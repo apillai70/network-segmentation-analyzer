@@ -1,0 +1,8 @@
+{"source_ip": "10.0.1.10", "dest_ip": "10.0.2.20", "protocol": "HTTP", "port": "80"}
+{"source_ip": "10.0.1.10", "dest_ip": "10.0.2.21", "protocol": "HTTPS", "port": "443"}
+{"source_ip": "10.0.1.11", "dest_ip": "10.0.2.20", "protocol": "HTTP", "port": "80"}
+{"source_ip": "10.0.2.20", "dest_ip": "10.0.3.30", "protocol": "MySQL", "port": "3306"}
+{"source_ip": "10.0.2.21", "dest_ip": "10.0.3.30", "protocol": "MySQL", "port": "3306"}
+{"source_ip": "10.0.1.12", "dest_ip": "10.0.2.22", "protocol": "HTTPS", "port": "443"}
+{"source_ip": "10.0.2.22", "dest_ip": "10.0.3.31", "protocol": "PostgreSQL", "port": "5432"}
+{"source_ip": "10.0.1.10", "dest_ip": "10.0.4.40", "protocol": "Redis", "port": "6379"}

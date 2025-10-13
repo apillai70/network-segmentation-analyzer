@@ -1,0 +1,7 @@
+{"from_entity": "web-server-01", "to_entity": "app-server-01", "connection_type": "HTTP", "port": "8080"}
+{"from_entity": "web-server-01", "to_entity": "app-server-02", "connection_type": "HTTP", "port": "8080"}
+{"from_entity": "web-server-02", "to_entity": "app-server-01", "connection_type": "HTTP", "port": "8080"}
+{"from_entity": "app-server-01", "to_entity": "database-01", "connection_type": "SQL", "port": "3306"}
+{"from_entity": "app-server-02", "to_entity": "database-01", "connection_type": "SQL", "port": "3306"}
+{"from_entity": "app-server-01", "to_entity": "cache-server-01", "connection_type": "Redis", "port": "6379"}
+{"from_entity": "app-server-02", "to_entity": "cache-server-01", "connection_type": "Redis", "port": "6379"}
