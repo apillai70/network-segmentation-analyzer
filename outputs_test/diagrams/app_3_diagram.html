@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Application: app_3</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
+            color: #fff;
+        }
+        h1 {
+            color: #6c7aff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        #diagram-container {
+            background: #1a1f3a;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 1600px;
+            overflow-x: auto;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        .info {
+            max-width: 1600px;
+            margin: 20px auto;
+            background: #1a1f3a;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .legend-item {
+            background: #2a2f4a;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .legend-title {
+            font-weight: bold;
+            color: #8a95ff;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔒 Application: app_3</h1>
+
+    <div class="info">
+        <h2>Network Segmentation Diagram</h2>
+        <p>This diagram visualizes the network topology and traffic flows for security analysis and segmentation planning.</p>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-title">Line Types</div>
+                <strong>=====></strong> High volume traffic<br>
+                <strong>-----></strong> Medium volume traffic<br>
+                <strong>-.-.-></strong> Low volume traffic
+            </div>
+            <div class="legend-item">
+                <div class="legend-title">Colors</div>
+                <span style="color: #f44336;">■</span> External/High Risk<br>
+                <span style="color: #ff9800;">■</span> DMZ/Medium Risk<br>
+                <span style="color: #4caf50;">■</span> Internal/Low Risk<br>
+                <span style="color: #2196f3;">■</span> Application Tier<br>
+                <span style="color: #ff5722;">■</span> Data Tier
+            </div>
+        </div>
+    </div>
+
+    <div id="diagram-container">
+        <pre class="mermaid">
+graph LR
+    %% Application: app_3
+
+    %% Component Styles
+    classDef internal fill:#4caf50,stroke:#388e3c,stroke-width:2px,color:#fff
+    classDef external fill:#f44336,stroke:#c62828,stroke-width:2px,color:#fff
+    classDef database fill:#ff5722,stroke:#d84315,stroke-width:2px,color:#fff
+    classDef cache fill:#00bcd4,stroke:#0097a7,stroke-width:2px,color:#fff
+    classDef messaging fill:#9c27b0,stroke:#7b1fa2,stroke-width:2px,color:#fff
+
+    %% Application Components
+    10_1_2_15["node-exporter-web-01"]:::internal
+    10_1_3_20["node-exporter-app-01"]:::internal
+    10_1_4_30["node-exporter-db-01"]:::internal
+    10_3_1_10["jenkins-master"]:::internal
+    10_3_1_15["jenkins-agent-01"]:::internal
+    10_3_1_16["jenkins-agent-02"]:::internal
+    10_3_10_100["nexus-repository"]:::internal
+    10_3_10_101["blobstore-s3"]:::internal
+    10_3_11_110["admin-devops"]:::internal
+    10_3_12_120["developer-workstation"]:::internal
+    10_3_13_130["smtp-relay"]:::internal
+    10_3_14_140["dns-internal"]:::internal
+    10_3_14_141["ntp-internal"]:::internal
+    10_3_2_20["git-server"]:::internal
+    10_3_3_30["docker-registry"]:::internal
+    10_3_4_40["artifactory"]:::internal
+    10_3_5_50["prometheus-server"]:::internal
+    10_3_5_55["grafana-dashboard"]:::internal
+    10_3_5_56["alertmanager"]:::internal
+    10_3_6_60["elasticsearch-logs"]:::internal
+    10_3_6_65["logstash-aggregator"]:::internal
+    10_3_7_70["vault-server"]:::internal
+    10_3_7_71["postgres-vault"]:::database
+    10_3_8_80["consul-server-01"]:::internal
+    10_3_8_81["consul-server-02"]:::internal
+    10_3_8_82["consul-server-03"]:::internal
+    10_3_9_90["sonarqube"]:::internal
+    10_3_9_91["postgres-sonar"]:::database
+    104_244_42_65["malicious-bot"]:::external
+    192_30_255_113["github-mirror"]:::external
+    52_5_167_20["dockerhub-mirror"]:::external
+    89_248_167_131["port-scanner"]:::external
+
+    %% Traffic Flows
+    10_3_1_15 -->|tcp:5000<br/>2.2MB, 1 flows| 10_3_3_30
+    10_3_1_16 -->|tcp:5000<br/>2.2MB, 1 flows| 10_3_3_30
+    10_3_3_30 -->|tcp:443<br/>1.2MB, 1 flows| 52_5_167_20
+    10_3_6_65 -.->|tcp:9200<br/>1 flows| 10_3_6_60
+    10_3_1_10 -.->|tcp:8081<br/>1 flows| 10_3_4_40
+    10_3_1_15 -.->|tcp:8081<br/>1 flows| 10_3_4_40
+    10_3_10_100 -.->|tcp:443<br/>1 flows| 10_3_10_101
+    10_3_1_15 -.->|tcp:22<br/>1 flows| 10_3_2_20
+    10_3_1_16 -.->|tcp:22<br/>1 flows| 10_3_2_20
+    10_3_2_20 -.->|tcp:443<br/>1 flows| 192_30_255_113
+    10_3_1_10 -.->|tcp:50000<br/>1 flows| 10_3_1_15
+    10_1_2_15 -.->|tcp:5044<br/>1 flows| 10_3_6_65
+    10_3_1_15 -.->|tcp:8081<br/>1 flows| 10_3_10_100
+    10_3_1_10 -.->|tcp:50000<br/>1 flows| 10_3_1_16
+    10_1_3_20 -.->|tcp:5044<br/>1 flows| 10_3_6_65
+    10_3_1_16 -.->|tcp:8081<br/>1 flows| 10_3_10_100
+    10_1_4_30 -.->|tcp:5044<br/>1 flows| 10_3_6_65
+    10_3_9_90 -.->|tcp:5432<br/>1 flows| 10_3_9_91
+    10_3_12_120 -.->|tcp:22<br/>1 flows| 10_3_2_20
+    10_3_1_15 -.->|tcp:9000<br/>1 flows| 10_3_9_90
+    10_3_5_55 -.->|tcp:9090<br/>1 flows| 10_3_5_50
+    10_3_8_80 -.->|tcp:8300<br/>1 flows| 10_3_8_81
+    10_3_8_81 -.->|tcp:8300<br/>1 flows| 10_3_8_82
+    10_3_5_55 -.->|tcp:9200<br/>1 flows| 10_3_6_60
+    10_3_7_70 -.->|tcp:5432<br/>1 flows| 10_3_7_71
+    10_3_1_10 -.->|tcp:8200<br/>1 flows| 10_3_7_70
+    10_3_1_15 -.->|tcp:8200<br/>1 flows| 10_3_7_70
+    10_3_5_50 -.->|tcp:9100<br/>1 flows| 10_1_2_15
+    10_3_1_10 -.->|tcp:8500<br/>1 flows| 10_3_8_80
+    10_3_11_110 -.->|tcp:8080<br/>1 flows| 10_3_1_10
+        </pre>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            themeVariables: {
+                darkMode: true,
+                background: '#1a1f3a',
+                primaryColor: '#6c7aff',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#8a95ff',
+                lineColor: '#8a95ff',
+                secondaryColor: '#2a2f4a',
+                tertiaryColor: '#3a3f5a'
+            }
+        });
+    </script>
+</body>
+</html>

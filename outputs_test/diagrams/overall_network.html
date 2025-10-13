@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Overall Network Architecture</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
+            color: #fff;
+        }
+        h1 {
+            color: #6c7aff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        #diagram-container {
+            background: #1a1f3a;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 1600px;
+            overflow-x: auto;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        .info {
+            max-width: 1600px;
+            margin: 20px auto;
+            background: #1a1f3a;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .legend-item {
+            background: #2a2f4a;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .legend-title {
+            font-weight: bold;
+            color: #8a95ff;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔒 Overall Network Architecture</h1>
+
+    <div class="info">
+        <h2>Network Segmentation Diagram</h2>
+        <p>This diagram visualizes the network topology and traffic flows for security analysis and segmentation planning.</p>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-title">Line Types</div>
+                <strong>=====></strong> High volume traffic<br>
+                <strong>-----></strong> Medium volume traffic<br>
+                <strong>-.-.-></strong> Low volume traffic
+            </div>
+            <div class="legend-item">
+                <div class="legend-title">Colors</div>
+                <span style="color: #f44336;">■</span> External/High Risk<br>
+                <span style="color: #ff9800;">■</span> DMZ/Medium Risk<br>
+                <span style="color: #4caf50;">■</span> Internal/Low Risk<br>
+                <span style="color: #2196f3;">■</span> Application Tier<br>
+                <span style="color: #ff5722;">■</span> Data Tier
+            </div>
+        </div>
+    </div>
+
+    <div id="diagram-container">
+        <pre class="mermaid">
+graph TB
+    %% Overall Network Architecture
+
+    %% Zone Styles
+    classDef external fill:#f44336,stroke:#333,stroke-width:2px,color:#fff
+    classDef dmz fill:#ff9800,stroke:#333,stroke-width:2px,color:#fff
+    classDef webtier fill:#4caf50,stroke:#333,stroke-width:2px,color:#fff
+    classDef apptier fill:#2196f3,stroke:#333,stroke-width:2px,color:#fff
+    classDef datatier fill:#ff5722,stroke:#333,stroke-width:2px,color:#fff
+    classDef messagingtier fill:#9c27b0,stroke:#333,stroke-width:2px,color:#fff
+    classDef cachetier fill:#00bcd4,stroke:#333,stroke-width:2px,color:#fff
+    classDef managementtier fill:#ffc107,stroke:#333,stroke-width:2px,color:#fff
+    classDef infrastructure fill:#795548,stroke:#333,stroke-width:2px,color:#fff
+    classDef internal fill:#4caf50,stroke:#333,stroke-width:2px,color:#fff
+
+    %% Macro Zones
+    EXTERNAL["EXTERNAL<br/>Internet-facing zone<br/>0 hosts | Security Level: 1"]:::external
+    DMZ["DMZ<br/>Demilitarized zone for public services<br/>0 hosts | Security Level: 2"]:::dmz
+    INTERNAL["INTERNAL<br/>Internal network<br/>0 hosts | Security Level: 3"]:::internal
+
+    %% Micro Zones (Application Tiers)
+    WEB_TIER["WEB_TIER<br/>9 hosts"]:::webtier
+    MANAGEMENT_TIER["MANAGEMENT_TIER<br/>6 hosts"]:::managementtier
+    APP_TIER["APP_TIER<br/>32 hosts"]:::apptier
+    DATA_TIER["DATA_TIER<br/>14 hosts"]:::datatier
+    MESSAGING_TIER["MESSAGING_TIER<br/>3 hosts"]:::messagingtier
+
+    %% Zone Relationships
+    EXTERNAL -->|Filtered Traffic| DMZ
+    DMZ -->|Firewall| INTERNAL
+    WEB_TIER -.->|4 flows| MANAGEMENT_TIER
+    WEB_TIER -.->|6 flows| APP_TIER
+    MANAGEMENT_TIER -.->|7 flows| DATA_TIER
+    APP_TIER -->|14 flows| DATA_TIER
+    MANAGEMENT_TIER -.->|1 flows| MESSAGING_TIER
+    APP_TIER -.->|4 flows| MESSAGING_TIER
+    EXTERNAL -.->|8 flows| WEB_TIER
+    INTERNAL -.->|2 flows| WEB_TIER
+    INTERNAL -.->|6 flows| MANAGEMENT_TIER
+    INTERNAL -.->|8 flows| DATA_TIER
+    MANAGEMENT_TIER -->|14 flows| APP_TIER
+    DATA_TIER -.->|6 flows| APP_TIER
+    MESSAGING_TIER -.->|2 flows| APP_TIER
+    INTERNAL -.->|1 flows| MESSAGING_TIER
+    WEB_TIER -.->|3 flows| MESSAGING_TIER
+    INTERNAL -.->|6 flows| APP_TIER
+    EXTERNAL -.->|4 flows| APP_TIER
+    APP_TIER -.->|3 flows| MANAGEMENT_TIER
+    MANAGEMENT_TIER -.->|2 flows| WEB_TIER
+    APP_TIER -.->|2 flows| WEB_TIER
+        </pre>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            themeVariables: {
+                darkMode: true,
+                background: '#1a1f3a',
+                primaryColor: '#6c7aff',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#8a95ff',
+                lineColor: '#8a95ff',
+                secondaryColor: '#2a2f4a',
+                tertiaryColor: '#3a3f5a'
+            }
+        });
+    </script>
+</body>
+</html>

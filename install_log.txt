@@ -1,0 +1,111 @@
+    # 3. Initialize database (first time only)
+  python scripts/init_db.py
+
+  # 4. Generate synthetic data (optional)
+  python scripts/generate_synthetic_flows.py --num-apps 140
+
+  # 5. Start the system
+  python start_system.py --web --incremental
+
+  Option 3: Just Web UI (with existing data)
+
+  cd C:\Users\AjayPillai\project\network-segmentation-analyzer
+  venv\Scripts\activate
+  python web_app.py
+
+  Then open: http://localhost:5000
+
+  Option 4: Quick Start without Data Generation
+
+  # If you already have data and database
+  python scripts/quick_start.py --web --skip-db-init --skip-data-gen
+
+  Troubleshooting
+
+  If you get "module not found" errors:
+  pip install -r requirements.txt
+
+  If database connection fails:
+  # Make sure PostgreSQL is running
+  # Then initialize database
+  python scripts/init_db.py
+
+  If you need a specific port:
+  python scripts/quick_start.py --web --port 8080
+  
+  
+  The issue is with the PyTorch version specification. The torch==2.1.2+cpu requires a special PyTorch index. Let's fix this:
+
+  Quick Fix: Install Without Strict Version Requirements
+
+  # Install PyTorch separately (latest compatible version)
+  pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+  # Then install other packages without PyTorch
+  pip install pandas numpy networkx flask scikit-learn matplotlib pyyaml psycopg2-binary
+  
+  | Command                             | What it does                     |
+  |-------------------------------------|----------------------------------|
+  | python scripts/quick_start.py --web | Full start with web UI           |
+  | python scripts/init_db.py           | Initialize database only         |
+  | python start_system.py --web        | Start system (assumes DB exists) |
+  | python web_app.py                   | Start web UI only                |
+  
+  After Installation, Start the System:
+
+AzureAD+AjayPillai@PruTechIT MINGW64 ~/project/network-segmentation-analyzer (main)
+$ python scripts/quick_start.py --generate-data 140 --web --port 8080
+
+  1. Web UI - Fully operational at http://localhost:5000
+    - Dashboard, Topology, Applications pages
+    - JSON storage backend
+    - 140 application files ready to process
+  2. File Management System - Complete!
+    - ✅ FileTracker class with duplicate detection
+    - ✅ Automatic file moving (processed/, duplicates/, errors/)
+    - ✅ Hash-based duplicate detection
+    - ✅ Row-level signature tracking
+    - ✅ Management utility script (scripts/manage_file_tracking.py)
+  3. UTF-8 Encoding - Fixed across all main scripts
+  4. Data Generation - 140 synthetic application CSV files ready
+
+  ⚠️ What's Not Working
+
+  Incremental Learning Process - The subprocess fails to start due to import errors in run_incremental_learning.py:
+  - ❌ EnsembleNetworkModel import failing
+  - ❌ Script has outdated/incompatible imports
+  - The script structure doesn't match the actual codebase architecture
+
+  📋 Summary of Your Questions Answered
+
+  "How will it start processing files one by one and learning?"
+
+  Answer: The system has two modes:
+
+  1. Continuous Mode (intended):
+    - python start_system.py --web --incremental
+    - Watches data/input/ every 30 seconds
+    - Processes new files automatically
+    - Moves processed files to data/input/processed/
+    - Status: Not working due to import errors
+  2. Batch Mode (alternative):
+    - Process all files at once
+    - Then start web UI to view results
+    - Status: Also has same import issues
+
+  "What if file is manually deleted from processed directory?"
+
+  Answer: Implemented a complete solution!
+  - Database tracks files independently of filesystem
+  - Use python scripts/manage_file_tracking.py --forget filename.csv to allow reprocessing
+  - Use --reset --confirm to clear all tracking
+
+  🔧 What Needs to be Fixed
+
+  The run_incremental_learning.py script needs its imports updated to match the actual codebase structure. The imports are looking for classes that don't exist or are in        
+  different locations than expected.
+
+  Would you like me to:
+  1. Fix the imports in run_incremental_learning.py so incremental learning actually works?
+  2. Or focus on getting batch processing working first?
+  3. Or just use the web UI with the 140 files loaded statically (which works now)?

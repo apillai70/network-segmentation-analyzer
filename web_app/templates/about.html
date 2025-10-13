@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}About - Network Segmentation Analyzer{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">
+        <i class="fas fa-info-circle"></i> About
+    </h1>
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Network Segmentation Analyzer v3.0</h4>
+        </div>
+        <div class="card-body">
+            <p class="lead">
+                Complete Network + Application Topology Discovery with AI/ML
+            </p>
+            <p>
+                An advanced network security analysis tool that combines traditional network analysis
+                with cutting-edge machine learning and agentic AI to provide comprehensive insights
+                into network topology and application dependencies.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-star"></i> Key Features</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Network Topology Discovery:</strong> Automated network mapping and visualization</li>
+                        <li><strong>Application Topology:</strong> Semantic understanding of application behavior</li>
+                        <li><strong>Deep Learning:</strong> GAT, VAE, Transformer models for pattern recognition</li>
+                        <li><strong>Incremental Learning:</strong> Continuous model improvement without restarts</li>
+                        <li><strong>Security Zones:</strong> Automated tier classification (Web, App, Data, etc.)</li>
+                        <li><strong>Dependency Detection:</strong> Discover hidden application relationships</li>
+                        <li><strong>Compliance Mapping:</strong> PCI-DSS, SOX, HIPAA requirements</li>
+                        <li><strong>100% Local:</strong> No external APIs - all processing on-premise</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-brain"></i> AI Technologies</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Ensemble Learning:</strong> GNN, RNN, CNN, Attention models</li>
+                        <li><strong>Graph Attention Networks:</strong> Multi-head attention for relationships</li>
+                        <li><strong>Variational Autoencoders:</strong> Application behavior fingerprinting</li>
+                        <li><strong>Transformers:</strong> Temporal traffic pattern analysis</li>
+                        <li><strong>Knowledge Graphs:</strong> Local semantic understanding</li>
+                        <li><strong>Community Detection:</strong> Louvain algorithm for clustering</li>
+                        <li><strong>Centrality Analysis:</strong> PageRank, Betweenness metrics</li>
+                        <li><strong>Reinforcement Learning:</strong> Optimal segmentation policies (optional)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-shield-alt"></i> Security & Privacy</h5>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-success">
+                <h6><i class="fas fa-lock"></i> 100% Local Processing</h6>
+                <p class="mb-0">
+                    All analysis and machine learning happens on-premise. No data leaves your network.
+                    No external API calls. Complete data sovereignty.
+                </p>
+            </div>
+
+            <h6>Security Features:</h6>
+            <ul>
+                <li>On-premise deployment only</li>
+                <li>No internet connectivity required</li>
+                <li>PostgreSQL or JSON file-based storage</li>
+                <li>Role-based access control (planned)</li>
+                <li>Audit logging</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-layer-group"></i> Architecture</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <h6>Backend</h6>
+                    <ul>
+                        <li>Python 3.8+</li>
+                        <li>Flask web framework</li>
+                        <li>PyTorch (optional for DL)</li>
+                        <li>NetworkX for graphs</li>
+                        <li>PostgreSQL or JSON</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6>Frontend</h6>
+                    <ul>
+                        <li>Bootstrap 5</li>
+                        <li>D3.js for visualization</li>
+                        <li>Chart.js for metrics</li>
+                        <li>Font Awesome icons</li>
+                        <li>Responsive design</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6>ML Pipeline</h6>
+                    <ul>
+                        <li>Ensemble models</li>
+                        <li>Incremental learning</li>
+                        <li>Graph algorithms</li>
+                        <li>Semantic analyzer</li>
+                        <li>Knowledge graphs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-code"></i> Technology Stack</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Core Dependencies:</strong></p>
+            <ul>
+                <li>pandas, numpy - Data processing</li>
+                <li>networkx - Graph algorithms</li>
+                <li>scikit-learn - Classical ML</li>
+                <li>matplotlib, seaborn, plotly - Visualization</li>
+                <li>Flask - Web framework</li>
+            </ul>
+
+            <p><strong>Optional Dependencies:</strong></p>
+            <ul>
+                <li>PyTorch - Deep learning (GAT, VAE, Transformer)</li>
+                <li>psycopg2 - PostgreSQL support</li>
+                <li>python-louvain, cdlib - Community detection</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-book"></i> Documentation</h5>
+        </div>
+        <div class="card-body">
+            <ul>
+                <li><a href="https://github.com/your-repo/DEPLOYMENT_GUIDE.md" target="_blank">Deployment Guide</a></li>
+                <li><a href="https://github.com/your-repo/INCREMENTAL_LEARNING_GUIDE.md" target="_blank">Incremental Learning Guide</a></li>
+                <li><a href="https://github.com/your-repo/QUICKSTART_INCREMENTAL.md" target="_blank">Quick Start Guide</a></li>
+                <li><a href="https://github.com/your-repo/WHATS_NEW_V3.md" target="_blank">What's New in v3.0</a></li>
+                <li><a href="https://github.com/your-repo/WEB_APP_README.md" target="_blank">Web App Documentation</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-users"></i> Team</h5>
+        </div>
+        <div class="card-body">
+            <p>
+                <strong>Enterprise Security Team</strong><br>
+                Network Segmentation Analyzer v3.0
+            </p>
+            <p class="text-muted">
+                Built with ❤️ for enterprise security teams
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "apps_analyzed": 50,
+    "total_flows": 125000
+  },
+  "gnn": {
+    "nodes": 342,
+    "embedding_dim": 16
+  },
+  "rl": {
+    "final_avg_reward": 8.5,
+    "zones_assigned": 342
+  },
+  "timeseries": {
+    "anomalies_detected": 23
+  },
+  "automl": {
+    "selected_features": 20,
+    "best_model": "kmeans"
+  }
+}

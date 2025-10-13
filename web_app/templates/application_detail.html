@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}{{ application.app_id }} - Network Segmentation Analyzer{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/applications">Applications</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ application.app_id }}</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">
+        <i class="fas fa-cube"></i> {{ application.app_id }}
+    </h1>
+
+    <div class="row">
+        <!-- Overview Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Overview</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Security Zone:</th>
+                            <td>
+                                <span class="badge bg-info">{{ topology.security_zone or 'UNKNOWN' }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Confidence:</th>
+                            <td>
+                                {% if topology.confidence %}
+                                {{ (topology.confidence * 100)|int }}%
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Risk Level:</th>
+                            <td>
+                                {% if topology.risk_level %}
+                                    {% if topology.risk_level == 'HIGH' %}
+                                    <span class="badge bg-danger">{{ topology.risk_level }}</span>
+                                    {% elif topology.risk_level == 'MEDIUM' %}
+                                    <span class="badge bg-warning text-dark">{{ topology.risk_level }}</span>
+                                    {% else %}
+                                    <span class="badge bg-success">{{ topology.risk_level }}</span>
+                                    {% endif %}
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Application Type:</th>
+                            <td>{{ topology.app_type or 'N/A' }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dependencies Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Dependencies</h5>
+                </div>
+                <div class="card-body">
+                    {% if topology.predicted_dependencies %}
+                    <ul class="list-group">
+                        {% for dep in topology.predicted_dependencies %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ dep }}
+                            <span class="badge bg-primary">Dependency</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="text-muted">No dependencies identified</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Compliance Requirements -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Compliance Requirements</h5>
+                </div>
+                <div class="card-body">
+                    {% if topology.compliance_requirements %}
+                    <ul class="list-unstyled">
+                        {% for req in topology.compliance_requirements %}
+                        <li><i class="fas fa-check-circle text-success"></i> {{ req }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="text-muted">No specific compliance requirements</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Communication Patterns -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Communication Patterns</h5>
+                </div>
+                <div class="card-body">
+                    {% if topology.typical_protocols %}
+                    <div class="mb-2">
+                        <strong>Protocols:</strong>
+                        {% for protocol in topology.typical_protocols %}
+                        <span class="badge bg-secondary">{{ protocol }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if topology.typical_ports %}
+                    <div>
+                        <strong>Ports:</strong>
+                        {% for port in topology.typical_ports %}
+                        <span class="badge bg-secondary">{{ port }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="mt-3">
+        <a href="/applications" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Applications
+        </a>
+        <a href="/topology" class="btn btn-primary">
+            <i class="fas fa-project-diagram"></i> View in Topology
+        </a>
+    </div>
+</div>
+{% endblock %}

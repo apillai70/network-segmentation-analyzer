@@ -1,0 +1,16 @@
+feature_category,feature_name,value
+general,app_name,ALE
+general,flow_count,51
+general,total_bytes,0
+general,total_packets,0
+general,unique_src_ips,51
+general,unique_dst_ips,50
+protocols,protocols_TCP,22
+protocols,protocols_HTTPS,15
+protocols,protocols_HTTP,14
+general,top_protocol,TCP
+general,top_port,0
+general,avg_bytes_per_flow,0
+general,avg_packets_per_flow,0
+general,bytes_std,0
+general,timestamp,2025-10-12T14:44:54.336640

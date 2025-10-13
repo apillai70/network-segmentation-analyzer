@@ -1,0 +1,77 @@
+# Hostname Resolution Configuration
+# ===================================
+# Configure how IP addresses are resolved to hostnames
+
+# Operation Mode
+# - demo: Use synthetic hostname generation (for demos/testing)
+# - production: Use DNS/Domain Controller lookups (for real environments)
+mode: demo
+
+# DNS Lookup Configuration
+dns_lookup:
+  enabled: true
+  timeout: 2.0  # seconds
+
+# Domain Controller Configuration (for production mode)
+domain_controller:
+  enabled: false
+  server: null  # e.g., "dc1.company.local"
+  domain: null  # e.g., "company.local"
+
+  # AD/LDAP Configuration (optional)
+  ldap:
+    base_dn: null  # e.g., "DC=company,DC=local"
+    username: null
+    password: null  # Use environment variable in production!
+
+  # Alternative: PowerShell remoting (Windows environments)
+  powershell:
+    enabled: false
+    ps_server: null
+
+# Synthetic Hostname Generation (demo mode)
+synthetic:
+  # Domain suffix for synthetic hostnames
+  domain_suffix: null  # e.g., "demo.local" or leave null for no suffix
+
+  # Naming patterns for different subnets
+  patterns:
+    "10.100.160.": "mgmt"
+    "10.100.246.": "app"
+    "10.164.105.": "web"
+    "10.164.116.": "db"
+    "10.164.144.": "cache"
+    "10.164.145.": "mq"
+    "10.165.116.": "api"
+    "2001:db8:": "ipv6"
+
+  # Zone-based naming
+  zone_prefixes:
+    WEB_TIER: "web"
+    APP_TIER: "app"
+    DATA_TIER: "db"
+    CACHE_TIER: "cache"
+    MESSAGING_TIER: "mq"
+    MANAGEMENT_TIER: "mgmt"
+    INFRASTRUCTURE_TIER: "infra"
+
+# Caching
+cache:
+  enabled: true
+  max_size: 10000  # Maximum cached entries
+  ttl: 3600  # Time to live in seconds (1 hour)
+
+# Examples for switching to production mode:
+# ==========================================
+# mode: production
+# dns_lookup:
+#   enabled: true
+#   timeout: 2.0
+# domain_controller:
+#   enabled: true
+#   server: "dc1.company.local"
+#   domain: "company.local"
+#   ldap:
+#     base_dn: "DC=company,DC=local"
+#     username: "svc_network_analyzer"
+#     password: "${NETWORK_ANALYZER_AD_PASSWORD}"  # Use env var!

@@ -1,0 +1,90 @@
+# Network Segmentation Analyzer Configuration
+# ============================================
+
+# Database Configuration
+database:
+  # Primary: PostgreSQL (if available)
+  # Fallback: JSON files (automatic)
+
+  postgresql:
+    enabled: true  # Set to false to force JSON mode
+    host: localhost
+    port: 5432
+    database: network_analysis
+    user: postgres
+    password: postgres  # CHANGE IN PRODUCTION!
+
+    # Connection pool settings
+    min_connections: 2
+    max_connections: 10
+
+  # JSON fallback settings
+  json:
+    data_dir: ./outputs_final/persistent_data
+    backup_enabled: true
+    backup_dir: ./outputs_final/backups
+
+# Web Application
+web:
+  host: 0.0.0.0  # Listen on all interfaces
+  port: 5000
+  debug: false  # Set to true for development
+  secret_key: CHANGE_THIS_IN_PRODUCTION  # Flask session secret
+
+  # Security
+  max_content_length: 16777216  # 16MB max upload
+
+# Incremental Learning
+incremental:
+  watch_dir: ./data/input
+  check_interval: 30  # seconds
+  checkpoint_interval: 10  # Save every N updates
+  max_files_per_batch: 50  # Process max N files at once
+
+# Model Configuration
+models:
+  # Deep Learning (optional - requires PyTorch)
+  deep_learning:
+    enabled: false  # Set to true if torch installed
+    device: cpu  # 'cpu' or 'cuda'
+
+  # Graph algorithms (always enabled)
+  graph_algorithms:
+    enabled: true
+
+  # Reinforcement Learning (slow - disable for production)
+  reinforcement_learning:
+    enabled: false
+
+# Logging
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR
+  dir: ./logs
+  max_size_mb: 100
+  backup_count: 10
+
+# Synthetic Data Generation
+synthetic:
+  default_num_apps: 140
+  ipv6_percentage: 15  # 15% of traffic uses IPv6
+
+  # Special app type recognition
+  patterns:
+    datamart: DM_*
+    api: "*API*,*SVC*"
+    web: "*WEB*,*UI*"
+    payment: "*PAY*,*BILL*"
+    cache: "*CACHE*,*REDIS*"
+    database: "*DB*,*SQL*"
+
+# Visualization
+visualization:
+  default_layout: force  # 'force', 'hierarchical', 'circular'
+  node_colors:
+    WEB_TIER: "#ff6b6b"
+    APP_TIER: "#4ecdc4"
+    DATA_TIER: "#45b7d1"
+    CACHE_TIER: "#96ceb4"
+    MESSAGING_TIER: "#ffeaa7"
+    MANAGEMENT_TIER: "#dfe6e9"
+    UNKNOWN: "#b2bec3"

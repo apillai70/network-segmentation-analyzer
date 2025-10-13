@@ -1,0 +1,38 @@
+graph TD
+    %% Zone Traffic Flow Analysis
+
+    %% Styles
+    classDef high fill:#f44336,stroke:#c62828,stroke-width:3px,color:#fff
+    classDef medium fill:#ff9800,stroke:#f57c00,stroke-width:2px,color:#fff
+    classDef low fill:#4caf50,stroke:#388e3c,stroke-width:2px,color:#fff
+
+    %% Zones
+    APP_TIER["APP_TIER<br/>32 hosts"]
+    DATA_TIER["DATA_TIER<br/>14 hosts"]
+    EXTERNAL["EXTERNAL<br/>0 hosts"]
+    INTERNAL["INTERNAL<br/>0 hosts"]
+    MANAGEMENT_TIER["MANAGEMENT_TIER<br/>6 hosts"]
+    MESSAGING_TIER["MESSAGING_TIER<br/>3 hosts"]
+    WEB_TIER["WEB_TIER<br/>9 hosts"]
+
+    %% Traffic Flows
+    APP_TIER -->|14 flows<br/>MEDIUM| DATA_TIER
+    MANAGEMENT_TIER -->|14 flows<br/>MEDIUM| APP_TIER
+    EXTERNAL -.->|8 flows<br/>LOW| WEB_TIER
+    INTERNAL -.->|8 flows<br/>LOW| DATA_TIER
+    MANAGEMENT_TIER -.->|7 flows<br/>LOW| DATA_TIER
+    WEB_TIER -.->|6 flows<br/>LOW| APP_TIER
+    INTERNAL -.->|6 flows<br/>LOW| MANAGEMENT_TIER
+    DATA_TIER -.->|6 flows<br/>LOW| APP_TIER
+    INTERNAL -.->|6 flows<br/>LOW| APP_TIER
+    WEB_TIER -.->|4 flows<br/>LOW| MANAGEMENT_TIER
+    APP_TIER -.->|4 flows<br/>LOW| MESSAGING_TIER
+    EXTERNAL -.->|4 flows<br/>LOW| APP_TIER
+    WEB_TIER -.->|3 flows<br/>LOW| MESSAGING_TIER
+    APP_TIER -.->|3 flows<br/>LOW| MANAGEMENT_TIER
+    INTERNAL -.->|2 flows<br/>LOW| WEB_TIER
+    MESSAGING_TIER -.->|2 flows<br/>LOW| APP_TIER
+    MANAGEMENT_TIER -.->|2 flows<br/>LOW| WEB_TIER
+    APP_TIER -.->|2 flows<br/>LOW| WEB_TIER
+    MANAGEMENT_TIER -.->|1 flows<br/>LOW| MESSAGING_TIER
+    INTERNAL -.->|1 flows<br/>LOW| MESSAGING_TIER

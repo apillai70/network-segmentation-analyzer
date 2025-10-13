@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Applications - Network Segmentation Analyzer{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h1 class="mb-4">
+        <i class="fas fa-cubes"></i> Applications
+    </h1>
+
+    {% if error %}
+    <div class="alert alert-danger">
+        <i class="fas fa-exclamation-triangle"></i> {{ error }}
+    </div>
+    {% endif %}
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">All Applications</h5>
+        </div>
+        <div class="card-body">
+            <!-- Search box -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <input type="text" id="searchBox" class="form-control" placeholder="Search applications...">
+                </div>
+                <div class="col-md-6 text-end">
+                    <span class="badge bg-primary">Total: {{ applications|length }}</span>
+                </div>
+            </div>
+
+            <!-- Applications table -->
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="applicationsTable">
+                    <thead>
+                        <tr>
+                            <th>App ID</th>
+                            <th>Security Zone</th>
+                            <th>Confidence</th>
+                            <th>Risk Level</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in applications %}
+                        <tr class="app-row" data-app="{{ app.app_id|lower }}">
+                            <td>
+                                <strong>{{ app.app_id }}</strong>
+                            </td>
+                            <td>
+                                <span class="badge bg-info">{{ app.security_zone or 'UNKNOWN' }}</span>
+                            </td>
+                            <td>
+                                {% if app.confidence %}
+                                <div class="progress" style="width: 100px;">
+                                    <div class="progress-bar" role="progressbar"
+                                         style="width: {{ (app.confidence * 100)|int }}%"
+                                         aria-valuenow="{{ (app.confidence * 100)|int }}"
+                                         aria-valuemin="0" aria-valuemax="100">
+                                        {{ (app.confidence * 100)|int }}%
+                                    </div>
+                                </div>
+                                {% else %}
+                                <span class="text-muted">N/A</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if app.risk_level %}
+                                    {% if app.risk_level == 'HIGH' %}
+                                    <span class="badge bg-danger">{{ app.risk_level }}</span>
+                                    {% elif app.risk_level == 'MEDIUM' %}
+                                    <span class="badge bg-warning text-dark">{{ app.risk_level }}</span>
+                                    {% else %}
+                                    <span class="badge bg-success">{{ app.risk_level }}</span>
+                                    {% endif %}
+                                {% else %}
+                                <span class="text-muted">N/A</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="/application/{{ app.app_id }}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Search functionality
+document.getElementById('searchBox').addEventListener('keyup', function() {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll('.app-row');
+
+    rows.forEach(row => {
+        const appId = row.dataset.app;
+        if (appId.includes(searchTerm)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

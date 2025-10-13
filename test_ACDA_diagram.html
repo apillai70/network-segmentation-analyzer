@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Application Data Flow Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .diagram-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .legend {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+        }
+        .legend h3 {
+            margin-top: 0;
+        }
+        .legend ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="diagram-container">
+        <h1>Application Data Flow Diagram</h1>
+        <div class="mermaid">
+graph LR
+
+    subgraph app_container["ACDA Application"]
+        direction TB
+
+        ACDA_WEB_TIER["Web Tier<br/>3 server(s)"]
+        style ACDA_WEB_TIER fill:#ffcccc,stroke:#333,stroke-width:2px
+        ACDA_APP_TIER["App Tier<br/>11 server(s)"]
+        style ACDA_APP_TIER fill:#ccffff,stroke:#333,stroke-width:2px
+        ACDA_DATA_TIER["Data Tier<br/>1 server(s)"]
+        style ACDA_DATA_TIER fill:#ccffcc,stroke:#333,stroke-width:2px
+        ACDA_CACHE_TIER["Cache Tier<br/>5 server(s)"]
+        style ACDA_CACHE_TIER fill:#ccffff,stroke:#333,stroke-width:2px
+        ACDA_MESSAGING_TIER["Messaging Tier<br/>7 server(s)"]
+        style ACDA_MESSAGING_TIER fill:#ccffff,stroke:#333,stroke-width:2px
+        ACDA_MANAGEMENT_TIER["Management Tier<br/>6 server(s)"]
+        style ACDA_MANAGEMENT_TIER fill:#ffffcc,stroke:#333,stroke-width:2px
+
+        ACDA_WEB_TIER --> ACDA_APP_TIER
+        ACDA_APP_TIER --> ACDA_DATA_TIER
+        ACDA_DATA_TIER --> ACDA_CACHE_TIER
+        ACDA_CACHE_TIER --> ACDA_MESSAGING_TIER
+        ACDA_MESSAGING_TIER --> ACDA_MANAGEMENT_TIER
+    end
+
+    subgraph downstream_apps_group["Downstream Applications"]
+        mgmt_srv_161((mgmt-srv-161))
+        style mgmt_srv_161 fill:#ffffcc,stroke:#333,stroke-width:2px
+        app_srv_50((app-srv-50))
+        style app_srv_50 fill:#ccffff,stroke:#333,stroke-width:2px
+        mgmt_srv_38((mgmt-srv-38))
+        style mgmt_srv_38 fill:#ffffcc,stroke:#333,stroke-width:2px
+        ipv6_srv_232((ipv6-srv-232))
+        style ipv6_srv_232 fill:#e6ccff,stroke:#333,stroke-width:2px
+        mgmt_srv_84((mgmt-srv-84))
+        style mgmt_srv_84 fill:#ffffcc,stroke:#333,stroke-width:2px
+        ipv6_srv_71((ipv6-srv-71))
+        style ipv6_srv_71 fill:#e6ccff,stroke:#333,stroke-width:2px
+        ipv6_srv_9((ipv6-srv-9))
+        style ipv6_srv_9 fill:#e6ccff,stroke:#333,stroke-width:2px
+        mgmt_srv_89((mgmt-srv-89))
+        style mgmt_srv_89 fill:#ffffcc,stroke:#333,stroke-width:2px
+        app_srv_57((app-srv-57))
+        style app_srv_57 fill:#ccffff,stroke:#333,stroke-width:2px
+        mgmt_srv_57((mgmt-srv-57))
+        style mgmt_srv_57 fill:#ffffcc,stroke:#333,stroke-width:2px
+    end
+
+    subgraph database_group["Databases"]
+        db_srv_21[db-srv-21]
+        style db_srv_21 fill:#ccffcc,stroke:#333,stroke-width:2px
+        db_srv_57[db-srv-57]
+        style db_srv_57 fill:#ccffcc,stroke:#333,stroke-width:2px
+        db_srv_221[db-srv-221]
+        style db_srv_221 fill:#ccffcc,stroke:#333,stroke-width:2px
+        db_srv_65[db-srv-65]
+        style db_srv_65 fill:#ccffcc,stroke:#333,stroke-width:2px
+        db_srv_32[db-srv-32]
+        style db_srv_32 fill:#ccffcc,stroke:#333,stroke-width:2px
+    end
+
+    subgraph cache_group["Caches"]
+        cache_srv_47[cache-srv-47]
+        style cache_srv_47 fill:#ccffff,stroke:#333,stroke-width:2px
+        cache_srv_158[cache-srv-158]
+        style cache_srv_158 fill:#ccffff,stroke:#333,stroke-width:2px
+        cache_srv_253[cache-srv-253]
+        style cache_srv_253 fill:#ccffff,stroke:#333,stroke-width:2px
+    end
+
+    subgraph queue_group["Queues"]
+        mq_srv_191[mq-srv-191]
+        style mq_srv_191 fill:#ccffff,stroke:#333,stroke-width:2px
+        mq_srv_235[mq-srv-235]
+        style mq_srv_235 fill:#ccffff,stroke:#333,stroke-width:2px
+    end
+
+
+    app_container ==app calls==> mgmt_srv_161
+    app_container ==app calls==> app_srv_50
+    app_container ==app calls==> mgmt_srv_38
+    app_container ==app calls==> ipv6_srv_232
+    app_container ==app calls==> mgmt_srv_84
+    app_container ==app calls==> ipv6_srv_71
+    app_container ==app calls==> ipv6_srv_9
+    app_container ==app calls==> mgmt_srv_89
+    app_container ==app calls==> app_srv_57
+    app_container ==app calls==> mgmt_srv_57
+    app_container --cache operations--> cache_srv_47
+    app_container --cache operations--> cache_srv_158
+    app_container --cache operations--> cache_srv_253
+    app_container --data flow--> mq_srv_191
+    app_container --data queries--> db_srv_21
+    app_container --data queries--> db_srv_57
+    app_container --data queries--> db_srv_221
+    app_container --data queries--> db_srv_65
+    app_container --data flow--> mq_srv_235
+    app_container --data queries--> db_srv_32
+        </div>
+
+        <div class="legend">
+            <h3>Legend</h3>
+            <ul>
+                <li><strong>⚪ Circles</strong> = Services/APIs</li>
+                <li><strong>▭ Rectangles</strong> = Data Stores (Database, Cache, Queue)</li>
+                <li><strong>▢ Rounded Rectangles</strong> = External Systems</li>
+                <li><strong>─── Solid lines</strong> = Observed flows (actual traffic data)</li>
+                <li><strong>╌╌╌ Dashed lines</strong> = Predicted flows (Markov chain inference)</li>
+                <li><strong>🎨 Colors</strong> indicate security zones</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                curve: 'basis',
+                padding: 20
+            }
+        });
+    </script>
+</body>
+</html>

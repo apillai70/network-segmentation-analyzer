@@ -1,0 +1,121 @@
+
+================================================================================
+NETWORK SEGMENTATION ANALYZER v3.0
+Complete Network + Application Topology Discovery
+================================================================================
+🔒 100% LOCAL PROCESSING - NO EXTERNAL APIs
+🧠 Deep Learning + Agentic AI + Incremental Learning
+================================================================================
+
+2025-10-12 12:51:29,198 - INFO - ⏭️  Skipping cleanup (--skip-cleanup flag set)
+
+2025-10-12 12:51:29,198 - INFO - 📦 Checking dependencies...
+2025-10-12 12:51:29,539 - INFO -   ✓ pandas
+2025-10-12 12:51:29,539 - INFO -   ✓ numpy
+2025-10-12 12:51:30,017 - INFO -   ✓ networkx
+2025-10-12 12:51:31,698 - INFO -   ✓ sklearn
+2025-10-12 12:51:31,857 - INFO -   ✓ matplotlib
+2025-10-12 12:51:32,085 - INFO -   ✓ flask
+2025-10-12 12:51:32,112 - INFO -   ✓ yaml
+2025-10-12 12:51:34,552 - INFO -   ✓ torch (Deep Learning (GAT, VAE, Transformer))
+2025-10-12 12:51:34,560 - INFO -   ✓ psycopg2 (PostgreSQL Support)
+2025-10-12 12:51:34,561 - INFO -   ⚠ plotly - OPTIONAL (Interactive Visualizations)
+2025-10-12 12:51:34,561 - INFO - ✓ All required dependencies installed
+
+2025-10-12 12:51:34,561 - INFO - 📁 Initializing directories...
+2025-10-12 12:51:34,561 - INFO -   ✓ data/input
+2025-10-12 12:51:34,561 - INFO -   ✓ data/output
+2025-10-12 12:51:34,561 - INFO -   ✓ outputs_final
+2025-10-12 12:51:34,561 - INFO -   ✓ logs
+2025-10-12 12:51:34,562 - INFO -   ✓ models/incremental
+2025-10-12 12:51:34,562 - INFO -   ✓ models/ensemble
+2025-10-12 12:51:34,562 - INFO -   ✓ web_app/static/css
+2025-10-12 12:51:34,562 - INFO -   ✓ web_app/static/js
+2025-10-12 12:51:34,562 - INFO -   ✓ web_app/templates
+2025-10-12 12:51:34,562 - INFO - ✓ Directories ready
+
+2025-10-12 12:51:34,562 - INFO - 💾 Checking database...
+2025-10-12 12:51:34,562 - INFO -   ✓ PostgreSQL driver available
+2025-10-12 12:51:34,562 - INFO -   ℹ Will attempt PostgreSQL connection at runtime
+2025-10-12 12:51:34,562 - INFO - ℹ️  Using POSTGRESQL persistence
+
+2025-10-12 12:51:34,562 - INFO - 🔄 Starting incremental learning (continuous mode)...
+
+2025-10-12 12:51:34,587 - INFO - ✓ Incremental learning started (PID: 41112)
+2025-10-12 12:51:34,587 - INFO -   Check logs/incremental_*.log for details
+
+2025-10-12 12:51:34,587 - INFO - 🌐 Starting web UI on http://0.0.0.0:5000...
+
+2025-10-12 12:51:34,650 - WARNING - PostgreSQL connection failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+2025-10-12 12:51:34,651 - INFO - ✓ JSON storage structure initialized
+2025-10-12 12:51:34,651 - INFO - ✓ Using JSON file backend (fallback)
+2025-10-12 12:51:34,651 - INFO - ✓ Unified Persistence Manager initialized
+2025-10-12 12:51:34,651 - INFO -   Backend: json
+2025-10-12 12:51:34,651 - INFO -   Auto-fallback: True
+2025-10-12 12:51:34,659 - INFO - Agentic AI Components v3.0.0 loaded
+2025-10-12 12:51:34,659 - INFO -   ✓ Local Semantic Analyzer available
+2025-10-12 12:51:34,659 - INFO -   ✓ Graph Topology Analyzer available
+2025-10-12 12:51:34,659 - INFO - ✓ Application Knowledge Graph initialized (local)
+2025-10-12 12:51:34,659 - INFO - ✓ Pattern Learner initialized (0 patterns)
+2025-10-12 12:51:34,659 - INFO - ✓ Local Semantic Analyzer initialized (no external APIs)
+2025-10-12 12:51:34,659 - INFO - ✓ Semantic analyzer initialized
+2025-10-12 12:51:34,665 - INFO - ================================================================================
+2025-10-12 12:51:34,665 - INFO - 🚀 WEB UI STARTED
+2025-10-12 12:51:34,665 - INFO - ================================================================================
+2025-10-12 12:51:34,665 - INFO -   URL: http://0.0.0.0:5000
+2025-10-12 12:51:34,665 - INFO -   Dashboard: http://{host}:{port}/
+2025-10-12 12:51:34,665 - INFO -   Topology: http://0.0.0.0:5000/topology
+2025-10-12 12:51:34,665 - INFO -   Applications: http://0.0.0.0:5000/applications
+2025-10-12 12:51:34,665 - INFO -   Press Ctrl+C to stop
+2025-10-12 12:51:34,665 - INFO - ================================================================================
+
+ * Serving Flask app 'web_app_module'
+ * Debug mode: off
+2025-10-12 12:51:34,692 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.86.44:5000
+2025-10-12 12:51:34,693 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-12 12:55:22,231 - INFO - 127.0.0.1 - - [12/Oct/2025 12:55:22] "GET /topology HTTP/1.1" 200 -
+2025-10-12 12:55:22,406 - INFO - 127.0.0.1 - - [12/Oct/2025 12:55:22] "[36mGET /static/js/topology.js HTTP/1.1[0m" 304 -
+2025-10-12 12:55:22,469 - INFO - 127.0.0.1 - - [12/Oct/2025 12:55:22] "GET /api/topology/graph HTTP/1.1" 200 -
+2025-10-12 13:07:44,943 - INFO - 127.0.0.1 - - [12/Oct/2025 13:07:44] "GET /topology HTTP/1.1" 200 -
+2025-10-12 13:07:45,058 - INFO - 127.0.0.1 - - [12/Oct/2025 13:07:45] "[36mGET /static/js/topology.js HTTP/1.1[0m" 304 -
+2025-10-12 13:07:45,161 - INFO - 127.0.0.1 - - [12/Oct/2025 13:07:45] "GET /api/topology/graph HTTP/1.1" 200 -
+2025-10-12 14:08:15,449 - INFO - 127.0.0.1 - - [12/Oct/2025 14:08:15] "GET /api/topology/graph HTTP/1.1" 200 -
+2025-10-12 14:08:17,151 - INFO - 127.0.0.1 - - [12/Oct/2025 14:08:17] "GET /api/topology/graph HTTP/1.1" 200 -
+2025-10-12 14:08:19,455 - INFO - 127.0.0.1 - - [12/Oct/2025 14:08:19] "GET / HTTP/1.1" 200 -
+2025-10-12 14:08:19,536 - INFO - 127.0.0.1 - - [12/Oct/2025 14:08:19] "GET /api/zones HTTP/1.1" 200 -
+2025-10-12 14:08:19,595 - INFO - 127.0.0.1 - - [12/Oct/2025 14:08:19] "GET /api/applications HTTP/1.1" 200 -
+2025-10-12 14:09:03,999 - INFO - 127.0.0.1 - - [12/Oct/2025 14:09:03] "GET / HTTP/1.1" 200 -
+2025-10-12 14:09:04,042 - INFO - 127.0.0.1 - - [12/Oct/2025 14:09:04] "GET /api/zones HTTP/1.1" 200 -
+2025-10-12 14:09:04,263 - INFO - 127.0.0.1 - - [12/Oct/2025 14:09:04] "GET /api/applications HTTP/1.1" 200 -
+2025-10-12 14:09:06,945 - INFO - 127.0.0.1 - - [12/Oct/2025 14:09:06] "GET /incremental HTTP/1.1" 200 -
+2025-10-12 14:10:18,330 - INFO - 127.0.0.1 - - [12/Oct/2025 14:10:18] "GET / HTTP/1.1" 200 -
+2025-10-12 14:10:18,413 - INFO - 127.0.0.1 - - [12/Oct/2025 14:10:18] "GET /api/zones HTTP/1.1" 200 -
+2025-10-12 14:10:18,592 - INFO - 127.0.0.1 - - [12/Oct/2025 14:10:18] "GET /api/applications HTTP/1.1" 200 -
+2025-10-12 14:14:09,487 - INFO - 127.0.0.1 - - [12/Oct/2025 14:14:09] "GET /topology HTTP/1.1" 200 -
+2025-10-12 14:14:09,555 - INFO - 127.0.0.1 - - [12/Oct/2025 14:14:09] "[36mGET /static/js/topology.js HTTP/1.1[0m" 304 -
+2025-10-12 14:14:09,757 - INFO - 127.0.0.1 - - [12/Oct/2025 14:14:09] "GET /api/topology/graph HTTP/1.1" 200 -
+2025-10-12 14:14:11,511 - INFO - 127.0.0.1 - - [12/Oct/2025 14:14:11] "GET /applications HTTP/1.1" 200 -
+2025-10-12 14:14:13,039 - INFO - 127.0.0.1 - - [12/Oct/2025 14:14:13] "GET /zones HTTP/1.1" 200 -
+2025-10-12 14:14:14,298 - INFO - 127.0.0.1 - - [12/Oct/2025 14:14:14] "GET /incremental HTTP/1.1" 200 -
+2025-10-12 14:14:15,987 - INFO - 127.0.0.1 - - [12/Oct/2025 14:14:15] "GET / HTTP/1.1" 200 -
+2025-10-12 14:14:16,292 - INFO - 127.0.0.1 - - [12/Oct/2025 14:14:16] "GET /api/zones HTTP/1.1" 200 -
+2025-10-12 14:14:16,342 - INFO - 127.0.0.1 - - [12/Oct/2025 14:14:16] "GET /api/applications HTTP/1.1" 200 -
+2025-10-12 14:16:21,478 - INFO - 127.0.0.1 - - [12/Oct/2025 14:16:21] "GET / HTTP/1.1" 200 -
+2025-10-12 14:16:21,509 - INFO - 127.0.0.1 - - [12/Oct/2025 14:16:21] "GET /api/zones HTTP/1.1" 200 -
+2025-10-12 14:16:21,724 - INFO - 127.0.0.1 - - [12/Oct/2025 14:16:21] "GET /api/applications HTTP/1.1" 200 -
+2025-10-12 14:17:23,146 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:23] "GET / HTTP/1.1" 200 -
+2025-10-12 14:17:23,185 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:23] "GET /api/zones HTTP/1.1" 200 -
+2025-10-12 14:17:23,414 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:23] "GET /api/applications HTTP/1.1" 200 -
+2025-10-12 14:17:35,176 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:35] "GET / HTTP/1.1" 200 -
+2025-10-12 14:17:35,239 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:35] "GET /api/zones HTTP/1.1" 200 -
+2025-10-12 14:17:35,429 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:35] "GET /api/applications HTTP/1.1" 200 -
+2025-10-12 14:17:38,628 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:38] "GET /topology HTTP/1.1" 200 -
+2025-10-12 14:17:38,762 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:38] "[36mGET /static/js/topology.js HTTP/1.1[0m" 304 -
+2025-10-12 14:17:38,877 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:38] "GET /api/topology/graph HTTP/1.1" 200 -
+2025-10-12 14:17:40,206 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:40] "GET /applications HTTP/1.1" 200 -
+2025-10-12 14:17:41,355 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:41] "GET /zones HTTP/1.1" 200 -
+2025-10-12 14:17:42,202 - INFO - 127.0.0.1 - - [12/Oct/2025 14:17:42] "GET /incremental HTTP/1.1" 200 -

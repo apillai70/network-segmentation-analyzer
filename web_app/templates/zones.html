@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Security Zones - Network Segmentation Analyzer{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h1 class="mb-4">
+        <i class="fas fa-shield-alt"></i> Security Zones
+    </h1>
+
+    {% if error %}
+    <div class="alert alert-danger">
+        <i class="fas fa-exclamation-triangle"></i> {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- Zone Cards -->
+    <div class="row">
+        {% for zone_name, zone_apps in zones.items() %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">{{ zone_name }}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>Applications:</strong> {{ zone_apps|length }}
+                    </p>
+
+                    <!-- Applications in this zone -->
+                    <div class="list-group list-group-flush" style="max-height: 300px; overflow-y: auto;">
+                        {% for app in zone_apps %}
+                        <a href="/application/{{ app.app_id }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ app.app_id }}</h6>
+                                {% if app.confidence %}
+                                <small>{{ (app.confidence * 100)|int }}%</small>
+                                {% endif %}
+                            </div>
+                            {% if app.app_type %}
+                            <small class="text-muted">{{ app.app_type }}</small>
+                            {% endif %}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                        {% if zone_name == 'WEB_TIER' %}
+                        External-facing applications
+                        {% elif zone_name == 'APP_TIER' %}
+                        Business logic and services
+                        {% elif zone_name == 'DATA_TIER' %}
+                        Databases and data storage
+                        {% elif zone_name == 'CACHE_TIER' %}
+                        Caching services
+                        {% elif zone_name == 'MESSAGING_TIER' %}
+                        Message queues and event buses
+                        {% elif zone_name == 'MANAGEMENT_TIER' %}
+                        Management and monitoring
+                        {% else %}
+                        Unclassified applications
+                        {% endif %}
+                    </small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Zone Distribution Chart -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Zone Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="zoneChart" width="400" height="150"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script>
+// Prepare data for chart
+const zoneData = {
+    {% for zone_name, zone_apps in zones.items() %}
+    '{{ zone_name }}': {{ zone_apps|length }},
+    {% endfor %}
+};
+
+const ctx = document.getElementById('zoneChart').getContext('2d');
+const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: Object.keys(zoneData),
+        datasets: [{
+            label: 'Applications per Zone',
+            data: Object.values(zoneData),
+            backgroundColor: [
+                'rgba(255, 107, 107, 0.7)',
+                'rgba(78, 205, 196, 0.7)',
+                'rgba(69, 183, 209, 0.7)',
+                'rgba(150, 206, 180, 0.7)',
+                'rgba(255, 234, 167, 0.7)',
+                'rgba(223, 230, 233, 0.7)',
+                'rgba(178, 190, 195, 0.7)'
+            ],
+            borderColor: [
+                'rgb(255, 107, 107)',
+                'rgb(78, 205, 196)',
+                'rgb(69, 183, 209)',
+                'rgb(150, 206, 180)',
+                'rgb(255, 234, 167)',
+                'rgb(223, 230, 233)',
+                'rgb(178, 190, 195)'
+            ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    precision: 0
+                }
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

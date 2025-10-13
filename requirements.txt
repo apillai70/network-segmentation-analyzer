@@ -1,0 +1,79 @@
+# ============================================================================
+# Network Segmentation Analyzer v3.0 - Requirements
+# Complete Network + Application Topology Discovery
+# ============================================================================
+
+# Core dependencies
+pandas==2.1.4
+numpy==1.26.2
+networkx==3.2.1
+
+# Machine learning (classical)
+scikit-learn==1.3.2
+
+# Deep Learning (OPTIONAL - for GAT, VAE, Transformer, RL)
+# Uncomment to enable advanced AI features - 100% LOCAL processing
+torch==2.1.2+cpu  # Use +cpu for CPU-only or +cu118 for CUDA 11.8
+# torch==2.1.2+cu118  # Uncomment for GPU support
+
+# Graph algorithms
+python-louvain==0.16  # Community detection
+cdlib==0.3.0  # Additional community detection algorithms
+
+# Visualization
+matplotlib==3.8.2
+seaborn==0.13.0
+plotly==5.18.0  # Interactive visualizations
+
+# Document generation
+python-docx==1.1.0
+Pillow==10.1.0
+reportlab==4.0.7  # PDF generation
+
+# Utilities
+tqdm==4.66.1
+joblib==1.3.2
+pyyaml==6.0.1
+
+# Database
+sqlite3  # Built-in with Python
+
+# Web Application
+flask==3.0.0
+psycopg2-binary==2.9.9  # PostgreSQL adapter (optional - will fallback to JSON)
+gunicorn==21.2.0  # Production WSGI server (optional)
+
+# Testing
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-mock==3.12.0
+
+# Code quality
+black==23.12.1
+flake8==7.0.0
+mypy==1.7.1
+
+# Development tools
+ipython==8.18.1
+jupyterlab==4.0.10
+
+# ============================================================================
+# Installation Notes:
+# ============================================================================
+#
+# BASIC INSTALLATION (without deep learning):
+#   pip install -r requirements.txt
+#
+# FULL INSTALLATION (with deep learning):
+#   1. Edit this file: Uncomment torch line
+#   2. Run: pip install -r requirements.txt
+#
+# GPU SUPPORT (for faster training):
+#   1. Replace torch line with +cu118 version
+#   2. Ensure CUDA 11.8 is installed
+#   3. Run: pip install -r requirements.txt
+#
+# VERIFY INSTALLATION:
+#   python scripts/verify_installation.py
+#
+# ============================================================================

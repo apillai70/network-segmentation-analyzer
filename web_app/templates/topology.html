@@ -1,0 +1,581 @@
+{% extends "base.html" %}
+
+{% block title %}Network Topology - Network Segmentation Analyzer{% endblock %}
+
+{% block extra_css %}
+<!-- D3.js -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<style>
+    #topology-container {
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+        height: calc(100vh - 280px);
+        min-height: 500px;
+    }
+
+    #topology-svg {
+        width: 100%;
+        height: 100%;
+        cursor: grab;
+    }
+
+    #topology-svg:active {
+        cursor: grabbing;
+    }
+
+    .node {
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .node:hover {
+        filter: brightness(1.2);
+    }
+
+    .node circle {
+        stroke: var(--text-primary);
+        stroke-width: 2px;
+    }
+
+    .node text {
+        font-size: 12px;
+        pointer-events: none;
+        text-anchor: middle;
+        fill: var(--text-primary);
+        font-weight: 600;
+    }
+
+    .link {
+        stroke: var(--text-muted);
+        stroke-opacity: 0.4;
+        stroke-width: 1.5px;
+        transition: all 0.2s ease;
+    }
+
+    .link:hover {
+        stroke-opacity: 0.8;
+        stroke-width: 2px;
+    }
+
+    .link-label {
+        font-size: 10px;
+        fill: var(--text-secondary);
+    }
+
+    .controls {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: var(--shadow-sm);
+        padding: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .legend {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: var(--shadow-sm);
+        padding: 0.75rem;
+    }
+
+    .legend h5 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .legend-item {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+    }
+
+    .legend-color {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .node-details {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: var(--shadow-sm);
+        padding: 0.75rem;
+        margin-top: 0.75rem;
+    }
+
+    .node-details h5 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .zone-WEB_TIER { fill: var(--zone-web); }
+    .zone-APP_TIER { fill: var(--zone-app); }
+    .zone-DATA_TIER { fill: var(--zone-data); }
+    .zone-MESSAGING_TIER { fill: var(--zone-messaging); }
+    .zone-CACHE_TIER { fill: var(--zone-cache); }
+    .zone-MANAGEMENT_TIER { fill: var(--zone-management); }
+    .zone-INFRASTRUCTURE_TIER { fill: var(--zone-infrastructure); }
+    .zone-UNKNOWN { fill: var(--zone-unknown); }
+
+    .topology-tooltip {
+        position: absolute;
+        text-align: center;
+        padding: 10px 14px;
+        font-size: 12px;
+        background: rgba(0, 0, 0, 0.95);
+        color: white;
+        border-radius: 8px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 1000;
+        border: 1px solid var(--accent-blue);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .form-check-input:checked {
+        background-color: var(--accent-blue);
+        border-color: var(--accent-blue);
+    }
+
+    .form-check-label {
+        color: var(--text-primary);
+    }
+
+    .btn-group-sm .btn {
+        font-size: 0.85rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Page Header -->
+    <div class="row mb-2">
+        <div class="col">
+            <h1 class="display-4">Network Topology</h1>
+            <p class="lead text-muted">Interactive visualization of application dependencies</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Left Column: Topology Visualization -->
+        <div class="col-lg-9">
+            <!-- Controls -->
+            <div class="controls">
+                <div class="row align-items-center mb-2">
+                    <div class="col-md-6">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-primary" onclick="resetZoom()">
+                                <i class="bi bi-arrow-clockwise"></i> Reset Zoom
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="centerGraph()">
+                                <i class="bi bi-crosshair"></i> Center
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="refreshTopology()">
+                                <i class="bi bi-arrow-repeat"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check form-switch float-end">
+                            <input class="form-check-input" type="checkbox" id="showLabels" checked onchange="toggleLabels()">
+                            <label class="form-check-label" for="showLabels">
+                                Show Labels
+                            </label>
+                        </div>
+                        <div class="form-check form-switch float-end me-3">
+                            <input class="form-check-input" type="checkbox" id="showEdgeLabels" onchange="toggleEdgeLabels()">
+                            <label class="form-check-label" for="showEdgeLabels">
+                                Show Edge Labels
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <label for="appFilter" class="form-label mb-1" style="font-size: 0.85rem; color: var(--text-secondary);">
+                            <i class="bi bi-funnel"></i> Filter by Application:
+                        </label>
+                        <select class="form-select form-select-sm" id="appFilter" onchange="filterByApplication()">
+                            <option value="">All Applications (Full Topology)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="zoneFilter" class="form-label mb-1" style="font-size: 0.85rem; color: var(--text-secondary);">
+                            <i class="bi bi-layers"></i> Filter by Zone:
+                        </label>
+                        <select class="form-select form-select-sm" id="zoneFilter" onchange="filterByZone()">
+                            <option value="">All Zones</option>
+                            <option value="WEB_TIER">WEB_TIER</option>
+                            <option value="APP_TIER">APP_TIER</option>
+                            <option value="DATA_TIER">DATA_TIER</option>
+                            <option value="MESSAGING_TIER">MESSAGING_TIER</option>
+                            <option value="CACHE_TIER">CACHE_TIER</option>
+                            <option value="MANAGEMENT_TIER">MANAGEMENT_TIER</option>
+                            <option value="INFRASTRUCTURE_TIER">INFRASTRUCTURE_TIER</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topology Visualization -->
+            <div id="topology-container">
+                <svg id="topology-svg"></svg>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="text-center mt-4" style="display: none;">
+                <div class="spinner-border" role="status" style="color: var(--accent-blue)">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2 text-muted">Loading topology data...</p>
+            </div>
+        </div>
+
+        <!-- Right Column: Legend and Details -->
+        <div class="col-lg-3">
+            <!-- Legend -->
+            <div class="legend">
+                <h5 class="mb-3"><i class="bi bi-palette"></i> Security Zones</h5>
+                <div class="legend-item">
+                    <span class="legend-color zone-WEB_TIER"></span>
+                    <span style="flex: 1;">WEB_TIER</span>
+                    <span class="badge bg-secondary" id="count-WEB_TIER">0</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color zone-APP_TIER"></span>
+                    <span style="flex: 1;">APP_TIER</span>
+                    <span class="badge bg-secondary" id="count-APP_TIER">0</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color zone-DATA_TIER"></span>
+                    <span style="flex: 1;">DATA_TIER</span>
+                    <span class="badge bg-secondary" id="count-DATA_TIER">0</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color zone-MESSAGING_TIER"></span>
+                    <span style="flex: 1;">MESSAGING_TIER</span>
+                    <span class="badge bg-secondary" id="count-MESSAGING_TIER">0</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color zone-CACHE_TIER"></span>
+                    <span style="flex: 1;">CACHE_TIER</span>
+                    <span class="badge bg-secondary" id="count-CACHE_TIER">0</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color zone-MANAGEMENT_TIER"></span>
+                    <span style="flex: 1;">MANAGEMENT_TIER</span>
+                    <span class="badge bg-secondary" id="count-MANAGEMENT_TIER">0</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color zone-INFRASTRUCTURE_TIER"></span>
+                    <span style="flex: 1;">INFRASTRUCTURE_TIER</span>
+                    <span class="badge bg-secondary" id="count-INFRASTRUCTURE_TIER">0</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color zone-UNKNOWN"></span>
+                    <span style="flex: 1;">UNKNOWN</span>
+                    <span class="badge bg-secondary" id="count-UNKNOWN">0</span>
+                </div>
+            </div>
+
+            <!-- Node Details -->
+            <div class="node-details" id="node-details" style="display: none;">
+                <h5 class="mb-3"><i class="bi bi-info-circle"></i> Node Details</h5>
+                <div id="node-info"></div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="legend mt-3">
+                <h5 class="mb-3"><i class="bi bi-graph-up"></i> Statistics</h5>
+                <div class="mb-2 d-flex justify-content-between">
+                    <small class="text-muted">Total Nodes:</small>
+                    <strong id="stat-nodes">0</strong>
+                </div>
+                <div class="mb-2 d-flex justify-content-between">
+                    <small class="text-muted">Total Edges:</small>
+                    <strong id="stat-edges">0</strong>
+                </div>
+                <div class="mb-2 d-flex justify-content-between">
+                    <small class="text-muted">Avg Dependencies:</small>
+                    <strong id="stat-avg-deps">0</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Tooltip -->
+<div id="tooltip" class="topology-tooltip"></div>
+
+<!-- Topology Visualization Script -->
+<script src="{{ url_for('static', filename='js/topology.js') }}"></script>
+
+<script>
+    // Initialize topology on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadAndRenderTopology();
+    });
+
+    // Global variable to store full topology data
+    let fullTopologyData = null;
+
+    // Load and render topology
+    async function loadAndRenderTopology() {
+        document.getElementById('loading').style.display = 'block';
+
+        try {
+            const response = await fetch('/api/topology/graph');
+            const data = await response.json();
+
+            if (data.success) {
+                // Store full topology data for filtering
+                fullTopologyData = data.graph;
+
+                // Populate application filter dropdown
+                populateApplicationFilter(data.graph);
+
+                // Render full topology
+                renderTopology(data.graph);
+                updateStatistics(data.graph);
+                updateZoneCounts(data.graph);
+            } else {
+                showError('Failed to load topology: ' + data.error);
+            }
+        } catch (error) {
+            console.error('Error loading topology:', error);
+            showError('Failed to load topology data');
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    }
+
+    // Populate application filter dropdown
+    function populateApplicationFilter(graph) {
+        const appFilter = document.getElementById('appFilter');
+
+        // Keep the "All Applications" option
+        const allOption = appFilter.options[0];
+        appFilter.innerHTML = '';
+        appFilter.appendChild(allOption);
+
+        // Get unique application IDs and sort them
+        const appIds = [...new Set(graph.nodes.map(node => node.id))].sort();
+
+        // Add application options
+        appIds.forEach(appId => {
+            const option = document.createElement('option');
+            option.value = appId;
+            option.textContent = appId;
+            appFilter.appendChild(option);
+        });
+
+        console.log(`Populated ${appIds.length} applications in filter`);
+    }
+
+    // Filter topology by application
+    function filterByApplication() {
+        if (!fullTopologyData) {
+            console.warn('No topology data loaded');
+            return;
+        }
+
+        const selectedApp = document.getElementById('appFilter').value;
+
+        // Reset zone filter when app is selected
+        if (selectedApp) {
+            document.getElementById('zoneFilter').value = '';
+        }
+
+        if (!selectedApp) {
+            // Show full topology
+            renderTopology(fullTopologyData);
+            updateStatistics(fullTopologyData);
+            updateZoneCounts(fullTopologyData);
+            console.log('Showing full topology');
+            return;
+        }
+
+        // Filter to show selected app and all its dependencies
+        const connectedNodeIds = new Set([selectedApp]);
+
+        // Find all nodes connected to the selected app (both directions)
+        fullTopologyData.edges.forEach(edge => {
+            if (edge.source === selectedApp) {
+                connectedNodeIds.add(edge.target);
+            }
+            if (edge.target === selectedApp) {
+                connectedNodeIds.add(edge.source);
+            }
+        });
+
+        // Filter nodes
+        const filteredNodes = fullTopologyData.nodes.filter(node =>
+            connectedNodeIds.has(node.id)
+        );
+
+        // Filter edges to only include those between filtered nodes
+        const filteredEdges = fullTopologyData.edges.filter(edge =>
+            connectedNodeIds.has(edge.source) && connectedNodeIds.has(edge.target)
+        );
+
+        const filteredGraph = {
+            nodes: filteredNodes,
+            edges: filteredEdges
+        };
+
+        // Render filtered topology
+        renderTopology(filteredGraph);
+        updateStatistics(filteredGraph);
+        updateZoneCounts(filteredGraph);
+
+        console.log(`Filtered to app ${selectedApp}: ${filteredNodes.length} nodes, ${filteredEdges.length} edges`);
+    }
+
+    // Filter topology by zone
+    function filterByZone() {
+        if (!fullTopologyData) {
+            console.warn('No topology data loaded');
+            return;
+        }
+
+        const selectedZone = document.getElementById('zoneFilter').value;
+
+        // Reset app filter when zone is selected
+        if (selectedZone) {
+            document.getElementById('appFilter').value = '';
+        }
+
+        if (!selectedZone) {
+            // Show full topology
+            renderTopology(fullTopologyData);
+            updateStatistics(fullTopologyData);
+            updateZoneCounts(fullTopologyData);
+            console.log('Showing full topology');
+            return;
+        }
+
+        // Filter nodes by zone
+        const filteredNodes = fullTopologyData.nodes.filter(node =>
+            node.zone === selectedZone
+        );
+
+        const nodeIds = new Set(filteredNodes.map(n => n.id));
+
+        // Filter edges to only include those between nodes in the selected zone
+        const filteredEdges = fullTopologyData.edges.filter(edge =>
+            nodeIds.has(edge.source) && nodeIds.has(edge.target)
+        );
+
+        const filteredGraph = {
+            nodes: filteredNodes,
+            edges: filteredEdges
+        };
+
+        // Render filtered topology
+        renderTopology(filteredGraph);
+        updateStatistics(filteredGraph);
+        updateZoneCounts(filteredGraph);
+
+        console.log(`Filtered to zone ${selectedZone}: ${filteredNodes.length} nodes, ${filteredEdges.length} edges`);
+    }
+
+    // Update statistics
+    function updateStatistics(graph) {
+        document.getElementById('stat-nodes').textContent = graph.nodes.length;
+        document.getElementById('stat-edges').textContent = graph.edges.length;
+
+        const avgDeps = graph.nodes.length > 0 ?
+            (graph.edges.length / graph.nodes.length).toFixed(2) : '0';
+        document.getElementById('stat-avg-deps').textContent = avgDeps;
+    }
+
+    // Update zone counts
+    function updateZoneCounts(graph) {
+        const zoneCounts = {};
+
+        graph.nodes.forEach(node => {
+            const zone = node.zone || 'UNKNOWN';
+            zoneCounts[zone] = (zoneCounts[zone] || 0) + 1;
+        });
+
+        // Update all zone counts
+        const zones = ['WEB_TIER', 'APP_TIER', 'DATA_TIER', 'MESSAGING_TIER', 'CACHE_TIER', 'MANAGEMENT_TIER', 'INFRASTRUCTURE_TIER', 'UNKNOWN'];
+        zones.forEach(zone => {
+            const countElement = document.getElementById(`count-${zone}`);
+            if (countElement) {
+                countElement.textContent = zoneCounts[zone] || 0;
+            }
+        });
+    }
+
+    // Refresh topology
+    function refreshTopology() {
+        // Reset filters
+        document.getElementById('appFilter').value = '';
+        document.getElementById('zoneFilter').value = '';
+
+        // Reload full topology
+        loadAndRenderTopology();
+    }
+
+    // Show error message
+    function showError(message) {
+        const container = document.getElementById('topology-container');
+        container.innerHTML = `
+            <div class="alert alert-danger m-3" role="alert">
+                <i class="bi bi-exclamation-triangle"></i> ${message}
+            </div>
+        `;
+    }
+
+    // Display node details
+    function showNodeDetails(node) {
+        const detailsPanel = document.getElementById('node-details');
+        const infoDiv = document.getElementById('node-info');
+
+        let html = `
+            <h6 class="border-bottom pb-2 mb-3">${node.label}</h6>
+            <div class="mb-2 d-flex justify-content-between">
+                <small class="text-muted">Zone:</small>
+                <span class="badge zone-badge-${node.zone || 'UNKNOWN'}">${node.zone || 'Unknown'}</span>
+            </div>
+        `;
+
+        if (node.characteristics && node.characteristics.length > 0) {
+            html += `
+                <div class="mb-2">
+                    <small class="text-muted">Characteristics:</small>
+                </div>
+                <div class="mb-3">
+            `;
+            node.characteristics.forEach(char => {
+                html += `<span class="badge bg-secondary me-1 mb-1">${char}</span>`;
+            });
+            html += '</div>';
+        }
+
+        html += `
+            <div class="d-grid gap-2">
+                <a href="/application/${node.id}" class="btn btn-sm btn-primary">
+                    <i class="bi bi-box-arrow-up-right"></i> View Details
+                </a>
+            </div>
+        `;
+
+        infoDiv.innerHTML = html;
+        detailsPanel.style.display = 'block';
+    }
+</script>
+{% endblock %}

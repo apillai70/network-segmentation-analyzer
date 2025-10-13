@@ -1,0 +1,44 @@
+graph LR
+
+    subgraph app_container["ACDA Application"]
+        direction TB
+
+        ACDA_WEB_TIER["Web Tier<br/>3 server(s)"]
+        style ACDA_WEB_TIER fill:#ffcccc,stroke:#333,stroke-width:2px
+        ACDA_APP_TIER["App Tier<br/>11 server(s)"]
+        style ACDA_APP_TIER fill:#ccffff,stroke:#333,stroke-width:2px
+        ACDA_DATA_TIER["Data Tier<br/>1 server(s)"]
+        style ACDA_DATA_TIER fill:#ccffcc,stroke:#333,stroke-width:2px
+        ACDA_CACHE_TIER["Cache Tier<br/>5 server(s)"]
+        style ACDA_CACHE_TIER fill:#ccffff,stroke:#333,stroke-width:2px
+        ACDA_MESSAGING_TIER["Messaging Tier<br/>7 server(s)"]
+        style ACDA_MESSAGING_TIER fill:#ccffff,stroke:#333,stroke-width:2px
+        ACDA_MANAGEMENT_TIER["Management Tier<br/>6 server(s)"]
+        style ACDA_MANAGEMENT_TIER fill:#ffffcc,stroke:#333,stroke-width:2px
+
+        ACDA_WEB_TIER --> ACDA_APP_TIER
+        ACDA_APP_TIER --> ACDA_DATA_TIER
+        ACDA_DATA_TIER --> ACDA_CACHE_TIER
+        ACDA_CACHE_TIER --> ACDA_MESSAGING_TIER
+        ACDA_MESSAGING_TIER --> ACDA_MANAGEMENT_TIER
+    end
+
+    subgraph downstream_apps_group["Downstream Applications"]
+        mgmt_srv_161((mgmt-srv-161))
+        style mgmt_srv_161 fill:#ffffcc,stroke:#333,stroke-width:2px
+        app_srv_50((app-srv-50))
+        style app_srv_50 fill:#ccffff,stroke:#333,stroke-width:2px
+        mgmt_srv_38((mgmt-srv-38))
+        style mgmt_srv_38 fill:#ffffcc,stroke:#333,stroke-width:2px
+        ipv6_srv_232((ipv6-srv-232))
+        style ipv6_srv_232 fill:#e6ccff,stroke:#333,stroke-width:2px
+    end
+
+    subgraph database_group["Databases"]
+        db_srv_21[db-srv-21]
+        style db_srv_21 fill:#ccffcc,stroke:#333,stroke-width:2px
+    end
+
+    app_container ==app calls==> mgmt_srv_161
+    app_container ==app calls==> app_srv_50
+    app_container --data queries--> db_srv_21

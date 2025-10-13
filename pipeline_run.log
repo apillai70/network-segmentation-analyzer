@@ -1,0 +1,1279 @@
+2025-10-12 13:28:51,245 - INFO - ✓ FileTracker initialized
+2025-10-12 13:28:51,245 - INFO -   Watch: data\input
+2025-10-12 13:28:51,245 - INFO -   Tracked files: 10
+2025-10-12 13:28:51,297 - WARNING - PostgreSQL connection failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+2025-10-12 13:28:51,298 - INFO - ✓ JSON storage structure initialized
+2025-10-12 13:28:51,298 - INFO - ✓ Using JSON file backend (fallback)
+2025-10-12 13:28:51,298 - INFO - ✓ Unified Persistence Manager initialized
+2025-10-12 13:28:51,298 - INFO -   Backend: json
+2025-10-12 13:28:51,298 - INFO -   Auto-fallback: True
+2025-10-12 13:28:52,844 - INFO -   ✓ Classical ML models loaded
+2025-10-12 13:28:52,845 - INFO - ✓ Ensemble Network Model initialized
+2025-10-12 13:28:52,845 - INFO -   Deep Learning: False
+2025-10-12 13:28:52,845 - INFO -   Active models: ['random_forest', 'svm']
+2025-10-12 13:28:52,845 - INFO - ✓ Complete Pipeline initialized
+2025-10-12 13:28:52,845 - INFO -   Input: data\input
+2025-10-12 13:28:52,845 - INFO -   Output: outputs_final
+
+================================================================================
+🚀 COMPLETE NETWORK ANALYSIS PIPELINE
+================================================================================
+
+2025-10-12 13:28:52,852 - INFO - 📁 Processing 130 files...
+
+
+[1/130] Processing: App_Code_BM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 84 flows for BM
+2025-10-12 13:28:52,881 - INFO -   Marked App_Code_BM.csv as processed (hash: 01bd0732...)
+2025-10-12 13:28:52,882 - INFO -   ✓ Moved to: processed\App_Code_BM.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.02s
+  ✓ Moved to: processed/
+
+[2/130] Processing: App_Code_BO.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 56 flows for BO
+2025-10-12 13:28:52,889 - INFO -   Marked App_Code_BO.csv as processed (hash: d6608bbc...)
+2025-10-12 13:28:52,890 - INFO -   ✓ Moved to: processed\App_Code_BO.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[3/130] Processing: App_Code_BOD.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 99 flows for BOD
+2025-10-12 13:28:52,900 - INFO -   Marked App_Code_BOD.csv as processed (hash: 14aee891...)
+2025-10-12 13:28:52,901 - INFO -   ✓ Moved to: processed\App_Code_BOD.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[4/130] Processing: App_Code_BP.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 44 flows for BP
+2025-10-12 13:28:52,908 - INFO -   Marked App_Code_BP.csv as processed (hash: fecb66ab...)
+2025-10-12 13:28:52,908 - INFO -   ✓ Moved to: processed\App_Code_BP.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[5/130] Processing: App_Code_BTIF.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 93 flows for BTIF
+2025-10-12 13:28:52,917 - INFO -   Marked App_Code_BTIF.csv as processed (hash: 352140b4...)
+2025-10-12 13:28:52,917 - INFO -   ✓ Moved to: processed\App_Code_BTIF.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[6/130] Processing: App_Code_BW.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 30 flows for BW
+2025-10-12 13:28:52,923 - INFO -   Marked App_Code_BW.csv as processed (hash: 792ac50c...)
+2025-10-12 13:28:52,924 - INFO -   ✓ Moved to: processed\App_Code_BW.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[7/130] Processing: App_Code_BX.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 55 flows for BX
+2025-10-12 13:28:52,930 - INFO -   Marked App_Code_BX.csv as processed (hash: 94ab9836...)
+2025-10-12 13:28:52,930 - INFO -   ✓ Moved to: processed\App_Code_BX.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[8/130] Processing: App_Code_CACS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 91 flows for CACS
+2025-10-12 13:28:52,939 - INFO -   Marked App_Code_CACS.csv as processed (hash: abde53a0...)
+2025-10-12 13:28:52,940 - INFO -   ✓ Moved to: processed\App_Code_CACS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[9/130] Processing: App_Code_CAP.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 70 flows for CAP
+2025-10-12 13:28:52,948 - INFO -   Marked App_Code_CAP.csv as processed (hash: c8c411a5...)
+2025-10-12 13:28:52,949 - INFO -   ✓ Moved to: processed\App_Code_CAP.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[10/130] Processing: App_Code_CCA.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 57 flows for CCA
+2025-10-12 13:28:52,958 - INFO -   Marked App_Code_CCA.csv as processed (hash: 2f40bf68...)
+2025-10-12 13:28:52,959 - INFO -   ✓ Moved to: processed\App_Code_CCA.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[11/130] Processing: App_Code_CCLTR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 81 flows for CCLTR
+2025-10-12 13:28:52,966 - INFO -   Marked App_Code_CCLTR.csv as processed (hash: d42316ae...)
+2025-10-12 13:28:52,967 - INFO -   ✓ Moved to: processed\App_Code_CCLTR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[12/130] Processing: App_Code_CCPA.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 40 flows for CCPA
+2025-10-12 13:28:52,975 - INFO -   Marked App_Code_CCPA.csv as processed (hash: 0164c79d...)
+2025-10-12 13:28:52,976 - INFO -   ✓ Moved to: processed\App_Code_CCPA.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[13/130] Processing: App_Code_CCS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 80 flows for CCS
+2025-10-12 13:28:52,985 - INFO -   Marked App_Code_CCS.csv as processed (hash: f6ef7ba1...)
+2025-10-12 13:28:52,986 - INFO -   ✓ Moved to: processed\App_Code_CCS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[14/130] Processing: App_Code_CDSA.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 60 flows for CDSA
+2025-10-12 13:28:52,995 - INFO -   Marked App_Code_CDSA.csv as processed (hash: 98de974c...)
+2025-10-12 13:28:52,995 - INFO -   ✓ Moved to: processed\App_Code_CDSA.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[15/130] Processing: App_Code_CIRA.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 36 flows for CIRA
+2025-10-12 13:28:53,001 - INFO -   Marked App_Code_CIRA.csv as processed (hash: 3b5b90c1...)
+2025-10-12 13:28:53,002 - INFO -   ✓ Moved to: processed\App_Code_CIRA.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[16/130] Processing: App_Code_CLSP.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 61 flows for CLSP
+2025-10-12 13:28:53,011 - INFO -   Marked App_Code_CLSP.csv as processed (hash: 1bba116b...)
+2025-10-12 13:28:53,011 - INFO -   ✓ Moved to: processed\App_Code_CLSP.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[17/130] Processing: App_Code_CMAR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 117 flows for CMAR
+2025-10-12 13:28:53,020 - INFO -   Marked App_Code_CMAR.csv as processed (hash: d873cd87...)
+2025-10-12 13:28:53,021 - INFO -   ✓ Moved to: processed\App_Code_CMAR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[18/130] Processing: App_Code_CNET.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 47 flows for CNET
+2025-10-12 13:28:53,029 - INFO -   Marked App_Code_CNET.csv as processed (hash: 58b333ec...)
+2025-10-12 13:28:53,029 - INFO -   ✓ Moved to: processed\App_Code_CNET.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[19/130] Processing: App_Code_CP.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 97 flows for CP
+2025-10-12 13:28:53,037 - INFO -   Marked App_Code_CP.csv as processed (hash: fc3ed974...)
+2025-10-12 13:28:53,037 - INFO -   ✓ Moved to: processed\App_Code_CP.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[20/130] Processing: App_Code_CRECL.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 44 flows for CRECL
+2025-10-12 13:28:53,044 - INFO -   Marked App_Code_CRECL.csv as processed (hash: d1290329...)
+2025-10-12 13:28:53,045 - INFO -   ✓ Moved to: processed\App_Code_CRECL.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[21/130] Processing: App_Code_CSAA.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 64 flows for CSAA
+2025-10-12 13:28:53,051 - INFO -   Marked App_Code_CSAA.csv as processed (hash: 5c9876e5...)
+2025-10-12 13:28:53,052 - INFO -   ✓ Moved to: processed\App_Code_CSAA.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[22/130] Processing: App_Code_CSAS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 58 flows for CSAS
+2025-10-12 13:28:53,060 - INFO -   Marked App_Code_CSAS.csv as processed (hash: 532eef26...)
+2025-10-12 13:28:53,061 - INFO -   ✓ Moved to: processed\App_Code_CSAS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[23/130] Processing: App_Code_CT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 45 flows for CT
+2025-10-12 13:28:53,073 - INFO -   Marked App_Code_CT.csv as processed (hash: 7236f808...)
+2025-10-12 13:28:53,074 - INFO -   ✓ Moved to: processed\App_Code_CT.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[24/130] Processing: App_Code_CV.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 55 flows for CV
+2025-10-12 13:28:53,082 - INFO -   Marked App_Code_CV.csv as processed (hash: ecbb779d...)
+2025-10-12 13:28:53,083 - INFO -   ✓ Moved to: processed\App_Code_CV.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[25/130] Processing: App_Code_CXI.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 86 flows for CXI
+2025-10-12 13:28:53,093 - INFO -   Marked App_Code_CXI.csv as processed (hash: 07c7aae4...)
+2025-10-12 13:28:53,093 - INFO -   ✓ Moved to: processed\App_Code_CXI.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[26/130] Processing: App_Code_CXSI.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 36 flows for CXSI
+2025-10-12 13:28:53,099 - INFO -   Marked App_Code_CXSI.csv as processed (hash: 4e1fe68f...)
+2025-10-12 13:28:53,100 - INFO -   ✓ Moved to: processed\App_Code_CXSI.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[27/130] Processing: App_Code_DAD.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 64 flows for DAD
+2025-10-12 13:28:53,108 - INFO -   Marked App_Code_DAD.csv as processed (hash: 05e756a8...)
+2025-10-12 13:28:53,109 - INFO -   ✓ Moved to: processed\App_Code_DAD.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[28/130] Processing: App_Code_DCDPP.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 65 flows for DCDPP
+2025-10-12 13:28:53,117 - INFO -   Marked App_Code_DCDPP.csv as processed (hash: 85141b0e...)
+2025-10-12 13:28:53,117 - INFO -   ✓ Moved to: processed\App_Code_DCDPP.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[29/130] Processing: App_Code_DCIDM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 73 flows for DCIDM
+2025-10-12 13:28:53,126 - INFO -   Marked App_Code_DCIDM.csv as processed (hash: 2a87e863...)
+2025-10-12 13:28:53,127 - INFO -   ✓ Moved to: processed\App_Code_DCIDM.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[30/130] Processing: App_Code_DCIFI.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 74 flows for DCIFI
+2025-10-12 13:28:53,134 - INFO -   Marked App_Code_DCIFI.csv as processed (hash: 90c82297...)
+2025-10-12 13:28:53,135 - INFO -   ✓ Moved to: processed\App_Code_DCIFI.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[31/130] Processing: App_Code_DG.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 46 flows for DG
+2025-10-12 13:28:53,144 - INFO -   Marked App_Code_DG.csv as processed (hash: 2c4e108b...)
+2025-10-12 13:28:53,145 - INFO -   ✓ Moved to: processed\App_Code_DG.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[32/130] Processing: App_Code_DM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 63 flows for DM
+2025-10-12 13:28:53,156 - INFO -   Marked App_Code_DM.csv as processed (hash: 7446ff9d...)
+2025-10-12 13:28:53,156 - INFO -   ✓ Moved to: processed\App_Code_DM.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[33/130] Processing: App_Code_DM_BAP.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 116 flows for DM_BAP
+2025-10-12 13:28:53,169 - INFO -   Marked App_Code_DM_BAP.csv as processed (hash: ed2a95d9...)
+2025-10-12 13:28:53,170 - INFO -   ✓ Moved to: processed\App_Code_DM_BAP.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[34/130] Processing: App_Code_DM_BLZE.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 137 flows for DM_BLZE
+2025-10-12 13:28:53,180 - INFO -   Marked App_Code_DM_BLZE.csv as processed (hash: 93305d91...)
+2025-10-12 13:28:53,180 - INFO -   ✓ Moved to: processed\App_Code_DM_BLZE.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[35/130] Processing: App_Code_DM_CCRMBZ.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 139 flows for DM_CCRMBZ
+2025-10-12 13:28:53,191 - INFO -   Marked App_Code_DM_CCRMBZ.csv as processed (hash: 5042503f...)
+2025-10-12 13:28:53,192 - INFO -   ✓ Moved to: processed\App_Code_DM_CCRMBZ.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[36/130] Processing: App_Code_DM_CMDAT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 141 flows for DM_CMDAT
+2025-10-12 13:28:53,211 - INFO -   Marked App_Code_DM_CMDAT.csv as processed (hash: 99d02791...)
+2025-10-12 13:28:53,212 - INFO -   ✓ Moved to: processed\App_Code_DM_CMDAT.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[37/130] Processing: App_Code_DM_CMDF.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 136 flows for DM_CMDF
+2025-10-12 13:28:53,227 - INFO -   Marked App_Code_DM_CMDF.csv as processed (hash: 66640791...)
+2025-10-12 13:28:53,228 - INFO -   ✓ Moved to: processed\App_Code_DM_CMDF.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[38/130] Processing: App_Code_DM_CMRDB.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 178 flows for DM_CMRDB
+2025-10-12 13:28:53,248 - INFO -   Marked App_Code_DM_CMRDB.csv as processed (hash: e7f88cae...)
+2025-10-12 13:28:53,248 - INFO -   ✓ Moved to: processed\App_Code_DM_CMRDB.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.01s
+  ✓ Moved to: processed/
+
+[39/130] Processing: App_Code_DM_CMREG.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 195 flows for DM_CMREG
+2025-10-12 13:28:53,262 - INFO -   Marked App_Code_DM_CMREG.csv as processed (hash: 737b2591...)
+2025-10-12 13:28:53,263 - INFO -   ✓ Moved to: processed\App_Code_DM_CMREG.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[40/130] Processing: App_Code_DM_CORD.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 173 flows for DM_CORD
+2025-10-12 13:28:53,274 - INFO -   Marked App_Code_DM_CORD.csv as processed (hash: 9d57f886...)
+2025-10-12 13:28:53,275 - INFO -   ✓ Moved to: processed\App_Code_DM_CORD.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[41/130] Processing: App_Code_DM_DNCCW.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 136 flows for DM_DNCCW
+2025-10-12 13:28:53,289 - INFO -   Marked App_Code_DM_DNCCW.csv as processed (hash: a19a5be7...)
+2025-10-12 13:28:53,289 - INFO -   ✓ Moved to: processed\App_Code_DM_DNCCW.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[42/130] Processing: App_Code_DM_LEDAT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 131 flows for DM_LEDAT
+2025-10-12 13:28:53,299 - INFO -   Marked App_Code_DM_LEDAT.csv as processed (hash: d3979719...)
+2025-10-12 13:28:53,300 - INFO -   ✓ Moved to: processed\App_Code_DM_LEDAT.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[43/130] Processing: App_Code_DM_RDOM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 183 flows for DM_RDOM
+2025-10-12 13:28:53,313 - INFO -   Marked App_Code_DM_RDOM.csv as processed (hash: 54357e82...)
+2025-10-12 13:28:53,314 - INFO -   ✓ Moved to: processed\App_Code_DM_RDOM.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[44/130] Processing: App_Code_DM_SBADJ.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 162 flows for DM_SBADJ
+2025-10-12 13:28:53,327 - INFO -   Marked App_Code_DM_SBADJ.csv as processed (hash: 1f4d1a80...)
+2025-10-12 13:28:53,328 - INFO -   ✓ Moved to: processed\App_Code_DM_SBADJ.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[45/130] Processing: App_Code_DM_WMAHR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 188 flows for DM_WMAHR
+2025-10-12 13:28:53,341 - INFO -   Marked App_Code_DM_WMAHR.csv as processed (hash: ae31339c...)
+2025-10-12 13:28:53,342 - INFO -   ✓ Moved to: processed\App_Code_DM_WMAHR.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[46/130] Processing: App_Code_DNACA.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 71 flows for DNACA
+2025-10-12 13:28:53,353 - INFO -   Marked App_Code_DNACA.csv as processed (hash: b2f9de43...)
+2025-10-12 13:28:53,353 - INFO -   ✓ Moved to: processed\App_Code_DNACA.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[47/130] Processing: App_Code_DNADP.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 108 flows for DNADP
+2025-10-12 13:28:53,366 - INFO -   Marked App_Code_DNADP.csv as processed (hash: 5a2845cf...)
+2025-10-12 13:28:53,367 - INFO -   ✓ Moved to: processed\App_Code_DNADP.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[48/130] Processing: App_Code_DNAEP.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 37 flows for DNAEP
+2025-10-12 13:28:53,376 - INFO -   Marked App_Code_DNAEP.csv as processed (hash: 374a3a66...)
+2025-10-12 13:28:53,377 - INFO -   ✓ Moved to: processed\App_Code_DNAEP.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[49/130] Processing: App_Code_DNAGR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 85 flows for DNAGR
+2025-10-12 13:28:53,387 - INFO -   Marked App_Code_DNAGR.csv as processed (hash: 28a76fda...)
+2025-10-12 13:28:53,388 - INFO -   ✓ Moved to: processed\App_Code_DNAGR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[50/130] Processing: App_Code_DNASA.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 30 flows for DNASA
+2025-10-12 13:28:53,396 - INFO -   Marked App_Code_DNASA.csv as processed (hash: 696d1d45...)
+2025-10-12 13:28:53,396 - INFO -   ✓ Moved to: processed\App_Code_DNASA.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[51/130] Processing: App_Code_DNBCI.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 78 flows for DNBCI
+2025-10-12 13:28:53,409 - INFO -   Marked App_Code_DNBCI.csv as processed (hash: e84c51b8...)
+2025-10-12 13:28:53,410 - INFO -   ✓ Moved to: processed\App_Code_DNBCI.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[52/130] Processing: App_Code_DNBIT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 53 flows for DNBIT
+2025-10-12 13:28:53,420 - INFO -   Marked App_Code_DNBIT.csv as processed (hash: c1fe4d4b...)
+2025-10-12 13:28:53,421 - INFO -   ✓ Moved to: processed\App_Code_DNBIT.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[53/130] Processing: App_Code_DNBLC.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 61 flows for DNBLC
+2025-10-12 13:28:53,430 - INFO -   Marked App_Code_DNBLC.csv as processed (hash: dbddaca1...)
+2025-10-12 13:28:53,431 - INFO -   ✓ Moved to: processed\App_Code_DNBLC.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[54/130] Processing: App_Code_DNBRI.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 83 flows for DNBRI
+2025-10-12 13:28:53,441 - INFO -   Marked App_Code_DNBRI.csv as processed (hash: 65ecbc80...)
+2025-10-12 13:28:53,442 - INFO -   ✓ Moved to: processed\App_Code_DNBRI.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[55/130] Processing: App_Code_DNBUH.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 109 flows for DNBUH
+2025-10-12 13:28:53,454 - INFO -   Marked App_Code_DNBUH.csv as processed (hash: f5a09f3a...)
+2025-10-12 13:28:53,455 - INFO -   ✓ Moved to: processed\App_Code_DNBUH.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[56/130] Processing: App_Code_DNCAC.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 95 flows for DNCAC
+2025-10-12 13:28:53,465 - INFO -   Marked App_Code_DNCAC.csv as processed (hash: 2c4a6518...)
+2025-10-12 13:28:53,466 - INFO -   ✓ Moved to: processed\App_Code_DNCAC.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[57/130] Processing: App_Code_DNCCL.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 47 flows for DNCCL
+2025-10-12 13:28:53,479 - INFO -   Marked App_Code_DNCCL.csv as processed (hash: 65778bb1...)
+2025-10-12 13:28:53,480 - INFO -   ✓ Moved to: processed\App_Code_DNCCL.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[58/130] Processing: App_Code_DNCCO.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 84 flows for DNCCO
+2025-10-12 13:28:53,492 - INFO -   Marked App_Code_DNCCO.csv as processed (hash: 1213abbe...)
+2025-10-12 13:28:53,493 - INFO -   ✓ Moved to: processed\App_Code_DNCCO.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[59/130] Processing: App_Code_DNCCS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 159 flows for DNCCS
+2025-10-12 13:28:53,506 - INFO -   Marked App_Code_DNCCS.csv as processed (hash: cb662ef9...)
+2025-10-12 13:28:53,507 - INFO -   ✓ Moved to: processed\App_Code_DNCCS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[60/130] Processing: App_Code_DNCCW.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 30 flows for DNCCW
+2025-10-12 13:28:53,516 - INFO -   Marked App_Code_DNCCW.csv as processed (hash: 10ba320c...)
+2025-10-12 13:28:53,517 - INFO -   ✓ Moved to: processed\App_Code_DNCCW.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[61/130] Processing: App_Code_DNCER.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 92 flows for DNCER
+2025-10-12 13:28:53,530 - INFO -   Marked App_Code_DNCER.csv as processed (hash: 49865942...)
+2025-10-12 13:28:53,530 - INFO -   ✓ Moved to: processed\App_Code_DNCER.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[62/130] Processing: App_Code_DNCIT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 42 flows for DNCIT
+2025-10-12 13:28:53,541 - INFO -   Marked App_Code_DNCIT.csv as processed (hash: 7e240268...)
+2025-10-12 13:28:53,542 - INFO -   ✓ Moved to: processed\App_Code_DNCIT.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[63/130] Processing: App_Code_DNCOR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 77 flows for DNCOR
+2025-10-12 13:28:53,551 - INFO -   Marked App_Code_DNCOR.csv as processed (hash: af0f09ab...)
+2025-10-12 13:28:53,552 - INFO -   ✓ Moved to: processed\App_Code_DNCOR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[64/130] Processing: App_Code_DNCWS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 51 flows for DNCWS
+2025-10-12 13:28:53,563 - INFO -   Marked App_Code_DNCWS.csv as processed (hash: c44187e3...)
+2025-10-12 13:28:53,564 - INFO -   ✓ Moved to: processed\App_Code_DNCWS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[65/130] Processing: App_Code_DNDNS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 78 flows for DNDNS
+2025-10-12 13:28:53,579 - INFO -   Marked App_Code_DNDNS.csv as processed (hash: 3a88fe75...)
+2025-10-12 13:28:53,580 - INFO -   ✓ Moved to: processed\App_Code_DNDNS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[66/130] Processing: App_Code_DNENG.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 42 flows for DNENG
+2025-10-12 13:28:53,594 - INFO -   Marked App_Code_DNENG.csv as processed (hash: 5a3596a6...)
+2025-10-12 13:28:53,595 - INFO -   ✓ Moved to: processed\App_Code_DNENG.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[67/130] Processing: App_Code_DNESR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 167 flows for DNESR
+2025-10-12 13:28:53,610 - INFO -   Marked App_Code_DNESR.csv as processed (hash: 887cf378...)
+2025-10-12 13:28:53,611 - INFO -   ✓ Moved to: processed\App_Code_DNESR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[68/130] Processing: App_Code_DNGCM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 37 flows for DNGCM
+2025-10-12 13:28:53,622 - INFO -   Marked App_Code_DNGCM.csv as processed (hash: b7099d9e...)
+2025-10-12 13:28:53,623 - INFO -   ✓ Moved to: processed\App_Code_DNGCM.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[69/130] Processing: App_Code_DNGFC.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 76 flows for DNGFC
+2025-10-12 13:28:53,639 - INFO -   Marked App_Code_DNGFC.csv as processed (hash: 71fb3bb1...)
+2025-10-12 13:28:53,640 - INFO -   ✓ Moved to: processed\App_Code_DNGFC.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[70/130] Processing: App_Code_DNHRT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 53 flows for DNHRT
+2025-10-12 13:28:53,650 - INFO -   Marked App_Code_DNHRT.csv as processed (hash: 6c473a87...)
+2025-10-12 13:28:53,651 - INFO -   ✓ Moved to: processed\App_Code_DNHRT.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[71/130] Processing: App_Code_DNIBS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 76 flows for DNIBS
+2025-10-12 13:28:53,663 - INFO -   Marked App_Code_DNIBS.csv as processed (hash: 0c72c31d...)
+2025-10-12 13:28:53,664 - INFO -   ✓ Moved to: processed\App_Code_DNIBS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[72/130] Processing: App_Code_DNIDE.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 64 flows for DNIDE
+2025-10-12 13:28:53,674 - INFO -   Marked App_Code_DNIDE.csv as processed (hash: aca9c5fc...)
+2025-10-12 13:28:53,675 - INFO -   ✓ Moved to: processed\App_Code_DNIDE.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[73/130] Processing: App_Code_DNINR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 96 flows for DNINR
+2025-10-12 13:28:53,688 - INFO -   Marked App_Code_DNINR.csv as processed (hash: 3fe4b9dc...)
+2025-10-12 13:28:53,689 - INFO -   ✓ Moved to: processed\App_Code_DNINR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[74/130] Processing: App_Code_DNINT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 95 flows for DNINT
+2025-10-12 13:28:53,701 - INFO -   Marked App_Code_DNINT.csv as processed (hash: 1b7ccd18...)
+2025-10-12 13:28:53,701 - INFO -   ✓ Moved to: processed\App_Code_DNINT.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[75/130] Processing: App_Code_DNINV.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 48 flows for DNINV
+2025-10-12 13:28:53,712 - INFO -   Marked App_Code_DNINV.csv as processed (hash: dd23b5d8...)
+2025-10-12 13:28:53,713 - INFO -   ✓ Moved to: processed\App_Code_DNINV.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[76/130] Processing: App_Code_DNLDS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 112 flows for DNLDS
+2025-10-12 13:28:53,725 - INFO -   Marked App_Code_DNLDS.csv as processed (hash: 9782b40c...)
+2025-10-12 13:28:53,726 - INFO -   ✓ Moved to: processed\App_Code_DNLDS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[77/130] Processing: App_Code_DNLOC.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 62 flows for DNLOC
+2025-10-12 13:28:53,741 - INFO -   Marked App_Code_DNLOC.csv as processed (hash: 82c0a9a0...)
+2025-10-12 13:28:53,742 - INFO -   ✓ Moved to: processed\App_Code_DNLOC.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[78/130] Processing: App_Code_DNMCM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 72 flows for DNMCM
+2025-10-12 13:28:53,755 - INFO -   Marked App_Code_DNMCM.csv as processed (hash: b68550c2...)
+2025-10-12 13:28:53,756 - INFO -   ✓ Moved to: processed\App_Code_DNMCM.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[79/130] Processing: App_Code_DNMET.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 60 flows for DNMET
+2025-10-12 13:28:53,767 - INFO -   Marked App_Code_DNMET.csv as processed (hash: 2502ffbd...)
+2025-10-12 13:28:53,767 - INFO -   ✓ Moved to: processed\App_Code_DNMET.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[80/130] Processing: App_Code_DNMLO.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 61 flows for DNMLO
+2025-10-12 13:28:53,779 - INFO -   Marked App_Code_DNMLO.csv as processed (hash: 0342835d...)
+2025-10-12 13:28:53,779 - INFO -   ✓ Moved to: processed\App_Code_DNMLO.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[81/130] Processing: App_Code_DNMMZ.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 71 flows for DNMMZ
+2025-10-12 13:28:53,792 - INFO -   Marked App_Code_DNMMZ.csv as processed (hash: 26345aba...)
+2025-10-12 13:28:53,792 - INFO -   ✓ Moved to: processed\App_Code_DNMMZ.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[82/130] Processing: App_Code_DNPGR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 59 flows for DNPGR
+2025-10-12 13:28:53,803 - INFO -   Marked App_Code_DNPGR.csv as processed (hash: ff4ac487...)
+2025-10-12 13:28:53,804 - INFO -   ✓ Moved to: processed\App_Code_DNPGR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[83/130] Processing: App_Code_DNRAS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 39 flows for DNRAS
+2025-10-12 13:28:53,813 - INFO -   Marked App_Code_DNRAS.csv as processed (hash: 6a51be5c...)
+2025-10-12 13:28:53,814 - INFO -   ✓ Moved to: processed\App_Code_DNRAS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[84/130] Processing: App_Code_DNRCB.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 86 flows for DNRCB
+2025-10-12 13:28:53,834 - INFO -   Marked App_Code_DNRCB.csv as processed (hash: 9f5bdf02...)
+2025-10-12 13:28:53,835 - INFO -   ✓ Moved to: processed\App_Code_DNRCB.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[85/130] Processing: App_Code_DNRCT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 100 flows for DNRCT
+2025-10-12 13:28:53,850 - INFO -   Marked App_Code_DNRCT.csv as processed (hash: 8c8c3a05...)
+2025-10-12 13:28:53,851 - INFO -   ✓ Moved to: processed\App_Code_DNRCT.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[86/130] Processing: App_Code_DNREP.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 56 flows for DNREP
+2025-10-12 13:28:53,863 - INFO -   Marked App_Code_DNREP.csv as processed (hash: d5adf645...)
+2025-10-12 13:28:53,864 - INFO -   ✓ Moved to: processed\App_Code_DNREP.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[87/130] Processing: App_Code_DNRGE.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 74 flows for DNRGE
+2025-10-12 13:28:53,875 - INFO -   Marked App_Code_DNRGE.csv as processed (hash: 40017584...)
+2025-10-12 13:28:53,875 - INFO -   ✓ Moved to: processed\App_Code_DNRGE.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[88/130] Processing: App_Code_DNROM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 101 flows for DNROM
+2025-10-12 13:28:53,888 - INFO -   Marked App_Code_DNROM.csv as processed (hash: 748363a4...)
+2025-10-12 13:28:53,889 - INFO -   ✓ Moved to: processed\App_Code_DNROM.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[89/130] Processing: App_Code_DNRVS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 100 flows for DNRVS
+2025-10-12 13:28:53,905 - INFO -   Marked App_Code_DNRVS.csv as processed (hash: 90e4585d...)
+2025-10-12 13:28:53,906 - INFO -   ✓ Moved to: processed\App_Code_DNRVS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[90/130] Processing: App_Code_DNSBT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 45 flows for DNSBT
+2025-10-12 13:28:53,917 - INFO -   Marked App_Code_DNSBT.csv as processed (hash: 169034ad...)
+2025-10-12 13:28:53,917 - INFO -   ✓ Moved to: processed\App_Code_DNSBT.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[91/130] Processing: App_Code_DNSCC.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 48 flows for DNSCC
+2025-10-12 13:28:53,928 - INFO -   Marked App_Code_DNSCC.csv as processed (hash: f34c8d8f...)
+2025-10-12 13:28:53,929 - INFO -   ✓ Moved to: processed\App_Code_DNSCC.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[92/130] Processing: App_Code_DNSCH.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 86 flows for DNSCH
+2025-10-12 13:28:53,943 - INFO -   Marked App_Code_DNSCH.csv as processed (hash: 9144c3ba...)
+2025-10-12 13:28:53,944 - INFO -   ✓ Moved to: processed\App_Code_DNSCH.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[93/130] Processing: App_Code_DNTCB.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 84 flows for DNTCB
+2025-10-12 13:28:53,959 - INFO -   Marked App_Code_DNTCB.csv as processed (hash: 71b2b57b...)
+2025-10-12 13:28:53,960 - INFO -   ✓ Moved to: processed\App_Code_DNTCB.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[94/130] Processing: App_Code_DNTCM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 76 flows for DNTCM
+2025-10-12 13:28:53,974 - INFO -   Marked App_Code_DNTCM.csv as processed (hash: 98b750c4...)
+2025-10-12 13:28:53,975 - INFO -   ✓ Moved to: processed\App_Code_DNTCM.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[95/130] Processing: App_Code_DNWHO.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 91 flows for DNWHO
+2025-10-12 13:28:53,993 - INFO -   Marked App_Code_DNWHO.csv as processed (hash: 7855f73a...)
+2025-10-12 13:28:53,994 - INFO -   ✓ Moved to: processed\App_Code_DNWHO.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[96/130] Processing: App_Code_DNWHS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 42 flows for DNWHS
+2025-10-12 13:28:54,005 - INFO -   Marked App_Code_DNWHS.csv as processed (hash: 7d632270...)
+2025-10-12 13:28:54,006 - INFO -   ✓ Moved to: processed\App_Code_DNWHS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[97/130] Processing: App_Code_DNZEL.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 52 flows for DNZEL
+2025-10-12 13:28:54,017 - INFO -   Marked App_Code_DNZEL.csv as processed (hash: 9702e231...)
+2025-10-12 13:28:54,018 - INFO -   ✓ Moved to: processed\App_Code_DNZEL.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[98/130] Processing: App_Code_DPAPI.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 116 flows for DPAPI
+2025-10-12 13:28:54,032 - INFO -   Marked App_Code_DPAPI.csv as processed (hash: 6b8e4220...)
+2025-10-12 13:28:54,033 - INFO -   ✓ Moved to: processed\App_Code_DPAPI.csv
+  ✓ Zone: APP_TIER (confidence: 0.60)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[99/130] Processing: App_Code_DSAA.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 189 flows for DSAA
+2025-10-12 13:28:54,050 - INFO -   Marked App_Code_DSAA.csv as processed (hash: d2f035cc...)
+2025-10-12 13:28:54,051 - INFO -   ✓ Moved to: processed\App_Code_DSAA.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[100/130] Processing: App_Code_ECL.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 36 flows for ECL
+2025-10-12 13:28:54,063 - INFO -   Marked App_Code_ECL.csv as processed (hash: ef9fcdae...)
+2025-10-12 13:28:54,063 - INFO -   ✓ Moved to: processed\App_Code_ECL.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[101/130] Processing: App_Code_EFW.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 76 flows for EFW
+2025-10-12 13:28:54,076 - INFO -   Marked App_Code_EFW.csv as processed (hash: 22aedeb9...)
+2025-10-12 13:28:54,076 - INFO -   ✓ Moved to: processed\App_Code_EFW.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[102/130] Processing: App_Code_EM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 34 flows for EM
+2025-10-12 13:28:54,089 - INFO -   Marked App_Code_EM.csv as processed (hash: 1fd71826...)
+2025-10-12 13:28:54,089 - INFO -   ✓ Moved to: processed\App_Code_EM.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[103/130] Processing: App_Code_EMDS.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 91 flows for EMDS
+2025-10-12 13:28:54,105 - INFO -   Marked App_Code_EMDS.csv as processed (hash: baf18fe7...)
+2025-10-12 13:28:54,106 - INFO -   ✓ Moved to: processed\App_Code_EMDS.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[104/130] Processing: App_Code_EMGR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 48 flows for EMGR
+2025-10-12 13:28:54,116 - INFO -   Marked App_Code_EMGR.csv as processed (hash: 190e13a0...)
+2025-10-12 13:28:54,117 - INFO -   ✓ Moved to: processed\App_Code_EMGR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[105/130] Processing: App_Code_END.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 57 flows for END
+2025-10-12 13:28:54,128 - INFO -   Marked App_Code_END.csv as processed (hash: 9f97139a...)
+2025-10-12 13:28:54,129 - INFO -   ✓ Moved to: processed\App_Code_END.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[106/130] Processing: App_Code_ENDNC.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 72 flows for ENDNC
+2025-10-12 13:28:54,142 - INFO -   Marked App_Code_ENDNC.csv as processed (hash: cd14d1c2...)
+2025-10-12 13:28:54,142 - INFO -   ✓ Moved to: processed\App_Code_ENDNC.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[107/130] Processing: App_Code_ERCPT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 83 flows for ERCPT
+2025-10-12 13:28:54,156 - INFO -   Marked App_Code_ERCPT.csv as processed (hash: 7a1fa650...)
+2025-10-12 13:28:54,156 - INFO -   ✓ Moved to: processed\App_Code_ERCPT.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[108/130] Processing: App_Code_FAAR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 84 flows for FAAR
+2025-10-12 13:28:54,171 - INFO -   Marked App_Code_FAAR.csv as processed (hash: 3a3ee4a0...)
+2025-10-12 13:28:54,171 - INFO -   ✓ Moved to: processed\App_Code_FAAR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[109/130] Processing: App_Code_FG.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 96 flows for FG
+2025-10-12 13:28:54,189 - INFO -   Marked App_Code_FG.csv as processed (hash: 60023a0b...)
+2025-10-12 13:28:54,190 - INFO -   ✓ Moved to: processed\App_Code_FG.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[110/130] Processing: App_Code_FICPM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 35 flows for FICPM
+2025-10-12 13:28:54,200 - INFO -   Marked App_Code_FICPM.csv as processed (hash: c0126a4b...)
+2025-10-12 13:28:54,201 - INFO -   ✓ Moved to: processed\App_Code_FICPM.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[111/130] Processing: App_Code_FIMSP.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 79 flows for FIMSP
+2025-10-12 13:28:54,213 - INFO -   Marked App_Code_FIMSP.csv as processed (hash: e1d709f7...)
+2025-10-12 13:28:54,214 - INFO -   ✓ Moved to: processed\App_Code_FIMSP.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[112/130] Processing: App_Code_FM.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 94 flows for FM
+2025-10-12 13:28:54,229 - INFO -   Marked App_Code_FM.csv as processed (hash: edad82c4...)
+2025-10-12 13:28:54,230 - INFO -   ✓ Moved to: processed\App_Code_FM.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[113/130] Processing: App_Code_I3SQL.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 201 flows for I3SQL
+2025-10-12 13:28:54,250 - INFO -   Marked App_Code_I3SQL.csv as processed (hash: 1bdf778d...)
+2025-10-12 13:28:54,251 - INFO -   ✓ Moved to: processed\App_Code_I3SQL.csv
+  ✓ Zone: DATA_TIER (confidence: 0.70)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[114/130] Processing: App_Code_IA.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 51 flows for IA
+2025-10-12 13:28:54,265 - INFO -   Marked App_Code_IA.csv as processed (hash: 756d41ba...)
+2025-10-12 13:28:54,265 - INFO -   ✓ Moved to: processed\App_Code_IA.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[115/130] Processing: App_Code_IB.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 100 flows for IB
+2025-10-12 13:28:54,280 - INFO -   Marked App_Code_IB.csv as processed (hash: f999b4db...)
+2025-10-12 13:28:54,280 - INFO -   ✓ Moved to: processed\App_Code_IB.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[116/130] Processing: App_Code_IMGVF.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 100 flows for IMGVF
+2025-10-12 13:28:54,296 - INFO -   Marked App_Code_IMGVF.csv as processed (hash: 760ce03b...)
+2025-10-12 13:28:54,297 - INFO -   ✓ Moved to: processed\App_Code_IMGVF.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[117/130] Processing: App_Code_ITR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 72 flows for ITR
+2025-10-12 13:28:54,312 - INFO -   Marked App_Code_ITR.csv as processed (hash: d0518783...)
+2025-10-12 13:28:54,312 - INFO -   ✓ Moved to: processed\App_Code_ITR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[118/130] Processing: App_Code_IV.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 77 flows for IV
+2025-10-12 13:28:54,330 - INFO -   Marked App_Code_IV.csv as processed (hash: 22265e4c...)
+2025-10-12 13:28:54,331 - INFO -   ✓ Moved to: processed\App_Code_IV.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[119/130] Processing: App_Code_IVGBU.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 67 flows for IVGBU
+2025-10-12 13:28:54,350 - INFO -   Marked App_Code_IVGBU.csv as processed (hash: 920bf29f...)
+2025-10-12 13:28:54,351 - INFO -   ✓ Moved to: processed\App_Code_IVGBU.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[120/130] Processing: App_Code_IVR.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 132 flows for IVR
+2025-10-12 13:28:54,367 - INFO -   Marked App_Code_IVR.csv as processed (hash: 550b4c0b...)
+2025-10-12 13:28:54,368 - INFO -   ✓ Moved to: processed\App_Code_IVR.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[121/130] Processing: App_Code_IVRMC.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 32 flows for IVRMC
+2025-10-12 13:28:54,383 - INFO -   Marked App_Code_IVRMC.csv as processed (hash: 25e4613a...)
+2025-10-12 13:28:54,384 - INFO -   ✓ Moved to: processed\App_Code_IVRMC.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[122/130] Processing: App_Code_IW.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 33 flows for IW
+2025-10-12 13:28:54,398 - INFO -   Marked App_Code_IW.csv as processed (hash: 50d5d571...)
+2025-10-12 13:28:54,399 - INFO -   ✓ Moved to: processed\App_Code_IW.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[123/130] Processing: App_Code_IWDE.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 31 flows for IWDE
+2025-10-12 13:28:54,412 - INFO -   Marked App_Code_IWDE.csv as processed (hash: 33937238...)
+2025-10-12 13:28:54,412 - INFO -   ✓ Moved to: processed\App_Code_IWDE.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[124/130] Processing: App_Code_IX.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 114 flows for IX
+2025-10-12 13:28:54,432 - INFO -   Marked App_Code_IX.csv as processed (hash: 489ff6a3...)
+2025-10-12 13:28:54,433 - INFO -   ✓ Moved to: processed\App_Code_IX.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[125/130] Processing: App_Code_IXCI.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 75 flows for IXCI
+2025-10-12 13:28:54,448 - INFO -   Marked App_Code_IXCI.csv as processed (hash: 42a9e29b...)
+2025-10-12 13:28:54,449 - INFO -   ✓ Moved to: processed\App_Code_IXCI.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[126/130] Processing: App_Code_IXOF.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 84 flows for IXOF
+2025-10-12 13:28:54,469 - INFO -   Marked App_Code_IXOF.csv as processed (hash: 7ded5979...)
+2025-10-12 13:28:54,469 - INFO -   ✓ Moved to: processed\App_Code_IXOF.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[127/130] Processing: App_Code_LB.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 42 flows for LB
+2025-10-12 13:28:54,485 - INFO -   Marked App_Code_LB.csv as processed (hash: 9fecf703...)
+2025-10-12 13:28:54,486 - INFO -   ✓ Moved to: processed\App_Code_LB.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[128/130] Processing: App_Code_LBCC.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 66 flows for LBCC
+2025-10-12 13:28:54,501 - INFO -   Marked App_Code_LBCC.csv as processed (hash: 79d8a610...)
+2025-10-12 13:28:54,502 - INFO -   ✓ Moved to: processed\App_Code_LBCC.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[129/130] Processing: App_Code_LBOT.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 55 flows for LBOT
+2025-10-12 13:28:54,519 - INFO -   Marked App_Code_LBOT.csv as processed (hash: 8e0421c9...)
+2025-10-12 13:28:54,521 - INFO -   ✓ Moved to: processed\App_Code_LBOT.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+[130/130] Processing: App_Code_ACDA.csv
+--------------------------------------------------------------------------------
+  ✓ Loaded 44 flows for ACDA
+2025-10-12 13:28:54,538 - INFO -   Marked App_Code_ACDA.csv as processed (hash: 6ca99120...)
+2025-10-12 13:28:54,539 - INFO -   ✓ Moved to: processed\App_Code_ACDA.csv
+  ✓ Zone: APP_TIER (confidence: 0.50)
+  ✓ Processed in 0.00s
+  ✓ Moved to: processed/
+
+================================================================================
+✅ FILE PROCESSING COMPLETE
+================================================================================
+
+================================================================================
+🧠 TRAINING ML MODELS
+================================================================================
+
+  Training on 130 applications...
+2025-10-12 13:28:54,539 - INFO - ⚡ Training classical models on 130 samples...
+2025-10-12 13:28:54,688 - INFO -   ✓ random_forest trained (score: 1.000)
+2025-10-12 13:28:54,696 - INFO -   ✓ svm trained (score: 0.892)
+2025-10-12 13:28:54,696 - INFO - ✓ Classical models training complete
+
+✓ Model training complete
+
+================================================================================
+📊 GENERATING VISUALIZATIONS
+================================================================================
+  ✓ Zone distribution: zone_distribution.png
+  ✓ Processing timeline: processing_timeline.png
+
+✓ Visualizations saved to: outputs_final\visualizations
+
+================================================================================
+💾 EXPORTING RESULTS
+================================================================================
+  ✓ Application zones: application_zones.csv
+  ✓ Summary report: ANALYSIS_REPORT.txt
+
+
+================================================================================
+NETWORK SEGMENTATION ANALYSIS - COMPLETE REPORT
+================================================================================
+
+Generated: 2025-10-12 13:28:55
+
+PROCESSING SUMMARY
+------------------
+Total Files Processed: 130
+Total Applications: 130
+Total Network Flows: 10,453
+Processing Duration: 2.5 seconds
+Average Speed: 51.94 files/sec
+
+ZONE DISTRIBUTION
+-----------------
+  APP_TIER             : 116 ( 89.2%)
+  DATA_TIER            :  14 ( 10.8%)
+
+TOP APPLICATIONS BY ZONE
+-------------------------
+
+  APP_TIER:
+    - DPAPI           (confidence: 0.60)
+    - BM              (confidence: 0.50)
+    - BO              (confidence: 0.50)
+
+  DATA_TIER:
+    - DM_BAP          (confidence: 0.70)
+    - DM_BLZE         (confidence: 0.70)
+    - DM_CCRMBZ       (confidence: 0.70)
+
+OUTPUT FILES
+------------
+- application_zones.csv (All application zone assignments)
+- complete_results.json (Complete analysis data)
+- visualizations/*.png (Charts and graphs)
+
+================================================================================
+
+  ✓ Complete results: complete_results.json
+
+================================================================================
+🎉 PIPELINE COMPLETE!
+================================================================================
+
+📁 All results saved to: outputs_final
+
+You can find:
+  - application_zones.csv (Zone assignments)
+  - ANALYSIS_REPORT.txt (Summary report)
+  - visualizations/*.png (Charts)
+  - complete_results.json (Raw data)

@@ -1,0 +1,67 @@
+graph LR
+    %% Application: app_1
+
+    %% Component Styles
+    classDef internal fill:#4caf50,stroke:#388e3c,stroke-width:2px,color:#fff
+    classDef external fill:#f44336,stroke:#c62828,stroke-width:2px,color:#fff
+    classDef database fill:#ff5722,stroke:#d84315,stroke-width:2px,color:#fff
+    classDef cache fill:#00bcd4,stroke:#0097a7,stroke-width:2px,color:#fff
+    classDef messaging fill:#9c27b0,stroke:#7b1fa2,stroke-width:2px,color:#fff
+
+    %% Application Components
+    10_1_1_10["lb-web-01"]:::internal
+    10_1_10_90["backup-srv"]:::internal
+    10_1_11_100["ldap-server"]:::internal
+    10_1_2_15["web-srv-01"]:::internal
+    10_1_2_16["web-srv-02"]:::internal
+    10_1_3_20["app-srv-01"]:::internal
+    10_1_3_21["app-srv-02"]:::internal
+    10_1_4_30["mysql-db-01"]:::database
+    10_1_4_31["mysql-db-02"]:::database
+    10_1_4_32["postgres-db-01"]:::database
+    10_1_5_40["redis-cache-01"]:::cache
+    10_1_5_41["redis-cache-02"]:::cache
+    10_1_6_50["kafka-broker-01"]:::messaging
+    10_1_6_51["zookeeper-01"]:::internal
+    10_1_6_52["zookeeper-02"]:::internal
+    10_1_7_60["monitoring-srv"]:::internal
+    10_1_8_70["admin-workstation"]:::internal
+    10_1_9_80["dns-server"]:::internal
+    10_1_9_85["ntp-server"]:::internal
+    185_220_101_23["suspicious-host"]:::external
+    192_0_2_134["external-client"]:::internal
+    198_51_100_78["external-client"]:::internal
+    203_0_113_45["external-client"]:::internal
+    45_33_32_156["external-scanner"]:::external
+
+    %% Traffic Flows
+    10_1_4_30 -.->|tcp:873<br/>1 flows| 10_1_10_90
+    10_1_4_32 -.->|tcp:873<br/>1 flows| 10_1_10_90
+    10_1_2_15 -.->|icmp, tcp:8080<br/>3 flows| 10_1_3_20
+    10_1_2_16 -.->|tcp:8080<br/>1 flows| 10_1_3_21
+    10_1_4_30 -.->|tcp:3306<br/>1 flows| 10_1_4_31
+    10_1_2_16 -.->|tcp:8080<br/>1 flows| 10_1_3_20
+    10_1_1_10 -.->|tcp:443, tcp:80<br/>2 flows| 10_1_2_15
+    10_1_2_15 -.->|tcp:8080<br/>1 flows| 10_1_3_21
+    10_1_3_20 -.->|tcp:5432<br/>1 flows| 10_1_4_32
+    10_1_3_21 -.->|tcp:5432<br/>1 flows| 10_1_4_32
+    10_1_1_10 -.->|tcp:443, tcp:80<br/>2 flows| 10_1_2_16
+    10_1_3_20 -.->|tcp:9092<br/>1 flows| 10_1_6_50
+    10_1_3_21 -.->|tcp:9092<br/>1 flows| 10_1_6_50
+    10_1_3_21 -.->|tcp:3306<br/>1 flows| 10_1_4_30
+    192_0_2_134 -.->|tcp:443<br/>1 flows| 10_1_1_10
+    203_0_113_45 -.->|tcp:443<br/>1 flows| 10_1_1_10
+    10_1_3_20 -.->|icmp, tcp:3306<br/>2 flows| 10_1_4_30
+    10_1_3_20 -.->|tcp:3306<br/>1 flows| 10_1_4_31
+    198_51_100_78 -.->|tcp:443<br/>1 flows| 10_1_1_10
+    10_1_3_20 -.->|tcp:6379<br/>1 flows| 10_1_5_40
+    10_1_3_21 -.->|tcp:6379<br/>1 flows| 10_1_5_40
+    10_1_6_50 -.->|tcp:2181<br/>1 flows| 10_1_6_51
+    10_1_6_50 -.->|tcp:2181<br/>1 flows| 10_1_6_52
+    10_1_5_40 -.->|tcp:6379<br/>1 flows| 10_1_5_41
+    10_1_8_70 -.->|tcp:3306<br/>1 flows| 10_1_4_30
+    10_1_8_70 -.->|tcp:22<br/>1 flows| 10_1_3_20
+    10_1_3_20 -.->|tcp:389<br/>1 flows| 10_1_11_100
+    10_1_3_21 -.->|tcp:389<br/>1 flows| 10_1_11_100
+    45_33_32_156 -.->|tcp:443, tcp:80<br/>2 flows| 10_1_1_10
+    10_1_8_70 -.->|tcp:22<br/>1 flows| 10_1_2_15

@@ -1,0 +1,2 @@
+service,timestamp,actual_count,expected_count,z_score,severity
+10.0.2.10:3306,2024-01-15 03:00:00,1500,200,6.5,HIGH

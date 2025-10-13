@@ -1,0 +1,400 @@
+{% extends "base.html" %}
+
+{% block title %}Network Segmentation Analyzer - Dashboard{% endblock %}
+
+{% block extra_css %}
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+{% endblock %}
+
+{% block content %}
+
+    <!-- Page Header -->
+    <div class="row mb-2 align-items-center">
+        <div class="col">
+            <h1 class="display-4 mb-0">Dashboard</h1>
+            <p class="lead text-muted mb-0">Network segmentation analysis overview</p>
+        </div>
+        <div class="col-auto">
+            <span class="badge bg-success">
+                <i class="bi bi-circle-fill"></i> {{ stats.backend|default('json') }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row g-3 mb-3">
+        <!-- Applications Card -->
+        <div class="col-md-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">Applications</h6>
+                            <h2 class="mb-0" id="stat-applications">{{ stats.applications|default(0)|number }}</h2>
+                        </div>
+                        <div class="stat-icon text-primary">
+                            <i class="bi bi-app-indicator"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flow Records Card -->
+        <div class="col-md-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">Flow Records</h6>
+                            <h2 class="mb-0" id="stat-flows">{{ stats.flow_records|default(0)|number }}</h2>
+                        </div>
+                        <div class="stat-icon text-success">
+                            <i class="bi bi-arrows-move"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topology Records Card -->
+        <div class="col-md-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">Topology Records</h6>
+                            <h2 class="mb-0" id="stat-topology">{{ stats.topology_records|default(0)|number }}</h2>
+                        </div>
+                        <div class="stat-icon text-info">
+                            <i class="bi bi-diagram-3"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Results Card -->
+        <div class="col-md-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">Analysis Results</h6>
+                            <h2 class="mb-0" id="stat-analysis">{{ stats.analysis_results|default(0)|number }}</h2>
+                        </div>
+                        <div class="stat-icon text-warning">
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row g-3 mb-2">
+        <!-- Zone Distribution Chart -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-pie-chart"></i> Security Zone Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="zoneChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Applications Timeline -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-bar-chart-line"></i> Applications Overview</h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="appsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row quick-actions">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="/topology" class="btn btn-primary w-100 quick-action-btn">
+                                <i class="bi bi-diagram-3"></i> View Topology
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/applications" class="btn btn-info w-100 quick-action-btn">
+                                <i class="bi bi-list-ul"></i> Browse Applications
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/zones" class="btn btn-success w-100 quick-action-btn">
+                                <i class="bi bi-shield-check"></i> View Zones
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-warning w-100 quick-action-btn" onclick="refreshStats()">
+                                <i class="bi bi-arrow-clockwise"></i> Refresh Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Applications</h5>
+                </div>
+                <div class="card-body">
+                    <div id="recent-apps" class="list-group">
+                        <div class="text-center text-muted py-3">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize charts
+    let zoneChart = null;
+    let appsChart = null;
+
+    // Load data on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadZoneDistribution();
+        loadRecentApplications();
+    });
+
+    // Load zone distribution data
+    async function loadZoneDistribution() {
+        try {
+            const response = await fetch('/api/zones');
+            const data = await response.json();
+
+            if (data.success) {
+                renderZoneChart(data.zones);
+                renderAppsChart(data.zones);
+            }
+        } catch (error) {
+            console.error('Error loading zone distribution:', error);
+        }
+    }
+
+    // Render zone distribution pie chart
+    function renderZoneChart(zones) {
+        const ctx = document.getElementById('zoneChart').getContext('2d');
+
+        const labels = zones.map(z => z.zone);
+        const counts = zones.map(z => z.count);
+
+        const colors = [
+            'rgba(54, 162, 235, 0.8)',
+            'rgba(255, 99, 132, 0.8)',
+            'rgba(255, 206, 86, 0.8)',
+            'rgba(75, 192, 192, 0.8)',
+            'rgba(153, 102, 255, 0.8)',
+            'rgba(255, 159, 64, 0.8)'
+        ];
+
+        if (zoneChart) {
+            zoneChart.destroy();
+        }
+
+        zoneChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: counts,
+                    backgroundColor: colors,
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+
+    // Render applications bar chart
+    function renderAppsChart(zones) {
+        const ctx = document.getElementById('appsChart').getContext('2d');
+
+        const labels = zones.map(z => z.zone);
+        const counts = zones.map(z => z.count);
+
+        if (appsChart) {
+            appsChart.destroy();
+        }
+
+        appsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Applications',
+                    data: counts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+
+    // Load recent applications
+    async function loadRecentApplications() {
+        try {
+            const response = await fetch('/api/applications');
+            const data = await response.json();
+
+            if (data.success) {
+                renderRecentApplications(data.applications.slice(0, 10));
+            }
+        } catch (error) {
+            console.error('Error loading recent applications:', error);
+            document.getElementById('recent-apps').innerHTML =
+                '<div class="alert alert-warning">Failed to load recent applications</div>';
+        }
+    }
+
+    // Render recent applications list
+    function renderRecentApplications(apps) {
+        const container = document.getElementById('recent-apps');
+
+        if (apps.length === 0) {
+            container.innerHTML = '<div class="alert alert-info">No applications found</div>';
+            return;
+        }
+
+        let html = '';
+        apps.forEach(app => {
+            html += `
+                <a href="/application/${app.app_id}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">${app.app_id}</h6>
+                        <small class="text-muted">${formatDate(app.updated_at)}</small>
+                    </div>
+                    <small class="text-muted">
+                        <i class="bi bi-arrows-move"></i> ${formatNumber(app.flow_count)} flows
+                    </small>
+                </a>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    // Refresh statistics
+    async function refreshStats() {
+        try {
+            const response = await fetch('/api/statistics');
+            const data = await response.json();
+
+            if (data.success) {
+                const stats = data.statistics;
+                document.getElementById('stat-applications').textContent = formatNumber(stats.applications);
+                document.getElementById('stat-flows').textContent = formatNumber(stats.flow_records);
+                document.getElementById('stat-topology').textContent = formatNumber(stats.topology_records);
+                document.getElementById('stat-analysis').textContent = formatNumber(stats.analysis_results);
+
+                // Reload charts
+                loadZoneDistribution();
+                loadRecentApplications();
+
+                // Show success message
+                showToast('Statistics refreshed successfully', 'success');
+            }
+        } catch (error) {
+            console.error('Error refreshing stats:', error);
+            showToast('Failed to refresh statistics', 'error');
+        }
+    }
+
+    // Helper: Format number with commas
+    function formatNumber(num) {
+        if (!num) return '0';
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Helper: Format date
+    function formatDate(dateStr) {
+        if (!dateStr) return 'N/A';
+        const date = new Date(dateStr);
+        return date.toLocaleString();
+    }
+
+    // Helper: Show toast notification
+    function showToast(message, type) {
+        // Simple alert for now - can be enhanced with toast library
+        const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+        const alert = document.createElement('div');
+        alert.className = `alert ${alertClass} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
+        alert.style.zIndex = '9999';
+        alert.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        document.body.appendChild(alert);
+
+        setTimeout(() => {
+            alert.remove();
+        }, 3000);
+    }
+</script>
+{% endblock %}

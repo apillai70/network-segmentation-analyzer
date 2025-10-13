@@ -1,0 +1,61 @@
+graph TB
+    subgraph "Artifact Downloads"
+        A1[ensemble_persistence_system.py]
+        A2[production_orchestrator.py]
+        A3[unified_future_state_system.py]
+        A4[transformer_model.py]
+        A5[segmentation_rule_generator.py]
+    end
+    
+    subgraph "Project Structure"
+        subgraph "src/core/"
+            F1[persistence_manager.py]
+            F2[ensemble_model.py]
+            F3[visualization_generator.py]
+        end
+        
+        subgraph "src/analysis/"
+            F4[future_state_generator.py]
+            F5[current_state_analyzer.py]
+            F6[gap_analysis_engine.py]
+            F7[markov_predictor.py]
+        end
+        
+        subgraph "src/orchestration/"
+            F8[production_orchestrator.py]
+            F9[unified_orchestrator.py]
+        end
+        
+        subgraph "src/utils/"
+            F10[color_schemes.py]
+            F11[data_loader.py]
+        end
+        
+        subgraph "static/js/"
+            F12[d3-renderer.js]
+            F13[prediction-overlay.js]
+        end
+    end
+    
+    A1 -->|PersistenceManager class| F1
+    A1 -->|EnsembleNetworkModel class| F2
+    A1 -->|VisualizationGenerator class| F3
+    
+    A2 -->|ProductionNetworkAnalyzer class| F8
+    
+    A3 -->|FutureStateGenerator class| F4
+    A3 -->|CurrentStateAnalyzer class| F5
+    A3 -->|GapAnalysisEngine class| F6
+    A3 -->|MasterUnifiedOrchestrator class| F9
+    
+    A3 -->|Markov methods| F7
+    
+    style A1 fill:#667eea
+    style A2 fill:#764ba2
+    style A3 fill:#f093fb
+    style F1 fill:#4facfe
+    style F2 fill:#4facfe
+    style F3 fill:#4facfe
+    style F7 fill:#43e97b
+    style F12 fill:#fa709a
+    style F13 fill:#fa709a

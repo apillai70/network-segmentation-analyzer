@@ -1,0 +1,139 @@
+{
+  "timestamp": "2025-10-12T14:27:48.201672",
+  "total_apps": 1,
+  "apps_observed": [
+    "ACDA"
+  ],
+  "topology": {
+    "ACDA": {
+      "app_name": "ACDA",
+      "app_type": "api_service",
+      "characteristics": [],
+      "primary_function": "Backend API and business logic service",
+      "tech_stack": {
+        "language": "unknown",
+        "framework": "unknown",
+        "database": "unknown"
+      },
+      "security_zone": "APP_TIER",
+      "predicted_dependencies": [
+        {
+          "type": "database",
+          "name": "database_service",
+          "purpose": "Standard database dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "cache",
+          "name": "cache_service",
+          "purpose": "Standard cache dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "message_queue",
+          "name": "message_queue_service",
+          "purpose": "Standard message_queue dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "other_apis",
+          "name": "other_apis_service",
+          "purpose": "Standard other_apis dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.169",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.238",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:2bda:f8d3:43cf:2fde:2493:3b83",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.109",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.25",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.246.146",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.139",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.105.128",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.122",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:548b:87b5:cf8d:446a:bc2c:bb0d",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        }
+      ],
+      "compliance_requirements": [
+        "SOC2"
+      ],
+      "risk_level": "LOW",
+      "confidence": 0.6,
+      "reasoning": "Application 'ACDA' classified as api service. Assigned to APP_TIER for appropriate network segmentation. Predicted dependencies: database, unknown, cache, message_queue, other_apis.",
+      "analysis_method": "local_semantic",
+      "knowledge_graph_version": "3.0"
+    }
+  },
+  "stats": {
+    "total_files_processed": 0,
+    "total_flows_processed": 44,
+    "total_apps_analyzed": 1,
+    "model_updates": 1,
+    "duplicates_skipped": 0,
+    "errors_encountered": 0,
+    "last_update": "2025-10-12T14:27:48.200939",
+    "start_time": "2025-10-12T14:27:48.149199"
+  }
+}

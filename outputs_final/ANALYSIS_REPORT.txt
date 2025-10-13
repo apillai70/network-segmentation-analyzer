@@ -1,0 +1,30 @@
+
+================================================================================
+NETWORK SEGMENTATION ANALYSIS - COMPLETE REPORT
+================================================================================
+
+Generated: 2025-10-12 15:29:31
+
+PROCESSING SUMMARY
+------------------
+Total Files Processed: 0
+Total Applications: 0
+Total Network Flows: 0
+Processing Duration: 0.4 seconds
+Average Speed: 0.00 files/sec
+
+ZONE DISTRIBUTION
+-----------------
+
+
+TOP APPLICATIONS BY ZONE
+-------------------------
+
+
+OUTPUT FILES
+------------
+- application_zones.csv (All application zone assignments)
+- complete_results.json (Complete analysis data)
+- visualizations/*.png (Charts and graphs)
+
+================================================================================

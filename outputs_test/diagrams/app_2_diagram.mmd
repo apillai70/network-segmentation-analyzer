@@ -1,0 +1,72 @@
+graph LR
+    %% Application: app_2
+
+    %% Component Styles
+    classDef internal fill:#4caf50,stroke:#388e3c,stroke-width:2px,color:#fff
+    classDef external fill:#f44336,stroke:#c62828,stroke-width:2px,color:#fff
+    classDef database fill:#ff5722,stroke:#d84315,stroke-width:2px,color:#fff
+    classDef cache fill:#00bcd4,stroke:#0097a7,stroke-width:2px,color:#fff
+    classDef messaging fill:#9c27b0,stroke:#7b1fa2,stroke-width:2px,color:#fff
+
+    %% Application Components
+    10_2_1_10["data-ingest-01"]:::internal
+    10_2_1_11["data-ingest-02"]:::internal
+    10_2_10_100["admin-analytics"]:::internal
+    10_2_11_110["ntp-server"]:::internal
+    10_2_11_111["dns-resolver"]:::internal
+    10_2_12_120["postgres-analytics"]:::database
+    10_2_13_130["ldap-auth"]:::internal
+    10_2_14_140["backup-analytics"]:::internal
+    10_2_2_20["kafka-analytics-01"]:::messaging
+    10_2_2_21["kafka-analytics-02"]:::messaging
+    10_2_3_25["spark-master"]:::internal
+    10_2_3_30["spark-worker-01"]:::internal
+    10_2_3_31["spark-worker-02"]:::internal
+    10_2_3_32["spark-worker-03"]:::internal
+    10_2_4_40["hdfs-namenode"]:::internal
+    10_2_4_41["hdfs-datanode-01"]:::internal
+    10_2_4_42["hdfs-datanode-02"]:::internal
+    10_2_4_43["hdfs-datanode-03"]:::internal
+    10_2_5_50["analytics-api"]:::internal
+    10_2_6_60["elasticsearch-master"]:::internal
+    10_2_6_61["elasticsearch-data-01"]:::internal
+    10_2_6_62["elasticsearch-data-02"]:::internal
+    10_2_6_63["elasticsearch-data-03"]:::internal
+    10_2_7_70["kibana-dashboard"]:::internal
+    10_2_8_80["monitoring-collector"]:::internal
+    10_2_9_90["s3-gateway"]:::internal
+    198_51_100_89["external-data-source"]:::internal
+    203_0_113_67["external-data-source"]:::internal
+    91_240_118_45["suspicious-scan"]:::external
+
+    %% Traffic Flows
+    10_2_3_30 -->|tcp:50010<br/>1.2MB, 1 flows| 10_2_4_41
+    10_2_3_31 -->|tcp:50010<br/>1.1MB, 1 flows| 10_2_4_42
+    10_2_3_32 -->|tcp:50010<br/>1.1MB, 1 flows| 10_2_4_43
+    10_2_3_30 -.->|tcp:9000<br/>1 flows| 10_2_4_40
+    10_2_4_41 -.->|tcp:50020<br/>1 flows| 10_2_4_42
+    10_2_4_42 -.->|tcp:50020<br/>1 flows| 10_2_4_43
+    10_2_3_31 -.->|tcp:9000<br/>1 flows| 10_2_4_40
+    10_2_3_32 -.->|tcp:9000<br/>1 flows| 10_2_4_40
+    10_2_3_30 -.->|tcp:9092<br/>1 flows| 10_2_2_20
+    10_2_6_61 -.->|tcp:9300<br/>1 flows| 10_2_6_62
+    10_2_14_140 -.->|tcp:22<br/>1 flows| 10_2_4_40
+    10_2_6_62 -.->|tcp:9300<br/>1 flows| 10_2_6_63
+    10_2_3_31 -.->|tcp:9092<br/>1 flows| 10_2_2_20
+    198_51_100_89 -.->|tcp:443<br/>1 flows| 10_2_1_10
+    10_2_14_140 -.->|tcp:9200<br/>1 flows| 10_2_6_60
+    203_0_113_67 -.->|tcp:443<br/>1 flows| 10_2_1_11
+    10_2_3_32 -.->|tcp:9092<br/>1 flows| 10_2_2_21
+    10_2_1_10 -.->|tcp:9092<br/>1 flows| 10_2_2_20
+    10_2_1_11 -.->|tcp:9092<br/>1 flows| 10_2_2_20
+    10_2_1_10 -.->|tcp:9092<br/>1 flows| 10_2_2_21
+    10_2_1_10 -.->|tcp:443<br/>1 flows| 10_2_9_90
+    10_2_1_11 -.->|tcp:443<br/>1 flows| 10_2_9_90
+    10_2_5_50 -.->|tcp:9200<br/>1 flows| 10_2_6_60
+    10_2_4_40 -.->|tcp:50010<br/>1 flows| 10_2_4_41
+    10_2_4_40 -.->|tcp:50010<br/>1 flows| 10_2_4_42
+    10_2_5_50 -.->|tcp:9200<br/>1 flows| 10_2_6_61
+    10_2_5_50 -.->|tcp:9200<br/>1 flows| 10_2_6_62
+    10_2_3_25 -.->|tcp:7077<br/>1 flows| 10_2_3_30
+    10_2_5_50 -.->|tcp:5432<br/>1 flows| 10_2_12_120
+    10_2_3_25 -.->|tcp:7077<br/>1 flows| 10_2_3_31

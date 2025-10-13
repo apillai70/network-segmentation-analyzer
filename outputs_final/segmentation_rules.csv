@@ -1,0 +1,19 @@
+rule_id,priority,source,destination,protocol,port,action,justification,risk_score,enforcement_target,complexity,zone_src,zone_dst
+RULE-1017,150,DATA_TIER,WEB_TIER,any,any,deny,Prevent reverse traffic from data tier to web tier - data exfiltration protection,85,internal-firewall,low,DATA_TIER,WEB_TIER
+RULE-1008,300,any,WEB_TIER,tcp,80,allow,Allow HTTP traffic to web tier - legitimate public access,20,perimeter-firewall,low,EXTERNAL,WEB_TIER
+RULE-1009,300,any,WEB_TIER,tcp,443,allow,Allow HTTPS traffic to web tier - legitimate public access,20,perimeter-firewall,low,EXTERNAL,WEB_TIER
+RULE-1010,400,WEB_TIER,APP_TIER,tcp,"8080,8443",allow,Allow web tier to communicate with application tier,15,internal-firewall,medium,WEB_TIER,APP_TIER
+RULE-1014,600,APP_TIER,DATA_TIER,tcp,6379,allow,Allow app tier to access Redis cache,20,internal-firewall,low,APP_TIER,DATA_TIER
+RULE-1015,700,APP_TIER,MESSAGING_TIER,tcp,"9092,5672",allow,"Allow app tier to access message queues (Kafka, RabbitMQ)",20,internal-firewall,medium,APP_TIER,MESSAGING_TIER
+RULE-1016,800,MANAGEMENT_TIER,any,tcp,"9090,9100,4040",allow,Allow management tier to collect metrics from all tiers,30,internal-firewall,high,MANAGEMENT_TIER,INTERNAL
+RULE-1001,1101,EXTERNAL,any,tcp,22,deny,Block SSH access from external networks - high security risk,90,perimeter-firewall,low,EXTERNAL,INTERNAL
+RULE-1002,1102,EXTERNAL,any,tcp,3389,deny,Block RDP access from external networks - high security risk,90,perimeter-firewall,low,EXTERNAL,INTERNAL
+RULE-1003,1103,EXTERNAL,any,tcp,23,deny,Block Telnet access from external networks - high security risk,90,perimeter-firewall,low,EXTERNAL,INTERNAL
+RULE-1004,1204,EXTERNAL,DATA_TIER,tcp,3306,deny,Block direct MySQL access from external - data exfiltration risk,95,perimeter-firewall,low,EXTERNAL,DATA_TIER
+RULE-1005,1205,EXTERNAL,DATA_TIER,tcp,5432,deny,Block direct PostgreSQL access from external - data exfiltration risk,95,perimeter-firewall,low,EXTERNAL,DATA_TIER
+RULE-1006,1206,EXTERNAL,DATA_TIER,tcp,27017,deny,Block direct MongoDB access from external - data exfiltration risk,95,perimeter-firewall,low,EXTERNAL,DATA_TIER
+RULE-1007,1207,EXTERNAL,DATA_TIER,tcp,6379,deny,Block direct Redis access from external - data exfiltration risk,95,perimeter-firewall,low,EXTERNAL,DATA_TIER
+RULE-1011,1511,APP_TIER,DATA_TIER,tcp,3306,allow,Allow app tier to access MySQL databases,25,internal-firewall,medium,APP_TIER,DATA_TIER
+RULE-1012,1512,APP_TIER,DATA_TIER,tcp,5432,allow,Allow app tier to access PostgreSQL databases,25,internal-firewall,medium,APP_TIER,DATA_TIER
+RULE-1013,1513,APP_TIER,DATA_TIER,tcp,27017,allow,Allow app tier to access MongoDB databases,25,internal-firewall,medium,APP_TIER,DATA_TIER
+RULE-1000,9999,any,any,any,any,deny,Default deny policy for zero-trust architecture,0,firewall,low,,
