@@ -6,6 +6,7 @@ __pycache__/
 .Python
 env/
 venv/
+nodeenv/
 *.egg-info/
 dist/
 build/
@@ -21,23 +22,15 @@ database/backups/*.db
 models/checkpoints/*.pkl
 models/checkpoints/*.pth
 
-# Data
-data/input/*.csv
-data/input/processed/.csv
-data/input/errors/.csv
-data/input/duplicates/.csv
+# Data - exclude entire directories
+data/
+persistent_data/
+outputs_final/
 
 # Outputs
 outputs/visualizations/*.html
 outputs/reports/*.json
 outputs/segmentation_rules/*
-
-outputs_final/word_reports/architecture/*
-outputs_final/word_reports/netseg/*
-outputs_final/diagrams/*
-
-persistent_data/applications/*
-persistent_data/topology/*
 
 # Logs
 logs/*.log

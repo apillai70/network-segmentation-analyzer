@@ -40,18 +40,27 @@ def main():
 
     # Setup directories
     diagrams_dir = Path('outputs_final/diagrams')
-    word_docs_dir = Path('outputs_final/word_reports/netseg')
+    word_docs_dir = Path('outputs_final/word_reports/architecture')
 
     word_docs_dir.mkdir(parents=True, exist_ok=True)
 
     # Find all PNG diagram files
-    png_files = list(diagrams_dir.glob('*_application_diagram.png'))
+    png_files = list(diagrams_dir.glob('*_diagram.png'))
     total_apps = len(png_files)
 
     logger.info(f"Found {total_apps} application PNG diagrams")
 
     if total_apps == 0:
+        logger.error("=" * 80)
         logger.error("No PNG diagrams found in outputs_final/diagrams/")
+        logger.error("=" * 80)
+        logger.error("Architecture documents require PNG files to be generated first.")
+        logger.error("")
+        logger.error("Solutions:")
+        logger.error("  1. Install mermaid-cli: npm install -g @mermaid-js/mermaid-cli")
+        logger.error("  2. Run batch processing to generate diagrams")
+        logger.error("  3. Or run: python generate_missing_pngs.py")
+        logger.error("=" * 80)
         return
 
     print()
@@ -68,7 +77,7 @@ def main():
     # Process each application
     for i, png_file in enumerate(sorted(png_files), 1):
         # Extract app name from filename
-        app_name = png_file.stem.replace('_application_diagram', '')
+        app_name = png_file.stem.replace('_diagram', '')
 
         print(f"\n[{i}/{total_apps}] {app_name}...", end=' ', flush=True)
 
