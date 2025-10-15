@@ -104,10 +104,10 @@ class EnsembleNetworkModel:
                 logger.warning(f"  ⚠ GAT model not available: {e}")
 
             try:
-                from deep_learning.transformer_model import TransformerTopologyAnalyzer
+                from deep_learning.transformer_model import TemporalTrafficAnalyzer
 
                 self.models['transformer'] = {
-                    'analyzer': TransformerTopologyAnalyzer(device=self.device),
+                    'analyzer': TemporalTrafficAnalyzer(device=self.device),
                     'type': 'deep_learning',
                     'trained': False
                 }
@@ -118,10 +118,10 @@ class EnsembleNetworkModel:
                 logger.warning(f"  ⚠ Transformer model not available: {e}")
 
             try:
-                from deep_learning.vae_model import TopologyVAE
+                from deep_learning.vae_model import ApplicationBehaviorAnalyzer
 
                 self.models['vae'] = {
-                    'analyzer': TopologyVAE(device=self.device),
+                    'analyzer': ApplicationBehaviorAnalyzer(device=self.device),
                     'type': 'deep_learning',
                     'trained': False
                 }

@@ -209,10 +209,21 @@ def main():
     logger.info(f"Watch directory: {args.watch_dir}")
     logger.info(f"Output directory: {output_dir}")
 
-    # Determine features
-    enable_dl = args.enable_deep_learning or args.enable_all
+    # Load config.yaml for default settings
+    import yaml
+    config_file = Path('config.yaml')
+    config = {}
+    if config_file.exists():
+        with open(config_file, 'r', encoding='utf-8') as f:
+            config = yaml.safe_load(f)
+
+    # Determine features (command-line overrides config.yaml)
+    config_dl_enabled = config.get('models', {}).get('deep_learning', {}).get('enabled', False)
+    enable_dl = args.enable_deep_learning or args.enable_all or config_dl_enabled
 
     logger.info(f"Deep Learning: {enable_dl}")
+    if config_dl_enabled and not (args.enable_deep_learning or args.enable_all):
+        logger.info(f"  (enabled via config.yaml)")
 
     try:
         # ====================================================================
@@ -230,8 +241,8 @@ def main():
         # create_persistence_manager() uses defaults and auto-fallback
         pm = create_persistence_manager()
 
-        # Initialize ensemble model
-        ensemble = EnsembleNetworkModel(pm)
+        # Initialize ensemble model with deep learning settings
+        ensemble = EnsembleNetworkModel(pm, use_deep_learning=enable_dl, device=args.device)
 
         # Initialize semantic analyzer
         semantic_analyzer = LocalSemanticAnalyzer(pm)

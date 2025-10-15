@@ -106,7 +106,7 @@ def verify_installation():
             'source_ip': ['10.0.1.' + str(i % 10) for i in range(100)],
             'destination_ip': ['10.0.2.' + str(i % 5) for i in range(100)],
             'source_port': np.random.randint(30000, 60000, 100),
-            'destination_port': [80, 443, 3306, 5432, 9092][i % 5] for i in range(100),
+            'destination_port': [[80, 443, 3306, 5432, 9092][i % 5] for i in range(100)],
             'protocol': ['TCP'] * 100
         })
         

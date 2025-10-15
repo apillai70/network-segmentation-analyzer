@@ -49,7 +49,9 @@ class UnifiedTopologyDiscoverySystem:
         use_deep_learning: bool = True,
         use_graph_algorithms: bool = True,
         use_rl_optimization: bool = True,
-        device: str = 'cpu'
+        device: str = 'cpu',
+        filter_nonexistent: bool = True,
+        hostname_resolver=None
     ):
         """
         Initialize unified topology system
@@ -60,9 +62,14 @@ class UnifiedTopologyDiscoverySystem:
             use_graph_algorithms: Enable advanced graph analysis
             use_rl_optimization: Enable RL-based optimization
             device: 'cpu' or 'cuda' for PyTorch models
+            filter_nonexistent: Filter flows where both IPs are non-existent (default: True)
+            hostname_resolver: HostnameResolver instance (optional)
         """
         self.pm = persistence_manager
         self.device = device
+        self.use_deep_learning = use_deep_learning
+        self.filter_nonexistent = filter_nonexistent
+        self.hostname_resolver = hostname_resolver
 
         # Core components (always available)
         self.network_graph = nx.DiGraph()
@@ -71,7 +78,11 @@ class UnifiedTopologyDiscoverySystem:
 
         # Load existing ensemble model (from enterprise_network_analyzer.py)
         from core.ensemble_model import EnsembleNetworkModel
-        self.ensemble_model = EnsembleNetworkModel(persistence_manager)
+        self.ensemble_model = EnsembleNetworkModel(
+            persistence_manager,
+            use_deep_learning=use_deep_learning,
+            device=device
+        )
 
         # Load semantic analyzer
         from .local_semantic_analyzer import LocalSemanticAnalyzer
@@ -145,6 +156,25 @@ class UnifiedTopologyDiscoverySystem:
         logger.info("=" * 80)
 
         start_time = datetime.now()
+
+        # ====================================================================
+        # PHASE 0: Flow Filtering (Optional)
+        # ====================================================================
+        if self.filter_nonexistent and self.hostname_resolver:
+            logger.info("\n🔍 PHASE 0: Flow Filtering")
+            logger.info("-" * 80)
+
+            from utils.flow_filter import filter_flows_by_dns_status
+            flow_records, filter_stats = filter_flows_by_dns_status(
+                flow_records,
+                self.hostname_resolver,
+                filter_nonexistent=True
+            )
+
+            logger.info(f"  ✓ Filtering complete:")
+            logger.info(f"    - Original flows: {filter_stats['total_flows']:,}")
+            logger.info(f"    - Filtered out: {filter_stats['flows_filtered']:,} ({filter_stats['filter_percentage']:.1f}%)")
+            logger.info(f"    - Flows kept: {filter_stats['flows_kept']:,}")
 
         # ====================================================================
         # PHASE 1: Network Topology Analysis (Existing System)

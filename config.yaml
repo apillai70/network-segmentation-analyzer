@@ -45,7 +45,7 @@ incremental:
 models:
   # Deep Learning (optional - requires PyTorch)
   deep_learning:
-    enabled: false  # Set to true if torch installed
+    enabled: true  # ✅ ENABLED
     device: cpu  # 'cpu' or 'cuda'
 
   # Graph algorithms (always enabled)

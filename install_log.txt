@@ -109,3 +109,97 @@ $ python scripts/quick_start.py --generate-data 140 --web --port 8080
   1. Fix the imports in run_incremental_learning.py so incremental learning actually works?
   2. Or focus on getting batch processing working first?
   3. Or just use the web UI with the 140 files loaded statically (which works now)?
+  
+  
+    python train_with_labels.py --create-template
+  
+  
+  # Copy your real CSV files (format: App_Code_<APPNAME>.csv)
+  cp /path/to/your/flows/*.csv data/input/
+
+  # Option 1: Quick analysis with heuristics
+  python run_complete_pipeline.py
+
+  # Option 2: Smart label generation + training for high confidence
+  python create_smart_labels.py
+  python train_with_labels.py --labels-file smart_labels.csv
+  python run_complete_pipeline.py  # Now with 0.85-0.95 confidence
+
+  # Option 3: Web UI
+  python start_system.py --web --incremental
+  
+  
+  # Demo mode (with synthetic data)
+  python run_complete_pipeline.py
+
+  # Production mode (ignore synthetic, only real data)
+  python run_complete_pipeline.py --ignore-synthetic
+
+  # Fast mode (skip some outputs)
+  python run_complete_pipeline.py --no-viz --no-lucid
+
+  # Process first 10 files only (testing)
+  python run_complete_pipeline.py --max-files 10
+  
+  python run_incremental_learning.py --continuous --skip-cleanup 
+
+
+
+Here are the steps after pip install -r requirements.txt
+
+  1. Extract project files
+  2. Run: pip install -r requirements.txt
+  3. Edit config.yaml (set postgresql.enabled = false)
+  4. Copy first flow file to data/input/
+  5. Run: python run_incremental_learning.py --batch
+  6. Generate docs: python generate_solution_design_docs.py
+
+  python generate_application_reports.py
+  python generate_solution_design_docs.py 
+  
+Document Generation Scripts
+
+  1. generate_application_word_docs.py
+  - Creates simple architecture Word docs with embedded PNG
+  - Output: outputs_final/word_reports/architecture/{AppID}_architecture.docx
+  - Uses: app_docx_generator.py
+
+  2. generate_solution_design_docs.py
+  - Creates comprehensive Solution Design documents
+  - Output: outputs_final/word_reports/architecture/Solution_Design-{AppID}.docx
+  - Uses: comprehensive_solution_doc_generator.py
+  - You fixed UTF-8 error here (line 51)
+
+  3. generate_all_reports.py
+  - Creates network segmentation reports + diagrams + Lucidchart exports
+  - Output: outputs_final/word_reports/netseg/{AppID}_report.docx
+  - I fixed the folder path here (line 318)
+
+  Updated Processing Sequence
+
+  1. Clear processed files (if reprocessing):
+  python scripts/manage_file_tracking.py --forget-all
+
+  2. Run batch processing (analyzes flows + generates application diagrams):
+  python run_incremental_learning.py --batch
+  This creates:
+  - ✅ .mmd, .html, .png diagrams in outputs_final/diagrams/
+  - ✅ Topology JSON in persistent_data/topology/
+
+  3. Generate network segmentation reports:
+  python generate_all_reports.py
+  This creates:
+  - ✅ Word docs in outputs_final/word_reports/netseg/
+  - ✅ Lucidchart CSVs
+
+  4. Generate architecture documents (OPTIONAL - pick one or both):
+  # Simple architecture docs
+  python generate_application_word_docs.py
+
+  # OR comprehensive solution design docs
+  python generate_solution_design_docs.py
+  Both save to outputs_final/word_reports/architecture/
+
+  So the sequence is:
+  1. Delete (if needed) → 2. Batch (diagrams auto-generated) → 3. NetSeg docs → 4. Architecture docs       
+  (optional)

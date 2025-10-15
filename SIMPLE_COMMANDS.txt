@@ -1,0 +1,149 @@
+================================================================================
+NETWORK SEGMENTATION ANALYZER - SIMPLE COMMANDS FOR CUSTOMER SITE
+================================================================================
+
+STEP 1: INITIAL SETUP (One Time Only)
+================================================================================
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Edit config.yaml (use notepad or vi)
+# Change line: postgresql.enabled = false
+
+
+STEP 2: CLEANUP OLD DATA (If Needed)
+================================================================================
+
+# Reset file tracking
+python scripts\manage_file_tracking.py --reset
+
+# Delete old topology
+del outputs_final\incremental_topology.json
+
+# That's it! Ready for fresh start.
+
+
+STEP 3: ADD FIRST FILE
+================================================================================
+
+# Copy file to input directory
+copy C:\path\to\App_Code_MYAPP.csv data\input\
+
+# Verify it's there
+dir data\input\App_Code_*.csv
+
+
+STEP 4: PROCESS FILE
+================================================================================
+
+# Process the file
+python run_incremental_learning.py --batch
+
+# Check result - should say "Files processed: 1"
+
+
+STEP 5: GENERATE REPORTS
+================================================================================
+
+# Generate diagrams FIRST
+python generate_application_reports.py
+
+# Generate documents SECOND
+python generate_solution_design_docs.py
+
+# Documents will be in:
+# outputs_final\word_reports\architecture\Solution_Design-MYAPP.docx
+
+
+STEP 6: ADD MORE FILES (Repeat as Needed)
+================================================================================
+
+# Copy next file
+copy C:\path\to\App_Code_NEXTAPP.csv data\input\
+
+# Process it
+python run_incremental_learning.py --batch
+
+# Regenerate reports
+python generate_application_reports.py
+python generate_solution_design_docs.py
+
+
+VERIFICATION COMMANDS
+================================================================================
+
+# Check how many files processed
+python scripts\manage_file_tracking.py --list
+
+# Check topology (shows total apps)
+type outputs_final\incremental_topology.json | findstr "total_apps"
+
+# Check logs for errors
+type logs\incremental_*.log | more
+
+
+TROUBLESHOOTING
+================================================================================
+
+Problem: Says "140 files tracked" but you only added 1 file
+Solution: python scripts\manage_file_tracking.py --reset
+
+Problem: No diagrams generated
+Solution: Check if topology file exists first
+          type outputs_final\incremental_topology.json
+
+Problem: Documents say "diagram not found"
+Solution: Run generate_application_reports.py BEFORE generate_solution_design_docs.py
+
+Problem: File not found
+Solution: Make sure file is in data\input\ (not just data\)
+          dir data\input\App_Code_*.csv
+
+
+DAILY WORKFLOW (Easy to Remember)
+================================================================================
+
+1. copy {file} data\input\
+2. python run_incremental_learning.py --batch
+3. python generate_application_reports.py
+4. python generate_solution_design_docs.py
+
+That's it!
+
+
+OUTPUT LOCATIONS
+================================================================================
+
+Architecture Docs: outputs_final\word_reports\architecture\
+NetSeg Docs:       outputs_final\word_reports\netseg\
+Diagrams (PNG):    outputs_final\diagrams\*.png
+Topology Data:     outputs_final\incremental_topology.json
+Logs:              logs\incremental_*.log
+
+
+DO NOT USE (Will Delete Data!)
+================================================================================
+
+DO NOT RUN: python start_system.py
+            ^ This is for demos only and will delete your data!
+
+ONLY USE:   python run_incremental_learning.py --batch
+            ^ This is the correct command for customer data
+
+
+QUICK REFERENCE
+================================================================================
+
+Reset everything:    python scripts\manage_file_tracking.py --reset
+Process files:       python run_incremental_learning.py --batch
+Generate diagrams:   python generate_application_reports.py
+Generate docs:       python generate_solution_design_docs.py
+Check status:        python scripts\manage_file_tracking.py --list
+View logs:           type logs\incremental_*.log | more
+
+
+END OF SIMPLE COMMANDS
+================================================================================
+Print this page and keep it handy at customer site!
+================================================================================

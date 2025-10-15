@@ -6,10 +6,11 @@ Two types of Word documents are generated, organized in separate folders:
 
 ```
 outputs_final/word_reports/
-├── architecture/              # Comprehensive Solution Design documents
-│   └── Solution_Design-{AppID}.docx
-└── netseg/                   # Simple network segmentation documents
-    └── {AppID}_architecture.docx
+├── architecture/              # Architecture documents (both types)
+│   ├── Solution_Design-{AppID}.docx  (comprehensive)
+│   └── {AppID}_architecture.docx     (simple)
+└── netseg/                   # Network segmentation reports
+    └── {AppID}_report.docx
 ```
 
 ## Document Types
@@ -44,8 +45,8 @@ outputs_final/word_reports/
 python generate_solution_design_docs.py
 ```
 
-### 2. NetSeg Documents (Simple)
-**Location:** `outputs_final/word_reports/netseg/`
+### 2. Application Architecture Documents (Simple)
+**Location:** `outputs_final/word_reports/architecture/`
 **Filename:** `{AppID}_architecture.docx`
 **Generator:** `src/app_docx_generator.py`
 
@@ -77,8 +78,11 @@ python generate_application_word_docs.py
 # Generate comprehensive architecture documents
 python generate_solution_design_docs.py
 
-# Generate simple netseg documents
+# Generate simple application architecture documents
 python generate_application_word_docs.py
+
+# Generate network segmentation reports (optional)
+python generate_all_reports.py
 ```
 
 ### Generate for Specific Application
@@ -100,13 +104,13 @@ generate_comprehensive_solution_document(
     output_path='outputs_final/word_reports/architecture/Solution_Design-ACDA.docx'
 )
 
-# NetSeg (simple)
+# Application architecture (simple)
 from src.app_docx_generator import generate_application_document
 
 generate_application_document(
     app_name='ACDA',
     png_path='outputs_final/diagrams/ACDA_application_diagram.png',
-    output_path='outputs_final/word_reports/netseg/ACDA_architecture.docx'
+    output_path='outputs_final/word_reports/architecture/ACDA_architecture.docx'
 )
 ```
 
@@ -120,13 +124,15 @@ outputs_final/
 │   ├── ACDA_application_diagram.mmd
 │   └── ...
 └── word_reports/                   # Word documents
-    ├── architecture/               # Comprehensive docs
-    │   ├── Solution_Design-ACDA.docx
-    │   ├── Solution_Design-AODSVY.docx
+    ├── architecture/               # Architecture docs (both types)
+    │   ├── Solution_Design-ACDA.docx     (comprehensive)
+    │   ├── Solution_Design-AODSVY.docx   (comprehensive)
+    │   ├── ACDA_architecture.docx        (simple)
+    │   ├── AODSVY_architecture.docx      (simple)
     │   └── ...
-    └── netseg/                     # Simple docs
-        ├── ACDA_architecture.docx
-        ├── AODSVY_architecture.docx
+    └── netseg/                     # Network segmentation reports
+        ├── ACDA_report.docx
+        ├── AODSVY_report.docx
         └── ...
 ```
 

@@ -1,0 +1,267 @@
+================================================================================
+CUSTOMER SITE - MANUAL FIXES FOR NaN AND EMPTY DIAGRAM ISSUES
+================================================================================
+
+IF YOU CANNOT RUN THE AUTOMATED FIXES, TYPE THESE CHANGES MANUALLY:
+
+================================================================================
+FILE 1: src\core\incremental_learner.py
+================================================================================
+
+CHANGE 1 (Line ~184) - Remove blank rows:
+----------------------------------------
+FIND:
+        try:
+            # Load flow data
+            flows_df = pd.read_csv(file_path)
+            logger.info(f"  Loaded {len(flows_df)} flows for {app_id}")
+
+REPLACE WITH:
+        try:
+            # Load flow data
+            flows_df = pd.read_csv(file_path)
+
+            # FIX: Remove completely blank rows
+            original_count = len(flows_df)
+            flows_df = flows_df.dropna(how='all')
+            flows_df = flows_df.reset_index(drop=True)
+
+            if len(flows_df) < original_count:
+                logger.info(f"  Removed {original_count - len(flows_df)} blank rows")
+
+            logger.info(f"  Loaded {len(flows_df)} flows for {app_id}")
+
+
+CHANGE 2 (Line ~261) - Fix IP NaN handling:
+----------------------------------------
+FIND:
+            record.app_name = app_id
+            record.src_ip = row.get('Source IP', '')
+            record.src_hostname = row.get('Source Hostname', '')
+            record.dst_ip = row.get('Dest IP', '')
+            record.dst_hostname = row.get('Dest Hostname', '')
+
+REPLACE WITH:
+            record.app_name = app_id
+
+            # FIX: Handle NaN values in IP columns
+            src_ip = row.get('Source IP', '')
+            dst_ip = row.get('Dest IP', '')
+            src_hostname = row.get('Source Hostname', '')
+            dst_hostname = row.get('Dest Hostname', '')
+
+            # Convert NaN to empty string, ensure all are strings
+            record.src_ip = str(src_ip) if pd.notna(src_ip) else ''
+            record.src_hostname = str(src_hostname) if pd.notna(src_hostname) else ''
+            record.dst_ip = str(dst_ip) if pd.notna(dst_ip) else ''
+            record.dst_hostname = str(dst_hostname) if pd.notna(dst_hostname) else ''
+
+
+CHANGE 3 (Line ~276) - Fix Protocol/Port NaN:
+----------------------------------------
+FIND:
+            # Parse protocol and port
+            protocol = row.get('Protocol', 'TCP')
+            port = row.get('Port', '')
+
+            record.protocol = protocol
+            record.port = port if port else None
+            record.transport = protocol.split('/')[0] if '/' in protocol else protocol
+
+REPLACE WITH:
+            # Parse protocol and port
+            # FIX: Handle NaN values from CSV
+            protocol = row.get('Protocol', 'TCP')
+            port = row.get('Port', '')
+
+            # Convert NaN to string defaults
+            if pd.isna(protocol) or not isinstance(protocol, str):
+                protocol = 'TCP'
+            if pd.isna(port):
+                port = ''
+
+            record.protocol = protocol
+            record.port = port if port else None
+            record.transport = protocol.split('/')[0] if '/' in protocol else protocol
+
+
+================================================================================
+FILE 2: src\agentic\local_semantic_analyzer.py
+================================================================================
+
+CHANGE 4 (Line ~610) - Fix peer NaN in database detection:
+----------------------------------------
+FIND:
+        # Detect database from observed peers
+        if observed_peers:
+            for peer in observed_peers:
+                peer_lower = peer.lower()
+                for db, keywords in patterns['databases'].items():
+                    if any(kw in peer_lower for kw in keywords):
+                        tech_stack['database'] = db
+                        break
+
+REPLACE WITH:
+        # Detect database from observed peers
+        if observed_peers:
+            for peer in observed_peers:
+                # FIX: Skip NaN/None/non-string values
+                if not peer or not isinstance(peer, str):
+                    continue
+
+                peer_lower = peer.lower()
+                for db, keywords in patterns['databases'].items():
+                    if any(kw in peer_lower for kw in keywords):
+                        tech_stack['database'] = db
+                        break
+
+
+CHANGE 5 (Line ~801) - Fix peer NaN in dependencies:
+----------------------------------------
+FIND:
+        # Dependencies from observed peers
+        if observed_peers:
+            for peer in observed_peers:
+                peer_lower = peer.lower()
+
+                # Identify peer type
+                peer_type = 'unknown'
+                for app_t, info in self.kg.graph.items():
+                    if any(name in peer_lower for name in info['common_names']):
+                        peer_type = app_t
+                        break
+
+                dependencies.append({
+                    'type': peer_type,
+                    'name': peer,
+                    'purpose': 'Observed network connection',
+                    'confidence': 0.95,
+                    'source': 'network_observation'
+                })
+
+REPLACE WITH:
+        # Dependencies from observed peers
+        if observed_peers:
+            for peer in observed_peers:
+                # FIX: Skip NaN/None/non-string values
+                if not peer or not isinstance(peer, str):
+                    continue
+
+                peer_lower = peer.lower()
+
+                # Identify peer type
+                peer_type = 'unknown'
+                for app_t, info in self.kg.graph.items():
+                    if any(name in peer_lower for name in info['common_names']):
+                        peer_type = app_t
+                        break
+
+                dependencies.append({
+                    'type': peer_type,
+                    'name': peer,
+                    'purpose': 'Observed network connection',
+                    'confidence': 0.95,
+                    'source': 'network_observation'
+                })
+
+
+================================================================================
+FILE 3: src\application_diagram_generator.py
+================================================================================
+
+CHANGE 6 (Line ~162) - Fix source IP validation:
+----------------------------------------
+FIND:
+        for record in flow_records:
+            if not record.src_ip:
+                continue
+
+            # Classify source IP by subnet to determine tier
+            src_zone = self._infer_zone_from_ip(record.src_ip)
+            internal_tiers[src_zone].add(record.src_ip)
+
+REPLACE WITH:
+        for record in flow_records:
+            # FIX: Skip if src_ip is missing, invalid, or string 'nan'
+            if not record.src_ip or not isinstance(record.src_ip, str) or record.src_ip == 'nan':
+                continue
+
+            # Classify source IP by subnet to determine tier
+            src_zone = self._infer_zone_from_ip(record.src_ip)
+            # Only track internal tiers (ignore external IPs)
+            if src_zone != 'EXTERNAL':
+                internal_tiers[src_zone].add(record.src_ip)
+
+
+CHANGE 7 (Line ~181) - Fix destination IP validation:
+----------------------------------------
+FIND:
+        for record in flow_records:
+            if not record.dst_ip:
+                continue
+
+            target_name = self.hostname_resolver.resolve(record.dst_ip) if self.hostname_resolver else record.dst_ip
+
+REPLACE WITH:
+        for record in flow_records:
+            # FIX: Skip if dst_ip is missing, invalid, or string 'nan'
+            if not record.dst_ip or not isinstance(record.dst_ip, str) or record.dst_ip == 'nan':
+                continue
+
+            target_name = self.hostname_resolver.resolve(record.dst_ip) if self.hostname_resolver else record.dst_ip
+
+
+================================================================================
+TESTING AFTER MANUAL FIXES
+================================================================================
+
+1. Reprocess the file:
+   python run_incremental_learning.py --batch
+
+2. Expected output (GOOD):
+   Loaded 924 flows for AODSVY
+   Found internal tiers: ['WEB_TIER', 'APP_TIER', 'DATA_TIER', ...]
+   Found 10 downstream applications, 10 infrastructure dependencies
+
+3. Check diagram:
+   dir outputs_final\diagrams\AODSVY*
+
+   Should see:
+   - AODSVY_application_diagram.mmd
+   - AODSVY_application_diagram.html
+   - AODSVY_application_diagram.png (if mmdc installed)
+
+
+================================================================================
+NODE.JS AND MERMAID CLI SETUP (FOR PNG GENERATION)
+================================================================================
+
+Check if Node.js installed:
+   node --version
+   npm --version
+
+If not installed:
+   Download from: https://nodejs.org/ (use LTS version)
+
+Install Mermaid CLI:
+   npm install -g @mermaid-js/mermaid-cli
+
+Verify:
+   mmdc --version
+
+
+================================================================================
+SUMMARY OF CHANGES
+================================================================================
+
+3 files modified:
+1. src\core\incremental_learner.py         - 3 changes (lines 184, 261, 276)
+2. src\agentic\local_semantic_analyzer.py  - 2 changes (lines 610, 801)
+3. src\application_diagram_generator.py    - 2 changes (lines 162, 181)
+
+All changes add NaN handling to prevent "argument of type 'float' is not iterable" errors
+and ensure diagram generator receives valid IP addresses.
+
+================================================================================
+END OF MANUAL FIXES
+================================================================================

@@ -8,6 +8,7 @@ Re-generates Mermaid diagrams from existing data with hostname resolver enabled
 
 import sys
 import logging
+import argparse
 from pathlib import Path
 
 # Setup logging
@@ -51,13 +52,71 @@ def load_flow_records(csv_path):
 def main():
     """Main function"""
 
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(
+        description='Regenerate diagrams with hostname resolution and optional filtering',
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    parser.add_argument(
+        '--input',
+        type=str,
+        default='data/input/duplicates/App_Code_ALE.csv',
+        help='Input CSV file path (default: data/input/duplicates/App_Code_ALE.csv)'
+    )
+
+    parser.add_argument(
+        '--output',
+        type=str,
+        default='outputs_final/diagrams',
+        help='Output directory for diagrams (default: outputs_final/diagrams)'
+    )
+
+    parser.add_argument(
+        '--filter-nonexistent',
+        dest='filter_nonexistent',
+        action='store_true',
+        default=True,
+        help='Filter flows where both IPs are non-existent domains (default: True)'
+    )
+
+    parser.add_argument(
+        '--no-filter-nonexistent',
+        dest='filter_nonexistent',
+        action='store_false',
+        help='Disable filtering of non-existent domain flows (show all flows)'
+    )
+
+    parser.add_argument(
+        '--mark-nonexistent',
+        dest='mark_nonexistent',
+        action='store_true',
+        default=True,
+        help='Show "server-not-found" for non-existent domains (default: True)'
+    )
+
+    parser.add_argument(
+        '--no-mark-nonexistent',
+        dest='mark_nonexistent',
+        action='store_false',
+        help='Show raw IP addresses for non-existent domains'
+    )
+
+    args = parser.parse_args()
+
     logger.info("="*80)
     logger.info("REGENERATING DIAGRAMS WITH HOSTNAMES")
     logger.info("="*80)
+    logger.info(f"Input file: {args.input}")
+    logger.info(f"Output directory: {args.output}")
+    logger.info(f"Flow filtering:")
+    logger.info(f"  - Filter non-existent: {'Yes' if args.filter_nonexistent else 'No'}")
+    logger.info(f"  - Mark non-existent: {'Yes (server-not-found)' if args.mark_nonexistent else 'No (show IPs)'}")
+    logger.info("="*80)
 
     # Configure paths
-    input_file = Path('data/input/duplicates/App_Code_ALE.csv')
-    output_dir = Path('outputs_final/diagrams')
+    input_file = Path(args.input)
+    output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     if not input_file.exists():
@@ -115,14 +174,19 @@ def main():
             elif ip.startswith('10.165.116.'):
                 zones['APP_TIER'].members.add(ip)
 
-    # Create hostname resolver (demo mode)
-    hostname_resolver = HostnameResolver(demo_mode=True)
+    # Create hostname resolver with filtering configuration
+    hostname_resolver = HostnameResolver(
+        demo_mode=True,
+        filter_nonexistent=args.filter_nonexistent,
+        mark_nonexistent=args.mark_nonexistent
+    )
 
-    # Create diagram generator with hostname resolver
+    # Create diagram generator with hostname resolver and filtering
     diagram_gen = MermaidDiagramGenerator(
         flow_records=records,
         zones=zones,
-        hostname_resolver=hostname_resolver
+        hostname_resolver=hostname_resolver,
+        filter_nonexistent=args.filter_nonexistent
     )
 
     logger.info("\n" + "="*80)

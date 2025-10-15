@@ -39,7 +39,9 @@ class HostnameResolver:
                  enable_dns_lookup: bool = True,
                  dc_server: Optional[str] = None,
                  dc_domain: Optional[str] = None,
-                 timeout: float = 2.0):
+                 timeout: float = 2.0,
+                 filter_nonexistent: bool = True,
+                 mark_nonexistent: bool = True):
         """
         Args:
             demo_mode: If True, generate synthetic hostnames instead of DNS lookups
@@ -47,12 +49,16 @@ class HostnameResolver:
             dc_server: Domain Controller server address (e.g., "dc1.company.com")
             dc_domain: Domain name (e.g., "company.local")
             timeout: DNS lookup timeout in seconds
+            filter_nonexistent: If True, mark non-existent domains for filtering (default: True)
+            mark_nonexistent: If True, show "server-not-found" for failed DNS lookups (default: True)
         """
         self.demo_mode = demo_mode
         self.enable_dns_lookup = enable_dns_lookup
         self.dc_server = dc_server
         self.dc_domain = dc_domain
         self.timeout = timeout
+        self.filter_nonexistent = filter_nonexistent
+        self.mark_nonexistent = mark_nonexistent
 
         # Cache for resolved hostnames
         self._cache: Dict[str, str] = {}
@@ -60,9 +66,14 @@ class HostnameResolver:
         # Provided hostnames (from CSV or other sources)
         self._provided_hostnames: Dict[str, str] = {}
 
+        # Track non-existent domains
+        self._nonexistent_ips: set = set()
+
         logger.info(f"HostnameResolver initialized")
         logger.info(f"  Demo mode: {demo_mode}")
         logger.info(f"  DNS lookup: {enable_dns_lookup}")
+        logger.info(f"  Filter non-existent: {filter_nonexistent}")
+        logger.info(f"  Mark non-existent: {mark_nonexistent}")
         if dc_server:
             logger.info(f"  DC Server: {dc_server}")
             logger.info(f"  DC Domain: {dc_domain}")
@@ -113,6 +124,16 @@ class HostnameResolver:
             if not hostname and self.enable_dns_lookup:
                 hostname = self._reverse_dns_lookup(ip_address)
 
+        # Handle non-existent domains
+        if hostname == "NXDOMAIN":
+            if self.mark_nonexistent:
+                # Show descriptive message for non-existent domains
+                hostname = "server-not-found"
+                logger.debug(f"Marked {ip_address} as server-not-found (NXDOMAIN)")
+            else:
+                # Just use IP address
+                hostname = ip_address
+
         # Fallback to IP address if all methods fail
         if not hostname:
             hostname = ip_address
@@ -158,7 +179,7 @@ class HostnameResolver:
             ip_address: IP address to lookup
 
         Returns:
-            Hostname or None if lookup fails
+            Hostname, "NXDOMAIN" for non-existent domains, or None for other failures
         """
         try:
             # Set timeout
@@ -170,8 +191,26 @@ class HostnameResolver:
             logger.debug(f"DNS lookup: {ip_address} -> {hostname}")
             return hostname
 
-        except (socket.herror, socket.gaierror, socket.timeout) as e:
+        except socket.herror as e:
+            # Host not found (non-existent domain)
+            error_msg = str(e).lower()
+            if 'host not found' in error_msg or 'no such host' in error_msg:
+                logger.debug(f"DNS lookup: {ip_address} -> Non-existent domain")
+                self._nonexistent_ips.add(ip_address)
+                return "NXDOMAIN"
             logger.debug(f"DNS lookup failed for {ip_address}: {e}")
+            return None
+        except socket.gaierror as e:
+            # Address-related error (often means NXDOMAIN)
+            error_msg = str(e).lower()
+            if 'name or service not known' in error_msg or 'nodename nor servname provided' in error_msg:
+                logger.debug(f"DNS lookup: {ip_address} -> Non-existent domain")
+                self._nonexistent_ips.add(ip_address)
+                return "NXDOMAIN"
+            logger.debug(f"DNS lookup failed for {ip_address}: {e}")
+            return None
+        except socket.timeout as e:
+            logger.debug(f"DNS lookup timeout for {ip_address}: {e}")
             return None
         except Exception as e:
             logger.warning(f"Unexpected error in DNS lookup for {ip_address}: {e}")
@@ -311,6 +350,53 @@ class HostnameResolver:
 
         return zone_prefixes.get(zone, 'srv')
 
+    def is_nonexistent(self, ip_address: str) -> bool:
+        """
+        Check if an IP address was marked as non-existent (NXDOMAIN)
+
+        Args:
+            ip_address: IP address to check
+
+        Returns:
+            True if IP is marked as non-existent
+        """
+        return ip_address in self._nonexistent_ips
+
+    def should_filter_flow(self, src_ip: str, dst_ip: str) -> bool:
+        """
+        Check if a flow should be filtered based on non-existent domains
+
+        A flow is filtered if BOTH source and destination are non-existent domains.
+
+        Args:
+            src_ip: Source IP address
+            dst_ip: Destination IP address
+
+        Returns:
+            True if flow should be filtered (both IPs are non-existent)
+        """
+        if not self.filter_nonexistent:
+            return False
+
+        # Filter only if BOTH source AND destination are non-existent
+        src_nonexistent = self.is_nonexistent(src_ip)
+        dst_nonexistent = self.is_nonexistent(dst_ip)
+
+        if src_nonexistent and dst_nonexistent:
+            logger.debug(f"Filtering flow: {src_ip} -> {dst_ip} (both non-existent)")
+            return True
+
+        return False
+
+    def get_nonexistent_count(self) -> int:
+        """
+        Get count of non-existent IP addresses
+
+        Returns:
+            Number of IPs marked as non-existent
+        """
+        return len(self._nonexistent_ips)
+
     def get_cache_stats(self) -> Dict[str, int]:
         """
         Get hostname resolution cache statistics
@@ -321,12 +407,14 @@ class HostnameResolver:
         return {
             'cached_hostnames': len(self._cache),
             'provided_hostnames': len(self._provided_hostnames),
-            'cache_size': len(self._cache)
+            'cache_size': len(self._cache),
+            'nonexistent_ips': len(self._nonexistent_ips)
         }
 
     def clear_cache(self):
         """Clear the hostname resolution cache"""
         self._cache.clear()
+        self._nonexistent_ips.clear()
         logger.info("Hostname resolution cache cleared")
 
 
@@ -351,7 +439,9 @@ def get_resolver() -> HostnameResolver:
 def configure_resolver(demo_mode: bool = False,
                       enable_dns_lookup: bool = True,
                       dc_server: Optional[str] = None,
-                      dc_domain: Optional[str] = None) -> HostnameResolver:
+                      dc_domain: Optional[str] = None,
+                      filter_nonexistent: bool = True,
+                      mark_nonexistent: bool = True) -> HostnameResolver:
     """
     Configure the global hostname resolver
 
@@ -360,6 +450,8 @@ def configure_resolver(demo_mode: bool = False,
         enable_dns_lookup: Enable reverse DNS lookups
         dc_server: Domain Controller server
         dc_domain: Domain name
+        filter_nonexistent: If True, mark non-existent domains for filtering (default: True)
+        mark_nonexistent: If True, show "server-not-found" for failed DNS lookups (default: True)
 
     Returns:
         Configured HostnameResolver instance
@@ -369,7 +461,9 @@ def configure_resolver(demo_mode: bool = False,
         demo_mode=demo_mode,
         enable_dns_lookup=enable_dns_lookup,
         dc_server=dc_server,
-        dc_domain=dc_domain
+        dc_domain=dc_domain,
+        filter_nonexistent=filter_nonexistent,
+        mark_nonexistent=mark_nonexistent
     )
     return _global_resolver
 

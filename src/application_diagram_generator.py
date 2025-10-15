@@ -35,7 +35,7 @@ class ApplicationDiagramGenerator:
         'MESSAGING_TIER': '#ccffff',     # Cyan (message queues)
         'MANAGEMENT_TIER': '#ffffcc',    # Yellow (infrastructure)
         'EXTERNAL': '#e6ccff',           # Purple (external systems)
-        'PREDICTED': '#ffcccc',          # Pink with dashed border
+        'PREDICTED': '#aed6f1',          # ✅ LIGHT BLUE for predictions
     }
 
     # Shape types
@@ -137,7 +137,8 @@ class ApplicationDiagramGenerator:
         topology_data: Dict = None,
         predictions: Dict = None,
         output_path: str = None,
-        max_nodes: int = 15
+        max_nodes: int = 15,
+        filter_nonexistent: bool = True
     ) -> str:
         """Generate application-level data flow diagram showing internal architecture
 
@@ -148,6 +149,7 @@ class ApplicationDiagramGenerator:
             predictions: Markov chain predictions (optional)
             output_path: Output file path for .mmd file
             max_nodes: Maximum number of external connections to show (default: 15)
+            filter_nonexistent: If True, filter flows with both IPs non-existent (default: True)
 
         Returns:
             Mermaid diagram content
@@ -156,16 +158,29 @@ class ApplicationDiagramGenerator:
 
         from collections import defaultdict
 
+        # Apply filtering to flow records if hostname resolver available
+        if filter_nonexistent and self.hostname_resolver:
+            from utils.flow_filter import apply_filtering_to_records
+            flow_records = apply_filtering_to_records(
+                flow_records,
+                self.hostname_resolver,
+                filter_enabled=True,
+                log_stats=False  # Don't log per-app (too verbose)
+            )
+
         # Analyze SOURCE IPs to determine internal tiers
         internal_tiers = defaultdict(set)
 
         for record in flow_records:
-            if not record.src_ip:
+            # ✅ FIX: Skip if src_ip is missing, invalid, or string 'nan'
+            if not record.src_ip or not isinstance(record.src_ip, str) or record.src_ip == 'nan':
                 continue
 
             # Classify source IP by subnet to determine tier
             src_zone = self._infer_zone_from_ip(record.src_ip)
-            internal_tiers[src_zone].add(record.src_ip)
+            # Only track internal tiers (ignore external IPs)
+            if src_zone != 'EXTERNAL':
+                internal_tiers[src_zone].add(record.src_ip)
 
         logger.info(f"  Found internal tiers: {list(internal_tiers.keys())}")
 
@@ -176,7 +191,8 @@ class ApplicationDiagramGenerator:
         })
 
         for record in flow_records:
-            if not record.dst_ip:
+            # ✅ FIX: Skip if dst_ip is missing, invalid, or string 'nan'
+            if not record.dst_ip or not isinstance(record.dst_ip, str) or record.dst_ip == 'nan':
                 continue
 
             target_name = self.hostname_resolver.resolve(record.dst_ip) if self.hostname_resolver else record.dst_ip
@@ -469,7 +485,12 @@ class ApplicationDiagramGenerator:
                 color = self.ZONE_COLORS.get(zone, '#cccccc')
 
                 lines.append(f"        {node_id}{shape_template.format(comp_name)}")
-                lines.append(f"        style {node_id} fill:{color},stroke:#333,stroke-width:2px")
+
+                # ✅ FIX: Blue stroke for predicted nodes
+                if comp_data['is_predicted']:
+                    lines.append(f"        style {node_id} fill:{color},stroke:#3498db,stroke-width:3px,stroke-dasharray:5")
+                else:
+                    lines.append(f"        style {node_id} fill:{color},stroke:#333,stroke-width:2px")
 
             lines.append("    end")
             lines.append("")
@@ -478,19 +499,24 @@ class ApplicationDiagramGenerator:
         lines.append("")
         app_node = "app_container"
 
+        flow_index = 0  # Track flow index for styling
         for flow in flows:
             target_id = self._sanitize_id(flow['target'])
             label = flow['label']
             flow_type = flow.get('flow_type', 'app_to_infra')
 
             if flow['is_predicted']:
+                # ✅ FIX: Blue dashed line for predictions
                 lines.append(f"    {app_node} -.{label}.-> {target_id}")
+                lines.append(f"    linkStyle {flow_index} stroke:#3498db,stroke-width:2px")
             else:
                 # Use thicker arrows for app-to-app connections
                 if flow_type == 'app_to_app':
                     lines.append(f"    {app_node} =={label}==> {target_id}")
                 else:
                     lines.append(f"    {app_node} --{label}--> {target_id}")
+
+            flow_index += 1
 
         lines.append("```")
         lines.append("")
@@ -504,8 +530,10 @@ class ApplicationDiagramGenerator:
             "- **Infrastructure** = Databases, caches, queues",
             "- ⚪ Circles = Services/Applications",
             "- ▭ Rectangles = Data Stores",
-            "- === Thick lines = App-to-app calls",
-            "- ─── Solid lines = Infrastructure dependencies",
+            "- === Thick lines = App-to-app calls (observed)",
+            "- ─── Solid lines = Infrastructure dependencies (observed)",
+            "- ╌╌╌ Blue dashed lines = Predicted flows (Markov chain)",
+            "- 🔵 Blue outline = Predicted components",
             "- 🎨 Colors indicate security zones",
             ""
         ])

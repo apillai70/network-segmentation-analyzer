@@ -609,6 +609,10 @@ class LocalSemanticAnalyzer:
         # Detect database from observed peers
         if observed_peers:
             for peer in observed_peers:
+                # ✅ FIX: Skip NaN/None/non-string values
+                if not peer or not isinstance(peer, str):
+                    continue
+
                 peer_lower = peer.lower()
                 for db, keywords in patterns['databases'].items():
                     if any(kw in peer_lower for kw in keywords):
@@ -796,6 +800,10 @@ class DependencyReasoner:
         # Dependencies from observed peers
         if observed_peers:
             for peer in observed_peers:
+                # ✅ FIX: Skip NaN/None/non-string values
+                if not peer or not isinstance(peer, str):
+                    continue
+
                 peer_lower = peer.lower()
 
                 # Identify peer type

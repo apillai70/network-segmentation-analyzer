@@ -1,0 +1,25 @@
+============================================================
+ESSENTIAL COMMANDS ONLY - Easy to Type at Customer Site
+============================================================
+
+CLEANUP (if needed):
+  python scripts\manage_file_tracking.py --reset
+  del outputs_final\incremental_topology.json
+
+ADD FILE:
+  copy {source} data\input\
+
+PROCESS:
+  python run_incremental_learning.py --batch
+
+REPORTS:
+  python generate_application_reports.py
+  python generate_solution_design_docs.py
+
+CHECK:
+  python scripts\manage_file_tracking.py --list
+  dir outputs_final\word_reports\architecture\
+
+============================================================
+THAT'S IT! Just these 6 commands.
+============================================================

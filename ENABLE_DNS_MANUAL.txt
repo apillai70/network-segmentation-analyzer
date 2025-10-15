@@ -1,0 +1,106 @@
+================================================================================
+MANUAL EDIT TO ENABLE DNS LOOKUPS - CUSTOMER SITE
+================================================================================
+
+FILE: src\core\incremental_learner.py
+LINE: ~379
+
+================================================================================
+FIND THIS (around line 378):
+================================================================================
+
+            # Create hostname resolver (demo mode)
+            hostname_resolver = HostnameResolver(demo_mode=True)
+
+            # Output path
+            diagram_output = Path('outputs_final/diagrams') / f"{app_id}_application_diagram.mmd"
+
+
+================================================================================
+REPLACE WITH:
+================================================================================
+
+            # Create hostname resolver with REAL DNS lookups (not demo mode!)
+            hostname_resolver = HostnameResolver(demo_mode=False, enable_dns_lookup=True, timeout=3.0)
+            logger.info(f"    DNS lookups ENABLED (timeout: 3s)")
+
+            # Pre-populate resolver with hostnames from CSV (if available)
+            for record in flow_records:
+                # Add source hostname if exists
+                if record.src_hostname and record.src_hostname.strip() and record.src_hostname != 'nan':
+                    hostname_resolver.add_known_hostname(record.src_ip, record.src_hostname)
+
+                # Add destination hostname if exists
+                if record.dst_hostname and record.dst_hostname.strip() and record.dst_hostname != 'nan':
+                    hostname_resolver.add_known_hostname(record.dst_ip, record.dst_hostname)
+
+            cache_stats = hostname_resolver.get_cache_stats()
+            logger.info(f"    Loaded {cache_stats['provided_hostnames']} hostnames from CSV")
+
+            # Output path
+            diagram_output = Path('outputs_final/diagrams') / f"{app_id}_application_diagram.mmd"
+
+
+================================================================================
+TO FIND THE LINE NUMBER:
+================================================================================
+
+Windows:
+    findstr /n "Create hostname resolver" src\core\incremental_learner.py
+
+Linux:
+    grep -n "Create hostname resolver" src/core/incremental_learner.py
+
+
+================================================================================
+QUICK OPTIONS (Edit line 379 only):
+================================================================================
+
+Option 1: Enable DNS (slower, real hostnames)
+    hostname_resolver = HostnameResolver(demo_mode=False, enable_dns_lookup=True, timeout=3.0)
+
+Option 2: Disable DNS (faster, shows IPs)
+    hostname_resolver = HostnameResolver(demo_mode=False, enable_dns_lookup=False)
+
+Option 3: Demo mode (fastest, fake hostnames)
+    hostname_resolver = HostnameResolver(demo_mode=True)
+
+
+================================================================================
+AFTER EDITING:
+================================================================================
+
+1. Delete old diagrams:
+   del outputs_final\diagrams\AODSVY*
+
+2. Reprocess:
+   python run_incremental_learning.py --batch
+
+3. Expected output:
+   DNS lookups ENABLED (timeout: 3s)
+   Loaded 0 hostnames from CSV
+   [Processing - DNS lookups in progress...]
+   [OK] Application diagram generated
+   [INFO] DNS resolution stats: 152 hostnames cached
+
+4. View diagram:
+   start outputs_final\diagrams\AODSVY_application_diagram.html
+
+
+================================================================================
+PERFORMANCE WARNING:
+================================================================================
+
+DNS lookups can be SLOW!
+- 924 flows × 3 sec timeout = UP TO 5 MINUTES
+- Actual time: 30-60 seconds (with successful lookups)
+
+If too slow:
+- Reduce timeout to 1s: timeout=1.0
+- Or disable DNS: enable_dns_lookup=False
+- Or pre-populate CSV with hostnames
+
+
+================================================================================
+END OF MANUAL EDIT GUIDE
+================================================================================
