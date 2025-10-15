@@ -133,8 +133,11 @@ for mmd_file in missing_pngs:
 
     # Generate PNG with high resolution (scale=4 for 300+ DPI equivalent)
     try:
+        # Use puppeteer config to disable sandboxing for customer environments
+        puppeteer_config = Path(__file__).parent / 'puppeteer-config.json'
         result = subprocess.run(
             [mmdc_cmd, '-i', tmp_path, '-o', str(png_path),
+             '-p', str(puppeteer_config),
              '-w', '4800', '-H', '3600', '-s', '4', '-t', 'neutral', '-b', 'transparent'],
             capture_output=True,
             text=True,

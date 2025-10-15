@@ -192,8 +192,11 @@ def generate_png_from_mmd(mmd_path, mmdc_cmd):
         
         # Generate PNG with high resolution (scale=4 for 300+ DPI equivalent)
         png_path = mmd_path.with_suffix('.png')
+        # Use puppeteer config to disable sandboxing for customer environments
+        puppeteer_config = Path(__file__).parent / 'puppeteer-config.json'
         result = subprocess.run(
             [mmdc_cmd, '-i', tmp_path, '-o', str(png_path),
+             '-p', str(puppeteer_config),
              '-w', '4800', '-H', '3600', '-s', '4', '-t', 'neutral', '-b', 'transparent'],
             capture_output=True,
             text=True,
