@@ -23,7 +23,7 @@ if mmdc_in_path:
         result = subprocess.run([mmdc_in_path, '--version'], capture_output=True, timeout=5)
         if result.returncode == 0:
             mmdc_cmd = mmdc_in_path
-            print(f"✓ Found mmdc in PATH: {mmdc_in_path}")
+            print(f"[OK] Found mmdc in PATH: {mmdc_in_path}")
     except:
         pass
 
@@ -36,7 +36,7 @@ if not mmdc_cmd:
             result = subprocess.run([str(nodeenv_mmdc), '--version'], capture_output=True, timeout=5)
             if result.returncode == 0:
                 mmdc_cmd = str(nodeenv_mmdc)
-                print(f"✓ Found mmdc in nodeenv: {mmdc_cmd}")
+                print(f"[OK] Found mmdc in nodeenv: {mmdc_cmd}")
         except:
             pass
 
@@ -50,7 +50,7 @@ if not mmdc_cmd:
                 result = subprocess.run([str(npm_mmdc), '--version'], capture_output=True, timeout=5)
                 if result.returncode == 0:
                     mmdc_cmd = str(npm_mmdc)
-                    print(f"✓ Found mmdc in npm global: {mmdc_cmd}")
+                    print(f"[OK] Found mmdc in npm global: {mmdc_cmd}")
             except:
                 pass
 
@@ -60,12 +60,12 @@ if not mmdc_cmd:
         result = subprocess.run(['mmdc', '--version'], capture_output=True, timeout=5)
         if result.returncode == 0:
             mmdc_cmd = 'mmdc'
-            print("✓ Found mmdc (direct command)")
+            print("[OK] Found mmdc (direct command)")
     except:
         pass
 
 if not mmdc_cmd:
-    print("\n✗ ERROR: mmdc (mermaid-cli) not found")
+    print("\n[ERROR] mmdc (mermaid-cli) not found")
     print("\nSolutions:")
     print("  1. Activate nodeenv: nodeenv\\Scripts\\activate (Windows)")
     print("  2. Install globally: npm install -g @mermaid-js/mermaid-cli")
@@ -86,7 +86,7 @@ print(f"Found {len(all_mmd_files)} total Mermaid diagrams")
 print(f"Missing {len(missing_pngs)} PNG files")
 
 if not missing_pngs:
-    print("\n✓ All PNG files already exist!")
+    print("\n[OK] All PNG files already exist!")
     exit(0)
 
 print(f"\nGenerating {len(missing_pngs)} PNG files...")
@@ -99,27 +99,32 @@ for mmd_file in missing_pngs:
     app_name = mmd_file.stem.replace('_diagram', '')
     png_path = mmd_file.with_suffix('.png')
 
-    # Read and strip code fences
+    # Read diagram content
     with open(mmd_file, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Extract graph content (between code fences and before legend)
-    lines = content.split('\n')
-    graph_lines = []
-    in_graph = False
+    # Check if content has code fences
+    if '```mermaid' in content:
+        # Extract graph content (between code fences)
+        lines = content.split('\n')
+        graph_lines = []
+        in_graph = False
 
-    for line in lines:
-        stripped = line.strip()
-        if stripped.startswith('```mermaid'):
-            in_graph = True
-            continue
-        elif stripped == '```':
-            in_graph = False
-            break
-        elif in_graph:
-            graph_lines.append(line)
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith('```mermaid'):
+                in_graph = True
+                continue
+            elif stripped == '```':
+                in_graph = False
+                break
+            elif in_graph:
+                graph_lines.append(line)
 
-    content = '\n'.join(graph_lines).strip()
+        content = '\n'.join(graph_lines).strip()
+    else:
+        # Content is already plain Mermaid syntax
+        content = content.strip()
 
     # Write to temp file
     with tempfile.NamedTemporaryFile(mode='w', suffix='.mmd', delete=False, encoding='utf-8') as tmp:
@@ -137,15 +142,15 @@ for mmd_file in missing_pngs:
         )
 
         if result.returncode == 0:
-            print(f'✓ {app_name}: PNG generated')
+            print(f'[OK] {app_name}: PNG generated')
             success_count += 1
         else:
-            print(f'✗ {app_name}: mmdc returned error')
+            print(f'[ERROR] {app_name}: mmdc returned error')
             if result.stderr:
                 print(f'  Error: {result.stderr[:200]}')
             failed_count += 1
     except Exception as e:
-        print(f'✗ {app_name}: {e}')
+        print(f'[ERROR] {app_name}: {e}')
         failed_count += 1
     finally:
         try:
@@ -156,8 +161,8 @@ for mmd_file in missing_pngs:
 print("\n" + "="*80)
 print(f"PNG GENERATION COMPLETE")
 print("="*80)
-print(f"✓ Success: {success_count}/{len(missing_pngs)} PNG files generated")
+print(f"[OK] Success: {success_count}/{len(missing_pngs)} PNG files generated")
 if failed_count > 0:
-    print(f"✗ Failed: {failed_count}/{len(missing_pngs)} PNG files")
+    print(f"[ERROR] Failed: {failed_count}/{len(missing_pngs)} PNG files")
 print(f"\nOutput location: {diagram_dir}")
 print("="*80)
