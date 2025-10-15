@@ -14,8 +14,6 @@ from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.section import WD_ORIENT
-from PIL import Image
-import tempfile
 
 logger = logging.getLogger(__name__)
 
@@ -125,30 +123,16 @@ class ApplicationArchitectureDocument:
 
         self.doc.add_paragraph()
 
-        # Embed PNG diagram - rotate to vertical and let it span multiple pages
+        # Embed PNG diagram - horizontal, full width, auto-scaled height
         png_file = Path(png_path)
         if png_file.exists():
             try:
-                # Rotate image 90° counterclockwise to make horizontal diagram vertical
-                with Image.open(str(png_file)) as img:
-                    rotated_img = img.rotate(90, expand=True)
-
-                    # Save to temporary file
-                    with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp:
-                        rotated_img.save(tmp.name, 'PNG')
-                        tmp_path = tmp.name
-
-                # Landscape page: 9" usable width, set to 60% = 5.4 inches
-                # Height auto-scales to preserve aspect ratio - can span multiple pages
-                # This keeps the image SHARP and READABLE
-                self.doc.add_picture(tmp_path, width=Inches(5.4))
-                logger.info(f"  PNG embedded (vertical, width=5.4in, height=auto): {png_file.name}")
-
-                # Clean up temp file
-                try:
-                    Path(tmp_path).unlink()
-                except:
-                    pass
+                # NO rotation - keep image horizontal as generated
+                # Landscape page: 11" wide x 8.5" tall, with 1" margins = 9" usable width
+                # Set width to 8.5 inches (95% of page width)
+                # Height auto-scales to preserve aspect ratio (will be 1.5-2x larger)
+                self.doc.add_picture(str(png_file), width=Inches(8.5))
+                logger.info(f"  PNG embedded (horizontal, width=8.5in, height=auto): {png_file.name}")
 
             except Exception as e:
                 logger.error(f"  Failed to embed PNG: {e}")
