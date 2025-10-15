@@ -72,6 +72,27 @@ if not mmdc_cmd:
     print("  3. Install in nodeenv: nodeenv\\Scripts\\npm install -g @mermaid-js/mermaid-cli")
     exit(1)
 
+# Check Chromium executable in nodeenv (for EPERM diagnosis)
+print("\nChecking Chromium executable...")
+project_root = Path(__file__).parent
+chromium_paths = [
+    project_root / 'nodeenv' / 'Scripts' / 'node_modules' / '@mermaid-js' / 'mermaid-cli' / 'node_modules' / 'puppeteer' / '.local-chromium',
+    project_root / 'nodeenv' / 'lib' / 'node_modules' / '@mermaid-js' / 'mermaid-cli' / 'node_modules' / 'puppeteer' / '.local-chromium',
+]
+
+chromium_found = False
+for chrome_path in chromium_paths:
+    if chrome_path.exists():
+        print(f"  Found Chromium cache: {chrome_path}")
+        chromium_found = True
+        break
+
+if not chromium_found:
+    print("  WARNING: Chromium not found in nodeenv")
+    print("  If you get EPERM errors, run: nodeenv\\Scripts\\node nodeenv\\Scripts\\node_modules\\puppeteer\\install.js")
+else:
+    print("  [OK] Chromium detected")
+
 # Find all .mmd files that need PNG conversion
 print(f"\nScanning {diagram_dir} for Mermaid diagrams...")
 all_mmd_files = list(diagram_dir.glob('*_diagram.mmd'))
@@ -135,13 +156,21 @@ for mmd_file in missing_pngs:
     try:
         # Use puppeteer config to disable sandboxing for customer environments
         puppeteer_config = Path(__file__).parent / 'puppeteer-config.json'
+
+        # Build mmdc command with config if it exists
+        mmdc_args = [mmdc_cmd, '-i', tmp_path, '-o', str(png_path)]
+
+        if puppeteer_config.exists():
+            mmdc_args.extend(['-p', str(puppeteer_config)])
+
+        mmdc_args.extend(['-w', '4800', '-H', '3600', '-s', '4', '-t', 'neutral', '-b', 'transparent'])
+
         result = subprocess.run(
-            [mmdc_cmd, '-i', tmp_path, '-o', str(png_path),
-             '-p', str(puppeteer_config),
-             '-w', '4800', '-H', '3600', '-s', '4', '-t', 'neutral', '-b', 'transparent'],
+            mmdc_args,
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=30,
+            env={**os.environ, 'PUPPETEER_EXECUTABLE_PATH': ''}  # Force use bundled Chromium
         )
 
         if result.returncode == 0:
@@ -150,10 +179,15 @@ for mmd_file in missing_pngs:
         else:
             print(f'[ERROR] {app_name}: mmdc returned error')
             if result.stderr:
-                print(f'  Error: {result.stderr[:200]}')
+                print(f'  Error: {result.stderr[:500]}')
+            if result.stdout:
+                print(f'  Output: {result.stdout[:500]}')
             failed_count += 1
+    except subprocess.TimeoutExpired:
+        print(f'[ERROR] {app_name}: Timeout after 30 seconds')
+        failed_count += 1
     except Exception as e:
-        print(f'[ERROR] {app_name}: {e}')
+        print(f'[ERROR] {app_name}: {type(e).__name__}: {e}')
         failed_count += 1
     finally:
         try:
