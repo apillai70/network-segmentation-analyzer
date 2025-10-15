@@ -15,9 +15,12 @@ from datetime import datetime
 from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.section import WD_ORIENT
 from docx.enum.style import WD_STYLE_TYPE
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
+from PIL import Image
+import tempfile
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +28,7 @@ logger = logging.getLogger(__name__)
 class SolutionsArchitectureDocument:
     """Generates comprehensive Solutions Architecture Document in Word format"""
 
-    def __init__(self, analysis_results: Dict, zones: Dict, rules: List, ml_predictions: Dict = None):
+    def __init__(self, analysis_results: Dict, zones: Dict, rules: List, ml_predictions: Dict = None, png_path: str = None):
         """
         Initialize document generator
 
@@ -34,11 +37,13 @@ class SolutionsArchitectureDocument:
             zones: Network zones dictionary
             rules: List of SegmentationRule objects
             ml_predictions: ML predictions for apps without data (optional)
+            png_path: Path to PNG diagram file for embedding (optional)
         """
         self.analysis = analysis_results
         self.zones = zones
         self.rules = rules
         self.ml_predictions = ml_predictions
+        self.png_path = png_path
         self.doc = Document()
 
         self._setup_styles()
@@ -88,7 +93,17 @@ class SolutionsArchitectureDocument:
         self._add_page_break()
 
         self._add_proposed_segmentation_design()
-        self._add_page_break()
+
+        # Add new section to return to portrait orientation after diagram page
+        if self.png_path:
+            section = self.doc.add_section()
+            section.orientation = WD_ORIENT.PORTRAIT
+            # Swap dimensions back to portrait
+            new_width, new_height = section.page_height, section.page_width
+            section.page_width = new_width
+            section.page_height = new_height
+        else:
+            self._add_page_break()
 
         self._add_segmentation_rules()
         self._add_page_break()
@@ -391,18 +406,88 @@ class SolutionsArchitectureDocument:
 
         self.doc.add_paragraph()
 
-        # Architecture diagram placeholder
-        self.doc.add_heading('Zone Architecture Diagram', level=2)
+        # Architecture diagram - embed PNG with landscape orientation
+        self.doc.add_heading('Application Architecture Diagram', level=2)
 
-        para = self.doc.add_paragraph()
-        para.add_run('Note: ').bold = True
-        para.add_run('See outputs/diagrams/overall_network.html for the interactive network diagram. ')
-        para.add_run('To embed the diagram image here, convert the Mermaid .mmd file to PNG using:\n')
+        # If PNG path is provided, embed it in landscape orientation with rotation
+        if self.png_path and Path(self.png_path).exists():
+            # Change this section to landscape orientation
+            section = self.doc.sections[-1]
+            section.orientation = WD_ORIENT.LANDSCAPE
+            # Swap page dimensions for landscape
+            new_width, new_height = section.page_height, section.page_width
+            section.page_width = new_width
+            section.page_height = new_height
 
-        code_para = self.doc.add_paragraph('mmdc -i overall_network.mmd -o overall_network.png', style='Quote')
-        code_para.runs[0].font.name = 'Courier New'
+            self.doc.add_paragraph(
+                'The following diagram shows the application architecture, data flows, security zones, '
+                'and dependencies for this network segmentation solution.'
+            )
 
-        self.doc.add_paragraph()
+            self.doc.add_paragraph()
+
+            try:
+                # Rotate image 90° counterclockwise to make horizontal diagram vertical
+                with Image.open(self.png_path) as img:
+                    rotated_img = img.rotate(90, expand=True)
+
+                    # Save to temporary file
+                    with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp:
+                        rotated_img.save(tmp.name, 'PNG')
+                        tmp_path = tmp.name
+
+                # Landscape page: 9" usable width, set to 60% = 5.4 inches
+                # Height auto-scales to preserve aspect ratio - can span multiple pages
+                # This keeps the image SHARP and READABLE
+                self.doc.add_picture(tmp_path, width=Inches(5.4))
+                logger.info(f"  PNG embedded (vertical, width=5.4in, height=auto): {Path(self.png_path).name}")
+
+                # Clean up temp file
+                try:
+                    Path(tmp_path).unlink()
+                except:
+                    pass
+
+            except Exception as e:
+                logger.error(f"  Failed to embed PNG: {e}")
+                self.doc.add_paragraph(f'Note: Diagram could not be embedded - {e}')
+
+            self.doc.add_paragraph()
+
+            # Legend
+            self.doc.add_heading('Diagram Legend', level=3)
+
+            legend_items = [
+                'Application Box (with direction TB) = Internal architecture showing application tiers',
+                'Web Tier = Frontend servers handling user requests',
+                'App Tier = Backend application servers',
+                'Data Tier = Database servers',
+                'Cache Tier = Caching layer (Redis, Memcache)',
+                'Messaging Tier = Message queues (Kafka, RabbitMQ)',
+                'Management Tier = Infrastructure management and monitoring',
+                'Downstream Applications (Circles) = External applications this app calls',
+                'Infrastructure (Rectangles) = Databases, caches, and queues',
+                'Thick lines (===) = Application-to-application calls',
+                'Regular lines (---) = Infrastructure dependencies',
+                'Colors indicate security zones and tiers'
+            ]
+
+            for item in legend_items:
+                self.doc.add_paragraph(item, style='List Bullet')
+
+            self.doc.add_paragraph()
+
+        else:
+            # Fallback message if no PNG provided
+            para = self.doc.add_paragraph()
+            para.add_run('Note: ').bold = True
+            para.add_run('Diagram image not available. ')
+            if self.png_path:
+                para.add_run(f'PNG file not found at: {self.png_path}')
+            else:
+                para.add_run('No diagram path provided. See outputs/diagrams/ for generated diagrams.')
+
+            self.doc.add_paragraph()
 
         # Traffic flow patterns
         self.doc.add_heading('Recommended Traffic Flow Patterns', level=2)
@@ -915,7 +1000,8 @@ def generate_solutions_document(
     analysis_results: Dict,
     zones: Dict,
     rules: List,
-    output_path: str = 'outputs/network_segmentation_solution.docx'
+    output_path: str = 'outputs_final/word_reports/netseg/network_segmentation_solution.docx',
+    png_path: str = None
 ):
     """
     Generate comprehensive Solutions Architecture Document
@@ -925,11 +1011,12 @@ def generate_solutions_document(
         zones: Network zones dictionary
         rules: List of SegmentationRule objects
         output_path: Output file path
+        png_path: Path to PNG diagram for embedding (optional)
 
     Returns:
         Path to generated document
     """
-    doc_gen = SolutionsArchitectureDocument(analysis_results, zones, rules)
+    doc_gen = SolutionsArchitectureDocument(analysis_results, zones, rules, png_path=png_path)
     doc_gen.generate_document(output_path)
 
     logger.info(f"✅ Solutions Architecture Document generated: {output_path}")

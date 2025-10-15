@@ -126,10 +126,11 @@ for mmd_file in missing_pngs:
         tmp.write(content)
         tmp_path = tmp.name
 
-    # Generate PNG
+    # Generate PNG with high resolution (scale=4 for 300+ DPI equivalent)
     try:
         result = subprocess.run(
-            [mmdc_cmd, '-i', tmp_path, '-o', str(png_path)],
+            [mmdc_cmd, '-i', tmp_path, '-o', str(png_path),
+             '-w', '4800', '-H', '3600', '-s', '4', '-t', 'neutral', '-b', 'transparent'],
             capture_output=True,
             text=True,
             timeout=30

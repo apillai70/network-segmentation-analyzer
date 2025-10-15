@@ -190,11 +190,11 @@ def generate_png_from_mmd(mmd_path, mmdc_cmd):
             tmp.write(clean_content)
             tmp_path = tmp.name
         
-        # Generate PNG with explicit dimensions and scale for better rendering
+        # Generate PNG with high resolution (scale=4 for 300+ DPI equivalent)
         png_path = mmd_path.with_suffix('.png')
         result = subprocess.run(
             [mmdc_cmd, '-i', tmp_path, '-o', str(png_path),
-             '-w', '3200', '-H', '2400', '-s', '2', '-t', 'neutral', '-b', 'transparent'],
+             '-w', '4800', '-H', '3600', '-s', '4', '-t', 'neutral', '-b', 'transparent'],
             capture_output=True,
             text=True,
             timeout=30
