@@ -19,18 +19,30 @@ logger = logging.getLogger(__name__)
 class MermaidDiagramGenerator:
     """Generates Mermaid diagrams for network visualization with hostname resolution"""
 
-    # Zone colors (Mermaid-compatible)
+    # Zone colors (Mermaid-compatible) - Rainbow spectrum for diverse components
     ZONE_COLORS = {
-        'EXTERNAL': '#f44336',
-        'DMZ': '#ff9800',
-        'WEB_TIER': '#4caf50',
-        'APP_TIER': '#2196f3',
-        'DATA_TIER': '#ff5722',
-        'MESSAGING_TIER': '#9c27b0',
-        'CACHE_TIER': '#00bcd4',
-        'MANAGEMENT_TIER': '#ffc107',
-        'INFRASTRUCTURE': '#795548',
-        'INTERNAL': '#4caf50'
+        'EXTERNAL': '#f44336',           # Red - External/High Risk
+        'DMZ': '#ff9800',                # Orange - DMZ
+        'WEB_TIER': '#4caf50',           # Green - Web Tier
+        'APP_TIER': '#2196f3',           # Blue - Application Tier
+        'DATA_TIER': '#ff5722',          # Deep Orange - Data Tier
+        'MESSAGING_TIER': '#9c27b0',     # Purple - Message queues
+        'CACHE_TIER': '#00bcd4',         # Cyan - Cache services
+        'MANAGEMENT_TIER': '#ffc107',    # Amber - Management/infrastructure
+        'INFRASTRUCTURE': '#795548',     # Brown - Infrastructure
+        'INTERNAL': '#4caf50',           # Green - Internal/Low Risk
+        'API_GATEWAY': '#8bc34a',        # Light Green - API Gateway
+        'LOAD_BALANCER': '#e91e63',      # Pink - Load Balancers
+        'STORAGE_TIER': '#673ab7',       # Deep Purple - Storage services
+        'MONITORING': '#ff9800',         # Orange - Monitoring/Logging
+        'SECURITY': '#f44336',           # Red - Security services
+        'NETWORK': '#009688',            # Teal - Network services
+        'COMPUTE': '#03a9f4',            # Light Blue - Compute/VMs
+        'CONTAINER': '#9c27b0',          # Purple - Containers
+        'SERVERLESS': '#00bcd4',         # Cyan - Serverless/Functions
+        'ANALYTICS': '#ffeb3b',          # Yellow - Analytics
+        'ML_SERVICE': '#8bc34a',         # Light Green - ML Services
+        'UNKNOWN': '#9e9e9e',            # Gray - Unknown/Unclassified
     }
 
     def __init__(self, flow_records: List, zones: Dict, hostname_resolver=None, filter_nonexistent: bool = False):
@@ -155,12 +167,15 @@ class MermaidDiagramGenerator:
 
         mermaid_content = '\n'.join(lines)
 
-        # Save as .mmd file
+        # Save as .mmd file with markdown fencing for better compatibility
         mmd_file = Path(output_path)
         mmd_file.parent.mkdir(parents=True, exist_ok=True)
 
         with open(mmd_file, 'w', encoding='utf-8') as f:
+            # Wrap in markdown code fence for Mermaid.ink API compatibility
+            f.write('```mermaid\n')
             f.write(mermaid_content)
+            f.write('\n```')
 
         logger.info(f"✓ Overall network diagram saved: {output_path}")
 
@@ -227,19 +242,25 @@ class MermaidDiagramGenerator:
             else:
                 dependency_types[dep_ip] = 'downstream_app'
 
-        # Start building Mermaid diagram - LEFT TO RIGHT layout
+        # Start building Mermaid diagram - TOP TO BOTTOM layout (VERTICAL)
         lines = []
-        lines.append("graph LR")
-        lines.append(f"    %% Application: {app_name} - Upstream/Downstream View")
+        lines.append("graph TB")
+        lines.append(f"    %% Application: {app_name} - Tier-based Architecture View")
         lines.append("")
 
-        # Define styles matching the sample diagram
+        # Define styles for vertical tier-based layout
         lines.append("    %% Component Styles")
-        lines.append("    classDef appComponent fill:#b3e5fc,stroke:#01579b,stroke-width:2px,color:#000")
-        lines.append("    classDef database fill:#a5d6a7,stroke:#2e7d32,stroke-width:2px,color:#000")
-        lines.append("    classDef cache fill:#b3e5fc,stroke:#01579b,stroke-width:2px,color:#000")
-        lines.append("    classDef queue fill:#90caf9,stroke:#0277bd,stroke-width:2px,color:#000")
-        lines.append("    classDef app fill:#ffe082,stroke:#f57c00,stroke-width:2px,color:#000")
+        lines.append("    classDef webTier fill:#ffcccc,stroke:#cc0000,stroke-width:3px,color:#000")  # Red - High Risk
+        lines.append("    classDef appTier fill:#cce5ff,stroke:#0066cc,stroke-width:3px,color:#000")  # Blue - Application Tier
+        lines.append("    classDef dataTier fill:#ff9966,stroke:#cc6600,stroke-width:3px,color:#000")  # Orange - Data Tier
+        lines.append("    classDef cacheTier fill:#ffcc99,stroke:#ff9933,stroke-width:3px,color:#000")  # Light Orange - Cache
+        lines.append("    classDef msgTier fill:#cc99ff,stroke:#9933ff,stroke-width:3px,color:#000")  # Purple - Messaging
+        lines.append("    classDef mgmtTier fill:#ffff99,stroke:#cccc00,stroke-width:3px,color:#000")  # Yellow - Management
+        lines.append("    classDef database fill:#ff9966,stroke:#cc6600,stroke-width:3px,color:#000")  # Orange - Databases
+        lines.append("    classDef cache fill:#ffcc99,stroke:#ff9933,stroke-width:2px,color:#000")  # Light Orange - Cache
+        lines.append("    classDef queue fill:#cc99ff,stroke:#9933ff,stroke-width:2px,color:#000")  # Purple - Queues
+        lines.append("    classDef downstream fill:#cce5ff,stroke:#0066cc,stroke-width:2px,color:#000")  # Blue - Downstream Apps
+        lines.append("    classDef lowRisk fill:#ccffcc,stroke:#009900,stroke-width:2px,color:#000")  # Green - Low Risk/Internal
         lines.append("")
 
         # Group application components by tier (LEFT SIDE)
@@ -247,13 +268,15 @@ class MermaidDiagramGenerator:
 
         for comp_ip in application_components:
             tier = None
+            # Try to find tier from zone membership first
             for zone_name, zone_obj in self.zones.items():
                 if hasattr(zone_obj, 'members') and comp_ip in zone_obj.members:
                     tier = zone_name
                     break
 
+            # If not in a zone, infer from IP address pattern
             if not tier:
-                tier = 'UNKNOWN'
+                tier = self._infer_tier_from_ip(comp_ip)
 
             hostname, display_label = self.hostname_resolver.resolve_with_display(comp_ip, tier)
 
@@ -263,32 +286,44 @@ class MermaidDiagramGenerator:
                 'display_label': display_label
             })
 
-        # Define tier order
+        # Define tier order (top to bottom)
         tier_order = ['WEB_TIER', 'APP_TIER', 'DATA_TIER', 'CACHE_TIER',
                      'MESSAGING_TIER', 'MANAGEMENT_TIER', 'INFRASTRUCTURE_TIER', 'UNKNOWN']
 
-        # Add application components subgraph (LEFT SIDE)
-        lines.append(f"    subgraph app[\"{app_name} Application\"]")
-        lines.append("        direction TB")
+        # Map tiers to class names
+        tier_classes = {
+            'WEB_TIER': 'webTier',
+            'APP_TIER': 'appTier',
+            'DATA_TIER': 'dataTier',
+            'CACHE_TIER': 'cacheTier',
+            'MESSAGING_TIER': 'msgTier',
+            'MANAGEMENT_TIER': 'mgmtTier',
+            'INFRASTRUCTURE_TIER': 'mgmtTier',
+            'UNKNOWN': 'mgmtTier'
+        }
 
+        # Add application tiers as SEPARATE subgraphs (LEFT SIDE - stacked vertically)
+        lines.append(f"    %% Application Tiers (Vertical Stack)")
         for tier in tier_order:
             if tier not in app_components_by_tier:
                 continue
 
             tier_label = tier.replace('_TIER', '').replace('_', ' ').title()
-            tier_id = self._safe_name(f"{tier}_group")
+            tier_id = self._safe_name(f"{app_name}_{tier}")
+            tier_class = tier_classes.get(tier, 'mgmtTier')
+            server_count = len(app_components_by_tier[tier])
 
-            lines.append(f"        subgraph {tier_id}[\"{tier_label}<br/>{len(app_components_by_tier[tier])} server(s)\"]")
+            lines.append(f"    subgraph {tier_id}[\"{tier_label}<br/>{server_count} server(s)\"]")
+            lines.append("        direction LR")
 
-            for comp_info in sorted(app_components_by_tier[tier], key=lambda x: x['ip'])[:15]:  # Limit to 15 per tier
+            # Show servers in this tier (limit to 10 for readability)
+            for comp_info in sorted(app_components_by_tier[tier], key=lambda x: x['ip'])[:10]:
                 safe_name = comp_info['safe_name']
-                display_label = comp_info['display_label']
-                lines.append(f"            {safe_name}[\"{display_label}\"]:::appComponent")
+                display_label = self._sanitize_label(comp_info['display_label'])
+                lines.append(f"        {safe_name}[\"{display_label}\"]:::{tier_class}")
 
-            lines.append("        end")
-
-        lines.append("    end")
-        lines.append("")
+            lines.append("    end")
+            lines.append("")
 
         # Group external dependencies by type (RIGHT SIDE)
         deps_by_type = defaultdict(list)
@@ -305,38 +340,40 @@ class MermaidDiagramGenerator:
 
         # Add external dependencies subgraphs (RIGHT SIDE)
         type_labels = {
-            'database': 'Databases',
-            'cache': 'Caches',
             'queue': 'Queues',
+            'cache': 'Caches',
+            'database': 'Databases',
             'downstream_app': 'Downstream Applications'
         }
 
+        lines.append(f"    %% Infrastructure & External Dependencies (Right Side)")
         for dep_type in ['queue', 'cache', 'database', 'downstream_app']:
             if dep_type not in deps_by_type:
                 continue
 
             type_label = type_labels[dep_type]
-            type_id = self._safe_name(dep_type)
+            type_id = self._safe_name(f"{dep_type}_infra")
 
             lines.append(f"    subgraph {type_id}[\"{type_label}\"]")
-            lines.append("        direction TB")
+            lines.append("        direction LR")
 
-            for dep_info in sorted(deps_by_type[dep_type], key=lambda x: x['ip'])[:20]:  # Limit to 20 per type
+            for dep_info in sorted(deps_by_type[dep_type], key=lambda x: x['ip'])[:10]:  # Limit to 10 per type for clarity
                 safe_name = dep_info['safe_name']
-                display_label = dep_info['display_label']
+                display_label = self._sanitize_label(dep_info['display_label'])
+
                 # Use different shapes for different service types
                 if dep_type == 'database':
                     # Cylinder shape for databases
                     lines.append(f"        {safe_name}[(\"{display_label}\")]:::database")
                 elif dep_type == 'downstream_app':
                     # Circle shape for downstream applications
-                    lines.append(f"        {safe_name}((\"{display_label}\")):::{dep_type.replace('downstream_', '')}")
+                    lines.append(f"        {safe_name}((\"{display_label}\")):::downstream")
                 elif dep_type == 'queue':
-                    # Hexagon for queues/messaging
-                    lines.append(f"        {safe_name}{{{{\"{display_label}\"}}}}:::queue")
+                    # Rectangle for queues
+                    lines.append(f"        {safe_name}[\"{display_label}\"]:::queue")
                 else:
                     # Rectangle for caches
-                    lines.append(f"        {safe_name}[\"{display_label}\"]:::{dep_type}")
+                    lines.append(f"        {safe_name}[\"{display_label}\"]:::cache")
 
             lines.append("    end")
             lines.append("")
@@ -353,18 +390,22 @@ class MermaidDiagramGenerator:
         }
 
         # Collect displayed node IPs (those that are actually rendered in the diagram)
+        # IMPORTANT: Must match EXACT sorting/filtering used when rendering!
         displayed_app_components = set()
         for tier_comps in app_components_by_tier.values():
-            for comp in tier_comps[:15]:  # Match the limit used above
+            # Match line 304: sorted by IP, first 10
+            for comp in sorted(tier_comps, key=lambda x: x['ip'])[:10]:
                 displayed_app_components.add(comp['ip'])
 
         displayed_dependencies = set()
         for dep_type_list in deps_by_type.values():
-            for dep in dep_type_list[:20]:  # Match the limit used above
+            # Match line 344: sorted by IP, first 10
+            for dep in sorted(dep_type_list, key=lambda x: x['ip'])[:10]:
                 displayed_dependencies.add(dep['ip'])
 
         flows_added = set()
-        for (src, dst), stats in sorted(flow_summary.items(), key=lambda x: x[1]['bytes'], reverse=True):
+        # Sort flows by count to show most important connections first
+        for (src, dst), stats in sorted(flow_summary.items(), key=lambda x: x[1]['count'], reverse=True):
             if src is None or dst is None:
                 continue
 
@@ -372,8 +413,8 @@ class MermaidDiagramGenerator:
             if src not in displayed_app_components or dst not in displayed_dependencies:
                 continue
 
-            # Limit total flows displayed
-            if len(flows_added) >= 100:
+            # Limit total flows displayed to avoid clutter
+            if len(flows_added) >= 50:
                 break
 
             src_safe = self._safe_name(src)
@@ -381,18 +422,21 @@ class MermaidDiagramGenerator:
             dep_type = dependency_types.get(dst, 'downstream_app')
             edge_label = edge_labels.get(dep_type, 'app calls')
 
-            # Use simplified edge label with straight arrows
-            lines.append(f"    {src_safe} -.->|{edge_label}| {dst_safe}")
+            # Use straight arrows with labels (vertical layout works better with simple arrows)
+            lines.append(f"    {src_safe} -->|{edge_label}| {dst_safe}")
             flows_added.add((src, dst))
 
         mermaid_content = '\n'.join(lines)
 
-        # Save as .mmd file
+        # Save as .mmd file with markdown fencing for better compatibility
         mmd_file = Path(output_path)
         mmd_file.parent.mkdir(parents=True, exist_ok=True)
 
         with open(mmd_file, 'w', encoding='utf-8') as f:
+            # Wrap in markdown code fence for Mermaid.ink API compatibility
+            f.write('```mermaid\n')
             f.write(mermaid_content)
+            f.write('\n```')
 
         logger.info(f"✓ Application diagram saved: {output_path}")
 
@@ -474,12 +518,15 @@ class MermaidDiagramGenerator:
 
         mermaid_content = '\n'.join(lines)
 
-        # Save as .mmd file
+        # Save as .mmd file with markdown fencing for better compatibility
         mmd_file = Path(output_path)
         mmd_file.parent.mkdir(parents=True, exist_ok=True)
 
         with open(mmd_file, 'w', encoding='utf-8') as f:
+            # Wrap in markdown code fence for Mermaid.ink API compatibility
+            f.write('```mermaid\n')
             f.write(mermaid_content)
+            f.write('\n```')
 
         logger.info(f"✓ Zone flow diagram saved: {output_path}")
 
@@ -514,11 +561,42 @@ class MermaidDiagramGenerator:
 
         return dict(zone_flows)
 
+    def _infer_tier_from_ip(self, ip: str) -> str:
+        """Infer network tier from IP address pattern"""
+        if not ip or not isinstance(ip, str):
+            return 'UNKNOWN'
+
+        # Standard tier IP ranges
+        if ip.startswith('10.100.160.'):
+            return 'MANAGEMENT_TIER'
+        elif ip.startswith('10.164.105.'):
+            return 'WEB_TIER'
+        elif ip.startswith('10.100.246.') or ip.startswith('10.165.116.'):
+            return 'APP_TIER'
+        elif ip.startswith('10.164.116.'):
+            return 'DATA_TIER'
+        elif ip.startswith('10.164.144.'):
+            return 'CACHE_TIER'
+        elif ip.startswith('10.164.145.'):
+            return 'MESSAGING_TIER'
+        else:
+            return 'UNKNOWN'
+
     def _safe_name(self, name: str) -> str:
         """Convert name to Mermaid-safe identifier"""
         if name is None:
             return 'unknown_host'
-        return str(name).replace('.', '_').replace('-', '_').replace(':', '_').replace(' ', '_')
+        return str(name).replace('.', '_').replace('-', '_').replace(':', '_').replace(' ', '_').replace('(', '_').replace(')', '_')
+
+    def _sanitize_label(self, label: str) -> str:
+        """Sanitize label text for Mermaid display (remove parentheses that break syntax)"""
+        if not label:
+            return 'unknown'
+        # Replace parentheses with hyphens for readability
+        # Example: "10.164.41.47(hostname.com)" -> "10.164.41.47 - hostname.com"
+        if '(' in label and ')' in label:
+            label = label.replace('(', ' - ').replace(')', '')
+        return label
 
     def _is_internal_ip_check(self, ip: str) -> bool:
         """Check if IP is internal"""
@@ -707,19 +785,30 @@ class MermaidDiagramGenerator:
 
         <div class="legend">
             <div class="legend-item">
-                <div class="legend-title">Line Types</div>
-                <span><strong>=====></strong> High volume traffic<br>
-                <strong>-----></strong> Medium volume traffic<br>
-                <strong>-.-.-></strong> Low volume traffic</span>
+                <div class="legend-title">Traffic Volume Indicators</div>
+                <span><strong>=====></strong> High volume (>100 flows) - Thick solid lines<br>
+                <strong>-----></strong> Medium volume (10-100 flows) - Solid lines<br>
+                <strong>-.-.-></strong> Low volume (<10 flows) - Dotted/dashed lines</span>
             </div>
             <div class="legend-item">
-                <div class="legend-title">Node Colors</div>
+                <div class="legend-title">Security Zone Colors</div>
                 <span>
                 <span style="color: #f44336;">■</span> External/High Risk<br>
                 <span style="color: #ff9800;">■</span> DMZ/Medium Risk<br>
                 <span style="color: #4caf50;">■</span> Internal/Low Risk<br>
                 <span style="color: #2196f3;">■</span> Application Tier<br>
-                <span style="color: #ff5722;">■</span> Data Tier
+                <span style="color: #ff5722;">■</span> Data Tier<br>
+                <span style="color: #00bcd4;">■</span> Cache Tier<br>
+                <span style="color: #9c27b0;">■</span> Messaging Tier<br>
+                <span style="color: #ffc107;">■</span> Management Tier
+                </span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-title">Data Source Attribution</div>
+                <span>
+                <strong>⬛ Black solid</strong> = Observed from network flows (ExtraHop)<br>
+                <strong>🔵 Blue dashed</strong> = ML inference/predictions<br>
+                <strong>⬜ Gray dashed</strong> = Unknown/unclassified
                 </span>
             </div>
         </div>
@@ -935,8 +1024,8 @@ def generate_all_diagrams(flow_records: List, zones: Dict, output_dir: str = 'ou
 
 if __name__ == '__main__':
     # Example usage
-    from src.parser import parse_network_logs
-    from src.analysis import analyze_traffic
+    from parser import parse_network_logs
+    from analysis import analyze_traffic
 
     print("="*60)
     print("Mermaid Diagram Generator - Test Run")

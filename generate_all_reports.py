@@ -555,6 +555,12 @@ def main():
                        help='Skip Word document generation (faster)')
     parser.add_argument('--skip-diagrams', action='store_true',
                        help='Skip diagram generation (Mermaid/HTML/PNG) - only generate documentation')
+    parser.add_argument(
+        '--apps',
+        type=str,
+        nargs='+',
+        help='List of app codes to process (e.g., DNMET XECHK). If not specified, processes all apps.'
+    )
     args = parser.parse_args()
 
     # Setup directories
@@ -574,11 +580,26 @@ def main():
     else:
         logger.warning("⚠ PNG generation will be skipped (mmdc not found)")
 
-    # Get all application directories
-    app_dirs = [d for d in apps_dir.iterdir() if d.is_dir()]
+    # Get application directories (filtered by --apps if provided)
+    if args.apps:
+        # Only process specified apps
+        app_dirs = []
+        for app_code in args.apps:
+            app_path = apps_dir / app_code
+            if app_path.exists() and app_path.is_dir():
+                app_dirs.append(app_path)
+            else:
+                logger.warning(f"⚠ Warning: Application '{app_code}' not found in {apps_dir}")
+    else:
+        # Process all apps
+        app_dirs = [d for d in apps_dir.iterdir() if d.is_dir()]
+
     total_apps = len(app_dirs)
 
-    logger.info(f"Found {total_apps} applications to process")
+    if args.apps:
+        logger.info(f"Found {total_apps}/{len(args.apps)} requested applications to process")
+    else:
+        logger.info(f"Found {total_apps} applications to process")
 
     if total_apps == 0:
         logger.error("No applications found in persistent_data/applications/")
@@ -771,44 +792,44 @@ def main():
     # ========================================================================
     if not args.skip_diagrams:
         png_stats = generate_pngs_for_all_diagrams(output_diagrams, mmdc_cmd)
-        # ========================================================================
-        # WORD DOCUMENT GENERATION (After PNGs are ready)
-        # ========================================================================
-        if not args.skip_docx:
-            print()
-            print("=" * 80)
-            print("GENERATING WORD DOCUMENTS (Architecture)")
-            print("=" * 80)
-            
-            from app_docx_generator import generate_application_document
-            
-            arch_output = Path('outputs_final/word_reports/architecture')
-            arch_output.mkdir(parents=True, exist_ok=True)
-            
-            # Find all PNG diagrams
-            png_files = list(output_diagrams.glob('*_diagram.png'))
-            
-            for png_file in png_files:
-                app_id = png_file.stem.replace('_diagram', '')
-                docx_path = arch_output / f"{app_id}_architecture.docx"
-                
-                print(f"  {app_id}...", end=' ', flush=True)
-                
-                try:
-                    generate_application_document(
-                        app_name=app_id,
-                        png_path=str(png_file),
-                        output_path=str(docx_path)
-                    )
-                    stats['docx_success'] += 1
-                    print("[OK]")
-                except Exception as e:
-                    logger.error(f"Failed: {e}")
-                    stats['docx_failed'] += 1
-                    print("[FAILED]")       
-        
     else:
         png_stats = {'total': 0, 'success': 0, 'failed': 0, 'skipped': 0}
+
+    # ========================================================================
+    # WORD DOCUMENT GENERATION (After PNGs are ready)
+    # ========================================================================
+    if not args.skip_docx:
+        print()
+        print("=" * 80)
+        print("GENERATING WORD DOCUMENTS (Architecture)")
+        print("=" * 80)
+
+        from app_docx_generator import generate_application_document
+
+        arch_output = Path('outputs_final/word_reports/architecture')
+        arch_output.mkdir(parents=True, exist_ok=True)
+
+        # Find all PNG diagrams
+        png_files = list(output_diagrams.glob('*_diagram.png'))
+
+        for png_file in png_files:
+            app_id = png_file.stem.replace('_diagram', '')
+            docx_path = arch_output / f"{app_id}_architecture.docx"
+
+            print(f"  {app_id}...", end=' ', flush=True)
+
+            try:
+                generate_application_document(
+                    app_name=app_id,
+                    png_path=str(png_file),
+                    output_path=str(docx_path)
+                )
+                stats['docx_success'] += 1
+                print("[OK]")
+            except Exception as e:
+                logger.error(f"Failed: {e}")
+                stats['docx_failed'] += 1
+                print("[FAILED]")
 
     print()
     print("=" * 80)

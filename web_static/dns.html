@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Validation - Network Segmentation Analyzer</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-network-wired"></i>
+            <span>Network Segmentation Analyzer</span>
+        </div>
+        <div class="nav-menu">
+            <a href="/" class="nav-link">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="/applications.html" class="nav-link">
+                <i class="fas fa-server"></i> Applications
+            </a>
+            <a href="/zones.html" class="nav-link">
+                <i class="fas fa-shield-alt"></i> Security Zones
+            </a>
+            <a href="/dns.html" class="nav-link active">
+                <i class="fas fa-globe"></i> DNS Validation
+            </a>
+            <a href="/analytics.html" class="nav-link">
+                <i class="fas fa-chart-line"></i> Analytics
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Header -->
+        <header class="page-header">
+            <h1>DNS Validation Dashboard</h1>
+            <p class="subtitle">Monitor DNS health and identify misconfigurations across your network</p>
+        </header>
+
+        <!-- DNS Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="total-valid">-</div>
+                    <div class="stat-label">Valid Records</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-server"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="multiple-ips">-</div>
+                    <div class="stat-label">Multiple IPs</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="mismatches">-</div>
+                    <div class="stat-label">Mismatches</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #ef4444;">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="nxdomain">-</div>
+                    <div class="stat-label">NXDOMAIN</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DNS Health Chart -->
+        <div class="charts-grid" style="grid-template-columns: 1fr;">
+            <div class="chart-card">
+                <div class="card-header">
+                    <h2>DNS Validation Status Distribution</h2>
+                    <button class="btn-refresh" onclick="loadDNSData()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <canvas id="dnsStatusChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- DNS Mismatches Table -->
+        <div class="table-card">
+            <div class="card-header">
+                <h2>DNS Mismatches</h2>
+                <span class="badge badge-warning" id="mismatch-count">0</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Application</th>
+                                <th>IP Address</th>
+                                <th>Reverse DNS</th>
+                                <th>Forward IP</th>
+                                <th>Issue</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mismatches-tbody">
+                            <tr>
+                                <td colspan="6" class="text-center">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- DNS Recommendations -->
+        <div class="table-card">
+            <div class="card-header">
+                <h2>Recommendations</h2>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; gap: 1rem;">
+                    <div class="success" id="healthy-message" style="display: none;">
+                        <strong>✓ DNS Configuration Healthy</strong>
+                        <p>All DNS records are properly configured with no mismatches detected.</p>
+                    </div>
+
+                    <div class="error" id="issues-message" style="display: none;">
+                        <strong>⚠ DNS Configuration Issues Detected</strong>
+                        <p>The following actions are recommended:</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                            <li>Review and correct DNS mismatches in the table above</li>
+                            <li>Ensure PTR records match A records for all IP addresses</li>
+                            <li>Synchronize DNS changes across all authoritative servers</li>
+                            <li>Implement DNS monitoring to detect future mismatches</li>
+                        </ul>
+                    </div>
+
+                    <div style="padding: 1rem; background: #f9fafb; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                        <strong>ℹ Multiple IPs (VM + ESXi)</strong>
+                        <p>Hostnames with multiple IP addresses are common in virtualized environments.
+                           Ensure firewall rules account for BOTH the VM and ESXi host IP addresses.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Network Segmentation Analyzer v2.0 | FastAPI + Modern UI</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        let dnsChart = null;
+
+        async function loadDNSData() {
+            try {
+                // Load summary
+                const summaryResponse = await fetch('/api/dns-validation/summary');
+                const summary = await summaryResponse.json();
+
+                // Update stats
+                const stats = summary.statistics || {};
+                document.getElementById('total-valid').textContent = stats.total_valid || 0;
+                document.getElementById('multiple-ips').textContent = stats.total_valid_multiple || 0;
+                document.getElementById('mismatches').textContent = stats.total_mismatches || 0;
+                document.getElementById('nxdomain').textContent = stats.total_nxdomain || 0;
+
+                // Show/hide messages
+                const totalIssues = (stats.total_mismatches || 0) + (stats.total_nxdomain || 0);
+                if (totalIssues === 0) {
+                    document.getElementById('healthy-message').style.display = 'block';
+                    document.getElementById('issues-message').style.display = 'none';
+                } else {
+                    document.getElementById('healthy-message').style.display = 'none';
+                    document.getElementById('issues-message').style.display = 'block';
+                }
+
+                // Load mismatches
+                const mismatchesResponse = await fetch('/api/dns-validation/mismatches');
+                const mismatchesData = await mismatchesResponse.json();
+                renderMismatches(mismatchesData.mismatches || []);
+
+                document.getElementById('mismatch-count').textContent = mismatchesData.total || 0;
+
+                // Render chart
+                renderDNSChart(stats);
+
+            } catch (error) {
+                console.error('Error loading DNS data:', error);
+            }
+        }
+
+        function renderMismatches(mismatches) {
+            const tbody = document.getElementById('mismatches-tbody');
+
+            if (mismatches.length === 0) {
+                tbody.innerHTML = `
+                    <tr><td colspan="6" class="text-center">No DNS mismatches found</td></tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = mismatches.map(m => `
+                <tr>
+                    <td><strong>${m.app_id || 'N/A'}</strong></td>
+                    <td><code>${m.ip}</code></td>
+                    <td>${m.reverse_hostname || 'N/A'}</td>
+                    <td><code>${m.forward_ip || 'N/A'}</code></td>
+                    <td>${m.mismatch || 'Unknown'}</td>
+                    <td>${m.timestamp ? new Date(m.timestamp).toLocaleDateString() : 'N/A'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderDNSChart(stats) {
+            const ctx = document.getElementById('dnsStatusChart');
+            if (!ctx) return;
+
+            if (dnsChart) {
+                dnsChart.destroy();
+            }
+
+            const data = {
+                labels: ['Valid', 'Multiple IPs', 'Mismatches', 'NXDOMAIN', 'Failed'],
+                datasets: [{
+                    label: 'DNS Records',
+                    data: [
+                        stats.total_valid || 0,
+                        stats.total_valid_multiple || 0,
+                        stats.total_mismatches || 0,
+                        stats.total_nxdomain || 0,
+                        stats.total_failed || 0
+                    ],
+                    backgroundColor: [
+                        '#10b981',
+                        '#3b82f6',
+                        '#f59e0b',
+                        '#ef4444',
+                        '#6b7280'
+                    ]
+                }]
+            };
+
+            dnsChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDNSData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications - Network Segmentation Analyzer</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-network-wired"></i>
+            <span>Network Segmentation Analyzer</span>
+        </div>
+        <div class="nav-menu">
+            <a href="/" class="nav-link">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="/applications.html" class="nav-link active">
+                <i class="fas fa-server"></i> Applications
+            </a>
+            <a href="/zones.html" class="nav-link">
+                <i class="fas fa-shield-alt"></i> Security Zones
+            </a>
+            <a href="/dns.html" class="nav-link">
+                <i class="fas fa-globe"></i> DNS Validation
+            </a>
+            <a href="/analytics.html" class="nav-link">
+                <i class="fas fa-chart-line"></i> Analytics
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Header -->
+        <header class="page-header">
+            <h1>Applications</h1>
+            <p class="subtitle">Complete inventory of all network applications</p>
+        </header>
+
+        <!-- Filters -->
+        <div class="table-card" style="margin-bottom: 1.5rem;">
+            <div class="card-body">
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <div style="flex: 1;">
+                        <input type="text" id="search-input" placeholder="Search applications..."
+                               style="width: 100%; padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 8px;">
+                    </div>
+                    <div>
+                        <select id="zone-filter" style="padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 8px;">
+                            <option value="">All Zones</option>
+                            <option value="WEB_TIER">WEB_TIER</option>
+                            <option value="APP_TIER">APP_TIER</option>
+                            <option value="DATA_TIER">DATA_TIER</option>
+                            <option value="CACHE_TIER">CACHE_TIER</option>
+                            <option value="MESSAGING_TIER">MESSAGING_TIER</option>
+                            <option value="MANAGEMENT_TIER">MANAGEMENT_TIER</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="loadApplications()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Applications Table -->
+        <div class="table-card">
+            <div class="card-header">
+                <h2>Applications (<span id="app-count">0</span>)</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Application ID</th>
+                                <th>Security Zone</th>
+                                <th>Dependencies</th>
+                                <th>DNS Validated</th>
+                                <th>DNS Issues</th>
+                                <th>Confidence</th>
+                                <th>Last Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="apps-tbody">
+                            <tr>
+                                <td colspan="8" class="text-center">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Network Segmentation Analyzer v2.0 | FastAPI + Modern UI</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        let allApplications = [];
+
+        async function loadApplications() {
+            try {
+                const zone = document.getElementById('zone-filter').value;
+                const url = zone ? `/api/applications?zone=${zone}` : '/api/applications';
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                allApplications = data.applications || [];
+                renderApplications(allApplications);
+
+                document.getElementById('app-count').textContent = allApplications.length;
+            } catch (error) {
+                console.error('Error loading applications:', error);
+                document.getElementById('apps-tbody').innerHTML = `
+                    <tr><td colspan="8" class="text-center error">Error loading applications</td></tr>
+                `;
+            }
+        }
+
+        function renderApplications(apps) {
+            const tbody = document.getElementById('apps-tbody');
+
+            if (apps.length === 0) {
+                tbody.innerHTML = `
+                    <tr><td colspan="8" class="text-center">No applications found</td></tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = apps.map(app => `
+                <tr>
+                    <td><strong>${app.app_id}</strong></td>
+                    <td>
+                        <span class="zone-badge zone-${app.security_zone}">
+                            ${app.security_zone}
+                        </span>
+                    </td>
+                    <td>${app.dependency_count}</td>
+                    <td>
+                        ${app.dns_validated > 0
+                            ? `<span class="badge badge-success">${app.dns_validated} IPs</span>`
+                            : `<span class="badge badge-info">Not Validated</span>`
+                        }
+                    </td>
+                    <td>
+                        ${app.dns_issues > 0
+                            ? `<span class="badge badge-warning">${app.dns_issues}</span>`
+                            : `<span class="badge badge-success">0</span>`
+                        }
+                    </td>
+                    <td>${(app.confidence * 100).toFixed(0)}%</td>
+                    <td>${formatTimestamp(app.timestamp)}</td>
+                    <td>
+                        <a href="/application.html?id=${app.app_id}" class="btn-link">
+                            View Details →
+                        </a>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return 'N/A';
+            const date = new Date(timestamp);
+            return date.toLocaleDateString();
+        }
+
+        // Search functionality
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = allApplications.filter(app =>
+                app.app_id.toLowerCase().includes(searchTerm)
+            );
+            renderApplications(filtered);
+            document.getElementById('app-count').textContent = filtered.length;
+        });
+
+        // Zone filter
+        document.getElementById('zone-filter').addEventListener('change', loadApplications);
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', loadApplications);
+    </script>
+</body>
+</html>

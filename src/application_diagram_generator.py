@@ -26,16 +26,28 @@ logger = logging.getLogger(__name__)
 class ApplicationDiagramGenerator:
     """Generates application-level data flow diagrams in Mermaid format"""
 
-    # Color scheme following template
+    # Color scheme following template - Rainbow spectrum for diverse components
     ZONE_COLORS = {
-        'WEB_TIER': '#ffcccc',           # Pink (frontend)
-        'APP_TIER': '#ccffff',           # Cyan (backend services)
-        'DATA_TIER': '#ccffcc',          # Light green (databases)
-        'CACHE_TIER': '#ccffff',         # Cyan (cache services)
-        'MESSAGING_TIER': '#ccffff',     # Cyan (message queues)
-        'MANAGEMENT_TIER': '#ffffcc',    # Yellow (infrastructure)
-        'EXTERNAL': '#e6ccff',           # Purple (external systems)
-        'PREDICTED': '#aed6f1',          # ✅ LIGHT BLUE for predictions
+        'WEB_TIER': '#ffcccc',           # Red - High Risk (frontend)
+        'APP_TIER': '#cce5ff',           # Blue - Application Tier (backend services)
+        'DATA_TIER': '#ff9966',          # Orange - Data Tier (databases)
+        'CACHE_TIER': '#ffcc99',         # Light Orange - Cache services
+        'MESSAGING_TIER': '#cc99ff',     # Purple - Message queues
+        'MANAGEMENT_TIER': '#ffff99',    # Yellow - Management/infrastructure
+        'EXTERNAL': '#e6ccff',           # Light Purple - External systems
+        'PREDICTED': '#aed6f1',          # Light Blue - Predictions
+        'API_GATEWAY': '#b3e6b3',        # Green - API Gateway
+        'LOAD_BALANCER': '#ffb3d9',      # Pink - Load Balancers
+        'STORAGE_TIER': '#d9b3ff',       # Lavender - Storage services
+        'MONITORING': '#ffe6cc',         # Peach - Monitoring/Logging
+        'SECURITY': '#ff9999',           # Coral - Security services
+        'NETWORK': '#99ffcc',            # Mint - Network services
+        'COMPUTE': '#cce6ff',            # Sky Blue - Compute/VMs
+        'CONTAINER': '#e6ccff',          # Lilac - Containers
+        'SERVERLESS': '#ccffff',         # Cyan - Serverless/Functions
+        'ANALYTICS': '#ffffcc',          # Pale Yellow - Analytics
+        'ML_SERVICE': '#d9f2d9',         # Pale Green - ML Services
+        'UNKNOWN': '#e0e0e0',            # Gray - Unknown/Unclassified
     }
 
     # Shape types
@@ -282,17 +294,55 @@ class ApplicationDiagramGenerator:
                 'flow_type': 'app_to_infra'
             })
 
-        # Add predicted dependencies (Markov chain)
+        # ✅ NEW: Add dependencies from topology data with source-based styling
+        if topology_data:
+            topology_deps = topology_data.get('predicted_dependencies', [])
+            for dep in topology_deps:
+                dep_name = dep.get('name', 'Unknown')
+                dep_type = dep.get('type', 'service')
+                dep_source = dep.get('source', 'unknown')  # network_observation, type_inference, or unknown
+
+                # Skip if already added from flow analysis
+                if dep_name in components['infrastructure'] or dep_name in components['downstream_apps']:
+                    continue
+
+                # Determine if this is ML-inferred or observed
+                is_ml_inferred = (dep_source == 'type_inference')
+                is_unknown = (dep_source not in ['network_observation', 'type_inference'])
+
+                # Add to infrastructure
+                components['infrastructure'][dep_name] = {
+                    'type': dep_type,
+                    'zone': 'PREDICTED' if (is_ml_inferred or is_unknown) else 'EXTERNAL',
+                    'is_predicted': is_ml_inferred or is_unknown,
+                    'source': dep_source  # Track source for flow styling
+                }
+
+                # Add flow with appropriate styling
+                flow_label = dep.get('purpose', 'data flow')
+                flows.append({
+                    'source': app_name,
+                    'target': dep_name,
+                    'label': flow_label,
+                    'is_predicted': is_ml_inferred or is_unknown,
+                    'source': dep_source,  # Pass source for color coding
+                    'flow_type': 'topology_dep'
+                })
+
+        # Add predicted dependencies from Markov chain (if available)
         if predictions:
             predicted_deps = predictions.get('predicted_dependencies', [])
             for pred in predicted_deps:
                 pred_name = pred.get('name', 'Unknown')
+                pred_type = pred.get('type', 'service')
 
-                if pred_name not in components:
-                    components[pred_name] = {
-                        'type': pred.get('type', 'service'),
+                # Add to infrastructure (since predictions are typically for backends/databases)
+                if pred_name not in components['infrastructure']:
+                    components['infrastructure'][pred_name] = {
+                        'type': pred_type,
                         'zone': 'PREDICTED',
-                        'is_predicted': True
+                        'is_predicted': True,
+                        'source': 'markov_prediction'
                     }
 
                 # Add predicted flow (dashed line)
@@ -300,7 +350,8 @@ class ApplicationDiagramGenerator:
                     'source': app_name,
                     'target': pred_name,
                     'label': f"predicted: {pred.get('description', 'data flow')}",
-                    'is_predicted': True
+                    'is_predicted': True,
+                    'source': 'markov_prediction'
                 })
 
         # Generate Mermaid diagram
@@ -319,8 +370,8 @@ class ApplicationDiagramGenerator:
             # Also generate HTML version
             self._generate_html_diagram(mermaid, str(output_file.with_suffix('.html')))
 
-            # Generate PNG using mmdc
-            self._generate_png_diagram(str(output_file), str(output_file.with_suffix('.png')))
+            # PNG generation now done by run_batch_processing.py using Python API (no Chrome!)
+            # self._generate_png_diagram(str(output_file), str(output_file.with_suffix('.png')))
 
         return mermaid
 
@@ -402,7 +453,7 @@ class ApplicationDiagramGenerator:
 
         lines = [
             "```mermaid",
-            "graph LR",  # Left-to-right for application flow
+            "graph TB",  # Top-to-bottom for application flow (rotated 90° clockwise from LR)
             ""
         ]
 
@@ -455,9 +506,10 @@ class ApplicationDiagramGenerator:
             lines.append(f"    subgraph downstream_apps_group[\"Downstream Applications\"]")
             for app_name_dest, app_data in downstream_apps.items():
                 node_id = self._sanitize_id(app_name_dest)
+                label = self._sanitize_label(app_name_dest)
                 color = self.ZONE_COLORS.get(app_data['zone'], '#cccccc')
 
-                lines.append(f"        {node_id}(({app_name_dest}))")
+                lines.append(f"        {node_id}(({label}))")
                 lines.append(f"        style {node_id} fill:{color},stroke:#333,stroke-width:2px")
 
             lines.append("    end")
@@ -480,22 +532,65 @@ class ApplicationDiagramGenerator:
             for comp_name, comp_data in by_type[comp_type]:
                 shape_template, _ = self._get_node_shape(comp_data['type'], comp_data['is_predicted'])
                 node_id = self._sanitize_id(comp_name)
+                label = self._sanitize_label(comp_name)
 
                 zone = comp_data['zone']
                 color = self.ZONE_COLORS.get(zone, '#cccccc')
+                comp_source = comp_data.get('source', 'unknown')
 
-                lines.append(f"        {node_id}{shape_template.format(comp_name)}")
+                lines.append(f"        {node_id}{shape_template.format(label)}")
 
-                # ✅ FIX: Blue stroke for predicted nodes
-                if comp_data['is_predicted']:
+                # ✅ Color-code stroke based on data source
+                if comp_source == 'network_observation':
+                    # Observed data: Black solid stroke (ExtraHop flows)
+                    lines.append(f"        style {node_id} fill:{color},stroke:#333,stroke-width:2px")
+                elif comp_source == 'type_inference':
+                    # ML inferred: Blue dashed stroke (ML predictions)
+                    lines.append(f"        style {node_id} fill:{color},stroke:#3498db,stroke-width:3px,stroke-dasharray:5")
+                elif comp_source == 'markov_prediction':
+                    # Markov prediction: Blue dashed stroke (usage pattern predictions)
                     lines.append(f"        style {node_id} fill:{color},stroke:#3498db,stroke-width:3px,stroke-dasharray:5")
                 else:
-                    lines.append(f"        style {node_id} fill:{color},stroke:#333,stroke-width:2px")
+                    # Unknown: Gray dashed stroke
+                    lines.append(f"        style {node_id} fill:{color},stroke:#95a5a6,stroke-width:3px,stroke-dasharray:5")
 
             lines.append("    end")
             lines.append("")
 
-        # Define flows
+        # Render other infrastructure (services, external systems, etc.)
+        other_types = [t for t in by_type.keys() if t not in ['database', 'cache', 'queue']]
+        if other_types:
+            lines.append(f"    subgraph other_deps_group[\"Other Dependencies\"]")
+            for comp_type in other_types:
+                for comp_name, comp_data in by_type[comp_type]:
+                    shape_template, _ = self._get_node_shape(comp_data['type'], comp_data['is_predicted'])
+                    node_id = self._sanitize_id(comp_name)
+                    label = self._sanitize_label(comp_name)
+
+                    zone = comp_data['zone']
+                    color = self.ZONE_COLORS.get(zone, '#cccccc')
+                    comp_source = comp_data.get('source', 'unknown')
+
+                    lines.append(f"        {node_id}{shape_template.format(label)}")
+
+                    # ✅ Color-code stroke based on data source
+                    if comp_source == 'network_observation':
+                        # Observed data: Black solid stroke (ExtraHop flows)
+                        lines.append(f"        style {node_id} fill:{color},stroke:#333,stroke-width:2px")
+                    elif comp_source == 'type_inference':
+                        # ML inferred: Blue dashed stroke (ML predictions)
+                        lines.append(f"        style {node_id} fill:{color},stroke:#3498db,stroke-width:3px,stroke-dasharray:5")
+                    elif comp_source == 'markov_prediction':
+                        # Markov prediction: Blue dashed stroke (usage pattern predictions)
+                        lines.append(f"        style {node_id} fill:{color},stroke:#3498db,stroke-width:3px,stroke-dasharray:5")
+                    else:
+                        # Unknown: Gray dashed stroke
+                        lines.append(f"        style {node_id} fill:{color},stroke:#95a5a6,stroke-width:3px,stroke-dasharray:5")
+
+            lines.append("    end")
+            lines.append("")
+
+        # Define flows with source-based color coding
         lines.append("")
         app_node = "app_container"
 
@@ -504,37 +599,62 @@ class ApplicationDiagramGenerator:
             target_id = self._sanitize_id(flow['target'])
             label = flow['label']
             flow_type = flow.get('flow_type', 'app_to_infra')
+            flow_source = flow.get('source', 'unknown')
 
-            if flow['is_predicted']:
-                # ✅ FIX: Blue dashed line for predictions
-                lines.append(f"    {app_node} -.{label}.-> {target_id}")
-                lines.append(f"    linkStyle {flow_index} stroke:#3498db,stroke-width:2px")
-            else:
-                # Use thicker arrows for app-to-app connections
+            # Color code based on data source
+            if flow_source == 'network_observation':
+                # ✅ OBSERVED DATA: Solid lines, standard style (black)
                 if flow_type == 'app_to_app':
                     lines.append(f"    {app_node} =={label}==> {target_id}")
+                    lines.append(f"    linkStyle {flow_index} stroke:#333,stroke-width:3px")
                 else:
                     lines.append(f"    {app_node} --{label}--> {target_id}")
+                    lines.append(f"    linkStyle {flow_index} stroke:#333,stroke-width:2px")
+
+            elif flow_source == 'type_inference':
+                # ✅ ML INFERRED: Blue dashed lines (ML predictions)
+                lines.append(f"    {app_node} -.{label}.-> {target_id}")
+                lines.append(f"    linkStyle {flow_index} stroke:#3498db,stroke-width:2px,stroke-dasharray:5")
+
+            elif flow_source == 'markov_prediction':
+                # ✅ MARKOV PREDICTION: Blue dashed lines
+                lines.append(f"    {app_node} -.{label}.-> {target_id}")
+                lines.append(f"    linkStyle {flow_index} stroke:#3498db,stroke-width:2px,stroke-dasharray:5")
+
+            else:
+                # ✅ UNKNOWN: Gray dashed lines
+                lines.append(f"    {app_node} -.{label}.-> {target_id}")
+                lines.append(f"    linkStyle {flow_index} stroke:#95a5a6,stroke-width:2px,stroke-dasharray:5")
 
             flow_index += 1
 
         lines.append("```")
         lines.append("")
 
-        # Add legend
+        # Add legend with source-based color coding
         lines.extend([
             "",
             "**Legend:**",
+            "",
+            "**Shapes:**",
             "- **Application Box** = Internal architecture (web/app/db tiers)",
             "- **Downstream Apps** = Applications this app calls",
             "- **Infrastructure** = Databases, caches, queues",
             "- ⚪ Circles = Services/Applications",
             "- ▭ Rectangles = Data Stores",
-            "- === Thick lines = App-to-app calls (observed)",
+            "",
+            "**Data Source Colors:**",
+            "- ⬛ Black solid = Observed from network flows (ExtraHop)",
+            "- 🔵 Blue dashed = ML type inference (predicted dependency type)",
+            "- 🔵 Blue dashed = Markov chain prediction (usage pattern predictions)",
+            "- ⬜ Gray dashed = Unknown/unclassified",
+            "",
+            "**Lines:**",
+            "- === Thick solid lines = App-to-app calls (observed)",
             "- ─── Solid lines = Infrastructure dependencies (observed)",
-            "- ╌╌╌ Blue dashed lines = Predicted flows (Markov chain)",
-            "- 🔵 Blue outline = Predicted components",
-            "- 🎨 Colors indicate security zones",
+            "- ╌╌╌ Dashed lines = Predicted/inferred connections",
+            "",
+            "**Colors:** Background colors indicate security zones (Web, App, Data tiers)",
             ""
         ])
 
@@ -569,66 +689,405 @@ class ApplicationDiagramGenerator:
     <title>Application Data Flow Diagram</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
+        * {{
+            box-sizing: border-box;
+        }}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
             background: #f5f5f5;
-        }}
-        .diagram-container {{
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: #333;
+            overflow: hidden;
+            height: 100vh;
         }}
         h1 {{
-            color: #333;
-            margin-bottom: 20px;
+            color: #2c3e50;
+            margin: 0;
+            padding: 15px 20px;
+            font-size: 22px;
+            background: white;
+            border-bottom: 3px solid #3498db;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }}
+        .instructions {{
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }}
+        .instructions strong {{
+            font-size: 15px;
+        }}
+        .diagram-container {{
+            background: #fafafa;
+            padding: 0;
+            margin: 0;
+            height: calc(100vh - 100px);
+            position: relative;
+            overflow: hidden;
+        }}
+        .diagram-container .mermaid {{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }}
+        .diagram-container svg {{
+            max-width: none !important;
+            width: auto !important;
+            height: auto !important;
+        }}
+        .controls {{
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            border: 2px solid #3498db;
+            cursor: move;
+        }}
+        .controls h4 {{
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            color: #2c3e50;
+            text-align: center;
+            font-weight: 600;
+            cursor: move;
+            user-select: none;
+        }}
+        .controls button {{
+            display: block;
+            width: 140px;
+            margin: 8px 0;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }}
+        .controls button:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        }}
+        .controls button:active {{
+            transform: translateY(0);
+        }}
+        .pan-control {{
+            width: 120px;
+            height: 120px;
+            margin: 15px auto;
+            position: relative;
+            background: radial-gradient(circle, #ecf0f1 0%, #bdc3c7 100%);
+            border-radius: 50%;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15);
+        }}
+        .pan-arrow {{
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }}
+        .pan-arrow:hover {{
+            transform: scale(1.15);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }}
+        .pan-arrow:active {{
+            transform: scale(0.95);
+        }}
+        .pan-up {{
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }}
+        .pan-down {{
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }}
+        .pan-left {{
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }}
+        .pan-right {{
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }}
+        .pan-center {{
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
         }}
         .legend {{
-            margin-top: 20px;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            max-width: 300px;
             padding: 15px;
-            background: #f9f9f9;
-            border-left: 4px solid #007bff;
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-size: 12px;
+            z-index: 1001;
+            max-height: 300px;
+            overflow-y: auto;
         }}
         .legend h3 {{
             margin-top: 0;
+            font-size: 14px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
         }}
         .legend ul {{
-            margin: 10px 0;
-            padding-left: 20px;
+            margin: 8px 0;
+            padding-left: 18px;
+            line-height: 1.6;
         }}
     </style>
 </head>
 <body>
-    <div class="diagram-container">
-        <h1>Application Data Flow Diagram</h1>
-        <div class="mermaid">
-{graph_content}
+    <h1>Application Data Flow Diagram</h1>
+
+    <div class="instructions">
+        <strong>🖱️ Navigation:</strong>
+        <span>Use 4-way arrows to pan • Mouse wheel to zoom • Use controls on right</span>
+    </div>
+
+    <div class="controls">
+        <h4>🎛️ Controls</h4>
+
+        <div class="pan-control">
+            <button class="pan-arrow pan-up" onclick="panDirection('up')" title="Pan Up">↑</button>
+            <button class="pan-arrow pan-down" onclick="panDirection('down')" title="Pan Down">↓</button>
+            <button class="pan-arrow pan-left" onclick="panDirection('left')" title="Pan Left">←</button>
+            <button class="pan-arrow pan-right" onclick="panDirection('right')" title="Pan Right">→</button>
+            <button class="pan-arrow pan-center" onclick="fitView()" title="Fit to Screen">⊕</button>
         </div>
 
-        <div class="legend">
-            <h3>Legend</h3>
-            <ul>
-                <li><strong>⚪ Circles</strong> = Services/APIs</li>
-                <li><strong>▭ Rectangles</strong> = Data Stores (Database, Cache, Queue)</li>
-                <li><strong>▢ Rounded Rectangles</strong> = External Systems</li>
-                <li><strong>─── Solid lines</strong> = Observed flows (actual traffic data)</li>
-                <li><strong>╌╌╌ Dashed lines</strong> = Predicted flows (Markov chain inference)</li>
-                <li><strong>🎨 Colors</strong> indicate security zones</li>
-            </ul>
+        <button onclick="zoomIn()">🔍 Zoom In</button>
+        <button onclick="zoomOut()">🔍 Zoom Out</button>
+        <button onclick="resetView()">↺ Reset View</button>
+    </div>
+
+    <div class="legend">
+        <h3>Legend</h3>
+        <ul>
+            <li><strong>⚪ Circles</strong> = Services/APIs</li>
+            <li><strong>▭ Rectangles</strong> = Data Stores</li>
+            <li><strong>⬛ Black solid</strong> = Observed flows (ExtraHop)</li>
+            <li><strong>🔵 Blue dashed</strong> = ML inference/predictions</li>
+            <li><strong>🎨 Colors</strong> = Security zones</li>
+        </ul>
+    </div>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+{graph_content}
         </div>
     </div>
 
     <script>
+        let translateX = 0;
+        let translateY = 0;
+        let scale = 1;
+        const PAN_STEP = 100; // pixels to pan per arrow click
+
+        // Make controls panel draggable
+        let controlsIsDragging = false;
+        let controlsStartX, controlsStartY, controlsInitialX, controlsInitialY;
+
         mermaid.initialize({{
             startOnLoad: true,
             theme: 'default',
             flowchart: {{
                 curve: 'basis',
-                padding: 20
+                padding: 20,
+                useMaxWidth: false
             }}
         }});
+
+        // Initialize after Mermaid renders
+        window.addEventListener('load', function() {{
+            const mermaidDiv = document.querySelector('.mermaid');
+            if (mermaidDiv) {{
+                mermaid.run({{ nodes: [mermaidDiv] }}).then(() => {{
+                    initControls();
+                }}).catch(err => {{
+                    console.error('Mermaid rendering failed:', err);
+                }});
+            }}
+        }});
+
+        function initControls() {{
+            const container = document.querySelector('.diagram-container');
+            const svg = document.querySelector('.diagram-container svg');
+
+            if (!svg) return;
+
+            // Mouse wheel to zoom
+            container.addEventListener('wheel', zoom);
+
+            // Make controls panel draggable
+            const controls = document.querySelector('.controls');
+            const controlsHeader = controls.querySelector('h4');
+
+            controlsHeader.addEventListener('mousedown', startDragControls);
+            document.addEventListener('mousemove', dragControls);
+            document.addEventListener('mouseup', stopDragControls);
+
+            // Initial fit
+            setTimeout(() => {{
+                fitView();
+            }}, 500);
+        }}
+
+        function startDragControls(e) {{
+            controlsIsDragging = true;
+            const controls = document.querySelector('.controls');
+            controlsStartX = e.clientX;
+            controlsStartY = e.clientY;
+            const rect = controls.getBoundingClientRect();
+            controlsInitialX = rect.left;
+            controlsInitialY = rect.top;
+            e.preventDefault();
+        }}
+
+        function dragControls(e) {{
+            if (!controlsIsDragging) return;
+
+            const controls = document.querySelector('.controls');
+            const dx = e.clientX - controlsStartX;
+            const dy = e.clientY - controlsStartY;
+
+            controls.style.left = (controlsInitialX + dx) + 'px';
+            controls.style.top = (controlsInitialY + dy) + 'px';
+            controls.style.right = 'auto';
+        }}
+
+        function stopDragControls() {{
+            controlsIsDragging = false;
+        }}
+
+        function zoom(e) {{
+            e.preventDefault();
+
+            const svg = document.querySelector('.diagram-container svg');
+            if (!svg) return;
+
+            const delta = e.deltaY > 0 ? 0.9 : 1.1;
+            scale = Math.min(Math.max(0.1, scale * delta), 5);
+
+            updateTransform();
+        }}
+
+        function panDirection(direction) {{
+            switch(direction) {{
+                case 'up':
+                    translateY += PAN_STEP;
+                    break;
+                case 'down':
+                    translateY -= PAN_STEP;
+                    break;
+                case 'left':
+                    translateX += PAN_STEP;
+                    break;
+                case 'right':
+                    translateX -= PAN_STEP;
+                    break;
+            }}
+            updateTransform();
+        }}
+
+        function zoomIn() {{
+            scale = Math.min(scale * 1.2, 5);
+            updateTransform();
+        }}
+
+        function zoomOut() {{
+            scale = Math.max(scale * 0.8, 0.1);
+            updateTransform();
+        }}
+
+        function resetView() {{
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateTransform();
+        }}
+
+        function fitView() {{
+            const container = document.querySelector('.diagram-container');
+            const svg = document.querySelector('.diagram-container svg');
+            if (!svg || !container) {{
+                console.log('SVG or container not found');
+                return;
+            }}
+
+            // Reset transform first
+            svg.style.transform = '';
+
+            // Get natural dimensions
+            setTimeout(() => {{
+                const svgRect = svg.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+
+                console.log('SVG:', svgRect.width, svgRect.height);
+                console.log('Container:', containerRect.width, containerRect.height);
+
+                const scaleX = containerRect.width / svgRect.width;
+                const scaleY = containerRect.height / svgRect.height;
+                scale = Math.min(scaleX, scaleY, 1) * 0.9;
+
+                // Center the diagram
+                translateX = (containerRect.width - svgRect.width * scale) / 2;
+                translateY = (containerRect.height - svgRect.height * scale) / 2;
+
+                console.log('Scale:', scale, 'Translate:', translateX, translateY);
+
+                updateTransform();
+            }}, 100);
+        }}
+
+        function updateTransform() {{
+            const svg = document.querySelector('.diagram-container svg');
+            if (svg) {{
+                svg.style.transformOrigin = '0 0';
+                svg.style.transform = `translate(${{translateX}}px, ${{translateY}}px) scale(${{scale}})`;
+            }}
+        }}
     </script>
 </body>
 </html>
@@ -664,11 +1123,19 @@ class ApplicationDiagramGenerator:
     def _sanitize_id(self, name: str) -> str:
         """Sanitize name for Mermaid node ID"""
         # Replace special characters
-        sanitized = name.replace('.', '_').replace('-', '_').replace(':', '_')
+        sanitized = name.replace('.', '_').replace('-', '_').replace(':', '_').replace('(', '_').replace(')', '_')
         # Ensure starts with letter
         if sanitized and not sanitized[0].isalpha():
             sanitized = 'node_' + sanitized
         return sanitized or 'unknown'
+
+    def _sanitize_label(self, name: str) -> str:
+        """Sanitize label text for Mermaid display (more readable than IDs)"""
+        # Replace parentheses with hyphens for readability
+        # Example: "10.164.41.47(hostname.com)" -> "10.164.41.47 - hostname.com"
+        if '(' in name and ')' in name:
+            name = name.replace('(', ' - ').replace(')', '')
+        return name
 
 
 # Convenience function

@@ -2,15 +2,17 @@
 
 ## Overview
 
-Two types of Word documents are generated, organized in separate folders:
+Three types of Word documents are generated, organized in separate folders:
 
 ```
 outputs_final/word_reports/
 ├── architecture/              # Architecture documents (both types)
 │   ├── Solution_Design-{AppID}.docx  (comprehensive)
 │   └── {AppID}_architecture.docx     (simple)
-└── netseg/                   # Network segmentation reports
-    └── {AppID}_report.docx
+├── netseg/                   # Network segmentation reports
+│   └── {AppID}_report.docx
+└── threat_surface/           # Threat surface analysis (NEW!)
+    └── ThreatSurface-{AppID}.docx
 ```
 
 ## Document Types
@@ -68,6 +70,45 @@ python generate_solution_design_docs.py
 **Generation:**
 ```bash
 python generate_application_word_docs.py
+```
+
+### 3. Threat Surface Analysis & Network Segmentation (NEW!)
+**Location:** `outputs_final/word_reports/threat_surface/`
+**Filename:** `ThreatSurface-{AppID}.docx`
+**Generator:** `src/threat_surface_netseg_generator.py`
+
+**Contents:**
+- Executive summary with threat scoring
+- External attack surface analysis
+- Internal attack surface (lateral movement paths)
+- Attack vector analysis (5 major categories)
+- Zero Trust micro-segmentation strategy
+- Specific firewall rules and network ACLs
+- Monitoring and threat detection requirements
+- Implementation roadmap (phased approach)
+
+**Attack Vectors Covered:**
+1. External web application attacks
+2. Lateral movement (east-west traffic)
+3. Data exfiltration
+4. Supply chain attacks
+5. Privilege escalation
+
+**Best for:**
+- Security assessments and audits
+- Threat modeling exercises
+- Zero Trust architecture planning
+- Network segmentation projects
+- Security team planning
+- Executive security briefings
+
+**Generation:**
+```bash
+# Generate for all applications (auto-runs at end of batch processing)
+python generate_threat_surface_docs.py
+
+# Batch processing includes this automatically
+python run_batch_processing.py --batch-size 10
 ```
 
 ## Quick Start
@@ -140,14 +181,19 @@ outputs_final/
 
 | Scenario | Use Document Type |
 |----------|------------------|
-| Security audit | Architecture (comprehensive) |
+| Security audit | Threat Surface Analysis |
+| Threat modeling | Threat Surface Analysis |
+| Zero Trust planning | Threat Surface Analysis |
+| Network segmentation project | Threat Surface Analysis |
 | Architecture review board | Architecture (comprehensive) |
 | Compliance documentation | Architecture (comprehensive) |
-| Executive presentation | Architecture (comprehensive) |
-| Firewall rule request | NetSeg (simple) |
+| Executive presentation | Architecture (comprehensive) or Threat Surface |
+| Firewall rule request | NetSeg (simple) or Threat Surface |
 | Network team reference | NetSeg (simple) |
 | Quick lookup | NetSeg (simple) |
 | Day-to-day operations | NetSeg (simple) |
+| Penetration test planning | Threat Surface Analysis |
+| Security team planning | Threat Surface Analysis |
 
 ## Prerequisites
 

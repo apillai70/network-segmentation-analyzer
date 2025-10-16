@@ -6,11 +6,12 @@ Batch Processing Script - Process Files in Batches
 Processes network flow files in configurable batches and generates all reports.
 
 This script orchestrates the complete workflow:
-1. Process batch of N files (incremental learning + Mermaid diagrams)
-2. Verify and generate PNG files (CRITICAL - needs mermaid-cli)
-3. Generate network segmentation reports (optional)
-4. Generate architecture documents (optional)
-5. Repeat for next batch
+1. Process batch of N files (incremental learning)
+2. Generate .mmd and .html diagrams for ALL applications
+3. Generate PNG files using Python Mermaid.ink API (no Node.js/Chrome!)
+4. Generate network segmentation reports (optional)
+5. Generate architecture documents (optional)
+6. Repeat for next batch
 
 Usage Examples:
     # Process all 138 files in batches of 10 (RECOMMENDED)
@@ -46,15 +47,13 @@ Per-File Status:
     - Time taken per file
 
 IMPORTANT - PNG Generation:
-    PNG files require mermaid-cli (mmdc) to be installed:
+    PNG files are generated using Python Mermaid.ink API - NO Node.js required!
+    The script automatically generates .mmd, .html, and .png files for all applications.
 
-    npm install -g @mermaid-js/mermaid-cli
-
-    If mmdc is not found, only .mmd and .html files will be generated.
-    The script will automatically verify and regenerate missing PNGs after each batch.
+    Rate limiting: The Mermaid.ink API has rate limits. Large batches may need delays.
 
 Author: Enterprise Security Team
-Version: 1.2 - PNG Verification
+Version: 2.0 - Python PNG Generation (No Node.js!)
 """
 
 import sys
@@ -193,10 +192,37 @@ def clear_file_tracking():
 
 
 def process_batch(batch_size=10):
-    """Process a batch of files with real-time per-file status"""
+    """Process a batch of files with real-time per-file status
+
+    Returns:
+        tuple: (success, list of app_codes processed)
+    """
     logger.info("\n" + "="*80)
     logger.info(f"STEP 1: PROCESSING BATCH ({batch_size} files)")
     logger.info("="*80)
+
+    # Check how many files will be processed
+    from pathlib import Path
+    import json
+
+    # Get unprocessed files
+    input_dir = Path('./data/input')
+    file_tracker_path = input_dir / 'processed_files.json'
+
+    processed_files = set()
+    if file_tracker_path.exists():
+        with open(file_tracker_path, 'r') as f:
+            data = json.load(f)
+            processed_files = set(data.get('processed_files', {}).keys())
+
+    all_csv_files = sorted(input_dir.glob('App_Code_*.csv'))
+    new_files = [f for f in all_csv_files if f.name not in processed_files][:batch_size]
+
+    # Extract app codes that will be processed
+    app_codes_to_process = [f.stem.replace('App_Code_', '') for f in new_files]
+
+    logger.info(f"  Apps to process: {', '.join(app_codes_to_process[:5])}" +
+                (f" ... and {len(app_codes_to_process)-5} more" if len(app_codes_to_process) > 5 else ""))
 
     cmd = [
         sys.executable,
@@ -212,179 +238,143 @@ def process_batch(batch_size=10):
         show_realtime=True  # Show each file as it's processed
     )
 
-    return success
+    return success, app_codes_to_process
 
 
-def generate_netseg_reports():
-    """Generate network segmentation reports"""
+def generate_netseg_reports(app_codes=None):
+    """Generate network segmentation reports (Word docs only - diagrams already generated)
+
+    Args:
+        app_codes: List of app codes to process. If None, processes all apps.
+    """
     logger.info("\n" + "="*80)
-    logger.info("STEP 2: GENERATING NETWORK SEGMENTATION REPORTS")
+    if app_codes:
+        logger.info(f"STEP 4: GENERATING NETWORK SEGMENTATION REPORTS (Word docs) FOR {len(app_codes)} APPS")
+    else:
+        logger.info("STEP 4: GENERATING NETWORK SEGMENTATION REPORTS (Word docs)")
     logger.info("="*80)
 
-    cmd = [sys.executable, 'generate_all_reports.py']
+    # Skip diagram generation (already done by Python PNG generation in Step 3)
+    # Only generate Word documents from existing PNGs
+    cmd = [sys.executable, 'generate_all_reports.py', '--skip-diagrams']
+    if app_codes:
+        cmd.extend(['--apps'] + app_codes)
+
     success, output = run_command(
-        cmd, 
-        "Generate network segmentation reports",
-        show_realtime=True  # ← ADD THIS!
+        cmd,
+        f"Generate network segmentation reports (Word docs only) for {len(app_codes) if app_codes else 'all'} applications",
+        show_realtime=True
     )
     return success
 
 
-def verify_and_generate_pngs():
-    """Verify PNG files exist and regenerate missing ones"""
+def generate_mmd_and_html(app_codes=None):
+    """Generate .mmd and .html files for specified applications
+
+    Args:
+        app_codes: List of app codes to process. If None, processes all apps.
+    """
     logger.info("\n" + "="*80)
-    logger.info("STEP 2B: VERIFYING PNG FILES")
+    if app_codes:
+        logger.info(f"STEP 2: GENERATING MMD AND HTML DIAGRAMS FOR {len(app_codes)} APPS")
+    else:
+        logger.info("STEP 2: GENERATING MMD AND HTML DIAGRAMS FOR ALL APPS")
+    logger.info("="*80)
+
+    cmd = [sys.executable, 'regenerate_all_mmds.py']
+    if app_codes:
+        cmd.extend(['--apps'] + app_codes)
+
+    success, output = run_command(
+        cmd,
+        f"Generate .mmd and .html diagrams for {len(app_codes) if app_codes else 'all'} applications",
+        show_realtime=True
+    )
+    return success
+
+
+def fix_mmd_fencing(app_codes=None):
+    """Fix markdown fencing in .mmd files (add ```mermaid wrapping)
+
+    Args:
+        app_codes: List of app codes to process. If None, processes all .mmd files.
+
+    Returns:
+        bool: True if successful
+    """
+    logger.info("\n" + "="*80)
+    if app_codes:
+        logger.info(f"STEP 2B: FIXING MARKDOWN FENCING FOR {len(app_codes)} APPS")
+    else:
+        logger.info("STEP 2B: FIXING MARKDOWN FENCING FOR ALL MMD FILES")
     logger.info("="*80)
 
     diagrams_dir = Path('outputs_final/diagrams')
-    if not diagrams_dir.exists():
-        logger.warning("Diagrams directory not found")
-        return False
 
-    # Find all .mmd files
-    mmd_files = list(diagrams_dir.glob('*.mmd'))
+    # Find .mmd files to fix
+    if app_codes:
+        mmd_files = [diagrams_dir / f'{app_code}_diagram.mmd' for app_code in app_codes]
+        mmd_files = [f for f in mmd_files if f.exists()]
+    else:
+        mmd_files = list(diagrams_dir.glob('*.mmd'))
 
     if not mmd_files:
-        logger.info("No Mermaid files found - skipping PNG verification")
+        logger.warning("No .mmd files found to fix")
         return True
 
-    missing_pngs = []
+    logger.info(f"Checking {len(mmd_files)} .mmd files for markdown fencing...")
+
+    success = 0
+    skipped = 0
+
     for mmd_file in mmd_files:
-        png_file = mmd_file.with_suffix('.png')
-        if not png_file.exists():
-            missing_pngs.append(mmd_file)
+        # Read content
+        with open(mmd_file, 'r', encoding='utf-8') as f:
+            content = f.read().strip()
 
-    logger.info(f"Found {len(mmd_files)} Mermaid diagrams")
-    logger.info(f"Missing {len(missing_pngs)} PNG files")
+        # Check if already has markdown fencing
+        if content.startswith('```mermaid'):
+            logger.debug(f"  {mmd_file.name} - Already has fencing (skipped)")
+            skipped += 1
+            continue
 
-    if missing_pngs:
-        logger.info("Regenerating missing PNGs...")
-        import subprocess
-        import tempfile
-        import shutil
+        # Add markdown fencing
+        new_content = f"```mermaid\n{content}\n```"
 
-        # Try to find mmdc - check multiple locations
-        mmdc_cmd = None
+        # Write back
+        with open(mmd_file, 'w', encoding='utf-8') as f:
+            f.write(new_content)
 
-        # Method 1: Check if mmdc is in PATH (works if nodeenv activated or globally installed)
-        mmdc_in_path = shutil.which('mmdc')
-        if mmdc_in_path:
-            try:
-                result = subprocess.run([mmdc_in_path, '--version'], capture_output=True, timeout=5)
-                if result.returncode == 0:
-                    mmdc_cmd = mmdc_in_path
-                    logger.info(f"Found mmdc in PATH: {mmdc_in_path}")
-            except:
-                pass
+        logger.info(f"  ✓ {mmd_file.name} - Added markdown fencing")
+        success += 1
 
-        # Method 2: Check for nodeenv in project directory (common for customer deployments)
-        if not mmdc_cmd:
-            project_root = Path(__file__).parent
-            
-            nodeenv_mmdc = project_root / 'nodeenv' / 'Scripts' / 'mmdc.cmd'
-            if nodeenv_mmdc.exists():
-                # Windows: Try both mmdc.cmd and mmdc.bat
-                for ext in ['.cmd', '.bat', '']:
-                    nodeenv_mmdc = project_root / 'nodeenv' / 'Scripts' / f'mmdc{ext}'
-                    if nodeenv_mmdc.exists():
-                        try:
-                            result = subprocess.run([str(nodeenv_mmdc), '--version'], 
-                            capture_output=True, timeout=5)
-                            if result.returncode == 0:
-                                mmdc_cmd = str(nodeenv_mmdc)
-                                logger.info(f"Found mmdc in nodeenv: {mmdc_cmd}")
-                                break
-                        except:
-                            pass
+    logger.info(f"✓ Markdown fencing: {success} fixed, {skipped} skipped")
+    return True
 
-        # Method 3: Try standard Windows npm global location
-        if not mmdc_cmd:
-            import os
-            user_profile = os.environ.get('USERPROFILE', '')
-            if user_profile:
-                npm_mmdc = Path(user_profile) / 'AppData' / 'Roaming' / 'npm' / 'mmdc.cmd'
-                if npm_mmdc.exists():
-                    try:
-                        result = subprocess.run([str(npm_mmdc), '--version'], capture_output=True, timeout=5)
-                        if result.returncode == 0:
-                            mmdc_cmd = str(npm_mmdc)
-                            logger.info(f"Found mmdc in npm global: {mmdc_cmd}")
-                    except:
-                        pass
 
-        # Method 4: Last resort - try 'mmdc' directly
-        if not mmdc_cmd:
-            try:
-                result = subprocess.run(['mmdc', '--version'], capture_output=True, timeout=5)
-                if result.returncode == 0:
-                    mmdc_cmd = 'mmdc'
-                    logger.info("Found mmdc (direct command)")
-            except:
-                pass
+def generate_pngs_python(app_codes=None):
+    """Generate PNG files using Python Mermaid.ink API (no Node.js required)
 
-        if not mmdc_cmd:
-            logger.warning("⚠ mmdc (mermaid-cli) not found - cannot generate PNGs")
-            logger.info("Solutions:")
-            logger.info("  1. Activate nodeenv: source nodeenv/bin/activate (Linux) or nodeenv\\Scripts\\activate (Windows)")
-            logger.info("  2. Install globally: npm install -g @mermaid-js/mermaid-cli")
-            logger.info("  3. Install in nodeenv: nodeenv/Scripts/npm install -g @mermaid-js/mermaid-cli")
-            return False
-
-        success_count = 0
-        for mmd_file in missing_pngs:
-            try:
-                # Read and clean mermaid content
-                with open(mmd_file, 'r', encoding='utf-8') as f:
-                    content = f.read()
-
-                # Extract graph content
-                lines = content.split('\n')
-                graph_lines = []
-                in_graph = False
-
-                for line in lines:
-                    if line.strip().startswith('```mermaid'):
-                        in_graph = True
-                        continue
-                    elif line.strip() == '```':
-                        in_graph = False
-                        break
-                    elif in_graph:
-                        graph_lines.append(line)
-
-                clean_content = '\n'.join(graph_lines).strip()
-
-                # Write to temp file
-                with tempfile.NamedTemporaryFile(mode='w', suffix='.mmd', delete=False, encoding='utf-8') as tmp:
-                    tmp.write(clean_content)
-                    tmp_path = tmp.name
-
-                # Generate PNG
-                png_path = mmd_file.with_suffix('.png')
-                result = subprocess.run(
-                    [mmdc_cmd, '-i', tmp_path, '-o', str(png_path)],
-                    capture_output=True,
-                    text=True,
-                    timeout=30
-                )
-
-                if result.returncode == 0:
-                    logger.info(f"  ✓ {mmd_file.stem}.png")
-                    success_count += 1
-                else:
-                    logger.warning(f"  ✗ {mmd_file.stem}.png - {result.stderr[:100]}")
-
-                # Clean up temp
-                Path(tmp_path).unlink()
-
-            except Exception as e:
-                logger.warning(f"  ✗ {mmd_file.stem}.png - {str(e)[:100]}")
-
-        logger.info(f"PNG generation: {success_count}/{len(missing_pngs)} successful")
-        return success_count > 0
+    Args:
+        app_codes: List of app codes to process. If None, processes all apps.
+    """
+    logger.info("\n" + "="*80)
+    if app_codes:
+        logger.info(f"STEP 3: GENERATING PNG FILES FOR {len(app_codes)} APPS (Python/Mermaid.ink API)")
     else:
-        logger.info("✓ All PNG files present")
-        return True
+        logger.info("STEP 3: GENERATING PNG FILES (Python/Mermaid.ink API)")
+    logger.info("="*80)
+
+    cmd = [sys.executable, 'generate_pngs_python.py']
+    if app_codes:
+        cmd.extend(['--apps'] + app_codes)
+
+    success, output = run_command(
+        cmd,
+        f"Generate PNG files for {len(app_codes) if app_codes else 'all'} applications",
+        show_realtime=True
+    )
+    return success
 
 
 def generate_architecture_docs():
@@ -545,15 +535,34 @@ def main():
         logger.info("="*80)
 
         # Step 1: Process batch
-        batch_success = process_batch(args.batch_size)
+        batch_success, app_codes_processed = process_batch(args.batch_size)
 
         if batch_success:
             stats['batches_processed'] += 1
 
-            # Step 2: Generate reports FIRST (creates .mmd files)
+            logger.info(f"\n✓ Batch processing complete: {len(app_codes_processed)} apps processed")
+
+            # Step 2: Generate .mmd and .html diagrams ONLY for apps in this batch
+            if args.output_format in ['mermaid', 'both']:
+                mmd_success = generate_mmd_and_html(app_codes_processed)
+                if not mmd_success:
+                    logger.warning("⚠ MMD generation had some failures - continuing...")
+
+                # Step 2B: Fix markdown fencing in .mmd files for Mermaid.ink API compatibility
+                fix_mmd_fencing(app_codes_processed)
+
+            # Step 3: Generate PNGs ONLY for apps in this batch (no Node.js/Chrome!)
+            if args.output_format in ['mermaid', 'both']:
+                png_success = generate_pngs_python(app_codes_processed)
+                if png_success:
+                    logger.info("✓ PNG generation complete")
+                else:
+                    logger.warning("⚠ Some PNGs may be missing")
+
+            # Step 4: Generate network segmentation reports (ONLY for apps in this batch)
             if not args.skip_reports:
                 if args.output_format in ['lucid', 'both']:
-                    reports_success = generate_netseg_reports()  # ← CREATE .mmd FILES FIRST!
+                    reports_success = generate_netseg_reports(app_codes_processed)
 
                     if reports_success:
                         stats['reports_generated'] += 1
@@ -561,16 +570,7 @@ def main():
                         stats['reports_failed'] += 1
                         logger.warning("⚠ Report generation failed - continuing...")
 
-            # Step 2B: THEN verify and generate PNGs (now .mmd files exist!)
-            if args.output_format in ['mermaid', 'both']:
-                png_success = verify_and_generate_pngs()  # ← NOW .mmd FILES EXIST!
-
-                if png_success:
-                    logger.info("✓ PNG verification complete")
-                else:
-                    logger.warning("⚠ Some PNGs may be missing (mmdc not found?)")
-
-            # Step 4: Generate architecture docs (INDEPENDENT of skip_reports flag)
+            # Step 5: Generate architecture docs (INDEPENDENT of skip_reports flag)
             if not args.skip_architecture:
                 # Verify PNGs exist first (architecture docs require them)
                 diagrams_dir = Path('outputs_final/diagrams')
@@ -618,6 +618,56 @@ def main():
 
             batch_num += 1
 
+    # Step 6: Build master topology from persistent data (runs ONCE at the end)
+    if stats['batches_processed'] > 0:
+        logger.info("\n\n" + "="*80)
+        logger.info("STEP 6: BUILDING MASTER TOPOLOGY FROM PERSISTENT DATA")
+        logger.info("="*80)
+
+        try:
+            cmd = [sys.executable, 'build_master_topology.py']
+            topology_success, _ = run_command(
+                cmd,
+                "Build cumulative master topology",
+                show_realtime=True
+            )
+
+            if topology_success:
+                logger.info("✓ Master topology built successfully")
+                stats['master_topology_built'] = True
+            else:
+                logger.warning("⚠ Master topology build had issues")
+                stats['master_topology_built'] = False
+
+        except Exception as e:
+            logger.error(f"✗ Master topology build failed: {e}")
+            stats['master_topology_built'] = False
+
+    # Step 7: Generate threat surface documents (runs ONCE at the end for ALL apps)
+    if stats['batches_processed'] > 0 and stats.get('master_topology_built', True):
+        logger.info("\n\n" + "="*80)
+        logger.info("STEP 7: GENERATING THREAT SURFACE & NETWORK SEGMENTATION DOCUMENTS")
+        logger.info("="*80)
+
+        try:
+            cmd = [sys.executable, 'generate_threat_surface_docs.py']
+            threat_success, _ = run_command(
+                cmd,
+                "Generate threat surface analysis documents",
+                show_realtime=True
+            )
+
+            if threat_success:
+                logger.info("✓ Threat surface documents generated successfully")
+                stats['threat_surface_generated'] = True
+            else:
+                logger.warning("⚠ Threat surface document generation had some issues")
+                stats['threat_surface_generated'] = False
+
+        except Exception as e:
+            logger.error(f"✗ Threat surface document generation failed: {e}")
+            stats['threat_surface_generated'] = False
+
     # Final summary
     end_time = datetime.now()
     elapsed = (end_time - start_time).total_seconds()
@@ -641,12 +691,20 @@ def main():
         print(f"  Architecture docs generated: {stats['architecture_generated']}")
         print(f"  Architecture docs failed: {stats['architecture_failed']}")
 
+    if stats.get('master_topology_built'):
+        print(f"  Master topology built: ✓")
+
+    if stats.get('threat_surface_generated'):
+        print(f"  Threat surface docs generated: ✓")
+
     print()
     print("Output locations:")
     print("  Diagrams: outputs_final/diagrams/")
     print("  Network segmentation reports: outputs_final/word_reports/netseg/")
     print("  Architecture documents: outputs_final/word_reports/architecture/")
-    print("  Topology data: persistent_data/topology/")
+    print("  Threat surface analysis: outputs_final/word_reports/threat_surface/")
+    print("  Persistent topology (individual): persistent_data/topology/")
+    print("  Master topology (cumulative): persistent_data/master_topology.json")
     print()
     print(f"Log file: {log_file}")
     print("="*80)

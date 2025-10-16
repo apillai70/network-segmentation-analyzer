@@ -1,0 +1,95 @@
+{
+  "app_id": "TEST_APP_2",
+  "security_zone": "APP_TIER",
+  "confidence": 0.85,
+  "dependencies": [],
+  "characteristics": [],
+  "dns_validation": {
+    "total_validated": 6,
+    "valid": 1,
+    "valid_multiple_ips": 2,
+    "mismatch": 1,
+    "nxdomain": 1,
+    "failed": 1
+  },
+  "validation_metadata": {
+    "8.8.8.8": {
+      "valid": true,
+      "ip": "8.8.8.8",
+      "reverse_hostname": "dns.google",
+      "forward_ip": "8.8.4.4",
+      "forward_ips": [
+        "8.8.4.4",
+        "8.8.8.8"
+      ],
+      "mismatch": null,
+      "status": "valid_multiple_ips",
+      "timestamp": 1760565800.534251,
+      "app_id": "TEST_APP_2"
+    },
+    "1.1.1.1": {
+      "valid": true,
+      "ip": "1.1.1.1",
+      "reverse_hostname": "one.one.one.one",
+      "forward_ip": "1.1.1.1",
+      "forward_ips": [
+        "1.1.1.1",
+        "1.0.0.1"
+      ],
+      "mismatch": null,
+      "status": "valid",
+      "timestamp": 1760565800.53426,
+      "app_id": "TEST_APP_2"
+    },
+    "10.164.105.136": {
+      "valid": false,
+      "ip": "10.164.105.136",
+      "reverse_hostname": "web-server.local",
+      "forward_ip": "10.164.105.137",
+      "forward_ips": [
+        "10.164.105.137"
+      ],
+      "mismatch": "Forward DNS (10.164.105.137) \u2260 Original IP (10.164.105.136)",
+      "status": "mismatch",
+      "timestamp": 1760565800.534262,
+      "app_id": "TEST_APP_2"
+    },
+    "192.168.1.1": {
+      "valid": false,
+      "ip": "192.168.1.1",
+      "reverse_hostname": null,
+      "forward_ip": null,
+      "forward_ips": [],
+      "mismatch": "Reverse DNS lookup returned NXDOMAIN",
+      "status": "nxdomain",
+      "timestamp": 1760565800.534264,
+      "app_id": "TEST_APP_2"
+    },
+    "10.100.160.214": {
+      "valid": true,
+      "ip": "10.100.160.214",
+      "reverse_hostname": "mgmt-server01.corp.local",
+      "forward_ip": "10.100.160.214",
+      "forward_ips": [
+        "10.100.160.214",
+        "10.100.160.215"
+      ],
+      "mismatch": null,
+      "status": "valid_multiple_ips",
+      "timestamp": 1760565800.534266,
+      "app_id": "TEST_APP_2"
+    },
+    "10.1.2.3": {
+      "valid": false,
+      "ip": "10.1.2.3",
+      "reverse_hostname": null,
+      "forward_ip": null,
+      "forward_ips": [],
+      "mismatch": "Reverse DNS lookup failed",
+      "status": "reverse_lookup_failed",
+      "timestamp": 1760565800.534267,
+      "app_id": "TEST_APP_2"
+    }
+  },
+  "timestamp": "2025-10-15T18:03:20.534291"
+}

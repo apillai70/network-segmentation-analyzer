@@ -1,0 +1,1687 @@
+{
+  "metadata": {
+    "generated_at": "2025-10-15T18:18:48.536348",
+    "total_applications": 139,
+    "total_dependencies": 3328,
+    "report_version": "1.0"
+  },
+  "statistics": {
+    "total_applications": 139,
+    "total_dependencies": 3328,
+    "total_unique_ips": 0,
+    "apps_by_zone": {
+      "APP_TIER": 103,
+      "MESSAGING_TIER": 17,
+      "CACHE_TIER": 6,
+      "WEB_TIER": 8,
+      "MANAGEMENT_TIER": 4,
+      "DATA_TIER": 1
+    },
+    "cross_zone_connections": 3328,
+    "dns_validation_summary": {
+      "total_validated": 0,
+      "total_valid": 0,
+      "total_valid_multiple": 0,
+      "total_mismatches": 0,
+      "total_nxdomain": 0,
+      "total_failed": 0,
+      "apps_with_validation": 0
+    },
+    "timestamp": "2025-10-15T18:18:48.358403"
+  },
+  "security_zones": {
+    "APP_TIER": {
+      "count": 103,
+      "applications": [
+        "ACDA",
+        "AODSVY",
+        "APSE",
+        "ARA",
+        "AV",
+        "BCA",
+        "BKO",
+        "BLND",
+        "BLZD",
+        "BLZE",
+        "BM",
+        "BO",
+        "BOD",
+        "BP",
+        "BTIF",
+        "BW",
+        "CACS",
+        "CAP",
+        "CCLTR",
+        "CCPA",
+        "CCS",
+        "CDSA",
+        "CIRA",
+        "CLSP",
+        "CNET",
+        "CRECL",
+        "CSAS",
+        "CT",
+        "CXI",
+        "CXSI",
+        "DAD",
+        "DM",
+        "DM_CMDF",
+        "DM_CMREG",
+        "DM_DNCCW",
+        "DM_LEDAT",
+        "DM_RDOM",
+        "DM_WMAHR",
+        "DNADP",
+        "DNAEP",
+        "DNASA",
+        "DNBCI",
+        "DNBIT",
+        "DNBLC",
+        "DNBRI",
+        "DNBUH",
+        "DNCAC",
+        "DNCCL",
+        "DNCCO",
+        "DNCCW",
+        "DNCER",
+        "DNCIT",
+        "DNCOR",
+        "DNCWS",
+        "DNDNS",
+        "DNENG",
+        "DNESR",
+        "DNGCM",
+        "DNHRT",
+        "DNIBS",
+        "DNIDE",
+        "DNINR",
+        "DNINV",
+        "DNLOC",
+        "DNMCM",
+        "DNMLO",
+        "DNMMZ",
+        "DNPGR",
+        "DNRAS",
+        "DNRCB",
+        "DNRCT",
+        "DNREP",
+        "DNRGE",
+        "DNSBT",
+        "DNTCB",
+        "DNTCM",
+        "DNWHO",
+        "DNWHS",
+        "DNZEL",
+        "ECL",
+        "EM",
+        "EMDS",
+        "EMGR",
+        "END",
+        "ENDNC",
+        "ERCPT",
+        "FAAR",
+        "FIMSP",
+        "FM",
+        "IA",
+        "IB",
+        "IMGVF",
+        "ITR",
+        "IV",
+        "IVGBU",
+        "IVR",
+        "IVRMC",
+        "IW",
+        "IX",
+        "IXCI",
+        "IXOF",
+        "LB",
+        "LBOT"
+      ]
+    },
+    "MESSAGING_TIER": {
+      "count": 17,
+      "applications": [
+        "BX",
+        "CCA",
+        "CMAR",
+        "CP",
+        "CV",
+        "DCDPP",
+        "DCIDM",
+        "DCIFI",
+        "DM_BAP",
+        "DM_CMRDB",
+        "DM_CORD",
+        "DNGFC",
+        "DNROM",
+        "DNSCC",
+        "DNSCH",
+        "EFW",
+        "LBCC"
+      ]
+    },
+    "CACHE_TIER": {
+      "count": 6,
+      "applications": [
+        "CSAA",
+        "DNCCS",
+        "DNLDS",
+        "DNRVS",
+        "DPAPI",
+        "FICPM"
+      ]
+    },
+    "WEB_TIER": {
+      "count": 8,
+      "applications": [
+        "DG",
+        "DM_BLZE",
+        "DM_CCRMBZ",
+        "DM_CMDAT",
+        "DM_SBADJ",
+        "DNINT",
+        "DSAA",
+        "I3SQL"
+      ]
+    },
+    "MANAGEMENT_TIER": {
+      "count": 4,
+      "applications": [
+        "DNACA",
+        "DNAGR",
+        "DNMET",
+        "FG"
+      ]
+    },
+    "DATA_TIER": {
+      "count": 1,
+      "applications": [
+        "IWDE"
+      ]
+    }
+  },
+  "applications": [
+    {
+      "app_id": "ACDA",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "AODSVY",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "APSE",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "ARA",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "AV",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BCA",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BKO",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BLND",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BLZD",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BLZE",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BM",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BO",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BOD",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BP",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BTIF",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BW",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "BX",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CACS",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CAP",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CCA",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CCLTR",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CCPA",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CCS",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CDSA",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CIRA",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CLSP",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CMAR",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CNET",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CP",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CRECL",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CSAA",
+      "security_zone": "CACHE_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CSAS",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CT",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CV",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CXI",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "CXSI",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DAD",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DCDPP",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DCIDM",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DCIFI",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DG",
+      "security_zone": "WEB_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_BAP",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_BLZE",
+      "security_zone": "WEB_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_CCRMBZ",
+      "security_zone": "WEB_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_CMDAT",
+      "security_zone": "WEB_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_CMDF",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_CMRDB",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 20,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_CMREG",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_CORD",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_DNCCW",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_LEDAT",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_RDOM",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_SBADJ",
+      "security_zone": "WEB_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DM_WMAHR",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNACA",
+      "security_zone": "MANAGEMENT_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNADP",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNAEP",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNAGR",
+      "security_zone": "MANAGEMENT_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNASA",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNBCI",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNBIT",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNBLC",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNBRI",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNBUH",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNCAC",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNCCL",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNCCO",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNCCS",
+      "security_zone": "CACHE_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNCCW",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNCER",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNCIT",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNCOR",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNCWS",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNDNS",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNENG",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNESR",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNGCM",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNGFC",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNHRT",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNIBS",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNIDE",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNINR",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNINT",
+      "security_zone": "WEB_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNINV",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNLDS",
+      "security_zone": "CACHE_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNLOC",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNMCM",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNMET",
+      "security_zone": "MANAGEMENT_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNMLO",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNMMZ",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNPGR",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNRAS",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNRCB",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNRCT",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNREP",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNRGE",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNROM",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNRVS",
+      "security_zone": "CACHE_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNSBT",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNSCC",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNSCH",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNTCB",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNTCM",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNWHO",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNWHS",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DNZEL",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DPAPI",
+      "security_zone": "CACHE_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "DSAA",
+      "security_zone": "WEB_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "ECL",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "EFW",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "EM",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "EMDS",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "EMGR",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "END",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "ENDNC",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "ERCPT",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "FAAR",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "FG",
+      "security_zone": "MANAGEMENT_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "FICPM",
+      "security_zone": "CACHE_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "FIMSP",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "FM",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "I3SQL",
+      "security_zone": "WEB_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 20,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IA",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IB",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IMGVF",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "ITR",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IV",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IVGBU",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IVR",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IVRMC",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IW",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IWDE",
+      "security_zone": "DATA_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IX",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IXCI",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "IXOF",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "LB",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "LBCC",
+      "security_zone": "MESSAGING_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    },
+    {
+      "app_id": "LBOT",
+      "security_zone": "APP_TIER",
+      "confidence": 0.0,
+      "num_dependencies": 24,
+      "dns_validation": {},
+      "validation_metadata": {},
+      "characteristics": [],
+      "timestamp": null
+    }
+  ],
+  "dependencies_summary": {
+    "total": 3328,
+    "by_type": {
+      "unknown": 3328
+    },
+    "cross_zone_flows": 3328
+  },
+  "dns_validation": {
+    "total_validated": 0,
+    "total_valid": 0,
+    "total_valid_multiple": 0,
+    "total_mismatches": 0,
+    "total_nxdomain": 0,
+    "total_failed": 0,
+    "apps_with_validation": 0
+  },
+  "top_applications": [
+    {
+      "app_id": "ACDA",
+      "security_zone": "APP_TIER",
+      "num_dependencies": 24,
+      "confidence": 0.0
+    },
+    {
+      "app_id": "AODSVY",
+      "security_zone": "APP_TIER",
+      "num_dependencies": 24,
+      "confidence": 0.0
+    },
+    {
+      "app_id": "APSE",
+      "security_zone": "APP_TIER",
+      "num_dependencies": 24,
+      "confidence": 0.0
+    },
+    {
+      "app_id": "ARA",
+      "security_zone": "APP_TIER",
+      "num_dependencies": 24,
+      "confidence": 0.0
+    },
+    {
+      "app_id": "AV",
+      "security_zone": "APP_TIER",
+      "num_dependencies": 24,
+      "confidence": 0.0
+    },
+    {
+      "app_id": "BCA",
+      "security_zone": "APP_TIER",
+      "num_dependencies": 24,
+      "confidence": 0.0
+    },
+    {
+      "app_id": "BKO",
+      "security_zone": "APP_TIER",
+      "num_dependencies": 24,
+      "confidence": 0.0
+    },
+    {
+      "app_id": "BLND",
+      "security_zone": "APP_TIER",
+      "num_dependencies": 24,
+      "confidence": 0.0
+    },
+    {
+      "app_id": "BLZD",
+      "security_zone": "APP_TIER",
+      "num_dependencies": 24,
+      "confidence": 0.0
+    },
+    {
+      "app_id": "BLZE",
+      "security_zone": "APP_TIER",
+      "num_dependencies": 24,
+      "confidence": 0.0
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "category": "Zone Distribution",
+      "issue": "103 applications (74.1%) are in APP_TIER",
+      "recommendation": "Consider further segmentation to reduce blast radius and improve security isolation"
+    },
+    {
+      "priority": "HIGH",
+      "category": "Network Segmentation",
+      "issue": "3328 cross-zone connections detected",
+      "recommendation": "Review cross-zone flows and implement strict firewall policies between security zones"
+    }
+  ]
+}

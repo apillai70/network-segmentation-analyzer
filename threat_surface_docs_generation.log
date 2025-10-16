@@ -1,0 +1,12 @@
+2025-10-15 15:16:30,117 - INFO - Loading topology data from: outputs_final\incremental_topology.json
+2025-10-15 15:16:30,118 - INFO - Found 1 applications in topology
+2025-10-15 15:16:30,118 - INFO - Output directory: outputs_final\word_reports\threat_surface
+2025-10-15 15:16:30,134 - INFO - Generating threat surface document for: ACDA
+2025-10-15 15:34:36,245 - INFO - Loading topology data from: outputs_final\incremental_topology.json
+2025-10-15 15:34:36,246 - INFO - Found 1 applications in topology
+2025-10-15 15:34:36,246 - INFO - Output directory: outputs_final\word_reports\threat_surface
+2025-10-15 15:34:36,260 - INFO - Generating threat surface document for: ACDA
+2025-10-15 15:38:45,668 - INFO - Loading topology data from: outputs_final\incremental_topology.json
+2025-10-15 15:38:45,669 - INFO - Found 1 applications in topology
+2025-10-15 15:38:45,669 - INFO - Output directory: outputs_final\word_reports\threat_surface
+2025-10-15 15:38:45,682 - INFO - Generating threat surface document for: ACDA

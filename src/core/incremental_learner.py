@@ -260,17 +260,18 @@ class IncrementalLearningSystem:
 
             record.app_name = app_id
 
-            # ✅ FIX: Handle NaN values in IP columns (pandas reads empty as NaN)
-            src_ip = row.get('Source IP', '')
-            dst_ip = row.get('Dest IP', '')
-            src_hostname = row.get('Source Hostname', '')
-            dst_hostname = row.get('Dest Hostname', '')
+            # ✅ FIX: Correct column names for your CSV format
+            # Your CSV has: IP, Peer, Name, Protocol, Bytes In, Bytes Out
+            src_ip = row.get('IP', '')  # Source IP
+            dst_ip = row.get('Peer', '')  # Destination IP (Peer)
+            src_hostname = row.get('Name', '')  # Hostname
+            dst_hostname = ''  # Not in your CSV
 
             # Convert NaN to empty string, ensure all are strings
-            record.src_ip = str(src_ip) if pd.notna(src_ip) else ''
-            record.src_hostname = str(src_hostname) if pd.notna(src_hostname) else ''
-            record.dst_ip = str(dst_ip) if pd.notna(dst_ip) else ''
-            record.dst_hostname = str(dst_hostname) if pd.notna(dst_hostname) else ''
+            record.src_ip = str(src_ip).strip() if pd.notna(src_ip) else ''
+            record.src_hostname = str(src_hostname).strip() if pd.notna(src_hostname) else ''
+            record.dst_ip = str(dst_ip).strip() if pd.notna(dst_ip) else ''
+            record.dst_hostname = ''  # Not available in CSV
 
             # Parse protocol and port
             # ✅ FIX: Handle NaN values from CSV (pandas reads empty cells as float NaN)
@@ -370,6 +371,11 @@ class IncrementalLearningSystem:
         except Exception as e:
             logger.error(f"    [ERROR] Failed to save topology: {e}")
 
+        # ✅ NEW: Save topology to JSON file (will be updated with DNS validation data later)
+        topology_json_dir = Path('persistent_data/topology')
+        topology_json_dir.mkdir(parents=True, exist_ok=True)
+        topology_json_file = topology_json_dir / f"{app_id}.json"
+
         # ✅ NEW: Generate Markov predictions (if enough data)
         markov_predictions = None
         try:
@@ -398,8 +404,15 @@ class IncrementalLearningSystem:
             from utils.hostname_resolver import HostnameResolver
 
             # Create hostname resolver with REAL DNS lookups (not demo mode!)
-            hostname_resolver = HostnameResolver(demo_mode=False, enable_dns_lookup=True, timeout=3.0)
-            logger.info(f"    DNS lookups ENABLED (timeout: 3s)")
+            # ✅ NEW: Enable forward DNS and bidirectional validation
+            hostname_resolver = HostnameResolver(
+                demo_mode=False,
+                enable_dns_lookup=True,
+                enable_forward_dns=True,
+                enable_bidirectional_validation=True,
+                timeout=3.0
+            )
+            logger.info(f"    DNS lookups ENABLED (reverse + forward + validation, timeout: 3s)")
 
             # Pre-populate resolver with hostnames from CSV (if available)
             for record in flow_records:
@@ -413,6 +426,69 @@ class IncrementalLearningSystem:
 
             cache_stats = hostname_resolver.get_cache_stats()
             logger.info(f"    Loaded {cache_stats['provided_hostnames']} hostnames from CSV")
+
+            # ✅ NEW: Perform DNS validation on unique IPs
+            logger.info(f"    🔍 Validating DNS (forward + reverse) for unique IPs...")
+            unique_ips = set()
+            for record in flow_records:
+                if record.src_ip:
+                    unique_ips.add(record.src_ip)
+                if record.dst_ip:
+                    unique_ips.add(record.dst_ip)
+
+            # Validate each unique IP (with rate limiting to avoid hammering DNS)
+            import time as time_module
+            validated_count = 0
+            for ip in list(unique_ips)[:50]:  # Limit to first 50 IPs to avoid delays
+                try:
+                    validation = hostname_resolver.validate_bidirectional_dns(ip)
+                    validated_count += 1
+
+                    # Log warnings for mismatches
+                    if validation['status'] == 'mismatch':
+                        logger.warning(f"      DNS mismatch: {ip} -> {validation['reverse_hostname']} -> {validation['forward_ip']}")
+                    elif validation['status'] == 'valid_multiple_ips':
+                        logger.info(f"      Multiple IPs: {ip} ({validation['reverse_hostname']}) - {len(validation['forward_ips'])} IPs")
+
+                    # Small delay to avoid overwhelming DNS
+                    time_module.sleep(0.1)
+                except Exception as e:
+                    logger.debug(f"      Validation failed for {ip}: {e}")
+
+            # Get validation summary
+            validation_summary = hostname_resolver.get_validation_summary()
+            logger.info(f"    ✓ DNS Validation complete:")
+            logger.info(f"      - Validated: {validation_summary['total_validated']} IPs")
+            logger.info(f"      - Valid: {validation_summary['valid']}")
+            logger.info(f"      - Valid (multiple IPs): {validation_summary['valid_multiple_ips']}")
+            logger.info(f"      - Mismatches: {validation_summary['mismatch']}")
+            logger.info(f"      - NXDOMAIN: {validation_summary['nxdomain']}")
+
+            # Save validation summary to topology analysis
+            analysis['dns_validation'] = validation_summary
+
+            # ✅ NEW: Save detailed validation metadata for DNS validation reporting
+            analysis['validation_metadata'] = hostname_resolver._validation_metadata
+
+            # ✅ NEW: Save complete topology (with DNS validation) to JSON file
+            try:
+                topology_export = {
+                    'app_id': app_id,
+                    'security_zone': analysis['security_zone'],
+                    'confidence': analysis['confidence'],
+                    'dependencies': analysis['predicted_dependencies'],
+                    'characteristics': analysis.get('characteristics', []),
+                    'dns_validation': analysis.get('dns_validation', {}),
+                    'validation_metadata': analysis.get('validation_metadata', {}),
+                    'timestamp': datetime.now().isoformat()
+                }
+
+                with open(topology_json_file, 'w') as f:
+                    json.dump(topology_export, f, indent=2)
+
+                logger.info(f"    [OK] Topology JSON saved with DNS validation: {topology_json_file.name}")
+            except Exception as e:
+                logger.error(f"    [ERROR] Failed to save topology JSON: {e}")
 
             # Output path
             diagram_output = Path('outputs_final/diagrams') / f"{app_id}_application_diagram.mmd"

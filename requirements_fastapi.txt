@@ -1,0 +1,18 @@
+# FastAPI Web Application Requirements
+# Network Segmentation Analyzer v2.0
+# Compatible with Python 3.13+
+
+# Core FastAPI (compatible with Python 3.13/3.14)
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9
+
+# Pydantic V2 for Python 3.13/3.14 compatibility
+pydantic>=2.0.0
+
+# Async support
+aiofiles>=23.2.1
+
+# Already have these from main requirements
+# python-docx>=0.8.11
+# ExtraHop SDK and other analysis tools already installed
