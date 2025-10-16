@@ -169,7 +169,7 @@ class NetworkLogParser:
                         logger.warning(f"Error parsing row {row_num} in {file_path.name}: {e}")
 
                 self.stats[f'parsed_{app_name}'] = row_count
-                logger.info(f"  ✓ Parsed {row_count} records from {file_path.name}")
+                logger.info(f"  [OK] Parsed {row_count} records from {file_path.name}")
 
         except Exception as e:
             logger.error(f"Failed to parse {file_path.name}: {e}")
@@ -451,7 +451,7 @@ class NetworkLogParser:
             for record in self.records:
                 writer.writerow(record.to_dict())
 
-        logger.info(f"✓ Exported {len(self.records)} normalized records to {output_path}")
+        logger.info(f"[OK] Exported {len(self.records)} normalized records to {output_path}")
 
 
 # Convenience function
@@ -478,12 +478,12 @@ if __name__ == '__main__':
 
     parser = parse_network_logs('data/input')
 
-    print(f"\n📊 Parsing Summary:")
+    print(f"\n[DATA] Parsing Summary:")
     stats = parser.get_summary_stats()
     for key, value in stats.items():
         print(f"  {key}: {value}")
 
-    print(f"\n⚠️  Suspicious Flows:")
+    print(f"\n[WARNING]️  Suspicious Flows:")
     suspicious = [r for r in parser.records if r.is_suspicious][:5]
     for record in suspicious:
         print(f"  - {record} (risk: {record.risk_score})")
@@ -491,4 +491,4 @@ if __name__ == '__main__':
     # Export normalized data
     parser.export_normalized_csv('data/processed/normalized_flows.csv')
 
-    print("\n✅ Parsing complete!")
+    print("\n[SUCCESS] Parsing complete!")

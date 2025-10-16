@@ -102,7 +102,7 @@ def find_mmdc():
             result = subprocess.run([mmdc_in_path, '--version'], 
                                   capture_output=True, timeout=5)
             if result.returncode == 0:
-                logger.info(f"✓ Found mmdc in PATH: {mmdc_in_path}")
+                logger.info(f"[OK] Found mmdc in PATH: {mmdc_in_path}")
                 return mmdc_in_path
         except:
             pass
@@ -115,7 +115,7 @@ def find_mmdc():
                 result = subprocess.run([str(nodeenv_mmdc), '--version'], 
                                       capture_output=True, timeout=5)
                 if result.returncode == 0:
-                    logger.info(f"✓ Found mmdc in nodeenv: {nodeenv_mmdc}")
+                    logger.info(f"[OK] Found mmdc in nodeenv: {nodeenv_mmdc}")
                     return str(nodeenv_mmdc)
             except:
                 pass
@@ -131,7 +131,7 @@ def find_mmdc():
                         result = subprocess.run([str(npm_mmdc), '--version'], 
                                               capture_output=True, timeout=5)
                         if result.returncode == 0:
-                            logger.info(f"✓ Found mmdc in npm global: {npm_mmdc}")
+                            logger.info(f"[OK] Found mmdc in npm global: {npm_mmdc}")
                             return str(npm_mmdc)
                     except:
                         pass
@@ -141,12 +141,12 @@ def find_mmdc():
         result = subprocess.run(['mmdc', '--version'], 
                               capture_output=True, timeout=5)
         if result.returncode == 0:
-            logger.info("✓ Found mmdc (direct command)")
+            logger.info("[OK] Found mmdc (direct command)")
             return 'mmdc'
     except:
         pass
     
-    logger.warning("✗ mmdc (mermaid-cli) not found")
+    logger.warning("[ERROR] mmdc (mermaid-cli) not found")
     logger.info("Install with: npm install -g @mermaid-js/mermaid-cli")
     return None
 
@@ -268,16 +268,16 @@ def generate_pngs_for_all_diagrams(diagrams_dir, mmdc_cmd):
         
         if generate_png_from_mmd(mmd_file, mmdc_cmd):
             stats['success'] += 1
-            print("[PNG ✓]")
+            print("[PNG [OK]]")
         else:
             stats['failed'] += 1
-            print("[PNG ✗]")
+            print("[PNG [ERROR]]")
     
     print()
     logger.info(f"PNG Generation Results:")
     logger.info(f"  Total: {stats['total']}")
-    logger.info(f"  ✓ Success: {stats['success']}")
-    logger.info(f"  ✗ Failed: {stats['failed']}")
+    logger.info(f"  [OK] Success: {stats['success']}")
+    logger.info(f"  [ERROR] Failed: {stats['failed']}")
     logger.info(f"  ⊘ Skipped: {stats['skipped']}")
     
     return stats
@@ -576,9 +576,9 @@ def main():
 
     # Check if mmdc is available
     if mmdc_cmd:
-        logger.info("✓ PNG generation will be enabled")
+        logger.info("[OK] PNG generation will be enabled")
     else:
-        logger.warning("⚠ PNG generation will be skipped (mmdc not found)")
+        logger.warning("[WARNING] PNG generation will be skipped (mmdc not found)")
 
     # Get application directories (filtered by --apps if provided)
     if args.apps:
@@ -589,7 +589,7 @@ def main():
             if app_path.exists() and app_path.is_dir():
                 app_dirs.append(app_path)
             else:
-                logger.warning(f"⚠ Warning: Application '{app_code}' not found in {apps_dir}")
+                logger.warning(f"[WARNING] Warning: Application '{app_code}' not found in {apps_dir}")
     else:
         # Process all apps
         app_dirs = [d for d in apps_dir.iterdir() if d.is_dir()]
@@ -705,7 +705,7 @@ def main():
                 print(f"  Generator.records: {len(diagram_gen.records)}")
 
                 if len(diagram_gen.records) == 0:
-                    print("  ⚠ WARNING: All records filtered out in MermaidDiagramGenerator!")
+                    print("  [WARNING] WARNING: All records filtered out in MermaidDiagramGenerator!")
                     print("  Check diagrams.py __init__ lines 42-51 for filtering logic")
 
                 mmd_path = output_diagrams / f"{app_id}_diagram.mmd"
@@ -735,13 +735,13 @@ def main():
                 diagram_success = len(content) > 0 and mmd_path.exists()
                 if diagram_success:
                     stats['diagrams_success'] += 1
-                    print(f"\n✓ [DIAG SUCCESS]")
+                    print(f"\n[OK] [DIAG SUCCESS]")
                 else:
                     stats['diagrams_failed'] += 1
-                    print(f"\n✗ [DIAG FAILED]")
+                    print(f"\n[ERROR] [DIAG FAILED]")
                     
             except Exception as e:
-                print(f"\n✗ [DIAG EXCEPTION]: {e}")
+                print(f"\n[ERROR] [DIAG EXCEPTION]: {e}")
                 import traceback
                 traceback.print_exc()
                 stats['diagrams_failed'] += 1
@@ -851,19 +851,19 @@ def main():
     print(f"  Skipped (no flows): {stats['skipped']}")
     print()
     print("Diagrams:")
-    print(f"  ✓ Success: {stats['diagrams_success']}")
-    print(f"  ✗ Failed: {stats['diagrams_failed']}")
+    print(f"  [OK] Success: {stats['diagrams_success']}")
+    print(f"  [ERROR] Failed: {stats['diagrams_failed']}")
     print()
     print("PNG Diagrams:")
     if mmdc_cmd:
-        print(f"  ✓ Success: {png_stats['success']}")
-        print(f"  ✗ Failed: {png_stats['failed']}")
+        print(f"  [OK] Success: {png_stats['success']}")
+        print(f"  [ERROR] Failed: {png_stats['failed']}")
         print(f"  ⊘ Skipped: {png_stats['skipped']}")
     else:
-        print(f"  ⚠ Skipped (mmdc not found)")
+        print(f"  [WARNING] Skipped (mmdc not found)")
     print()
     print("Lucidchart Exports:")
-    print(f"  {'✓ Generated' if lucid_success else '✗ Failed'}")
+    print(f"  {'[OK] Generated' if lucid_success else '[ERROR] Failed'}")
     print()
     print("=" * 80)
     print("OUTPUT LOCATIONS")
@@ -879,8 +879,8 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        logger.warning("\n⚠️  Interrupted by user")
+        logger.warning("\n[WARNING]️  Interrupted by user")
         sys.exit(0)
     except Exception as e:
-        logger.error(f"\n❌ Error: {e}", exc_info=True)
+        logger.error(f"\n[ERROR] Error: {e}", exc_info=True)
         sys.exit(1)

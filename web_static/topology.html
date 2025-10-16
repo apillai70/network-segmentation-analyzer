@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Topology - ActivNet</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
+    <style>
+        #cy {
+            width: 100%;
+            height: calc(100vh - 200px);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: #f9fafb;
+            position: relative;
+        }
+
+        .topology-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .topology-legend {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        .legend-title {
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--gray-900);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .topology-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-box {
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .stat-box-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .stat-box-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-top: 0.25rem;
+        }
+
+        .layout-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .layout-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .layout-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        #node-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+            min-width: 300px;
+            max-width: 400px;
+            display: none;
+        }
+
+        #node-info.show {
+            display: block;
+        }
+
+        .info-title {
+            font-weight: 700;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.875rem;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: var(--gray-900);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-project-diagram"></i>
+            <span>Activ<span style="background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Net</span></span>
+        </div>
+        <div class="nav-menu">
+            <a href="/" class="nav-link">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="/applications.html" class="nav-link">
+                <i class="fas fa-server"></i> Applications
+            </a>
+            <a href="/zones.html" class="nav-link">
+                <i class="fas fa-shield-alt"></i> Security Zones
+            </a>
+            <a href="/topology.html" class="nav-link active">
+                <i class="fas fa-network-wired"></i> Topology
+            </a>
+            <a href="/dns.html" class="nav-link">
+                <i class="fas fa-globe"></i> DNS Validation
+            </a>
+            <a href="/analytics.html" class="nav-link">
+                <i class="fas fa-chart-line"></i> Analytics
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Header -->
+        <header class="page-header">
+            <h1><i class="fas fa-network-wired"></i> Network Topology Map</h1>
+            <p class="subtitle">Interactive visualization of application dependencies and security zones</p>
+        </header>
+
+        <!-- Statistics -->
+        <div class="topology-stats">
+            <div class="stat-box">
+                <div class="stat-box-value" id="stat-nodes">-</div>
+                <div class="stat-box-label">Applications</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box-value" id="stat-edges">-</div>
+                <div class="stat-box-label">Dependencies</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box-value" id="stat-zones">-</div>
+                <div class="stat-box-label">Security Zones</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-box-value" id="stat-density">-</div>
+                <div class="stat-box-label">Avg Dependencies</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="topology-controls">
+            <div class="control-group">
+                <label style="font-weight: 600; color: var(--gray-700);">Layout:</label>
+                <button class="layout-btn active" onclick="changeLayout('cose')">Force</button>
+                <button class="layout-btn" onclick="changeLayout('circle')">Circle</button>
+                <button class="layout-btn" onclick="changeLayout('grid')">Grid</button>
+                <button class="layout-btn" onclick="changeLayout('concentric')">Concentric</button>
+            </div>
+
+            <div class="control-group">
+                <label style="font-weight: 600; color: var(--gray-700);">Filter Zone:</label>
+                <select id="zone-filter" style="padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 8px;">
+                    <option value="">All Zones</option>
+                    <option value="WEB_TIER">WEB_TIER</option>
+                    <option value="APP_TIER">APP_TIER</option>
+                    <option value="DATA_TIER">DATA_TIER</option>
+                    <option value="CACHE_TIER">CACHE_TIER</option>
+                    <option value="MESSAGING_TIER">MESSAGING_TIER</option>
+                    <option value="MANAGEMENT_TIER">MANAGEMENT_TIER</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="fitGraph()">
+                <i class="fas fa-compress-arrows-alt"></i> Fit to Screen
+            </button>
+
+            <button class="btn btn-primary" onclick="exportGraph()">
+                <i class="fas fa-download"></i> Export PNG
+            </button>
+        </div>
+
+        <!-- Graph Container -->
+        <div style="position: relative;">
+            <div id="cy"></div>
+
+            <!-- Legend -->
+            <div class="topology-legend">
+                <div class="legend-title">Security Zones</div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #8b5cf6;"></div>
+                    <span>WEB_TIER</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3b82f6;"></div>
+                    <span>APP_TIER</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #10b981;"></div>
+                    <span>DATA_TIER</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f59e0b;"></div>
+                    <span>CACHE_TIER</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ec4899;"></div>
+                    <span>MESSAGING_TIER</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #6366f1;"></div>
+                    <span>MANAGEMENT_TIER</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #6b7280;"></div>
+                    <span>UNKNOWN</span>
+                </div>
+            </div>
+
+            <!-- Node Info Panel -->
+            <div id="node-info">
+                <div class="info-title" id="info-app-id">-</div>
+                <div class="info-item">
+                    <span class="info-label">Security Zone:</span>
+                    <span class="info-value" id="info-zone">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Dependencies:</span>
+                    <span class="info-value" id="info-deps">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Confidence:</span>
+                    <span class="info-value" id="info-confidence">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">DNS Issues:</span>
+                    <span class="info-value" id="info-dns">-</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="viewAppDetails()">
+                    View Full Details →
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>ActivNet v2.0 | Active Network Intelligence Platform</p>
+    </footer>
+
+    <!-- Script -->
+    <script src="/static/js/topology.js"></script>
+</body>
+</html>

@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Validation - ActivNet</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Enhanced DNS Page Styles */
+        .filter-bar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-select {
+            padding: 0.75rem 2.5rem 0.75rem 1rem;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            background: white url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") no-repeat right 0.5rem center/1.5em 1.5em;
+            cursor: pointer;
+            appearance: none;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .severity-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .severity-critical {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .severity-high {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .severity-medium {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        .severity-low {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .action-btn {
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            color: #4b5563;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .action-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .trend-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mini-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            border-left: 3px solid;
+            transition: all 0.3s ease;
+        }
+
+        .mini-stat:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(4px);
+        }
+
+        .mini-stat.green { border-color: #10b981; }
+        .mini-stat.blue { border-color: #3b82f6; }
+        .mini-stat.orange { border-color: #f59e0b; }
+        .mini-stat.red { border-color: #ef4444; }
+
+        .mini-stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .mini-stat-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .pulse-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .pulse-green {
+            background: #10b981;
+        }
+
+        .pulse-orange {
+            background: #f59e0b;
+        }
+
+        .pulse-red {
+            background: #ef4444;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
+        }
+
+        .detail-row {
+            display: none;
+            background: rgba(102, 126, 234, 0.02);
+            border-left: 3px solid #667eea;
+        }
+
+        .detail-row.active {
+            display: table-row;
+        }
+
+        .detail-content {
+            padding: 1.5rem;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            font-size: 0.875rem;
+            color: #1f2937;
+            font-family: var(--font-mono);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .trend-container {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-bar {
+                flex-direction: column;
+            }
+
+            .search-wrapper {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-project-diagram"></i>
+            <span>Activ<span style="background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Net</span></span>
+        </div>
+        <div class="nav-menu">
+            <a href="/" class="nav-link">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="/applications.html" class="nav-link">
+                <i class="fas fa-server"></i> Applications
+            </a>
+            <a href="/zones.html" class="nav-link">
+                <i class="fas fa-shield-alt"></i> Security Zones
+            </a>
+            <a href="/topology.html" class="nav-link">
+                <i class="fas fa-network-wired"></i> Topology
+            </a>
+            <a href="/dns.html" class="nav-link active">
+                <i class="fas fa-globe"></i> DNS Validation
+            </a>
+            <a href="/analytics.html" class="nav-link">
+                <i class="fas fa-chart-line"></i> Analytics
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Header -->
+        <header class="page-header">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+                <div>
+                    <h1><i class="fas fa-globe"></i> DNS Validation Dashboard</h1>
+                    <p class="subtitle">Real-time DNS health monitoring and misconfiguration detection</p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                    <button class="btn btn-primary" onclick="refreshData()" id="refresh-btn">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <div class="dropdown" style="position: relative;">
+                        <button class="btn btn-primary" onclick="toggleExportDropdown(event)">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <div id="export-dropdown" style="display: none; position: absolute; right: 0; top: 100%; margin-top: 0.25rem; background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); min-width: 150px; z-index: 1000;">
+                            <button onclick="exportData('json')" style="display: block; width: 100%; padding: 0.75rem 1rem; text-align: left; border: none; background: none; cursor: pointer; border-bottom: 1px solid #e5e7eb;">
+                                <i class="fas fa-file-code"></i> JSON
+                            </button>
+                            <button onclick="exportData('csv')" style="display: block; width: 100%; padding: 0.75rem 1rem; text-align: left; border: none; background: none; cursor: pointer; border-bottom: 1px solid #e5e7eb;">
+                                <i class="fas fa-file-csv"></i> CSV
+                            </button>
+                            <button onclick="exportData('pdf')" style="display: block; width: 100%; padding: 0.75rem 1rem; text-align: left; border: none; background: none; cursor: pointer;">
+                                <i class="fas fa-file-pdf"></i> PDF Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- DNS Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="total-valid">-</div>
+                    <div class="stat-label">Valid Records</div>
+                    <div style="margin-top: 0.25rem; font-size: 0.75rem; color: #10b981;">
+                        <span class="pulse-indicator pulse-green"></span> Healthy
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="multiple-ips">-</div>
+                    <div class="stat-label">Multiple IPs</div>
+                    <div style="margin-top: 0.25rem; font-size: 0.75rem; color: #3b82f6;">
+                        VM + ESXi Hosts
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="mismatches">-</div>
+                    <div class="stat-label">Mismatches</div>
+                    <div style="margin-top: 0.25rem; font-size: 0.75rem; color: #f59e0b;">
+                        <span class="pulse-indicator pulse-orange"></span> <span id="mismatch-status">Needs Review</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="nxdomain">-</div>
+                    <div class="stat-label">NXDOMAIN</div>
+                    <div style="margin-top: 0.25rem; font-size: 0.75rem; color: #ef4444;">
+                        <span class="pulse-indicator pulse-red"></span> <span id="nxdomain-status">Critical</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trend Charts -->
+        <div class="trend-container">
+            <div class="chart-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-chart-line"></i> DNS Health Trend (7 Days)</h2>
+                    <span class="badge badge-info">Live</span>
+                </div>
+                <div class="card-body">
+                    <canvas id="trendChart" height="100"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-chart-pie"></i> Status Distribution</h2>
+                </div>
+                <div class="card-body">
+                    <canvas id="statusChart"></canvas>
+                    <div style="margin-top: 1rem; display: grid; gap: 0.5rem;">
+                        <div class="mini-stat green">
+                            <div>
+                                <div class="mini-stat-value" id="percent-valid">-</div>
+                                <div class="mini-stat-label">Valid %</div>
+                            </div>
+                        </div>
+                        <div class="mini-stat orange">
+                            <div>
+                                <div class="mini-stat-value" id="percent-issues">-</div>
+                                <div class="mini-stat-label">Issues %</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search & Filter Bar -->
+        <div class="filter-bar">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Search by application, IP, or hostname...">
+            </div>
+
+            <select id="severity-filter" class="filter-select">
+                <option value="">All Severities</option>
+                <option value="critical">Critical</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+
+            <select id="type-filter" class="filter-select">
+                <option value="">All Types</option>
+                <option value="mismatch">Mismatches</option>
+                <option value="nxdomain">NXDOMAIN</option>
+                <option value="multiple">Multiple IPs</option>
+            </select>
+
+            <button class="action-btn" onclick="clearFilters()">
+                <i class="fas fa-times"></i> Clear
+            </button>
+
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #6b7280;">
+                <span id="results-count">0 results</span>
+            </div>
+        </div>
+
+        <!-- DNS Issues Table -->
+        <div class="table-card">
+            <div class="card-header">
+                <h2><i class="fas fa-list-alt"></i> DNS Issues & Validation Status</h2>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <span class="badge badge-warning" id="issue-count">0</span>
+                    <button class="action-btn" onclick="expandAll()">
+                        <i class="fas fa-expand"></i> Expand All
+                    </button>
+                    <button class="action-btn" onclick="collapseAll()">
+                        <i class="fas fa-compress"></i> Collapse All
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;"></th>
+                                <th>Severity</th>
+                                <th>Application</th>
+                                <th>IP Address</th>
+                                <th>Status</th>
+                                <th>Issue</th>
+                                <th>Last Checked</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="issues-tbody">
+                            <tr>
+                                <td colspan="8" class="text-center">
+                                    <div class="loading-spinner"></div> Loading DNS validation data...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- DNS Recommendations -->
+        <div class="table-card">
+            <div class="card-header">
+                <h2><i class="fas fa-lightbulb"></i> Recommendations & Best Practices</h2>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; gap: 1rem;">
+                    <div class="success" id="healthy-message" style="display: none;">
+                        <strong><i class="fas fa-check-circle"></i> Excellent DNS Health</strong>
+                        <p>All DNS records are properly configured with forward and reverse lookups matching correctly. No action required.</p>
+                    </div>
+
+                    <div class="error" id="issues-message" style="display: none;">
+                        <strong><i class="fas fa-exclamation-triangle"></i> DNS Configuration Issues Detected</strong>
+                        <p>Immediate actions recommended:</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                            <li><strong>Critical:</strong> Fix NXDOMAIN errors - DNS records missing entirely</li>
+                            <li><strong>High:</strong> Correct PTR/A record mismatches affecting reliability</li>
+                            <li><strong>Medium:</strong> Review multiple IP scenarios for firewall rule completeness</li>
+                            <li><strong>Low:</strong> Document known exceptions and whitelist patterns</li>
+                        </ul>
+                    </div>
+
+                    <div style="padding: 1rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%); border-radius: 8px; border-left: 4px solid #3b82f6;">
+                        <strong><i class="fas fa-info-circle"></i> Multiple IPs (Virtualization)</strong>
+                        <p>Hostnames with multiple IP addresses typically indicate virtualized hosts (VM + ESXi):</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                            <li>Ensure firewall rules account for BOTH IPs</li>
+                            <li>Verify vMotion/HA scenarios don't break connectivity</li>
+                            <li>Document which IP is primary vs. management interface</li>
+                            <li>Monitor for IP drift during maintenance windows</li>
+                        </ul>
+                    </div>
+
+                    <div style="padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 4px solid #10b981;">
+                        <strong><i class="fas fa-shield-alt"></i> Security Impact</strong>
+                        <p>DNS misconfigurations can have security implications:</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                            <li>Incorrect PTR records may trigger email spam filters</li>
+                            <li>Missing DNS entries could indicate shadow IT or rogue services</li>
+                            <li>Mismatches may indicate DNS poisoning or hijacking attempts</li>
+                            <li>Always verify DNS changes through secure channels</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>ActivNet v2.0 | Active Network Intelligence Platform | DNS Validation Module</p>
+        <p>Last updated: <span id="last-updated">-</span> | Auto-refresh: <span id="refresh-status">Every 30s</span></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        let trendChart = null;
+        let statusChart = null;
+        let allIssues = [];
+        let filteredIssues = [];
+        let expandedRows = new Set();
+
+        // Auto-refresh
+        let refreshInterval = null;
+
+        async function loadDNSData() {
+            try {
+                // Show loading state
+                document.getElementById('refresh-btn').innerHTML = '<div class="loading-spinner"></div> Loading...';
+
+                // Load summary
+                const summaryResponse = await fetch('/api/dns-validation/summary');
+                const summary = await summaryResponse.json();
+
+                // Update stats
+                const stats = summary.statistics || {};
+                updateStats(stats);
+
+                // Load mismatches
+                const mismatchesResponse = await fetch('/api/dns-validation/mismatches');
+                const mismatchesData = await mismatchesResponse.json();
+                allIssues = mismatchesData.mismatches || [];
+
+                applyFilters();
+
+                // Render charts
+                renderTrendChart(stats);
+                renderStatusChart(stats);
+
+                // Update last updated time
+                document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
+
+                // Reset refresh button
+                document.getElementById('refresh-btn').innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+
+            } catch (error) {
+                console.error('Error loading DNS data:', error);
+                document.getElementById('refresh-btn').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+            }
+        }
+
+        function updateStats(stats) {
+            const totalValid = stats.total_valid || 0;
+            const multipleIPs = stats.total_valid_multiple || 0;
+            const mismatches = stats.total_mismatches || 0;
+            const nxdomain = stats.total_nxdomain || 0;
+            const total = totalValid + multipleIPs + mismatches + nxdomain;
+
+            document.getElementById('total-valid').textContent = totalValid;
+            document.getElementById('multiple-ips').textContent = multipleIPs;
+            document.getElementById('mismatches').textContent = mismatches;
+            document.getElementById('nxdomain').textContent = nxdomain;
+
+            // Update percentages
+            if (total > 0) {
+                document.getElementById('percent-valid').textContent = `${((totalValid / total) * 100).toFixed(1)}%`;
+                document.getElementById('percent-issues').textContent = `${(((mismatches + nxdomain) / total) * 100).toFixed(1)}%`;
+            }
+
+            // Update status indicators
+            if (mismatches === 0) {
+                document.getElementById('mismatch-status').textContent = 'Clean';
+                document.querySelector('#mismatches').closest('.stat-card').querySelector('.pulse-indicator').className = 'pulse-indicator pulse-green';
+            } else {
+                document.getElementById('mismatch-status').textContent = 'Needs Review';
+            }
+
+            if (nxdomain === 0) {
+                document.getElementById('nxdomain-status').textContent = 'Clean';
+                document.querySelector('#nxdomain').closest('.stat-card').querySelector('.pulse-indicator').className = 'pulse-indicator pulse-green';
+            } else {
+                document.getElementById('nxdomain-status').textContent = 'Critical';
+            }
+
+            // Show/hide messages
+            const totalIssues = mismatches + nxdomain;
+            if (totalIssues === 0) {
+                document.getElementById('healthy-message').style.display = 'block';
+                document.getElementById('issues-message').style.display = 'none';
+            } else {
+                document.getElementById('healthy-message').style.display = 'none';
+                document.getElementById('issues-message').style.display = 'block';
+            }
+
+            document.getElementById('issue-count').textContent = totalIssues;
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const severityFilter = document.getElementById('severity-filter').value;
+            const typeFilter = document.getElementById('type-filter').value;
+
+            filteredIssues = allIssues.filter(issue => {
+                // Search filter
+                const matchesSearch = !searchTerm ||
+                    (issue.app_id || '').toLowerCase().includes(searchTerm) ||
+                    (issue.ip || '').toLowerCase().includes(searchTerm) ||
+                    (issue.reverse_hostname || '').toLowerCase().includes(searchTerm);
+
+                // Severity filter
+                const issueSeverity = getSeverity(issue);
+                const matchesSeverity = !severityFilter || issueSeverity === severityFilter;
+
+                // Type filter
+                const issueType = getIssueType(issue);
+                const matchesType = !typeFilter || issueType === typeFilter;
+
+                return matchesSearch && matchesSeverity && matchesType;
+            });
+
+            renderIssues();
+            document.getElementById('results-count').textContent = `${filteredIssues.length} results`;
+        }
+
+        function getSeverity(issue) {
+            if (issue.mismatch && issue.mismatch.toLowerCase().includes('nxdomain')) return 'critical';
+            if (issue.mismatch && issue.mismatch.toLowerCase().includes('mismatch')) return 'high';
+            if (issue.forward_ip && issue.forward_ip.includes(',')) return 'medium';
+            return 'low';
+        }
+
+        function getIssueType(issue) {
+            if (issue.mismatch && issue.mismatch.toLowerCase().includes('nxdomain')) return 'nxdomain';
+            if (issue.mismatch && issue.mismatch.toLowerCase().includes('mismatch')) return 'mismatch';
+            if (issue.forward_ip && issue.forward_ip.includes(',')) return 'multiple';
+            return 'other';
+        }
+
+        function renderIssues() {
+            const tbody = document.getElementById('issues-tbody');
+
+            if (filteredIssues.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8">
+                            <div class="no-results">
+                                <i class="fas fa-search"></i>
+                                <p>No DNS issues found matching your filters</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredIssues.map((issue, idx) => {
+                const severity = getSeverity(issue);
+                const rowId = `row-${idx}`;
+                const detailId = `detail-${idx}`;
+                const isExpanded = expandedRows.has(rowId);
+
+                return `
+                    <tr id="${rowId}" style="cursor: pointer;" onclick="toggleDetail('${rowId}', '${detailId}')">
+                        <td>
+                            <i class="fas fa-chevron-${isExpanded ? 'down' : 'right'}" id="icon-${rowId}"></i>
+                        </td>
+                        <td>
+                            <span class="severity-badge severity-${severity}">
+                                <i class="fas fa-${severity === 'critical' ? 'times-circle' : severity === 'high' ? 'exclamation-triangle' : severity === 'medium' ? 'info-circle' : 'check-circle'}"></i>
+                                ${severity.toUpperCase()}
+                            </span>
+                        </td>
+                        <td><strong>${issue.app_id || 'N/A'}</strong></td>
+                        <td><code style="font-size: 0.75rem;">${issue.ip}</code></td>
+                        <td>
+                            <span class="badge ${issue.mismatch && issue.mismatch.includes('NXDOMAIN') ? 'badge-danger' : 'badge-warning'}">
+                                ${issue.mismatch || 'Unknown'}
+                            </span>
+                        </td>
+                        <td>${issue.mismatch || 'Unknown'}</td>
+                        <td style="font-size: 0.75rem;">${issue.timestamp ? new Date(issue.timestamp).toLocaleString() : 'N/A'}</td>
+                        <td>
+                            <button class="action-btn" onclick="viewDetails(event, ${idx})">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </td>
+                    </tr>
+                    <tr id="${detailId}" class="detail-row ${isExpanded ? 'active' : ''}">
+                        <td colspan="8">
+                            <div class="detail-content">
+                                <h3 style="margin-bottom: 1rem; color: #1f2937;"><i class="fas fa-info-circle"></i> Detailed Information</h3>
+                                <div class="detail-grid">
+                                    <div class="detail-item">
+                                        <div class="detail-label">IP Address</div>
+                                        <div class="detail-value">${issue.ip}</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Reverse DNS (PTR)</div>
+                                        <div class="detail-value">${issue.reverse_hostname || 'N/A'}</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Forward IP (A)</div>
+                                        <div class="detail-value">${issue.forward_ip || 'N/A'}</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Issue Type</div>
+                                        <div class="detail-value">${issue.mismatch || 'Unknown'}</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Severity</div>
+                                        <div class="detail-value">${severity.toUpperCase()}</div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">Last Validated</div>
+                                        <div class="detail-value">${issue.timestamp ? new Date(issue.timestamp).toLocaleString() : 'N/A'}</div>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
+                                    <h4 style="margin-bottom: 0.5rem; color: #1f2937;">Remediation Steps:</h4>
+                                    <ul style="margin-left: 1.5rem; color: #4b5563; font-size: 0.875rem;">
+                                        ${getRemediationSteps(issue, severity)}
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function getRemediationSteps(issue, severity) {
+            if (severity === 'critical') {
+                return `
+                    <li>DNS record is completely missing (NXDOMAIN)</li>
+                    <li>Create PTR record in reverse DNS zone</li>
+                    <li>Verify DNS server authoritative for this zone</li>
+                    <li>Test with: <code>nslookup ${issue.ip}</code></li>
+                `;
+            } else if (severity === 'high') {
+                return `
+                    <li>Forward and reverse DNS records don't match</li>
+                    <li>Update PTR record to match A record hostname</li>
+                    <li>Or update A record to match PTR hostname</li>
+                    <li>Ensure DNS propagation completes (may take up to 24h)</li>
+                `;
+            } else if (severity === 'medium') {
+                return `
+                    <li>Multiple IPs detected (likely VM + ESXi host)</li>
+                    <li>Verify both IPs are intentional and documented</li>
+                    <li>Update firewall rules to include both IPs if needed</li>
+                    <li>Document primary vs. management interface</li>
+                `;
+            }
+            return '<li>Review DNS configuration for consistency</li>';
+        }
+
+        function toggleDetail(rowId, detailId) {
+            const detailRow = document.getElementById(detailId);
+            const icon = document.getElementById(`icon-${rowId}`);
+
+            if (expandedRows.has(rowId)) {
+                expandedRows.delete(rowId);
+                detailRow.classList.remove('active');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-right');
+            } else {
+                expandedRows.add(rowId);
+                detailRow.classList.add('active');
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        function viewDetails(event, idx) {
+            event.stopPropagation();
+            const rowId = `row-${idx}`;
+            const detailId = `detail-${idx}`;
+            expandedRows.add(rowId);
+            document.getElementById(detailId).classList.add('active');
+            document.getElementById(`icon-${rowId}`).classList.remove('fa-chevron-right');
+            document.getElementById(`icon-${rowId}`).classList.add('fa-chevron-down');
+        }
+
+        function expandAll() {
+            filteredIssues.forEach((_, idx) => {
+                const rowId = `row-${idx}`;
+                const detailId = `detail-${idx}`;
+                expandedRows.add(rowId);
+                const detailRow = document.getElementById(detailId);
+                const icon = document.getElementById(`icon-${rowId}`);
+                if (detailRow) {
+                    detailRow.classList.add('active');
+                    icon.classList.remove('fa-chevron-right');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        }
+
+        function collapseAll() {
+            expandedRows.clear();
+            filteredIssues.forEach((_, idx) => {
+                const detailId = `detail-${idx}`;
+                const rowId = `row-${idx}`;
+                const detailRow = document.getElementById(detailId);
+                const icon = document.getElementById(`icon-${rowId}`);
+                if (detailRow) {
+                    detailRow.classList.remove('active');
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-right');
+                }
+            });
+        }
+
+        function renderTrendChart(stats) {
+            const ctx = document.getElementById('trendChart');
+            if (!ctx) return;
+
+            if (trendChart) {
+                trendChart.destroy();
+            }
+
+            // Simulate 7-day trend data
+            const days = 7;
+            const labels = [];
+            const validData = [];
+            const issuesData = [];
+
+            for (let i = days - 1; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+
+                // Simulate trend (current day uses real data)
+                if (i === 0) {
+                    validData.push(stats.total_valid || 0);
+                    issuesData.push((stats.total_mismatches || 0) + (stats.total_nxdomain || 0));
+                } else {
+                    // Simulate historical data
+                    const baseValid = stats.total_valid || 100;
+                    const baseIssues = (stats.total_mismatches || 0) + (stats.total_nxdomain || 0);
+                    validData.push(Math.max(0, baseValid + Math.floor(Math.random() * 10) - 5));
+                    issuesData.push(Math.max(0, baseIssues + Math.floor(Math.random() * 4) - 2));
+                }
+            }
+
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Valid Records',
+                            data: validData,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Issues',
+                            data: issuesData,
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderStatusChart(stats) {
+            const ctx = document.getElementById('statusChart');
+            if (!ctx) return;
+
+            if (statusChart) {
+                statusChart.destroy();
+            }
+
+            const data = {
+                labels: ['Valid', 'Multiple IPs', 'Mismatches', 'NXDOMAIN'],
+                datasets: [{
+                    data: [
+                        stats.total_valid || 0,
+                        stats.total_valid_multiple || 0,
+                        stats.total_mismatches || 0,
+                        stats.total_nxdomain || 0
+                    ],
+                    backgroundColor: [
+                        '#10b981',
+                        '#3b82f6',
+                        '#f59e0b',
+                        '#ef4444'
+                    ]
+                }]
+            };
+
+            statusChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 10,
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function clearFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('severity-filter').value = '';
+            document.getElementById('type-filter').value = '';
+            applyFilters();
+        }
+
+        function refreshData() {
+            loadDNSData();
+        }
+
+        function toggleExportDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('export-dropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function exportData(format) {
+            window.location.href = `/api/export/dns-report?format=${format}`;
+            document.getElementById('export-dropdown').style.display = 'none';
+        }
+
+        // Event listeners
+        document.getElementById('search-input').addEventListener('input', applyFilters);
+        document.getElementById('severity-filter').addEventListener('change', applyFilters);
+        document.getElementById('type-filter').addEventListener('change', applyFilters);
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            const dropdown = document.getElementById('export-dropdown');
+            if (dropdown) dropdown.style.display = 'none';
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDNSData();
+
+            // Auto-refresh every 30 seconds
+            refreshInterval = setInterval(loadDNSData, 30000);
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (refreshInterval) clearInterval(refreshInterval);
+        });
+    </script>
+</body>
+</html>

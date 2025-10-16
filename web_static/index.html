@@ -24,6 +24,9 @@
             <a href="/zones.html" class="nav-link">
                 <i class="fas fa-shield-alt"></i> Security Zones
             </a>
+            <a href="/topology.html" class="nav-link">
+                <i class="fas fa-network-wired"></i> Topology
+            </a>
             <a href="/dns.html" class="nav-link">
                 <i class="fas fa-globe"></i> DNS Validation
             </a>
@@ -37,8 +40,25 @@
     <main class="container">
         <!-- Header -->
         <header class="page-header">
-            <h1>Enterprise Network Dashboard</h1>
-            <p class="subtitle">Real-time network topology and security analysis</p>
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+                <div>
+                    <h1>Enterprise Network Dashboard</h1>
+                    <p class="subtitle">Real-time network topology and security analysis</p>
+                </div>
+                <div class="dropdown" style="position: relative; margin-top: 0.5rem;">
+                    <button class="btn btn-primary" onclick="toggleEnterpriseExportDropdown(event)" style="min-width: 150px;">
+                        <i class="fas fa-file-export"></i> Export Report
+                    </button>
+                    <div id="enterprise-export-dropdown" style="display: none; position: absolute; right: 0; top: 100%; margin-top: 0.25rem; background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); min-width: 180px; z-index: 1000;">
+                        <button onclick="exportEnterpriseReport('docx')" style="display: block; width: 100%; padding: 0.75rem 1rem; text-align: left; border: none; background: none; cursor: pointer; border-bottom: 1px solid #e5e7eb;">
+                            <i class="fas fa-file-word"></i> Word Document
+                        </button>
+                        <button onclick="exportEnterpriseReport('json')" style="display: block; width: 100%; padding: 0.75rem 1rem; text-align: left; border: none; background: none; cursor: pointer;">
+                            <i class="fas fa-file-code"></i> JSON
+                        </button>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <!-- Stats Cards -->
@@ -152,6 +172,24 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="/static/js/main.js"></script>
     <script>
+        // Export functionality
+        function toggleEnterpriseExportDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('enterprise-export-dropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function exportEnterpriseReport(format) {
+            window.location.href = `/api/export/enterprise-report?format=${format}`;
+            document.getElementById('enterprise-export-dropdown').style.display = 'none';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            const dropdown = document.getElementById('enterprise-export-dropdown');
+            if (dropdown) dropdown.style.display = 'none';
+        });
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             loadData();

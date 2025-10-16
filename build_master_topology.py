@@ -117,12 +117,12 @@ def main():
     print()
 
     if result:
-        print(f"✓ Master topology built successfully")
+        print(f"[SUCCESS] Master topology built successfully")
         print(f"  Location: {result}")
         print(f"\nYou can now generate threat surface documents with:")
         print(f"  python generate_threat_surface_docs.py")
     else:
-        print("✗ Failed to build master topology")
+        print("[ERROR] Failed to build master topology")
         print("  Check logs for details")
 
 

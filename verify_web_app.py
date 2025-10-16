@@ -40,17 +40,17 @@ def print_header(text: str):
 
 def print_success(text: str):
     """Print success message"""
-    print(f"{Colors.OKGREEN}✓{Colors.ENDC} {text}")
+    print(f"{Colors.OKGREEN}[OK]{Colors.ENDC} {text}")
 
 
 def print_warning(text: str):
     """Print warning message"""
-    print(f"{Colors.WARNING}⚠{Colors.ENDC} {text}")
+    print(f"{Colors.WARNING}[WARNING]{Colors.ENDC} {text}")
 
 
 def print_error(text: str):
     """Print error message"""
-    print(f"{Colors.FAIL}✗{Colors.ENDC} {text}")
+    print(f"{Colors.FAIL}[ERROR]{Colors.ENDC} {text}")
 
 
 def print_info(text: str):
@@ -256,7 +256,7 @@ def print_summary(results: dict):
 
     print()
     for test_name, result in results.items():
-        status = "✓ PASS" if result else "✗ FAIL"
+        status = "[OK] PASS" if result else "[ERROR] FAIL"
         color = Colors.OKGREEN if result else Colors.FAIL
         print(f"  {color}{status}{Colors.ENDC} - {test_name}")
 

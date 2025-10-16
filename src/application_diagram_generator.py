@@ -655,6 +655,16 @@ class ApplicationDiagramGenerator:
             "- ╌╌╌ Dashed lines = Predicted/inferred connections",
             "",
             "**Colors:** Background colors indicate security zones (Web, App, Data tiers)",
+            "",
+            "**\\* Unknown Connections - Detailed Explanation:**",
+            "",
+            "Unknown connections could not be definitively classified based on available ExtraHop network flow data.",
+            "This may occur when:",
+            "- (1) Destination endpoints do not have clear service type indicators in their network signatures",
+            "- (2) Flow data lacks sufficient context to determine the application protocol",
+            "- (3) Connections involve custom or proprietary services without standard port/protocol patterns",
+            "",
+            "**Recommendation:** Manual investigation and correlation with application configuration is recommended to properly classify these dependencies.",
             ""
         ])
 
@@ -853,15 +863,15 @@ class ApplicationDiagramGenerator:
             position: fixed;
             bottom: 20px;
             left: 20px;
-            max-width: 300px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.95);
+            max-width: 450px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.96);
             border: 2px solid #3498db;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            font-size: 12px;
+            font-size: 13px;
             z-index: 1001;
-            max-height: 300px;
+            max-height: 500px;
             overflow-y: auto;
         }}
         .legend h3 {{
@@ -911,6 +921,18 @@ class ApplicationDiagramGenerator:
             <li><strong>🔵 Blue dashed</strong> = ML inference/predictions</li>
             <li><strong>🎨 Colors</strong> = Security zones</li>
         </ul>
+        <div style="margin-top: 15px; padding: 18px; background: rgba(158, 158, 158, 0.15); border-radius: 6px; border-left: 4px solid #9e9e9e;">
+            <strong style="color: #2c3e50; font-size: 14px;">* Unknown Connections:</strong>
+            <p style="margin: 8px 0 0 0; font-size: 13px; line-height: 1.7;">
+                Unknown connections could not be definitively classified based on available ExtraHop network flow data.
+                This may occur when: <br><br>
+                <strong>(1)</strong> Destination endpoints do not have clear service type indicators,<br>
+                <strong>(2)</strong> Flow data lacks sufficient context to determine the application protocol, or<br>
+                <strong>(3)</strong> Connections involve custom or proprietary services without standard port/protocol patterns.
+                <br><br>
+                <strong>Recommendation:</strong> Manual investigation and correlation with application configuration is recommended.
+            </p>
+        </div>
     </div>
 
     <div class="diagram-container">

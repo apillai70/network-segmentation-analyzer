@@ -177,7 +177,7 @@ class MermaidDiagramGenerator:
             f.write(mermaid_content)
             f.write('\n```')
 
-        logger.info(f"✓ Overall network diagram saved: {output_path}")
+        logger.info(f"[OK] Overall network diagram saved: {output_path}")
 
         # Also generate HTML version
         html_path = output_path.replace('.mmd', '.html')
@@ -308,12 +308,21 @@ class MermaidDiagramGenerator:
             if tier not in app_components_by_tier:
                 continue
 
-            tier_label = tier.replace('_TIER', '').replace('_', ' ').title()
-            tier_id = self._safe_name(f"{app_name}_{tier}")
-            tier_class = tier_classes.get(tier, 'mgmtTier')
-            server_count = len(app_components_by_tier[tier])
+            # Special handling for UNKNOWN tier - use detailed ExtraHop explanation
+            if tier == 'UNKNOWN':
+                server_count = len(app_components_by_tier[tier])
+                tier_label = f"* Unknown Connections: {server_count} connection(s)"
+                tier_id = self._safe_name(f"{app_name}_{tier}")
+                tier_class = tier_classes.get(tier, 'mgmtTier')
 
-            lines.append(f"    subgraph {tier_id}[\"{tier_label}<br/>{server_count} server(s)\"]")
+                lines.append(f"    subgraph {tier_id}[\"{tier_label}<br/>These could not be definitively classified<br/>based on available ExtraHop network flow data\"]")
+            else:
+                tier_label = tier.replace('_TIER', '').replace('_', ' ').title()
+                tier_id = self._safe_name(f"{app_name}_{tier}")
+                tier_class = tier_classes.get(tier, 'mgmtTier')
+                server_count = len(app_components_by_tier[tier])
+
+                lines.append(f"    subgraph {tier_id}[\"{tier_label}<br/>{server_count} server(s)\"]")
             lines.append("        direction LR")
 
             # Show servers in this tier (limit to 10 for readability)
@@ -438,7 +447,7 @@ class MermaidDiagramGenerator:
             f.write(mermaid_content)
             f.write('\n```')
 
-        logger.info(f"✓ Application diagram saved: {output_path}")
+        logger.info(f"[OK] Application diagram saved: {output_path}")
 
         # Also generate HTML version
         html_path = output_path.replace('.mmd', '.html')
@@ -462,7 +471,7 @@ class MermaidDiagramGenerator:
             content = self.generate_app_diagram(app_name, str(output_file))
             diagrams[app_name] = content
 
-        logger.info(f"✓ Generated {len(diagrams)} application diagrams")
+        logger.info(f"[OK] Generated {len(diagrams)} application diagrams")
         return diagrams
 
     def generate_zone_flow_diagram(self, output_path: str) -> str:
@@ -528,7 +537,7 @@ class MermaidDiagramGenerator:
             f.write(mermaid_content)
             f.write('\n```')
 
-        logger.info(f"✓ Zone flow diagram saved: {output_path}")
+        logger.info(f"[OK] Zone flow diagram saved: {output_path}")
 
         # Also generate HTML version
         html_path = output_path.replace('.mmd', '.html')
@@ -811,6 +820,17 @@ class MermaidDiagramGenerator:
                 <strong>⬜ Gray dashed</strong> = Unknown/unclassified
                 </span>
             </div>
+            <div class="legend-item" style="grid-column: 1 / -1; border-left-color: #9e9e9e; padding: 20px; font-size: 14px;">
+                <div class="legend-title" style="font-size: 16px; margin-bottom: 12px;">* Unknown Connections - Detailed Explanation</div>
+                <span style="font-size: 14px; line-height: 1.8;">
+                Unknown connections could not be definitively classified based on available ExtraHop network flow data.
+                This may occur when: <br><br>
+                <strong>(1)</strong> Destination endpoints do not have clear service type indicators in their network signatures<br>
+                <strong>(2)</strong> Flow data lacks sufficient context to determine the application protocol<br>
+                <strong>(3)</strong> Connections involve custom or proprietary services without standard port/protocol patterns<br><br>
+                <strong>Recommendation:</strong> Manual investigation and correlation with application configuration is recommended to properly classify these dependencies.
+                </span>
+            </div>
         </div>
     </div>
 
@@ -988,7 +1008,7 @@ class MermaidDiagramGenerator:
         with open(html_file, 'w', encoding='utf-8') as f:
             f.write(html_template)
 
-        logger.info(f"✓ HTML diagram saved: {output_path}")
+        logger.info(f"[OK] HTML diagram saved: {output_path}")
 
 
 # Convenience function
@@ -1018,7 +1038,7 @@ def generate_all_diagrams(flow_records: List, zones: Dict, output_dir: str = 'ou
     # Generate per-app diagrams
     generator.generate_all_app_diagrams(str(output_path))
 
-    logger.info("✅ All diagrams generated successfully")
+    logger.info("[SUCCESS] All diagrams generated successfully")
     return generator
 
 
@@ -1042,4 +1062,4 @@ if __name__ == '__main__':
         'outputs/diagrams'
     )
 
-    print("\n✅ Diagram generation complete!")
+    print("\n[SUCCESS] Diagram generation complete!")

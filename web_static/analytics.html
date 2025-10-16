@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Analytics - ActivNet</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-project-diagram"></i>
+            <span>Activ<span style="background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Net</span></span>
+        </div>
+        <div class="nav-menu">
+            <a href="/" class="nav-link">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="/applications.html" class="nav-link">
+                <i class="fas fa-server"></i> Applications
+            </a>
+            <a href="/zones.html" class="nav-link">
+                <i class="fas fa-shield-alt"></i> Security Zones
+            </a>
+            <a href="/topology.html" class="nav-link">
+                <i class="fas fa-network-wired"></i> Topology
+            </a>
+            <a href="/dns.html" class="nav-link">
+                <i class="fas fa-globe"></i> DNS Validation
+            </a>
+            <a href="/analytics.html" class="nav-link active">
+                <i class="fas fa-chart-line"></i> Analytics
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Header -->
+        <header class="page-header">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+                <div>
+                    <h1>Advanced Network Analytics</h1>
+                    <p class="subtitle">Deep insights, anomaly detection, and security risk analysis</p>
+                </div>
+                <button class="btn btn-primary" onclick="exportAnalytics()" style="margin-top: 0.5rem;">
+                    <i class="fas fa-download"></i> Export Report
+                </button>
+            </div>
+        </header>
+
+        <!-- Network Health Score -->
+        <div class="table-card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+                <h2><i class="fas fa-heartbeat"></i> Network Health Score</h2>
+                <button class="btn-refresh" onclick="loadAllAnalytics()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; align-items: center;">
+                    <div style="text-align: center;">
+                        <div id="health-score" style="font-size: 4rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                            --
+                        </div>
+                        <div style="font-size: 1.25rem; color: var(--gray-600); font-weight: 600;">
+                            Overall Health
+                        </div>
+                    </div>
+                    <div style="display: grid; gap: 0.75rem;">
+                        <div id="health-indicators"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Critical Alerts -->
+        <div class="table-card" id="alerts-section" style="margin-bottom: 1.5rem; display: none;">
+            <div class="card-header">
+                <h2><i class="fas fa-exclamation-triangle"></i> Critical Alerts</h2>
+                <span class="badge badge-danger" id="alert-count">0</span>
+            </div>
+            <div class="card-body">
+                <div id="alerts-content" style="display: grid; gap: 1rem;"></div>
+            </div>
+        </div>
+
+        <!-- Anomaly Detection -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="anomalies-count">-</div>
+                    <div class="stat-label">Anomalies Detected</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="high-risk-count">-</div>
+                    <div class="stat-label">High Risk Apps</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="complex-apps-count">-</div>
+                    <div class="stat-label">Complex Dependencies</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="dns-health-score">-</div>
+                    <div class="stat-label">DNS Health %</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Risk Scoring -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Security Risk Distribution</h2>
+                </div>
+                <div class="card-body">
+                    <canvas id="riskChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-chart-pie"></i> Dependency Complexity</h2>
+                </div>
+                <div class="card-body">
+                    <canvas id="complexityChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- High Risk Applications Table -->
+        <div class="table-card">
+            <div class="card-header">
+                <h2><i class="fas fa-shield-alt"></i> High Risk Applications</h2>
+                <span class="badge badge-warning" id="high-risk-badge">0</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Application</th>
+                                <th>Risk Score</th>
+                                <th>Risk Factors</th>
+                                <th>Dependencies</th>
+                                <th>DNS Issues</th>
+                                <th>Recommendation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="high-risk-tbody">
+                            <tr>
+                                <td colspan="6" class="text-center">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Anomalous Applications -->
+        <div class="table-card">
+            <div class="card-header">
+                <h2><i class="fas fa-exclamation-circle"></i> Detected Anomalies</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Application</th>
+                                <th>Anomaly Type</th>
+                                <th>Severity</th>
+                                <th>Details</th>
+                                <th>Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody id="anomalies-tbody">
+                            <tr>
+                                <td colspan="5" class="text-center">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="table-card">
+            <div class="card-header">
+                <h2><i class="fas fa-lightbulb"></i> Actionable Recommendations</h2>
+            </div>
+            <div class="card-body">
+                <div id="recommendations-content" style="display: grid; gap: 1rem;"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>ActivNet v2.0 | Active Network Intelligence Platform</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="/static/js/analytics.js"></script>
+</body>
+</html>

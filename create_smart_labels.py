@@ -183,7 +183,7 @@ class SmartLabelGenerator:
 
             # Show high-confidence predictions
             if result['confidence'] >= 0.7:
-                print(f"✓ {result['app_name']:20s} -> {result['predicted_zone']:20s} ({result['confidence']:.0%}) [{result['signals_used']}]")
+                print(f"[OK] {result['app_name']:20s} -> {result['predicted_zone']:20s} ({result['confidence']:.0%}) [{result['signals_used']}]")
 
         # Create DataFrame
         df = pd.DataFrame(results)
@@ -220,7 +220,7 @@ class SmartLabelGenerator:
         print(f"  {output_file:25s} - Labels for training (REVIEW & EDIT!)")
         print(f"  {analysis_file:25s} - Detailed analysis")
 
-        print(f"\n⚠️  IMPORTANT:")
+        print(f"\n[WARNING]️  IMPORTANT:")
         print(f"  1. Review {output_file}")
         print(f"  2. Correct any wrong zones (especially low confidence ones)")
         print(f"  3. Run: python train_with_labels.py --labels-file {output_file}")
@@ -241,7 +241,7 @@ def main():
     for _, row in high_conf.iterrows():
         print(f"{row['app_name']:20s} -> {row['predicted_zone']:20s} ({row['confidence']:.0%})")
         print(f"  Signals: {row['signals_used']}")
-        print(f"  Name match: {'✓' if row['name_match'] else '✗'}, Port match: {'✓' if row['port_match'] else '✗'}")
+        print(f"  Name match: {'[OK]' if row['name_match'] else '[ERROR]'}, Port match: {'[OK]' if row['port_match'] else '[ERROR]'}")
         print()
 
 

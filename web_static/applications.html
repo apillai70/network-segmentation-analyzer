@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applications - Network Segmentation Analyzer</title>
+    <title>Applications - ActivNet</title>
     <link rel="stylesheet" href="/static/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -11,8 +11,8 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-brand">
-            <i class="fas fa-network-wired"></i>
-            <span>Network Segmentation Analyzer</span>
+            <i class="fas fa-project-diagram"></i>
+            <span>Activ<span style="background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Net</span></span>
         </div>
         <div class="nav-menu">
             <a href="/" class="nav-link">
@@ -23,6 +23,9 @@
             </a>
             <a href="/zones.html" class="nav-link">
                 <i class="fas fa-shield-alt"></i> Security Zones
+            </a>
+            <a href="/topology.html" class="nav-link">
+                <i class="fas fa-network-wired"></i> Topology
             </a>
             <a href="/dns.html" class="nav-link">
                 <i class="fas fa-globe"></i> DNS Validation
@@ -60,6 +63,9 @@
                             <option value="MANAGEMENT_TIER">MANAGEMENT_TIER</option>
                         </select>
                     </div>
+                    <button class="btn btn-primary" onclick="exportApplications()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
                     <button class="btn btn-primary" onclick="loadApplications()">
                         <i class="fas fa-sync-alt"></i> Refresh
                     </button>
@@ -100,7 +106,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>Network Segmentation Analyzer v2.0 | FastAPI + Modern UI</p>
+        <p>ActivNet v2.0 | Active Network Intelligence Platform</p>
     </footer>
 
     <!-- Scripts -->
@@ -187,6 +193,24 @@
 
         // Zone filter
         document.getElementById('zone-filter').addEventListener('change', loadApplications);
+
+        // Export functionality
+        function exportApplications() {
+            // Export all applications as JSON
+            fetch('/api/applications')
+                .then(response => response.json())
+                .then(data => {
+                    const dataStr = JSON.stringify(data, null, 2);
+                    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                    const url = URL.createObjectURL(dataBlob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `applications_export_${new Date().toISOString().split('T')[0]}.json`;
+                    link.click();
+                    URL.revokeObjectURL(url);
+                })
+                .catch(error => console.error('Error exporting applications:', error));
+        }
 
         // Initial load
         document.addEventListener('DOMContentLoaded', loadApplications);

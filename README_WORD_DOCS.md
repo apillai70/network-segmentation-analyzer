@@ -263,7 +263,7 @@ Check that you're running from the project root directory.
 ## Document Authorship
 
 - **Architecture Documents**: Prepared by Enterprise Architecture Team
-- **NetSeg Documents**: Prepared by Network Security Team
+- **NetSeg Documents**: Prepared by: Prutech Network Security Team
 
 ## Related Files
 

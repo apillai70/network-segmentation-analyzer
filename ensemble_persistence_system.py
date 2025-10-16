@@ -85,7 +85,7 @@ class NetworkSegmentationAnalyzer:
         for _, flow in flows_df.iterrows():
             self._process_flow(flow, app_name)
         
-        print(f"✓ Added {app_name}: {len(flows_df)} flows")
+        print(f"[OK] Added {app_name}: {len(flows_df)} flows")
         return len(self.apps)
     
     def _process_flow(self, flow, app_name):
@@ -124,7 +124,7 @@ class NetworkSegmentationAnalyzer:
     
     def analyze_infrastructure(self):
         """Comprehensive infrastructure component detection"""
-        print("\n🔍 Analyzing Infrastructure Components...")
+        print("\n[SEARCH] Analyzing Infrastructure Components...")
         
         for ip, node in self.nodes.items():
             for port, stats in node['ports'].items():
@@ -590,7 +590,7 @@ class NetworkSegmentationAnalyzer:
     
     def _print_infrastructure_summary(self):
         """Print infrastructure detection summary"""
-        print("\n📊 Infrastructure Components Detected:")
+        print("\n[DATA] Infrastructure Components Detected:")
         print(f"  ├─ Load Balancers: {len(self.infrastructure['load_balancers'])}")
         print(f"  ├─ Message Queues: {len(self.infrastructure['message_queues'])}")
         print(f"  ├─ Databases: {len(self.infrastructure['databases'])}")
@@ -602,7 +602,7 @@ class NetworkSegmentationAnalyzer:
     
     def _print_segmentation_summary(self):
         """Print segmentation summary"""
-        print("\n📋 Network Segmentation Zones:")
+        print("\n[INFO] Network Segmentation Zones:")
         for segment in self.segments:
             print(f"  ├─ {segment['zone']}: {segment['member_count']} members")
             print(f"  │  └─ {segment['description']}")
@@ -648,7 +648,7 @@ class NetworkSegmentationAnalyzer:
         with open(filename, 'w') as f:
             json.dump(report, f, indent=2, default=str)
         
-        print(f"\n✅ Full report exported to {filename}")
+        print(f"\n[SUCCESS] Full report exported to {filename}")
         return report
 
 
@@ -674,7 +674,7 @@ if __name__ == "__main__":
                 analyzer.analyze_infrastructure()
         
         except FileNotFoundError:
-            print(f"⚠️  File not found: app_{i}_flows.csv")
+            print(f"[WARNING]️  File not found: app_{i}_flows.csv")
             continue
     
     # Final comprehensive analysis

@@ -151,6 +151,24 @@ async def analytics_page():
         return FileResponse(STATIC_DIR / "index.html")
 
 
+@app.get("/topology.html", response_class=HTMLResponse)
+async def topology_page():
+    """Serve the network topology visualization page"""
+    if (STATIC_DIR / "topology.html").exists():
+        return FileResponse(STATIC_DIR / "topology.html")
+    else:
+        return FileResponse(STATIC_DIR / "index.html")
+
+
+@app.get("/application.html", response_class=HTMLResponse)
+async def application_detail_page():
+    """Serve the application detail page"""
+    if (STATIC_DIR / "application.html").exists():
+        return FileResponse(STATIC_DIR / "application.html")
+    else:
+        return FileResponse(STATIC_DIR / "index.html")
+
+
 @app.get("/api/health")
 async def health_check():
     """Health check endpoint"""
@@ -526,6 +544,280 @@ async def get_dns_health():
             "error_fallback": True,
             "timestamp": datetime.now().isoformat()
         }
+
+
+# ============================================================================
+# Export Endpoints
+# ============================================================================
+
+@app.get("/api/export/enterprise-report")
+async def export_enterprise_report(format: str = "docx"):
+    """Export comprehensive enterprise network analysis report
+
+    Query Parameters:
+        format: Export format (docx, json)
+    """
+    try:
+        generator = EnterpriseNetworkReportGenerator(
+            topology_dir=str(TOPOLOGY_DIR),
+            output_dir=str(OUTPUTS_DIR)
+        )
+
+        # Load and analyze data
+        generator.load_all_topology_data()
+        generator.analyze_network_topology()
+
+        if format == "docx":
+            # Generate Word document
+            output_file = generator.generate_word_report()
+            if output_file and Path(output_file).exists():
+                return FileResponse(
+                    path=output_file,
+                    filename=f"Enterprise_Network_Report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.docx",
+                    media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                )
+            else:
+                raise HTTPException(status_code=500, detail="Failed to generate report")
+
+        elif format == "json":
+            # Export as JSON
+            report_data = {
+                "title": "Enterprise Network Analysis Report",
+                "generated": datetime.now().isoformat(),
+                "statistics": generator.stats,
+                "security_zones": {zone: apps for zone, apps in generator.security_zones.items()},
+                "total_applications": len(generator.applications),
+                "total_dependencies": len(generator.all_dependencies),
+                "applications": [
+                    {
+                        "app_id": app.get('app_id'),
+                        "security_zone": app.get('security_zone'),
+                        "confidence": app.get('confidence'),
+                        "dependencies": app.get('dependencies', [])
+                    }
+                    for app in generator.applications
+                ]
+            }
+
+            from fastapi.responses import Response
+            import json as json_lib
+            return Response(
+                content=json_lib.dumps(report_data, indent=2),
+                media_type="application/json",
+                headers={"Content-Disposition": f"attachment; filename=enterprise_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"}
+            )
+
+        else:
+            raise HTTPException(status_code=400, detail=f"Unsupported format: {format}")
+
+    except Exception as e:
+        logger.error(f"Error exporting enterprise report: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/export/dns-report")
+async def export_dns_report(format: str = "json"):
+    """Export DNS validation report
+
+    Query Parameters:
+        format: Export format (json, csv)
+    """
+    try:
+        reporter = collect_dns_validation_from_apps(
+            topology_dir=str(TOPOLOGY_DIR)
+        )
+
+        if format == "json":
+            report_data = {
+                "title": "DNS Validation Report",
+                "generated": datetime.now().isoformat(),
+                "statistics": reporter.stats,
+                "total_validated": len(reporter.all_validations),
+                "mismatches": reporter.mismatches,
+                "multiple_ips": reporter.multiple_ips,
+                "nxdomain": reporter.nxdomain,
+                "all_validations": reporter.all_validations
+            }
+
+            from fastapi.responses import Response
+            import json as json_lib
+            return Response(
+                content=json_lib.dumps(report_data, indent=2),
+                media_type="application/json",
+                headers={"Content-Disposition": f"attachment; filename=dns_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"}
+            )
+
+        elif format == "csv":
+            # Export as CSV
+            import csv
+            from io import StringIO
+
+            output = StringIO()
+            writer = csv.writer(output)
+
+            # Write headers
+            writer.writerow(['Application', 'IP Address', 'Reverse Hostname', 'Forward IP', 'Status', 'Issue'])
+
+            # Write mismatches
+            for mismatch in reporter.mismatches:
+                writer.writerow([
+                    mismatch.get('app_id', 'N/A'),
+                    mismatch.get('ip', 'N/A'),
+                    mismatch.get('reverse_hostname', 'N/A'),
+                    mismatch.get('forward_ip', 'N/A'),
+                    'Mismatch',
+                    mismatch.get('mismatch', 'N/A')
+                ])
+
+            # Write NXDOMAIN
+            for nxd in reporter.nxdomain:
+                writer.writerow([
+                    nxd.get('app_id', 'N/A'),
+                    nxd.get('ip', 'N/A'),
+                    'NXDOMAIN',
+                    'N/A',
+                    'NXDOMAIN',
+                    'DNS record not found'
+                ])
+
+            from fastapi.responses import Response
+            return Response(
+                content=output.getvalue(),
+                media_type="text/csv",
+                headers={"Content-Disposition": f"attachment; filename=dns_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"}
+            )
+
+        else:
+            raise HTTPException(status_code=400, detail=f"Unsupported format: {format}")
+
+    except Exception as e:
+        logger.error(f"Error exporting DNS report: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/export/application/{app_id}")
+async def export_application(app_id: str, format: str = "json"):
+    """Export specific application details
+
+    Parameters:
+        app_id: Application identifier
+        format: Export format (json)
+    """
+    try:
+        json_file = TOPOLOGY_DIR / f"{app_id}.json"
+
+        if not json_file.exists():
+            raise HTTPException(status_code=404, detail=f"Application {app_id} not found")
+
+        with open(json_file, 'r') as f:
+            data = json.load(f)
+
+        if format == "json":
+            from fastapi.responses import Response
+            import json as json_lib
+            return Response(
+                content=json_lib.dumps(data, indent=2),
+                media_type="application/json",
+                headers={"Content-Disposition": f"attachment; filename={app_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"}
+            )
+        else:
+            raise HTTPException(status_code=400, detail=f"Unsupported format: {format}")
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error exporting application {app_id}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/export/analytics")
+async def export_analytics(format: str = "json"):
+    """Export analytics and risk assessment data
+
+    Query Parameters:
+        format: Export format (json)
+    """
+    try:
+        # Get all data
+        apps_response = await get_applications()
+        zones_response = await get_security_zones()
+        dns_response = await get_dns_validation_summary()
+        enterprise_response = await get_enterprise_summary()
+
+        report_data = {
+            "title": "ActivNet Analytics Report",
+            "generated": datetime.now().isoformat(),
+            "applications": apps_response,
+            "security_zones": zones_response,
+            "dns_validation": dns_response,
+            "enterprise_summary": enterprise_response
+        }
+
+        from fastapi.responses import Response
+        import json as json_lib
+        return Response(
+            content=json_lib.dumps(report_data, indent=2),
+            media_type="application/json",
+            headers={"Content-Disposition": f"attachment; filename=analytics_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"}
+        )
+
+    except Exception as e:
+        logger.error(f"Error exporting analytics: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/export/zones")
+async def export_zones(format: str = "json"):
+    """Export security zones analysis
+
+    Query Parameters:
+        format: Export format (json, csv)
+    """
+    try:
+        zones_data = await get_security_zones()
+
+        if format == "json":
+            from fastapi.responses import Response
+            import json as json_lib
+            return Response(
+                content=json_lib.dumps(zones_data, indent=2),
+                media_type="application/json",
+                headers={"Content-Disposition": f"attachment; filename=zones_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"}
+            )
+
+        elif format == "csv":
+            import csv
+            from io import StringIO
+
+            output = StringIO()
+            writer = csv.writer(output)
+
+            # Write headers
+            writer.writerow(['Zone Name', 'Application Count', 'Total Dependencies', 'Avg Dependencies'])
+
+            # Write zone data
+            for zone in zones_data.get('zones', []):
+                avg_deps = zone['total_dependencies'] / zone['app_count'] if zone['app_count'] > 0 else 0
+                writer.writerow([
+                    zone['name'],
+                    zone['app_count'],
+                    zone['total_dependencies'],
+                    f"{avg_deps:.2f}"
+                ])
+
+            from fastapi.responses import Response
+            return Response(
+                content=output.getvalue(),
+                media_type="text/csv",
+                headers={"Content-Disposition": f"attachment; filename=zones_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"}
+            )
+
+        else:
+            raise HTTPException(status_code=400, detail=f"Unsupported format: {format}")
+
+    except Exception as e:
+        logger.error(f"Error exporting zones: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # ============================================================================

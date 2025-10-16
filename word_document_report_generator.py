@@ -73,16 +73,16 @@ class WordReportGenerator:
             Path to generated Word document
         """
         app_name = app_data['app_name']
-        print(f"\n📄 Generating Word report for: {app_name}")
+        print(f"\n[DOC] Generating Word report for: {app_name}")
         
         # Load or create document
         if self.template_path and Path(self.template_path).exists():
             doc = Document(self.template_path)
-            print(f"  ✓ Using template: {self.template_path}")
+            print(f"  [OK] Using template: {self.template_path}")
         else:
             doc = Document()
             self._setup_default_styles(doc)
-            print("  ✓ Using default template")
+            print("  [OK] Using default template")
         
         # Add content sections
         self._add_title_page(doc, app_name, app_data)
@@ -129,7 +129,7 @@ class WordReportGenerator:
         output_path = self.output_dir / f"{app_name}_Network_Analysis_Report.docx"
         doc.save(output_path)
         
-        print(f"  ✓ Report saved: {output_path}")
+        print(f"  [OK] Report saved: {output_path}")
         return output_path
     
     def _setup_default_styles(self, doc):
@@ -778,7 +778,7 @@ class BatchReportGenerator:
             })
         
         print("\n" + "="*60)
-        print(f"✅ Generated {len(generated_reports)} Word reports")
+        print(f"[SUCCESS] Generated {len(generated_reports)} Word reports")
         print("="*60)
         
         # Save manifest
@@ -786,7 +786,7 @@ class BatchReportGenerator:
         with open(manifest_path, 'w') as f:
             json.dump(generated_reports, f, indent=2)
         
-        print(f"\n📋 Report manifest saved: {manifest_path}")
+        print(f"\n[INFO] Report manifest saved: {manifest_path}")
         
         return generated_reports
     
@@ -854,7 +854,7 @@ if __name__ == '__main__':
     # Generate all reports
     reports = batch_gen.generate_all_reports()
     
-    print("\n📁 Reports saved to: ./outputs/word_reports/")
+    print("\n[FOLDER] Reports saved to: ./outputs/word_reports/")
     print("\nEach application now has:")
     print("  • Professional Word document")
     print("  • Embedded visualizations")

@@ -30,7 +30,7 @@ class ProductionNetworkAnalyzer:
     
     def __init__(self, db_path='network_analysis.db'):
         print("="*60)
-        print("🚀 PRODUCTION NETWORK ANALYZER")
+        print("[START] PRODUCTION NETWORK ANALYZER")
         print("="*60)
         
         # Initialize persistence
@@ -46,10 +46,10 @@ class ProductionNetworkAnalyzer:
         self.graph = nx.DiGraph()
         self.current_analysis_id = None
         
-        print("✓ System initialized")
-        print(f"✓ Database: {db_path}")
-        print(f"✓ Models: {self.pm.models_dir}")
-        print(f"✓ Visualizations: {self.viz.output_dir}")
+        print("[OK] System initialized")
+        print(f"[OK] Database: {db_path}")
+        print(f"[OK] Models: {self.pm.models_dir}")
+        print(f"[OK] Visualizations: {self.viz.output_dir}")
     
     def add_application(self, app_name, flows_csv_path):
         """
@@ -76,7 +76,7 @@ class ProductionNetworkAnalyzer:
                                dst_port=flow.get('destination_port'),
                                app=app_name)
         
-        print(f"✓ Application added: {len(flows_df)} flows")
+        print(f"[OK] Application added: {len(flows_df)} flows")
         return app_id
     
     def add_applications_bulk(self, csv_directory):
@@ -90,7 +90,7 @@ class ProductionNetworkAnalyzer:
             app_name = csv_file.stem
             self.add_application(app_name, csv_file)
         
-        print(f"\n✓ Bulk load complete: {len(csv_files)} applications")
+        print(f"\n[OK] Bulk load complete: {len(csv_files)} applications")
     
     def run_comprehensive_analysis(self):
         """
@@ -154,7 +154,7 @@ class ProductionNetworkAnalyzer:
             self.pm.conn.commit()
             
             print("\n" + "="*60)
-            print("✅ ANALYSIS COMPLETE")
+            print("[SUCCESS] ANALYSIS COMPLETE")
             print("="*60)
             
             return report
@@ -168,7 +168,7 @@ class ProductionNetworkAnalyzer:
             ''', (datetime.now(), 'failed', self.current_analysis_id))
             self.pm.conn.commit()
             
-            print(f"\n❌ Analysis failed: {e}")
+            print(f"\n[ERROR] Analysis failed: {e}")
             raise
     
     def _extract_all_features(self):
@@ -213,7 +213,7 @@ class ProductionNetworkAnalyzer:
             
             node_features[ip] = features
         
-        print(f"✓ Extracted features for {len(node_features)} nodes")
+        print(f"[OK] Extracted features for {len(node_features)} nodes")
         return node_features
     
     def _train_ensemble_models(self, node_features):
@@ -263,7 +263,7 @@ class ProductionNetworkAnalyzer:
             embedding = ensemble_outputs[i] if len(ensemble_outputs.shape) > 1 else ensemble_outputs
             self.pm.save_node(node, node_features[node], embedding)
         
-        print("✓ Ensemble training complete")
+        print("[OK] Ensemble training complete")
         return ensemble_outputs
     
     def _assign_segmentation_zones(self, predictions):
@@ -321,11 +321,11 @@ class ProductionNetworkAnalyzer:
         
         # Print summary
         zone_counts = nodes_df.groupby('micro_segment').size()
-        print("\n📊 Segmentation Summary:")
+        print("\n[DATA] Segmentation Summary:")
         for zone, count in zone_counts.items():
             print(f"  {zone}: {count} nodes")
         
-        print("✓ Zone assignment complete")
+        print("[OK] Zone assignment complete")
     
     def _generate_comprehensive_report(self, viz_paths):
         """Generate final comprehensive report"""
@@ -374,7 +374,7 @@ class ProductionNetworkAnalyzer:
         with open(report_path, 'w') as f:
             json.dump(stats, f, indent=2)
         
-        print(f"✓ Report saved: {report_path}")
+        print(f"[OK] Report saved: {report_path}")
         
         # Print summary
         print("\n" + "="*60)
@@ -445,7 +445,7 @@ class ProductionNetworkAnalyzer:
         
         csv_path = output_path / 'zone_assignments.csv'
         df.to_csv(csv_path, index=False)
-        print(f"✓ Zone assignments: {csv_path}")
+        print(f"[OK] Zone assignments: {csv_path}")
         
         # Generate firewall rules (simplified)
         rules = []
@@ -466,8 +466,8 @@ class ProductionNetworkAnalyzer:
         with open(rules_path, 'w') as f:
             f.write('\n'.join(rules))
         
-        print(f"✓ Firewall rules: {rules_path}")
-        print(f"\n✅ Segmentation rules exported")
+        print(f"[OK] Firewall rules: {rules_path}")
+        print(f"\n[SUCCESS] Segmentation rules exported")
         
         return {
             'assignments_csv': str(csv_path),
@@ -477,7 +477,7 @@ class ProductionNetworkAnalyzer:
     def close(self):
         """Clean shutdown"""
         self.pm.close()
-        print("\n✓ System shutdown complete")
+        print("\n[OK] System shutdown complete")
 
 
 # ============================================================================
@@ -502,8 +502,8 @@ if __name__ == '__main__':
         # Export rules
         analyzer.export_segmentation_rules()
         
-        print("\n🎉 COMPLETE!")
-        print(f"📊 Report: {report['report_path']}")
+        print("\n[SUCCESS] COMPLETE!")
+        print(f"[DATA] Report: {report['report_path']}")
         print(f"🎨 D3 Visualization: {report['visualizations']['d3_network']}")
         print(f"🎨 Mermaid Diagram: {report['visualizations']['mermaid_segmentation']}")
         

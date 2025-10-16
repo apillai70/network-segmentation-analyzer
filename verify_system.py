@@ -27,7 +27,7 @@ def verify_installation():
         'matplotlib': '3.5.0'
     }
     
-    print("\n📦 Checking Required Packages...")
+    print("\n[STEP] Checking Required Packages...")
     all_ok = True
     
     for package, min_version in required_packages.items():
@@ -38,26 +38,26 @@ def verify_installation():
                 module = importlib.import_module(package)
             
             version = getattr(module, '__version__', 'unknown')
-            print(f"  ✓ {package}: {version}")
+            print(f"  [OK] {package}: {version}")
         except ImportError:
-            print(f"  ✗ {package}: NOT INSTALLED")
+            print(f"  [ERROR] {package}: NOT INSTALLED")
             all_ok = False
     
-    print("\n📦 Checking Optional Packages...")
+    print("\n[STEP] Checking Optional Packages...")
     for package, min_version in optional_packages.items():
         try:
             module = importlib.import_module(package)
             version = getattr(module, '__version__', 'unknown')
-            print(f"  ✓ {package}: {version}")
+            print(f"  [OK] {package}: {version}")
         except ImportError:
-            print(f"  ⚠ {package}: Not installed (optional)")
+            print(f"  [WARNING] {package}: Not installed (optional)")
     
     if not all_ok:
-        print("\n❌ MISSING REQUIRED PACKAGES")
+        print("\n[ERROR] MISSING REQUIRED PACKAGES")
         print("Run: pip install -r requirements.txt")
         return False
     
-    print("\n✅ All required packages installed!")
+    print("\n[SUCCESS] All required packages installed!")
     
     # Test imports from main system
     print("\n🔧 Testing System Components...")
@@ -66,32 +66,32 @@ def verify_installation():
         print("  Testing GNN...")
         from enterprise_network_analyzer import GraphNeuralNetwork
         gnn = GraphNeuralNetwork(input_dim=10, hidden_dim=8, output_dim=4, num_layers=2)
-        print("  ✓ GNN initialized")
+        print("  [OK] GNN initialized")
         
         print("  Testing RL Agent...")
         from enterprise_network_analyzer import SegmentationRLAgent
         agent = SegmentationRLAgent(state_dim=4, action_dim=5)
-        print("  ✓ RL Agent initialized")
+        print("  [OK] RL Agent initialized")
         
         print("  Testing Time-Series Analyzer...")
         from enterprise_network_analyzer import TimeSeriesAnalyzer
         ts = TimeSeriesAnalyzer()
-        print("  ✓ Time-Series Analyzer initialized")
+        print("  [OK] Time-Series Analyzer initialized")
         
         print("  Testing Federated Learning...")
         from enterprise_network_analyzer import FederatedLearningCoordinator
         fl = FederatedLearningCoordinator(num_clients=2)
-        print("  ✓ Federated Learning initialized")
+        print("  [OK] Federated Learning initialized")
         
         print("  Testing AutoML...")
         from enterprise_network_analyzer import AutoMLPipeline
         automl = AutoMLPipeline()
-        print("  ✓ AutoML initialized")
+        print("  [OK] AutoML initialized")
         
-        print("\n✅ All components working!")
+        print("\n[SUCCESS] All components working!")
         
     except Exception as e:
-        print(f"\n❌ Component test failed: {e}")
+        print(f"\n[ERROR] Component test failed: {e}")
         return False
     
     # Create sample data and test pipeline
@@ -112,17 +112,17 @@ def verify_installation():
         
         # Save sample file
         sample_data.to_csv('test_flow_data.csv', index=False)
-        print("  ✓ Created test data")
+        print("  [OK] Created test data")
         
         # Test loading
         from enterprise_network_analyzer import EnterpriseNetworkAnalyzer
         analyzer = EnterpriseNetworkAnalyzer()
         analyzer.load_data(['test_flow_data.csv'])
-        print(f"  ✓ Loaded {len(analyzer.flows_df)} flows")
+        print(f"  [OK] Loaded {len(analyzer.flows_df)} flows")
         
         # Test graph building
         node_features, adj_matrix, node_list = analyzer.prepare_graph_data()
-        print(f"  ✓ Built graph with {len(node_list)} nodes")
+        print(f"  [OK] Built graph with {len(node_list)} nodes")
         
         # Quick GNN test
         gnn = GraphNeuralNetwork(
@@ -132,23 +132,23 @@ def verify_installation():
             num_layers=2
         )
         embeddings = gnn.train(node_features, adj_matrix, labels=None, epochs=5)
-        print(f"  ✓ GNN generated embeddings: {embeddings.shape}")
+        print(f"  [OK] GNN generated embeddings: {embeddings.shape}")
         
         # Clean up
         import os
         os.remove('test_flow_data.csv')
-        print("  ✓ Cleaned up test files")
+        print("  [OK] Cleaned up test files")
         
-        print("\n✅ END-TO-END TEST PASSED!")
+        print("\n[SUCCESS] END-TO-END TEST PASSED!")
         
     except Exception as e:
-        print(f"\n❌ End-to-end test failed: {e}")
+        print(f"\n[ERROR] End-to-end test failed: {e}")
         import traceback
         traceback.print_exc()
         return False
     
     print("\n" + "="*60)
-    print("🎉 SYSTEM VERIFICATION COMPLETE - ALL TESTS PASSED!")
+    print("[SUCCESS] SYSTEM VERIFICATION COMPLETE - ALL TESTS PASSED!")
     print("="*60)
     print("\nYou're ready to analyze your network flows!")
     print("\nNext step:")

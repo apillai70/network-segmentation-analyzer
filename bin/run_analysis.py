@@ -127,7 +127,7 @@ def run_analysis(args):
         parser.parse_all_logs()
 
         stats = parser.get_summary_stats()
-        print(f"\n✅ Parsing Complete!")
+        print(f"\n[SUCCESS] Parsing Complete!")
         print(f"   Total records parsed: {stats['total_records']:,}")
         print(f"   Applications found: {stats['apps_parsed']}")
         print(f"   Unique source IPs: {stats['unique_src_ips']}")
@@ -136,7 +136,7 @@ def run_analysis(args):
         print(f"   Total bytes: {stats['total_bytes'] / (1024**3):.2f} GB")
 
         if args.dry_run:
-            print("\n⚠️  DRY RUN MODE - Stopping after parsing")
+            print("\n[WARNING]️  DRY RUN MODE - Stopping after parsing")
             return 0
 
         # Export normalized data
@@ -150,7 +150,7 @@ def run_analysis(args):
         analyzer = TrafficAnalyzer(parser.records)
         analysis_results = analyzer.analyze()
 
-        print(f"\n✅ Analysis Complete!")
+        print(f"\n[SUCCESS] Analysis Complete!")
         print(f"   Network zones identified: {len(analyzer.zones)}")
         print(f"   Segmentation rules generated: {len(analyzer.rules)}")
         print(f"   Top talkers identified: {len(analysis_results.get('top_talkers', {}).get('top_sources_by_bytes', {}))}")
@@ -161,7 +161,7 @@ def run_analysis(args):
         analyzer.export_iptables_rules(str(output_dir / 'iptables_rules.sh'))
         analyzer.export_aws_security_groups(str(output_dir / 'aws_security_groups.json'))
         analyzer.export_analysis_report(str(output_dir / 'analysis_report.json'))
-        print(f"   ✓ Rules exported (CSV, IPTables, AWS SG)")
+        print(f"   [OK] Rules exported (CSV, IPTables, AWS SG)")
 
         # Step 2.5: ML Prediction for Apps Without Data
         print_section("STEP 2.5: ML Prediction for Apps Without Data")
@@ -182,7 +182,7 @@ def run_analysis(args):
             apps_without_data = set(all_apps) - apps_with_data
 
             if apps_without_data:
-                print(f"📊 Total applications in catalog: {len(all_apps)}")
+                print(f"[DATA] Total applications in catalog: {len(all_apps)}")
                 print(f"   Apps with traffic data: {len(apps_with_data)}")
                 print(f"   Apps requiring prediction: {len(apps_without_data)}")
 
@@ -200,7 +200,7 @@ def run_analysis(args):
                     print(f"🎓 Training ensemble models on {len(apps_with_data)} observed apps...")
                     training_results = ml_predictor.train_on_observed_apps(parser.records)
 
-                    print(f"   ✓ Training complete!")
+                    print(f"   [OK] Training complete!")
                     print(f"   • Observed apps: {training_results.get('observed_apps_count', 0)}")
                     print(f"   • Total flows: {training_results.get('total_flows', 0):,}")
                     print(f"   • Network zones: {training_results.get('zones_identified', 0)}")
@@ -209,7 +209,7 @@ def run_analysis(args):
                     print(f"\n🔮 Predicting network patterns for {len(apps_without_data)} apps...")
                     ml_predictions = ml_predictor.predict_missing_apps(all_apps)
 
-                    print(f"\n✅ ML Prediction Complete!")
+                    print(f"\n[SUCCESS] ML Prediction Complete!")
                     print(f"   • Apps predicted: {len(ml_predictions)}")
 
                     # Show sample predictions
@@ -227,7 +227,7 @@ def run_analysis(args):
                     ml_predictions_path = output_dir / 'ml_predictions.json'
                     with open(ml_predictions_path, 'w', encoding='utf-8') as f:
                         json.dump(ml_predictions, f, indent=2, ensure_ascii=False)
-                    print(f"\n   ✓ ML predictions exported: {ml_predictions_path}")
+                    print(f"\n   [OK] ML predictions exported: {ml_predictions_path}")
 
                     # Add predictions to analysis results
                     analysis_results['ml_predictions'] = {
@@ -237,7 +237,7 @@ def run_analysis(args):
                     }
 
                 except Exception as e:
-                    print(f"\n⚠️  Warning: ML prediction failed: {e}")
+                    print(f"\n[WARNING]️  Warning: ML prediction failed: {e}")
                     logger.warning(f"ML prediction error: {e}", exc_info=True)
                     print(f"   Continuing without ML predictions...")
             else:
@@ -254,23 +254,23 @@ def run_analysis(args):
         # Overall network diagram
         overall_mmd = output_dir / 'diagrams' / 'overall_network.mmd'
         diagram_gen.generate_overall_network_diagram(str(overall_mmd))
-        print(f"   ✓ Overall network diagram: {overall_mmd}")
+        print(f"   [OK] Overall network diagram: {overall_mmd}")
 
         # Zone flow diagram
         zone_flow_mmd = output_dir / 'diagrams' / 'zone_flows.mmd'
         diagram_gen.generate_zone_flow_diagram(str(zone_flow_mmd))
-        print(f"   ✓ Zone flow diagram: {zone_flow_mmd}")
+        print(f"   [OK] Zone flow diagram: {zone_flow_mmd}")
 
         # Per-app diagrams
         if args.app:
             # Generate specific app diagram
             app_mmd = output_dir / 'diagrams' / f'{args.app}_diagram.mmd'
             diagram_gen.generate_app_diagram(args.app, str(app_mmd))
-            print(f"   ✓ Application diagram for {args.app}: {app_mmd}")
+            print(f"   [OK] Application diagram for {args.app}: {app_mmd}")
         else:
             # Generate all app diagrams
             diagrams = diagram_gen.generate_all_app_diagrams(str(output_dir / 'diagrams'))
-            print(f"   ✓ Generated {len(diagrams)} application diagrams")
+            print(f"   [OK] Generated {len(diagrams)} application diagrams")
 
         print(f"\n💡 Tip: Open the .html files in a browser to view interactive diagrams")
 
@@ -287,15 +287,15 @@ def run_analysis(args):
         doc_path = output_dir / 'network_segmentation_solution.docx'
         doc_gen.generate_document(str(doc_path))
 
-        print(f"\n✅ Solutions Document Generated!")
+        print(f"\n[SUCCESS] Solutions Document Generated!")
         print(f"   Document: {doc_path}")
         print(f"   Pages: ~25-30")
         print(f"   Sections: Executive Summary, Analysis, Design, Rules, Implementation")
 
         # Final Summary
         print_section("ANALYSIS COMPLETE")
-        print(f"✅ All outputs generated successfully!")
-        print(f"\n📊 Summary:")
+        print(f"[SUCCESS] All outputs generated successfully!")
+        print(f"\n[DATA] Summary:")
         print(f"   • Parsed {stats['total_records']:,} network flows")
         print(f"   • Identified {len(analyzer.zones)} network zones")
         print(f"   • Generated {len(analyzer.rules)} segmentation rules")
@@ -304,7 +304,7 @@ def run_analysis(args):
         print(f"   • Created {len(list((output_dir / 'diagrams').glob('*.html')))} interactive diagrams")
         print(f"   • Produced comprehensive Solutions Architecture Document")
 
-        print(f"\n📁 Output Directory: {output_dir}")
+        print(f"\n[FOLDER] Output Directory: {output_dir}")
         print(f"\n   Key Files:")
         print(f"   ├── network_segmentation_solution.docx  (Solutions Document)")
         print(f"   ├── segmentation_rules.csv               (All rules in CSV)")
@@ -330,13 +330,13 @@ def run_analysis(args):
         return 0
 
     except FileNotFoundError as e:
-        print(f"\n❌ ERROR: {e}")
+        print(f"\n[ERROR] ERROR: {e}")
         print(f"   Please ensure the data directory exists and contains CSV files.")
         logger.error(f"File not found: {e}")
         return 1
 
     except Exception as e:
-        print(f"\n❌ ERROR: An unexpected error occurred")
+        print(f"\n[ERROR] ERROR: An unexpected error occurred")
         print(f"   {e}")
         logger.exception("Unexpected error during analysis")
         return 1
@@ -414,7 +414,7 @@ For more information, see README.md
     # Check if output directory exists and not empty
     output_path = Path(args.output_dir)
     if output_path.exists() and any(output_path.iterdir()) and not args.force:
-        print(f"⚠️  Warning: Output directory '{args.output_dir}' is not empty.")
+        print(f"[WARNING]️  Warning: Output directory '{args.output_dir}' is not empty.")
         response = input("Continue and overwrite existing files? [y/N]: ")
         if response.lower() not in ['y', 'yes']:
             print("Aborted.")

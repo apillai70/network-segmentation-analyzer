@@ -126,11 +126,11 @@ def run_command(cmd, description, show_realtime=False):
 
             if process.returncode != 0:
                 elapsed = time.time() - start_time
-                logger.error(f"✗ {description} failed after {elapsed:.1f}s")
+                logger.error(f"[ERROR] {description} failed after {elapsed:.1f}s")
                 return False, ''.join(output_lines)
 
             elapsed = time.time() - start_time
-            logger.info(f"✓ {description} completed in {elapsed:.1f}s")
+            logger.info(f"[OK] {description} completed in {elapsed:.1f}s")
             return True, ''.join(output_lines)
         else:
             # Captured output for quieter commands
@@ -144,7 +144,7 @@ def run_command(cmd, description, show_realtime=False):
             )
 
             elapsed = time.time() - start_time
-            logger.info(f"✓ {description} completed in {elapsed:.1f}s")
+            logger.info(f"[OK] {description} completed in {elapsed:.1f}s")
 
             if result.stdout:
                 logger.debug(f"STDOUT:\n{result.stdout}")
@@ -153,7 +153,7 @@ def run_command(cmd, description, show_realtime=False):
 
     except subprocess.CalledProcessError as e:
         elapsed = time.time() - start_time
-        logger.error(f"✗ {description} failed after {elapsed:.1f}s")
+        logger.error(f"[ERROR] {description} failed after {elapsed:.1f}s")
         logger.error(f"Error: {e}")
 
         if e.stdout:
@@ -184,9 +184,9 @@ def clear_file_tracking():
     success, _ = run_command(cmd, "Clear file tracking")
 
     if success:
-        logger.info("✓ File tracking cleared - all files will be reprocessed")
+        logger.info("[OK] File tracking cleared - all files will be reprocessed")
     else:
-        logger.warning("⚠ Failed to clear file tracking - continuing anyway")
+        logger.warning("[WARNING] Failed to clear file tracking - continuing anyway")
 
     return success
 
@@ -345,10 +345,10 @@ def fix_mmd_fencing(app_codes=None):
         with open(mmd_file, 'w', encoding='utf-8') as f:
             f.write(new_content)
 
-        logger.info(f"  ✓ {mmd_file.name} - Added markdown fencing")
+        logger.info(f"  [OK] {mmd_file.name} - Added markdown fencing")
         success += 1
 
-    logger.info(f"✓ Markdown fencing: {success} fixed, {skipped} skipped")
+    logger.info(f"[OK] Markdown fencing: {success} fixed, {skipped} skipped")
     return True
 
 
@@ -509,7 +509,7 @@ def main():
     logger.info(f"Total batches planned: {total_batches}")
 
     if total_files == 0:
-        logger.warning("\n⚠ No files to process!")
+        logger.warning("\n[WARNING] No files to process!")
         logger.info("\nPossible reasons:")
         logger.info("  1. All files already processed (use --clear-first to reprocess)")
         logger.info("  2. No CSV files in data/input/")
@@ -540,13 +540,13 @@ def main():
         if batch_success:
             stats['batches_processed'] += 1
 
-            logger.info(f"\n✓ Batch processing complete: {len(app_codes_processed)} apps processed")
+            logger.info(f"\n[OK] Batch processing complete: {len(app_codes_processed)} apps processed")
 
             # Step 2: Generate .mmd and .html diagrams ONLY for apps in this batch
             if args.output_format in ['mermaid', 'both']:
                 mmd_success = generate_mmd_and_html(app_codes_processed)
                 if not mmd_success:
-                    logger.warning("⚠ MMD generation had some failures - continuing...")
+                    logger.warning("[WARNING] MMD generation had some failures - continuing...")
 
                 # Step 2B: Fix markdown fencing in .mmd files for Mermaid.ink API compatibility
                 fix_mmd_fencing(app_codes_processed)
@@ -555,9 +555,9 @@ def main():
             if args.output_format in ['mermaid', 'both']:
                 png_success = generate_pngs_python(app_codes_processed)
                 if png_success:
-                    logger.info("✓ PNG generation complete")
+                    logger.info("[OK] PNG generation complete")
                 else:
-                    logger.warning("⚠ Some PNGs may be missing")
+                    logger.warning("[WARNING] Some PNGs may be missing")
 
             # Step 4: Generate network segmentation reports (ONLY for apps in this batch)
             if not args.skip_reports:
@@ -568,7 +568,7 @@ def main():
                         stats['reports_generated'] += 1
                     else:
                         stats['reports_failed'] += 1
-                        logger.warning("⚠ Report generation failed - continuing...")
+                        logger.warning("[WARNING] Report generation failed - continuing...")
 
             # Step 5: Generate architecture docs (INDEPENDENT of skip_reports flag)
             if not args.skip_architecture:
@@ -577,16 +577,16 @@ def main():
                 png_files = list(diagrams_dir.glob('*_application_diagram.png')) if diagrams_dir.exists() else []
 
                 if png_files:
-                    logger.info(f"\n📄 Found {len(png_files)} PNG files for architecture docs")
+                    logger.info(f"\n[INFO] Found {len(png_files)} PNG files for architecture docs")
                     arch_success = generate_architecture_docs()
 
                     if arch_success:
                         stats['architecture_generated'] += 1
                     else:
                         stats['architecture_failed'] += 1
-                        logger.warning("⚠ Architecture doc generation failed - continuing...")
+                        logger.warning("[WARNING] Architecture doc generation failed - continuing...")
                 else:
-                    logger.warning("\n⚠ Cannot generate architecture docs - No PNG files found")
+                    logger.warning("\n[WARNING] Cannot generate architecture docs - No PNG files found")
                     logger.info("  Architecture documents require PNG diagrams")
                     logger.info("  Solutions:")
                     logger.info("    1. Install mmdc: npm install -g @mermaid-js/mermaid-cli")
@@ -597,18 +597,18 @@ def main():
             # Check if more files remain
             remaining_files = count_unprocessed_files()
 
-            logger.info(f"\n✓ Batch {batch_num} complete")
+            logger.info(f"\n[OK] Batch {batch_num} complete")
             logger.info(f"  Remaining files: {remaining_files}")
 
             if remaining_files == 0:
-                logger.info("\n🎉 All files processed!")
+                logger.info("\n[SUCCESS] All files processed!")
                 break
 
             batch_num += 1
 
         else:
             stats['batches_failed'] += 1
-            logger.error(f"\n✗ Batch {batch_num} failed!")
+            logger.error(f"\n[ERROR] Batch {batch_num} failed!")
 
             user_input = input("\nContinue to next batch? (y/n): ").strip().lower()
 
@@ -633,14 +633,14 @@ def main():
             )
 
             if topology_success:
-                logger.info("✓ Master topology built successfully")
+                logger.info("[OK] Master topology built successfully")
                 stats['master_topology_built'] = True
             else:
-                logger.warning("⚠ Master topology build had issues")
+                logger.warning("[WARNING] Master topology build had issues")
                 stats['master_topology_built'] = False
 
         except Exception as e:
-            logger.error(f"✗ Master topology build failed: {e}")
+            logger.error(f"[ERROR] Master topology build failed: {e}")
             stats['master_topology_built'] = False
 
     # Step 7: Generate threat surface documents (runs ONCE at the end for ALL apps)
@@ -658,14 +658,14 @@ def main():
             )
 
             if threat_success:
-                logger.info("✓ Threat surface documents generated successfully")
+                logger.info("[OK] Threat surface documents generated successfully")
                 stats['threat_surface_generated'] = True
             else:
-                logger.warning("⚠ Threat surface document generation had some issues")
+                logger.warning("[WARNING] Threat surface document generation had some issues")
                 stats['threat_surface_generated'] = False
 
         except Exception as e:
-            logger.error(f"✗ Threat surface document generation failed: {e}")
+            logger.error(f"[ERROR] Threat surface document generation failed: {e}")
             stats['threat_surface_generated'] = False
 
     # Final summary
@@ -692,10 +692,10 @@ def main():
         print(f"  Architecture docs failed: {stats['architecture_failed']}")
 
     if stats.get('master_topology_built'):
-        print(f"  Master topology built: ✓")
+        print(f"  Master topology built: [SUCCESS]")
 
     if stats.get('threat_surface_generated'):
-        print(f"  Threat surface docs generated: ✓")
+        print(f"  Threat surface docs generated: [SUCCESS]")
 
     print()
     print("Output locations:")
@@ -709,15 +709,15 @@ def main():
     print(f"Log file: {log_file}")
     print("="*80)
 
-    logger.info(f"\n✅ Batch processing complete - {elapsed/60:.1f} minutes")
+    logger.info(f"\n[SUCCESS] Batch processing complete - {elapsed/60:.1f} minutes")
 
 
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        logger.warning("\n\n⚠️ Interrupted by user")
+        logger.warning("\n\n[WARNING] Interrupted by user")
         sys.exit(0)
     except Exception as e:
-        logger.error(f"\n❌ Fatal error: {e}", exc_info=True)
+        logger.error(f"\n[ERROR] Fatal error: {e}", exc_info=True)
         sys.exit(1)

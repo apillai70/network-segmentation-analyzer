@@ -112,11 +112,11 @@ def main():
                 output_path=str(output_path)
             )
 
-            print("✓")
+            print("[OK]")
             success_count += 1
 
         except Exception as e:
-            print(f"✗ Error: {e}")
+            print(f"[ERROR] Error: {e}")
             logger.error(f"Failed to generate document for {app_name}: {e}")
             failed_count += 1
             failed_apps.append(app_name)
@@ -140,7 +140,7 @@ def main():
 
     if failed_apps:
         print()
-        print("⚠️  Failed Applications:")
+        print("[WARNING] Failed Applications:")
         for app in failed_apps:
             print(f"   - {app}")
         print()

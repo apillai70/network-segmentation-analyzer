@@ -103,7 +103,7 @@ class UnifiedTopologyDiscoverySystem:
                 self.vae_analyzer = ApplicationBehaviorAnalyzer(device=device)
                 self.transformer_analyzer = TemporalTrafficAnalyzer(device=device)
 
-                logger.info("✓ Deep learning models loaded")
+                logger.info("[OK] Deep learning models loaded")
             except Exception as e:
                 logger.warning(f"Deep learning models not available: {e}")
 
@@ -113,7 +113,7 @@ class UnifiedTopologyDiscoverySystem:
             try:
                 from .graph_topology_analyzer import GraphTopologyAnalyzer
                 self.graph_analyzer = GraphTopologyAnalyzer()
-                logger.info("✓ Graph algorithms loaded")
+                logger.info("[OK] Graph algorithms loaded")
             except Exception as e:
                 logger.warning(f"Graph algorithms not available: {e}")
 
@@ -123,7 +123,7 @@ class UnifiedTopologyDiscoverySystem:
             try:
                 from deep_learning.rl_segmentation_agent import RLSegmentationOptimizer
                 self.rl_optimizer = RLSegmentationOptimizer(device=device)
-                logger.info("✓ RL optimizer loaded")
+                logger.info("[OK] RL optimizer loaded")
             except Exception as e:
                 logger.warning(f"RL optimizer not available: {e}")
 
@@ -132,7 +132,7 @@ class UnifiedTopologyDiscoverySystem:
         self.application_analysis = {}
         self.optimization_results = {}
 
-        logger.info("🚀 Unified Topology Discovery System initialized")
+        logger.info("[START] Unified Topology Discovery System initialized")
 
     def discover_complete_topology(
         self,
@@ -152,7 +152,7 @@ class UnifiedTopologyDiscoverySystem:
             Complete topology analysis with predictions for all apps
         """
         logger.info("=" * 80)
-        logger.info("🔍 UNIFIED TOPOLOGY DISCOVERY - COMPLETE ANALYSIS")
+        logger.info("[SEARCH] UNIFIED TOPOLOGY DISCOVERY - COMPLETE ANALYSIS")
         logger.info("=" * 80)
 
         start_time = datetime.now()
@@ -161,7 +161,7 @@ class UnifiedTopologyDiscoverySystem:
         # PHASE 0: Flow Filtering (Optional)
         # ====================================================================
         if self.filter_nonexistent and self.hostname_resolver:
-            logger.info("\n🔍 PHASE 0: Flow Filtering")
+            logger.info("\n[SEARCH] PHASE 0: Flow Filtering")
             logger.info("-" * 80)
 
             from utils.flow_filter import filter_flows_by_dns_status
@@ -171,7 +171,7 @@ class UnifiedTopologyDiscoverySystem:
                 filter_nonexistent=True
             )
 
-            logger.info(f"  ✓ Filtering complete:")
+            logger.info(f"  [OK] Filtering complete:")
             logger.info(f"    - Original flows: {filter_stats['total_flows']:,}")
             logger.info(f"    - Filtered out: {filter_stats['flows_filtered']:,} ({filter_stats['filter_percentage']:.1f}%)")
             logger.info(f"    - Flows kept: {filter_stats['flows_kept']:,}")
@@ -179,12 +179,12 @@ class UnifiedTopologyDiscoverySystem:
         # ====================================================================
         # PHASE 1: Network Topology Analysis (Existing System)
         # ====================================================================
-        logger.info("\n📊 PHASE 1: Network Topology Analysis")
+        logger.info("\n[DATA] PHASE 1: Network Topology Analysis")
         logger.info("-" * 80)
 
         network_topology = self._analyze_network_topology(flow_records)
 
-        logger.info(f"  ✓ Network analysis complete:")
+        logger.info(f"  [OK] Network analysis complete:")
         logger.info(f"    - Nodes: {network_topology['num_nodes']}")
         logger.info(f"    - Edges: {network_topology['num_edges']}")
         logger.info(f"    - Apps with data: {network_topology['apps_observed']}")
@@ -201,7 +201,7 @@ class UnifiedTopologyDiscoverySystem:
             network_topology
         )
 
-        logger.info(f"  ✓ Semantic analysis complete:")
+        logger.info(f"  [OK] Semantic analysis complete:")
         logger.info(f"    - Applications analyzed: {len(application_semantics)}")
         logger.info(f"    - Avg confidence: {np.mean([a['confidence'] for a in application_semantics.values()]):.2f}")
 
@@ -217,12 +217,12 @@ class UnifiedTopologyDiscoverySystem:
             flow_records
         )
 
-        logger.info(f"  ✓ Deep learning analysis complete")
+        logger.info(f"  [OK] Deep learning analysis complete")
 
         # ====================================================================
         # PHASE 4: Graph Algorithm Analysis
         # ====================================================================
-        logger.info("\n🕸️  PHASE 4: Graph Algorithm Analysis")
+        logger.info("\n[GRAPH]  PHASE 4: Graph Algorithm Analysis")
         logger.info("-" * 80)
 
         graph_analysis = self._graph_algorithm_analysis(
@@ -230,7 +230,7 @@ class UnifiedTopologyDiscoverySystem:
             all_applications
         )
 
-        logger.info(f"  ✓ Graph analysis complete:")
+        logger.info(f"  [OK] Graph analysis complete:")
         logger.info(f"    - Communities detected: {len(graph_analysis.get('communities', []))}")
         logger.info(f"    - Critical nodes: {len(graph_analysis.get('critical_nodes', []))}")
 
@@ -248,7 +248,7 @@ class UnifiedTopologyDiscoverySystem:
             all_applications
         )
 
-        logger.info(f"  ✓ Integration complete")
+        logger.info(f"  [OK] Integration complete")
 
         # ====================================================================
         # PHASE 6: RL-Based Optimization (Optional)
@@ -259,14 +259,14 @@ class UnifiedTopologyDiscoverySystem:
 
             optimization = self._optimize_segmentation(integrated_topology)
 
-            logger.info(f"  ✓ Optimization complete")
+            logger.info(f"  [OK] Optimization complete")
         else:
             optimization = {}
 
         # ====================================================================
         # PHASE 7: Final Results Assembly
         # ====================================================================
-        logger.info("\n📦 PHASE 7: Results Assembly")
+        logger.info("\n[STEP] PHASE 7: Results Assembly")
         logger.info("-" * 80)
 
         final_results = self._assemble_final_results(
@@ -282,7 +282,7 @@ class UnifiedTopologyDiscoverySystem:
         elapsed_time = (datetime.now() - start_time).total_seconds()
 
         logger.info("\n" + "=" * 80)
-        logger.info("✅ TOPOLOGY DISCOVERY COMPLETE")
+        logger.info("[SUCCESS] TOPOLOGY DISCOVERY COMPLETE")
         logger.info("=" * 80)
         logger.info(f"  Total applications: {final_results['total_applications']}")
         logger.info(f"  Apps with data: {final_results['apps_with_data']}")
@@ -423,7 +423,7 @@ class UnifiedTopologyDiscoverySystem:
             )
 
             results['gat'] = gat_results
-            logger.info(f"    ✓ GAT: {len(gat_results.get('applications', {}))} apps analyzed")
+            logger.info(f"    [OK] GAT: {len(gat_results.get('applications', {}))} apps analyzed")
 
         # VAE Analysis
         if self.vae_analyzer:
@@ -448,7 +448,7 @@ class UnifiedTopologyDiscoverySystem:
                 )
 
                 results['vae'] = vae_results
-                logger.info(f"    ✓ VAE: {len(vae_results.get('fingerprints', {}))} fingerprints")
+                logger.info(f"    [OK] VAE: {len(vae_results.get('fingerprints', {}))} fingerprints")
 
         # Transformer Analysis
         if self.transformer_analyzer:
@@ -463,7 +463,7 @@ class UnifiedTopologyDiscoverySystem:
                 )
 
                 results['transformer'] = transformer_results
-                logger.info(f"    ✓ Transformer: {len(transformer_results.get('patterns', {}))} patterns")
+                logger.info(f"    [OK] Transformer: {len(transformer_results.get('patterns', {}))} patterns")
 
         return results
 
@@ -763,10 +763,10 @@ RISK DISTRIBUTION
 
 ANALYSIS COMPONENTS
 -------------------
-GAT (Graph Attention): {'✓ Enabled' if self.topology_results['deep_learning_results']['gat_enabled'] else '✗ Disabled'}
-VAE (Fingerprinting): {'✓ Enabled' if self.topology_results['deep_learning_results']['vae_enabled'] else '✗ Disabled'}
-Transformer (Temporal): {'✓ Enabled' if self.topology_results['deep_learning_results']['transformer_enabled'] else '✗ Disabled'}
-RL Optimization: {'✓ Enabled' if self.topology_results['optimization'] else '✗ Disabled'}
+GAT (Graph Attention): {'[OK] Enabled' if self.topology_results['deep_learning_results']['gat_enabled'] else '[ERROR] Disabled'}
+VAE (Fingerprinting): {'[OK] Enabled' if self.topology_results['deep_learning_results']['vae_enabled'] else '[ERROR] Disabled'}
+Transformer (Temporal): {'[OK] Enabled' if self.topology_results['deep_learning_results']['transformer_enabled'] else '[ERROR] Disabled'}
+RL Optimization: {'[OK] Enabled' if self.topology_results['optimization'] else '[ERROR] Disabled'}
 
 All results exported to: {output_path}
 """
@@ -774,7 +774,7 @@ All results exported to: {output_path}
         with open(output_path / 'SUMMARY.txt', 'w') as f:
             f.write(summary)
 
-        logger.info(f"\n✅ Results exported to {output_path}")
+        logger.info(f"\n[SUCCESS] Results exported to {output_path}")
         logger.info(f"  - unified_topology.json (complete data)")
         logger.info(f"  - applications_complete.csv (tabular view)")
         logger.info(f"  - *_graph.gexf (network graphs)")

@@ -45,7 +45,7 @@ class FutureStateGenerator:
         
     def analyze_current_state(self):
         """Analyze current network state"""
-        print("📊 Analyzing Current State...")
+        print("[DATA] Analyzing Current State...")
         
         nodes_df = self.pm.get_all_nodes()
         flows_df = self.pm.get_all_flows()
@@ -58,7 +58,7 @@ class FutureStateGenerator:
             'security_issues': self._identify_security_issues(nodes_df, flows_df)
         }
         
-        print(f"✓ Current State: {self.current_state['total_nodes']} nodes")
+        print(f"[OK] Current State: {self.current_state['total_nodes']} nodes")
         print(f"  - Unassigned: {self.current_state['unassigned_nodes']}")
         print(f"  - Security Issues: {len(self.current_state['security_issues'])}")
         
@@ -185,7 +185,7 @@ class FutureStateGenerator:
             'nodes_requiring_migration': sum(1 for a in future_assignments if a['needs_migration'])
         }
         
-        print(f"✓ Future State Generated")
+        print(f"[OK] Future State Generated")
         print(f"  - Total Zones: {len(future_zones)}")
         print(f"  - Nodes to Migrate: {self.future_state['nodes_requiring_migration']}")
         
@@ -319,7 +319,7 @@ class FutureStateGenerator:
                             'recommendation': 'Add exception or revise zone assignment'
                         })
         
-        print(f"✓ Markov Validation Complete")
+        print(f"[OK] Markov Validation Complete")
         print(f"  - Total Flow Patterns: {len(markov_probs)}")
         print(f"  - Potential Issues: {len(validation_results)}")
         
@@ -346,7 +346,7 @@ class FutureStateGenerator:
         with open(output_path / 'future_state.json', 'w') as f:
             json.dump(self.future_state, f, indent=2, default=str)
         
-        print(f"\n✓ States exported to {output_dir}/")
+        print(f"\n[OK] States exported to {output_dir}/")
 
 
 class GapAnalysisEngine:
@@ -364,7 +364,7 @@ class GapAnalysisEngine:
     
     def analyze_gaps(self):
         """Identify all gaps between current and future state"""
-        print("\n🔍 Analyzing Gaps (Current vs Future)...")
+        print("\n[SEARCH] Analyzing Gaps (Current vs Future)...")
         
         gaps = {
             'zone_migrations': [],
@@ -408,7 +408,7 @@ class GapAnalysisEngine:
         
         self.gap_analysis = gaps
         
-        print(f"✓ Gap Analysis Complete")
+        print(f"[OK] Gap Analysis Complete")
         print(f"  - Zone Migrations: {len(gaps['zone_migrations'])}")
         print(f"  - Security Improvements: {len(gaps['security_improvements'])}")
         print(f"  - New Rules: {len(gaps['new_rules_required'])}")
@@ -445,7 +445,7 @@ class GapAnalysisEngine:
     
     def generate_migration_plan(self):
         """Generate phased migration plan with timeline"""
-        print("\n📋 Generating Migration Plan...")
+        print("\n[INFO] Generating Migration Plan...")
         
         # Group migrations by priority
         p0_migrations = [m for m in self.gap_analysis['zone_migrations'] if m['priority'] == 'P0']
@@ -492,7 +492,7 @@ class GapAnalysisEngine:
             'completion_date': start_date + timedelta(weeks=14)
         }
         
-        print(f"✓ Migration Plan Generated")
+        print(f"[OK] Migration Plan Generated")
         print(f"  - Total Phases: {len(phases)}")
         print(f"  - Duration: {self.migration_plan['total_duration_weeks']} weeks")
         print(f"  - Completion: {self.migration_plan['completion_date'].strftime('%Y-%m-%d')}")
@@ -537,7 +537,7 @@ class UnifiedVisualizationGenerator:
         with open(output_path, 'w') as f:
             f.write(html_content)
         
-        print(f"✓ Unified App Generated: {output_path}")
+        print(f"[OK] Unified App Generated: {output_path}")
         return str(output_path)
     
     def _prepare_current_state_data(self):
@@ -797,11 +797,11 @@ class UnifiedVisualizationGenerator:
     </div>
     
     <div class="tabs">
-        <div class="tab active" onclick="showTab('overview')">📊 Overview</div>
+        <div class="tab active" onclick="showTab('overview')">[DATA] Overview</div>
         <div class="tab" onclick="showTab('current')">🔵 Current State</div>
         <div class="tab" onclick="showTab('future')">🟢 Future State</div>
-        <div class="tab" onclick="showTab('gap')">⚠️ Gap Analysis</div>
-        <div class="tab" onclick="showTab('migration')">🚀 Migration Plan</div>
+        <div class="tab" onclick="showTab('gap')">[WARNING]️ Gap Analysis</div>
+        <div class="tab" onclick="showTab('migration')">[START] Migration Plan</div>
         <div class="tab" onclick="showTab('markov')">🔗 Markov Predictions</div>
     </div>
     
@@ -1158,7 +1158,7 @@ class MasterUnifiedOrchestrator:
     
     def run_complete_analysis(self):
         """Run complete end-to-end analysis"""
-        print("\n🚀 Running Complete Analysis Pipeline...")
+        print("\n[START] Running Complete Analysis Pipeline...")
         
         # Phase 1: Analyze current state
         current_state = self.fsg.analyze_current_state()
@@ -1186,12 +1186,12 @@ class MasterUnifiedOrchestrator:
         self.fsg.export_states()
         
         print("\n" + "="*60)
-        print("✅ COMPLETE ANALYSIS FINISHED")
+        print("[SUCCESS] COMPLETE ANALYSIS FINISHED")
         print("="*60)
         print(f"\n🌐 Open Unified App: {app_path}")
-        print(f"📊 View Current vs Future state")
-        print(f"⚠️  Review {len(gaps['zone_migrations'])} required migrations")
-        print(f"🚀 {migration_plan['total_duration_weeks']}-week migration plan generated")
+        print(f"[DATA] View Current vs Future state")
+        print(f"[WARNING]️  Review {len(gaps['zone_migrations'])} required migrations")
+        print(f"[START] {migration_plan['total_duration_weeks']}-week migration plan generated")
         
         return {
             'current_state': current_state,
@@ -1213,9 +1213,9 @@ if __name__ == '__main__':
     
     results = orchestrator.run_complete_analysis()
     
-    print("\n📁 All outputs saved:")
+    print("\n[FOLDER] All outputs saved:")
     print(f"  - Unified App: {results['unified_app']}")
     print(f"  - Current State: ./states/current_state.json")
     print(f"  - Future State: ./states/future_state.json")
     
-    print("\n🎉 Open the unified app in your browser to explore!")
+    print("\n[SUCCESS] Open the unified app in your browser to explore!")

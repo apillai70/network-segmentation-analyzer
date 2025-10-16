@@ -101,7 +101,7 @@ class TrafficAnalyzer:
             'rules': self._generate_segmentation_rules()
         }
 
-        logger.info("✓ Analysis complete")
+        logger.info("[OK] Analysis complete")
         return self.analysis_results
 
     def _compute_summary_stats(self) -> Dict:
@@ -654,7 +654,7 @@ class TrafficAnalyzer:
         # Sort by priority
         self.rules.sort(key=lambda r: r.priority)
 
-        logger.info(f"  ✓ Generated {len(self.rules)} segmentation rules")
+        logger.info(f"  [OK] Generated {len(self.rules)} segmentation rules")
         return self.rules
 
     def export_rules_csv(self, output_path: str):
@@ -674,7 +674,7 @@ class TrafficAnalyzer:
             for rule in self.rules:
                 writer.writerow(rule.to_dict())
 
-        logger.info(f"✓ Exported {len(self.rules)} rules to {output_path}")
+        logger.info(f"[OK] Exported {len(self.rules)} rules to {output_path}")
 
     def export_iptables_rules(self, output_path: str):
         """Export rules as IPTables script"""
@@ -723,7 +723,7 @@ class TrafficAnalyzer:
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write('\n'.join(lines))
 
-        logger.info(f"✓ Exported IPTables rules to {output_path}")
+        logger.info(f"[OK] Exported IPTables rules to {output_path}")
 
     def export_aws_security_groups(self, output_path: str):
         """Export rules as AWS Security Group JSON"""
@@ -763,7 +763,7 @@ class TrafficAnalyzer:
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump({'SecurityGroups': list(security_groups.values())}, f, indent=2)
 
-        logger.info(f"✓ Exported AWS Security Groups to {output_path}")
+        logger.info(f"[OK] Exported AWS Security Groups to {output_path}")
 
     def export_analysis_report(self, output_path: str):
         """Export complete analysis report as JSON"""
@@ -786,7 +786,7 @@ class TrafficAnalyzer:
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2, default=str)
 
-        logger.info(f"✓ Exported analysis report to {output_path}")
+        logger.info(f"[OK] Exported analysis report to {output_path}")
 
 
 # Convenience function
@@ -832,10 +832,10 @@ if __name__ == '__main__':
     # Analyze
     analyzer = analyze_traffic(parser.records, 'outputs')
 
-    print(f"\n📊 Analysis Summary:")
+    print(f"\n[DATA] Analysis Summary:")
     print(f"  Total flows: {analyzer.analysis_results['summary']['total_flows']}")
     print(f"  Suspicious flows: {analyzer.analysis_results['summary']['suspicious_count']}")
     print(f"  Generated rules: {len(analyzer.rules)}")
     print(f"  Network zones: {len(analyzer.zones)}")
 
-    print("\n✅ Analysis complete!")
+    print("\n[SUCCESS] Analysis complete!")

@@ -59,7 +59,7 @@ def list_processed_files(tracker: FileTracker):
     print(f"\n  Total: {len(tracker.processed_files)} files\n")
 
     for filename, metadata in sorted(tracker.processed_files.items()):
-        print(f"  📄 {filename}")
+        print(f"  [DOC] {filename}")
         print(f"     Hash: {metadata['file_hash'][:16]}...")
         print(f"     Timestamp: {metadata['timestamp']}")
         print(f"     Rows: {metadata['row_count']}")
@@ -90,27 +90,27 @@ def forget_file(tracker: FileTracker, filename: str):
     print(f"\n🔄 Forgetting {filename}...")
 
     if tracker.forget_file(filename):
-        print(f"\n✅ Success!")
+        print(f"\n[SUCCESS] Success!")
         print(f"   You can now reprocess this file by:")
         print(f"   1. Copying it back to data/input/")
         print(f"   2. Running incremental learning")
     else:
-        print(f"\n❌ File not found in tracking database")
+        print(f"\n[ERROR] File not found in tracking database")
 
 
 def reset_tracking(tracker: FileTracker, confirm: bool):
     """Reset all tracking"""
     if not confirm:
-        print("\n⚠️  WARNING: This will clear ALL tracking data!")
+        print("\n[WARNING]️  WARNING: This will clear ALL tracking data!")
         print("   All files will be considered 'new' and can be reprocessed")
         print("\n   To confirm, use: --reset --confirm")
         return
 
-    print("\n⚠️  RESETTING ALL TRACKING DATA...")
+    print("\n[WARNING]️  RESETTING ALL TRACKING DATA...")
 
     tracker.reset_all_tracking(confirm=True)
 
-    print(f"\n✅ All tracking data cleared!")
+    print(f"\n[SUCCESS] All tracking data cleared!")
     print(f"   {tracker.watch_dir} is now considered empty")
 
 

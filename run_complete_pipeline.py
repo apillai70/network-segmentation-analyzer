@@ -104,7 +104,7 @@ class CompletePipeline:
             self.gat_model = GATApplicationAnalyzer()
             self.transformer_model = TemporalTrafficAnalyzer()
             self.vae_model = ApplicationBehaviorAnalyzer()
-            logger.info("  ✓ GAT, Transformer, VAE models ready")
+            logger.info("  [OK] GAT, Transformer, VAE models ready")
 
         # Tracking
         self.all_flows = []
@@ -119,7 +119,7 @@ class CompletePipeline:
             'start_time': datetime.now()
         }
 
-        logger.info("✓ Complete Pipeline initialized (Full ML/DL mode)")
+        logger.info("[OK] Complete Pipeline initialized (Full ML/DL mode)")
         logger.info(f"  Input: {self.watch_dir}")
         logger.info(f"  Output: {self.output_dir}")
         logger.info(f"  Features: {self.features_dir}")
@@ -139,7 +139,7 @@ class CompletePipeline:
         """Process all files one by one"""
 
         print("\n" + "=" * 80)
-        print("🚀 COMPLETE NETWORK ANALYSIS PIPELINE")
+        print("[START] COMPLETE NETWORK ANALYSIS PIPELINE")
         print("=" * 80)
         print()
 
@@ -162,7 +162,7 @@ class CompletePipeline:
             pending_files = pending_files[:max_files]
 
         total_files = len(pending_files)
-        logger.info(f"📁 Processing {total_files} files...\n")
+        logger.info(f"[FOLDER] Processing {total_files} files...\n")
 
         # Process each file
         for i, file_path in enumerate(pending_files, 1):
@@ -172,7 +172,7 @@ class CompletePipeline:
             self._process_single_file(file_path, i, total_files)
 
         print("\n" + "=" * 80)
-        print("✅ FILE PROCESSING COMPLETE")
+        print("[SUCCESS] FILE PROCESSING COMPLETE")
         print("=" * 80)
 
     def _process_single_file(self, file_path: Path, index: int, total: int):
@@ -183,7 +183,7 @@ class CompletePipeline:
         # Check duplicate
         is_dup, dup_reason = self.file_tracker.is_duplicate(file_path)
         if is_dup:
-            print(f"  ⚠ DUPLICATE: {dup_reason}")
+            print(f"  [WARNING] DUPLICATE: {dup_reason}")
             self.file_tracker.move_to_duplicates(file_path, dup_reason)
             return
 
@@ -192,7 +192,7 @@ class CompletePipeline:
         try:
             # Read CSV
             df = pd.read_csv(file_path)
-            print(f"  ✓ Loaded {len(df)} flows for {app_id}")
+            print(f"  [OK] Loaded {len(df)} flows for {app_id}")
 
             # Store flows
             self.all_flows.extend(df.to_dict('records'))
@@ -248,16 +248,16 @@ class CompletePipeline:
             self.processing_stats['total_flows'] += len(df)
             self.processing_stats['total_apps'] += 1
 
-            print(f"  ✓ Zone: {zone_prediction['zone']} (confidence: {zone_prediction['confidence']:.2f})")
-            print(f"  ✓ Features: {len(features)} extracted → {self.features_dir / f'{app_id}_features.csv'}")
+            print(f"  [OK] Zone: {zone_prediction['zone']} (confidence: {zone_prediction['confidence']:.2f})")
+            print(f"  [OK] Features: {len(features)} extracted → {self.features_dir / f'{app_id}_features.csv'}")
             if self.use_deep_learning:
-                print(f"  ✓ Embeddings: {len(embedding)}-dim → {self.embeddings_dir / f'{app_id}_embedding.npy'}")
-            print(f"  ✓ Database: Saved to {'PostgreSQL' if self.pm.backend == 'postgres' else 'JSON'}")
-            print(f"  ✓ Processed in {process_time:.2f}s")
-            print(f"  ✓ Moved to: {new_path.parent.name}/")
+                print(f"  [OK] Embeddings: {len(embedding)}-dim → {self.embeddings_dir / f'{app_id}_embedding.npy'}")
+            print(f"  [OK] Database: Saved to {'PostgreSQL' if self.pm.backend == 'postgres' else 'JSON'}")
+            print(f"  [OK] Processed in {process_time:.2f}s")
+            print(f"  [OK] Moved to: {new_path.parent.name}/")
 
         except Exception as e:
-            logger.error(f"  ✗ Error: {e}")
+            logger.error(f"  [ERROR] Error: {e}")
             self.file_tracker.move_to_errors(file_path, str(e))
 
     def _extract_comprehensive_features(self, app_name: str, df: pd.DataFrame) -> dict:
@@ -515,7 +515,7 @@ class CompletePipeline:
         print("=" * 80)
 
         if len(self.app_zones) < 5:
-            print("  ⚠ Not enough data to train models (need at least 5 apps)")
+            print("  [WARNING] Not enough data to train models (need at least 5 apps)")
             return
 
         # Prepare training data
@@ -539,13 +539,13 @@ class CompletePipeline:
         # Train ensemble
         self.ensemble.train_classical_models(X, y)
 
-        print("\n✓ Model training complete")
+        print("\n[OK] Model training complete")
 
     def generate_visualizations(self):
         """Generate all visualizations"""
 
         print("\n" + "=" * 80)
-        print("📊 GENERATING VISUALIZATIONS")
+        print("[DATA] GENERATING VISUALIZATIONS")
         print("=" * 80)
 
         viz_dir = self.output_dir / 'visualizations'
@@ -560,7 +560,7 @@ class CompletePipeline:
         # 3. Flow Statistics
         self._plot_flow_statistics(viz_dir)
 
-        print(f"\n✓ Visualizations saved to: {viz_dir}")
+        print(f"\n[OK] Visualizations saved to: {viz_dir}")
 
     def generate_mermaid_diagrams(self):
         """Generate Mermaid network diagrams"""
@@ -570,7 +570,7 @@ class CompletePipeline:
         print("=" * 80)
 
         if not self.flow_records:
-            print("  ⚠ No flow records available for diagram generation")
+            print("  [WARNING] No flow records available for diagram generation")
             return
 
         diagram_dir = self.output_dir / 'diagrams'
@@ -601,22 +601,22 @@ class CompletePipeline:
         # 1. Overall network diagram
         overall_path = diagram_dir / 'overall_network.mmd'
         diagram_gen.generate_overall_network_diagram(str(overall_path))
-        print(f"  ✓ Overall network diagram: {overall_path.name}")
+        print(f"  [OK] Overall network diagram: {overall_path.name}")
 
         # 2. Zone flow diagram
         zone_flow_path = diagram_dir / 'zone_flows.mmd'
         diagram_gen.generate_zone_flow_diagram(str(zone_flow_path))
-        print(f"  ✓ Zone flow diagram: {zone_flow_path.name}")
+        print(f"  [OK] Zone flow diagram: {zone_flow_path.name}")
 
         # 3. Per-application diagrams (using actual app names!)
         unique_apps = set(r.app_name for r in self.flow_records)
         for app_name in unique_apps:
             app_diagram_path = diagram_dir / f'{app_name}_diagram.mmd'
             diagram_gen.generate_app_diagram(app_name, str(app_diagram_path))
-            print(f"  ✓ Application diagram: {app_name}_diagram.html")
+            print(f"  [OK] Application diagram: {app_name}_diagram.html")
 
-        print(f"\n✓ Generated {len(unique_apps) + 2} Mermaid diagrams (+ HTML versions)")
-        print(f"✓ Diagrams saved to: {diagram_dir}")
+        print(f"\n[OK] Generated {len(unique_apps) + 2} Mermaid diagrams (+ HTML versions)")
+        print(f"[OK] Diagrams saved to: {diagram_dir}")
 
     def generate_lucidchart_export(self):
         """Generate Lucidchart CSV export"""
@@ -626,7 +626,7 @@ class CompletePipeline:
         print("=" * 80)
 
         if not self.app_zones:
-            print("  ⚠ No application data available for Lucidchart export")
+            print("  [WARNING] No application data available for Lucidchart export")
             return
 
         # Prepare topology data in the format Lucidchart exporter expects
@@ -662,11 +662,11 @@ class CompletePipeline:
 
         # Export without zone containers
         csv_path = exporter.export_from_topology_json(str(temp_json))
-        print(f"  ✓ Lucidchart CSV (flat): {Path(csv_path).name}")
+        print(f"  [OK] Lucidchart CSV (flat): {Path(csv_path).name}")
 
         # Export with zone containers
         csv_zones_path = exporter.export_with_zones_as_containers(str(temp_json))
-        print(f"  ✓ Lucidchart CSV (zones): {Path(csv_zones_path).name}")
+        print(f"  [OK] Lucidchart CSV (zones): {Path(csv_zones_path).name}")
 
         # Clean up temp file
         temp_json.unlink()
@@ -695,7 +695,7 @@ class CompletePipeline:
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
         plt.close()
 
-        print(f"  ✓ Zone distribution: {output_file.name}")
+        print(f"  [OK] Zone distribution: {output_file.name}")
 
     def _plot_processing_timeline(self, output_dir: Path):
         """Plot processing timeline"""
@@ -715,7 +715,7 @@ class CompletePipeline:
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
         plt.close()
 
-        print(f"  ✓ Processing timeline: {output_file.name}")
+        print(f"  [OK] Processing timeline: {output_file.name}")
 
     def _plot_flow_statistics(self, output_dir: Path):
         """Plot flow statistics"""
@@ -738,20 +738,20 @@ class CompletePipeline:
             plt.savefig(output_file, dpi=300, bbox_inches='tight')
             plt.close()
 
-            print(f"  ✓ Flow distribution: {output_file.name}")
+            print(f"  [OK] Flow distribution: {output_file.name}")
 
     def export_results(self):
         """Export all results"""
 
         print("\n" + "=" * 80)
-        print("💾 EXPORTING RESULTS")
+        print("[SAVE] EXPORTING RESULTS")
         print("=" * 80)
 
         # 1. Application zones CSV
         zones_df = pd.DataFrame.from_dict(self.app_zones, orient='index')
         zones_file = self.output_dir / 'application_zones.csv'
         zones_df.to_csv(zones_file)
-        print(f"  ✓ Application zones: {zones_file.name}")
+        print(f"  [OK] Application zones: {zones_file.name}")
 
         # 2. Summary report
         self._generate_summary_report()
@@ -769,7 +769,7 @@ class CompletePipeline:
         json_file = self.output_dir / 'complete_results.json'
         with open(json_file, 'w') as f:
             json.dump(results, f, indent=2)
-        print(f"  ✓ Complete results: {json_file.name}")
+        print(f"  [OK] Complete results: {json_file.name}")
 
     def _generate_summary_report(self):
         """Generate summary report"""
@@ -813,7 +813,7 @@ OUTPUT FILES
         with open(report_file, 'w', encoding='utf-8') as f:
             f.write(report)
 
-        print(f"  ✓ Summary report: {report_file.name}")
+        print(f"  [OK] Summary report: {report_file.name}")
         print("\n" + report)
 
     def _format_zone_distribution(self, zone_dist):
@@ -926,9 +926,9 @@ def main():
         pipeline.export_results()
 
         print("\n" + "=" * 80)
-        print("🎉 PIPELINE COMPLETE!")
+        print("[SUCCESS] PIPELINE COMPLETE!")
         print("=" * 80)
-        print(f"\n📁 All results saved to: {pipeline.output_dir}")
+        print(f"\n[FOLDER] All results saved to: {pipeline.output_dir}")
         print("\nYou can find:")
         print("  - application_zones.csv (Zone assignments)")
         print("  - ANALYSIS_REPORT.txt (Summary report)")

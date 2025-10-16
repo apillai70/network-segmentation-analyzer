@@ -67,7 +67,7 @@ def main():
     # Generate documents for specified applications
     for app_name in app_names:
         if app_name not in topology:
-            print(f"⚠️  {app_name}: Not found in topology data")
+            print(f"[WARNING]️  {app_name}: Not found in topology data")
             print(f"   Available apps: {', '.join(sorted(topology.keys())[:10])}...")
             continue
 
@@ -83,11 +83,11 @@ def main():
                 output_path=str(output_path)
             )
 
-            print("✓")
+            print("[OK]")
             print(f"   Output: {output_path}")
 
         except Exception as e:
-            print(f"✗ Error: {e}")
+            print(f"[ERROR] Error: {e}")
 
     print()
     print("="*80)

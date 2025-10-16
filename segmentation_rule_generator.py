@@ -82,7 +82,7 @@ class SegmentationRuleGenerator:
         with open(output_file, 'w') as f:
             f.write('\n'.join(rules))
         
-        print(f"✅ iptables rules generated: {output_file}")
+        print(f"[SUCCESS] iptables rules generated: {output_file}")
         return rules
     
     def generate_aws_security_groups(self, output_file='aws_security_groups.json'):
@@ -138,7 +138,7 @@ class SegmentationRuleGenerator:
         with open(output_file, 'w') as f:
             json.dump({'SecurityGroups': security_groups}, f, indent=2)
         
-        print(f"✅ AWS Security Groups generated: {output_file}")
+        print(f"[SUCCESS] AWS Security Groups generated: {output_file}")
         return security_groups
     
     def generate_cisco_acls(self, output_file='cisco_acls.txt'):
@@ -173,7 +173,7 @@ class SegmentationRuleGenerator:
         with open(output_file, 'w') as f:
             f.write('\n'.join(acls))
         
-        print(f"✅ Cisco ACLs generated: {output_file}")
+        print(f"[SUCCESS] Cisco ACLs generated: {output_file}")
         return acls
     
     def generate_openshift_network_policy(self, output_file='openshift_network_policies.yaml'):
@@ -247,7 +247,7 @@ spec:
         with open(output_file, 'w') as f:
             f.write('\n'.join(policies))
         
-        print(f"✅ Kubernetes Network Policies generated: {output_file}")
+        print(f"[SUCCESS] Kubernetes Network Policies generated: {output_file}")
         return policies
     
     def generate_application_labels(self, output_file='application_labels.csv'):
@@ -279,7 +279,7 @@ spec:
             writer.writeheader()
             writer.writerows(app_labels)
         
-        print(f"✅ Application labels generated: {output_file}")
+        print(f"[SUCCESS] Application labels generated: {output_file}")
         return app_labels
     
     def generate_zero_trust_matrix(self, output_file='zero_trust_matrix.csv'):
@@ -314,7 +314,7 @@ spec:
             writer.writeheader()
             writer.writerows(matrix)
         
-        print(f"✅ Zero-trust matrix generated: {output_file}")
+        print(f"[SUCCESS] Zero-trust matrix generated: {output_file}")
         return matrix
     
     def generate_all_outputs(self):
@@ -329,7 +329,7 @@ spec:
         self.generate_application_labels()
         self.generate_zero_trust_matrix()
         
-        print("\n✅ All segmentation artifacts generated successfully!")
+        print("\n[SUCCESS] All segmentation artifacts generated successfully!")
 
 
 # ============================================================================
@@ -341,7 +341,7 @@ if __name__ == "__main__":
     generator = SegmentationRuleGenerator('network_segmentation_report.json')
     generator.generate_all_outputs()
     
-    print("\n📦 Generated Files:")
+    print("\n[STEP] Generated Files:")
     print("  ├─ iptables_rules.sh - Linux firewall rules")
     print("  ├─ aws_security_groups.json - AWS security group definitions")
     print("  ├─ cisco_acls.txt - Cisco ACL configurations")

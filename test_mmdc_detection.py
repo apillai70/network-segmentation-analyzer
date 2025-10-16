@@ -18,17 +18,17 @@ print("=" * 80)
 print("\n1. Checking PATH...")
 mmdc_in_path = shutil.which('mmdc')
 if mmdc_in_path:
-    print(f"   ✓ Found in PATH: {mmdc_in_path}")
+    print(f"   [OK] Found in PATH: {mmdc_in_path}")
     try:
         result = subprocess.run([mmdc_in_path, '--version'], capture_output=True, timeout=5, text=True)
         if result.returncode == 0:
-            print(f"   ✓ Version: {result.stdout.strip()}")
+            print(f"   [OK] Version: {result.stdout.strip()}")
         else:
-            print(f"   ✗ Failed to get version")
+            print(f"   [ERROR] Failed to get version")
     except Exception as e:
-        print(f"   ✗ Error running: {e}")
+        print(f"   [ERROR] Error running: {e}")
 else:
-    print("   ✗ Not in PATH")
+    print("   [ERROR] Not in PATH")
 
 # Test 2: Check for nodeenv in project directory
 print("\n2. Checking nodeenv...")
@@ -37,17 +37,17 @@ nodeenv_mmdc = project_root / 'nodeenv' / 'Scripts' / 'mmdc'
 print(f"   Looking for: {nodeenv_mmdc}")
 
 if nodeenv_mmdc.exists():
-    print(f"   ✓ File exists")
+    print(f"   [OK] File exists")
     try:
         result = subprocess.run([str(nodeenv_mmdc), '--version'], capture_output=True, timeout=5, text=True)
         if result.returncode == 0:
-            print(f"   ✓ Version: {result.stdout.strip()}")
+            print(f"   [OK] Version: {result.stdout.strip()}")
         else:
-            print(f"   ✗ Failed to run: {result.stderr}")
+            print(f"   [ERROR] Failed to run: {result.stderr}")
     except Exception as e:
-        print(f"   ✗ Error: {e}")
+        print(f"   [ERROR] Error: {e}")
 else:
-    print(f"   ✗ File not found")
+    print(f"   [ERROR] File not found")
 
 # Test 3: Check Windows npm global
 print("\n3. Checking Windows npm global...")
@@ -56,32 +56,32 @@ if user_profile:
     npm_mmdc = Path(user_profile) / 'AppData' / 'Roaming' / 'npm' / 'mmdc.cmd'
     print(f"   Looking for: {npm_mmdc}")
     if npm_mmdc.exists():
-        print(f"   ✓ File exists")
+        print(f"   [OK] File exists")
         try:
             result = subprocess.run([str(npm_mmdc), '--version'], capture_output=True, timeout=5, text=True)
             if result.returncode == 0:
-                print(f"   ✓ Version: {result.stdout.strip()}")
+                print(f"   [OK] Version: {result.stdout.strip()}")
             else:
-                print(f"   ✗ Failed to run")
+                print(f"   [ERROR] Failed to run")
         except Exception as e:
-            print(f"   ✗ Error: {e}")
+            print(f"   [ERROR] Error: {e}")
     else:
-        print(f"   ✗ File not found")
+        print(f"   [ERROR] File not found")
 else:
-    print("   ✗ USERPROFILE not set")
+    print("   [ERROR] USERPROFILE not set")
 
 # Test 4: Try direct command
 print("\n4. Checking direct 'mmdc' command...")
 try:
     result = subprocess.run(['mmdc', '--version'], capture_output=True, timeout=5, text=True)
     if result.returncode == 0:
-        print(f"   ✓ Works: {result.stdout.strip()}")
+        print(f"   [OK] Works: {result.stdout.strip()}")
     else:
-        print(f"   ✗ Failed")
+        print(f"   [ERROR] Failed")
 except FileNotFoundError:
-    print("   ✗ Command not found")
+    print("   [ERROR] Command not found")
 except Exception as e:
-    print(f"   ✗ Error: {e}")
+    print(f"   [ERROR] Error: {e}")
 
 # Test 5: Check environment
 print("\n5. Environment check...")
@@ -98,14 +98,14 @@ print("RECOMMENDATION")
 print("=" * 80)
 
 if mmdc_in_path:
-    print("✓ mmdc is accessible - should work!")
+    print("[OK] mmdc is accessible - should work!")
 elif nodeenv_mmdc.exists():
-    print("⚠ mmdc exists but not in PATH")
+    print("[WARNING] mmdc exists but not in PATH")
     print("\nSolution: Activate nodeenv first:")
     print(f"   {project_root}\\nodeenv\\Scripts\\activate")
     print("   python run_batch_processing.py --batch-size 10")
 else:
-    print("✗ mmdc not found anywhere")
+    print("[ERROR] mmdc not found anywhere")
     print("\nSolution: Install mermaid-cli:")
     print("   npm install -g @mermaid-js/mermaid-cli")
 

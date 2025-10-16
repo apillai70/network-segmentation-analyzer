@@ -28,22 +28,22 @@ def print_banner():
 
 def check_python_version():
     """Check if Python version is compatible"""
-    print("✓ Checking Python version...")
+    print("[OK] Checking Python version...")
 
     required_version = (3, 8)
     current_version = sys.version_info[:2]
 
     if current_version < required_version:
-        print(f"❌ Python {required_version[0]}.{required_version[1]}+ required")
+        print(f"[ERROR] Python {required_version[0]}.{required_version[1]}+ required")
         print(f"   Current version: {current_version[0]}.{current_version[1]}")
         sys.exit(1)
 
-    print(f"  Python {current_version[0]}.{current_version[1]} detected ✓")
+    print(f"  Python {current_version[0]}.{current_version[1]} detected [OK]")
 
 
 def install_dependencies(full_install=False, gpu_support=False):
     """Install Python dependencies"""
-    print("\n📦 Installing dependencies...")
+    print("\n[STEP] Installing dependencies...")
 
     # Modify requirements based on options
     if full_install or gpu_support:
@@ -83,12 +83,12 @@ def install_dependencies(full_install=False, gpu_support=False):
             sys.executable, '-m', 'pip', 'install', '-r', 'requirements.txt'
         ])
 
-    print("  ✓ Dependencies installed")
+    print("  [OK] Dependencies installed")
 
 
 def create_directories():
     """Create necessary directories"""
-    print("\n📁 Creating directories...")
+    print("\n[FOLDER] Creating directories...")
 
     directories = [
         'data/input',
@@ -105,7 +105,7 @@ def create_directories():
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)
 
-    print("  ✓ Directories created")
+    print("  [OK] Directories created")
 
 
 def create_config_files():
@@ -144,12 +144,12 @@ ENABLE_RL_OPTIMIZATION=true
 ENABLE_GRAPH_ALGORITHMS=true
 """)
 
-    print("  ✓ Configuration files created")
+    print("  [OK] Configuration files created")
 
 
 def run_verification():
     """Run installation verification"""
-    print("\n🔍 Verifying installation...")
+    print("\n[SEARCH] Verifying installation...")
 
     try:
         # Test basic imports
@@ -158,35 +158,35 @@ def run_verification():
         import networkx
         import sklearn
 
-        print("  ✓ Basic dependencies OK")
+        print("  [OK] Basic dependencies OK")
 
         # Test deep learning (optional)
         try:
             import torch
-            print(f"  ✓ PyTorch {torch.__version__} available")
+            print(f"  [OK] PyTorch {torch.__version__} available")
             print(f"    CUDA available: {torch.cuda.is_available()}")
         except ImportError:
-            print("  ⚠️  PyTorch not available (deep learning disabled)")
+            print("  [WARNING]️  PyTorch not available (deep learning disabled)")
 
         # Test project imports
         sys.path.insert(0, str(Path.cwd() / 'src'))
 
         from core.persistence_manager import PersistenceManager
-        print("  ✓ Core modules OK")
+        print("  [OK] Core modules OK")
 
         from agentic.local_semantic_analyzer import LocalSemanticAnalyzer
-        print("  ✓ Agentic AI modules OK")
+        print("  [OK] Agentic AI modules OK")
 
         try:
             from deep_learning.gat_model import GATApplicationAnalyzer
-            print("  ✓ Deep learning modules OK")
+            print("  [OK] Deep learning modules OK")
         except ImportError as e:
-            print(f"  ⚠️  Deep learning modules unavailable: {e}")
+            print(f"  [WARNING]️  Deep learning modules unavailable: {e}")
 
-        print("\n  ✅ Verification passed!")
+        print("\n  [SUCCESS] Verification passed!")
 
     except Exception as e:
-        print(f"\n  ❌ Verification failed: {e}")
+        print(f"\n  [ERROR] Verification failed: {e}")
         print("  Please check the error and try again")
         return False
 
@@ -196,7 +196,7 @@ def run_verification():
 def print_next_steps():
     """Print next steps for user"""
     print("\n" + "=" * 80)
-    print("✅ INSTALLATION COMPLETE!")
+    print("[SUCCESS] INSTALLATION COMPLETE!")
     print("=" * 80)
     print("\nNext Steps:")
     print("  1. Place your network flow CSV files in: ./data/input/")
@@ -245,11 +245,11 @@ def main():
         print_next_steps()
 
     except KeyboardInterrupt:
-        print("\n⚠️  Installation interrupted by user")
+        print("\n[WARNING]️  Installation interrupted by user")
         sys.exit(1)
 
     except Exception as e:
-        print(f"\n❌ Installation failed: {e}")
+        print(f"\n[ERROR] Installation failed: {e}")
         sys.exit(1)
 
 

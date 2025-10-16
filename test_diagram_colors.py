@@ -73,17 +73,17 @@ def test_acda_diagram():
         max_nodes=50
     )
 
-    print("✓ Diagram generated successfully!")
+    print("[OK] Diagram generated successfully!")
     print()
 
     # Check if color coding is present in output
     print("Checking color coding in output...")
     if 'stroke:#333' in diagram_content:
-        print("  ✓ Black solid lines for network_observation found")
+        print("  [OK] Black solid lines for network_observation found")
     if 'stroke:#3498db' in diagram_content:
-        print("  ✓ Blue dashed lines for type_inference found")
+        print("  [OK] Blue dashed lines for type_inference found")
     if 'Data Source Colors' in diagram_content:
-        print("  ✓ Legend with data source colors found")
+        print("  [OK] Legend with data source colors found")
     print()
 
     print("="*80)

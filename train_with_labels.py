@@ -165,7 +165,7 @@ def train_from_labels(labels_file='ground_truth_labels.csv'):
     for model_name, score in ensemble.model_scores.items():
         print(f"  {model_name}: {score:.3f} ({score*100:.1f}% accuracy)")
 
-    print(f"\n✅ NEXT: Run pipeline again - predictions will now have HIGH confidence!")
+    print(f"\n[SUCCESS] NEXT: Run pipeline again - predictions will now have HIGH confidence!")
     print(f"="*50)
 
 

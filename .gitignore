@@ -10,6 +10,7 @@ nodeenv/
 *.egg-info/
 dist/
 build/
+*.log
 
 *claude
 

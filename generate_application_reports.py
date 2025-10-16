@@ -308,11 +308,11 @@ def main():
 
         if diagram_success:
             stats['diagrams_success'] += 1
-            pred_indicator = "📊+🔮" if predictions else "📊"
-            print(f"[{pred_indicator} ✓]", end=' ', flush=True)
+            pred_indicator = "[DATA]+🔮" if predictions else "[DATA]"
+            print(f"[{pred_indicator} [OK]]", end=' ', flush=True)
         else:
             stats['diagrams_failed'] += 1
-            print("[DIAG ✗]", end=' ', flush=True)
+            print("[DIAG [ERROR]]", end=' ', flush=True)
 
         # Show zone
         if topology_data:
@@ -339,11 +339,11 @@ def main():
     print(f"  Without predictions: {stats['without_predictions']}")
     print()
     print("Diagrams (Template-based):")
-    print(f"  ✓ Success: {stats['diagrams_success']}")
-    print(f"  ✗ Failed: {stats['diagrams_failed']}")
+    print(f"  [OK] Success: {stats['diagrams_success']}")
+    print(f"  [ERROR] Failed: {stats['diagrams_failed']}")
     print()
     print("Lucidchart Exports:")
-    print(f"  {'✓ Generated (with predictions)' if lucid_success else '✗ Failed'}")
+    print(f"  {'[OK] Generated (with predictions)' if lucid_success else '[ERROR] Failed'}")
     print()
     print("=" * 80)
     print("OUTPUT LOCATIONS")
@@ -360,8 +360,8 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        logger.warning("\n⚠️  Interrupted by user")
+        logger.warning("\n[WARNING]️  Interrupted by user")
         sys.exit(0)
     except Exception as e:
-        logger.error(f"\n❌ Error: {e}", exc_info=True)
+        logger.error(f"\n[ERROR] Error: {e}", exc_info=True)
         sys.exit(1)

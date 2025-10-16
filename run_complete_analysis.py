@@ -154,7 +154,7 @@ def main():
     print("=" * 80)
     print("COMPLETE NETWORK + APPLICATION TOPOLOGY ANALYZER v3.0")
     print("=" * 80)
-    print("🚀 Starting unified topology discovery...")
+    print("[STARTING] Starting unified topology discovery...")
     print()
 
     # Parse arguments
@@ -195,7 +195,7 @@ def main():
         # ====================================================================
         # Step 1: Initialize Components
         # ====================================================================
-        logger.info("\n📦 Step 1: Initializing components...")
+        logger.info("\n[STEP 1] Step 1: Initializing components...")
 
         from core.persistence_manager import PersistenceManager
         from agentic.unified_topology_system import UnifiedTopologyDiscoverySystem
@@ -216,12 +216,12 @@ def main():
             device=args.device
         )
 
-        logger.info("✓ Components initialized")
+        logger.info("[OK] Components initialized")
 
         # ====================================================================
         # Step 2: Load Network Flow Data
         # ====================================================================
-        logger.info(f"\n📊 Step 2: Loading network flow data from {args.data_dir}...")
+        logger.info(f"\n[STEP 2] Step 2: Loading network flow data from {args.data_dir}...")
 
         from parser import FlowParser
 
@@ -240,12 +240,12 @@ def main():
             records = parser.parse_csv(str(csv_file))
             all_records.extend(records)
 
-        logger.info(f"✓ Loaded {len(all_records)} flow records from {len(csv_files)} files")
+        logger.info(f"[OK] Loaded {len(all_records)} flow records from {len(csv_files)} files")
 
         # ====================================================================
         # Step 3: Load Application Catalog
         # ====================================================================
-        logger.info("\n📋 Step 3: Loading application catalog...")
+        logger.info("\n[STEP 3] Step 3: Loading application catalog...")
 
         if args.app_catalog:
             all_applications = load_application_catalog(args.app_catalog)
@@ -255,12 +255,12 @@ def main():
             predicted_apps = generate_predicted_apps(observed_apps, target_total=260)
             all_applications = list(observed_apps | predicted_apps)
 
-        logger.info(f"✓ Application catalog: {len(all_applications)} total applications")
+        logger.info(f"[OK] Application catalog: {len(all_applications)} total applications")
 
         # ====================================================================
         # Step 4: Run Complete Topology Discovery
         # ====================================================================
-        logger.info("\n🔍 Step 4: Running complete topology discovery...")
+        logger.info("\n[STEP 4] Step 4: Running complete topology discovery...")
 
         results = topology_system.discover_complete_topology(
             flow_records=all_records,
@@ -268,21 +268,21 @@ def main():
             incremental=False
         )
 
-        logger.info("✓ Topology discovery complete!")
+        logger.info("[OK] Topology discovery complete!")
 
         # ====================================================================
         # Step 5: Export Results
         # ====================================================================
-        logger.info("\n💾 Step 5: Exporting results...")
+        logger.info("\n[STEP 5] Step 5: Exporting results...")
 
         topology_system.export_results(output_dir=str(output_dir))
 
-        logger.info("✓ Results exported!")
+        logger.info("[OK] Results exported!")
 
         # ====================================================================
         # Step 6: Generate Reports
         # ====================================================================
-        logger.info("\n📄 Step 6: Generating reports...")
+        logger.info("\n[STEP 6] Step 6: Generating reports...")
 
         from word_document_report_generator import generate_comprehensive_report
 
@@ -294,13 +294,13 @@ def main():
             include_visualizations=True
         )
 
-        logger.info(f"✓ Report generated: {doc_path}")
+        logger.info(f"[OK] Report generated: {doc_path}")
 
         # ====================================================================
         # Step 7: Summary
         # ====================================================================
         print("\n" + "=" * 80)
-        print("✅ ANALYSIS COMPLETE!")
+        print("[SUCCESS] ANALYSIS COMPLETE!")
         print("=" * 80)
         print(f"\nResults Summary:")
         print(f"  Total Applications: {results['total_applications']}")
@@ -311,21 +311,21 @@ def main():
         for zone, count in sorted(results['zone_distribution'].items()):
             print(f"  {zone}: {count}")
         print(f"\nOutput Files:")
-        print(f"  📊 Complete Data: {output_dir / 'unified_topology.json'}")
-        print(f"  📈 Applications CSV: {output_dir / 'applications_complete.csv'}")
-        print(f"  🕸️  Network Graphs: {output_dir / '*.gexf'}")
-        print(f"  📄 Report: {doc_path}")
-        print(f"  📝 Summary: {output_dir / 'SUMMARY.txt'}")
+        print(f"  [DATA] Complete Data: {output_dir / 'unified_topology.json'}")
+        print(f"  [DATA] Applications CSV: {output_dir / 'applications_complete.csv'}")
+        print(f"  [DATA] Network Graphs: {output_dir / '*.gexf'}")
+        print(f"  [DATA] Report: {doc_path}")
+        print(f"  [DATA] Summary: {output_dir / 'SUMMARY.txt'}")
         print("=" * 80)
 
-        print(f"\n✨ Success! Review your complete topology in: {output_dir}")
+        print(f"\n[SUCCESS] Success! Review your complete topology in: {output_dir}")
 
     except KeyboardInterrupt:
-        logger.warning("\n⚠️  Analysis interrupted by user")
+        logger.warning("\n[WARNING] Analysis interrupted by user")
         sys.exit(1)
 
     except Exception as e:
-        logger.error(f"\n❌ Error during analysis: {e}", exc_info=True)
+        logger.error(f"\n[ERROR] Error during analysis: {e}", exc_info=True)
         sys.exit(1)
 
 

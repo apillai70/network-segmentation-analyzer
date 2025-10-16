@@ -33,18 +33,18 @@ def setup_environment():
             print(f"  Installing {pkg}...")
             subprocess.check_call([sys.executable, '-m', 'pip', 'install', pkg, '-q'])
     
-    print("✓ Environment ready")
+    print("[OK] Environment ready")
 
 def validate_csv_files(data_dir):
     """Validate CSV files exist and have required columns"""
     csv_files = glob.glob(os.path.join(data_dir, '*.csv'))
     
     if not csv_files:
-        print(f"❌ No CSV files found in {data_dir}")
+        print(f"[ERROR] No CSV files found in {data_dir}")
         print("Expected format: app_1_flows.csv, app_2_flows.csv, ...")
         sys.exit(1)
     
-    print(f"✓ Found {len(csv_files)} CSV files")
+    print(f"[OK] Found {len(csv_files)} CSV files")
     
     # Check first file for required columns
     import pandas as pd
@@ -54,7 +54,7 @@ def validate_csv_files(data_dir):
     missing = [col for col in required_cols if col not in sample.columns.str.lower()]
     
     if missing:
-        print(f"⚠️  Missing columns: {missing}")
+        print(f"[WARNING]️  Missing columns: {missing}")
         print(f"Available columns: {list(sample.columns)}")
         print("Will attempt to proceed with available columns...")
     
@@ -62,7 +62,7 @@ def validate_csv_files(data_dir):
 
 def run_fast_analysis(csv_files, output_dir):
     """Run optimized analysis for quick results"""
-    print("\n🚀 Starting Fast Analysis Mode...")
+    print("\n[START] Starting Fast Analysis Mode...")
     print("="*60)
     
     # Import the main analyzer
@@ -121,7 +121,7 @@ def run_fast_analysis(csv_files, output_dir):
     automl_results = analyzer.automl.run_auto_pipeline(X, y, task='clustering')
     
     # Generate report
-    print("\n📊 Generating reports...")
+    print("\n[DATA] Generating reports...")
     
     os.makedirs(output_dir, exist_ok=True)
     
@@ -182,13 +182,13 @@ def run_fast_analysis(csv_files, output_dir):
         anomalies_path = os.path.join(output_dir, 'temporal_anomalies.csv')
         anomalies_df.to_csv(anomalies_path, index=False)
     
-    print("\n✅ ANALYSIS COMPLETE!")
+    print("\n[SUCCESS] ANALYSIS COMPLETE!")
     print("="*60)
-    print(f"📁 Results saved to: {output_dir}/")
+    print(f"[FOLDER] Results saved to: {output_dir}/")
     print(f"  - quick_analysis_report.json")
     print(f"  - zone_assignments.csv")
     print(f"  - temporal_anomalies.csv")
-    print(f"\n📊 Summary:")
+    print(f"\n[DATA] Summary:")
     print(f"  Apps Analyzed: {len(csv_files[:50])}")
     print(f"  Network Nodes: {len(node_list)}")
     print(f"  RL Avg Reward: {np.mean(rewards[-10:]):.2f}")
@@ -198,8 +198,8 @@ def run_fast_analysis(csv_files, output_dir):
 
 def run_full_analysis(csv_files, output_dir):
     """Run complete analysis with all 135 apps"""
-    print("\n🚀 Starting Full Analysis Mode (ALL 135 apps)...")
-    print("⚠️  This will take 30-60 minutes")
+    print("\n[START] Starting Full Analysis Mode (ALL 135 apps)...")
+    print("[WARNING]️  This will take 30-60 minutes")
     print("="*60)
     
     from enterprise_network_analyzer import EnterpriseNetworkAnalyzer
@@ -208,8 +208,8 @@ def run_full_analysis(csv_files, output_dir):
     analyzer.load_data(csv_files)
     results = analyzer.run_complete_analysis()
     
-    print(f"\n✅ Full analysis complete!")
-    print(f"📁 Report: enterprise_network_analysis_report.json")
+    print(f"\n[SUCCESS] Full analysis complete!")
+    print(f"[FOLDER] Report: enterprise_network_analysis_report.json")
     
     return results
 
@@ -258,7 +258,7 @@ def main():
     else:
         report = run_full_analysis(csv_files, args.output_dir)
     
-    print("\n🎉 DEPLOYMENT SUCCESSFUL!")
+    print("\n[SUCCESS] DEPLOYMENT SUCCESSFUL!")
     print(f"Next steps:")
     print(f"  1. Review {args.output_dir}/quick_analysis_report.json")
     print(f"  2. Check {args.output_dir}/zone_assignments.csv for segmentation")
