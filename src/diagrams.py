@@ -58,7 +58,7 @@ class MermaidDiagramGenerator:
         """
         # Initialize hostname resolver first
         if hostname_resolver is None:
-            from utils.hostname_resolver import HostnameResolver
+            from src.utils.hostname_resolver import HostnameResolver
             self.hostname_resolver = HostnameResolver(
                 demo_mode=True,
                 filter_nonexistent=filter_nonexistent,
