@@ -273,6 +273,15 @@ class IncrementalLearningSystem:
             record.dst_ip = str(dst_ip).strip() if pd.notna(dst_ip) else ''
             record.dst_hostname = str(dst_hostname).strip() if pd.notna(dst_hostname) else ''
 
+            # [SUCCESS] FIX: Parse format like "10.164.92.166(WPEVISQL02.corp.rgbk.com)"
+            # Extract hostname from parentheses if present in Dest IP column
+            import re
+            if '(' in record.dst_ip and ')' in record.dst_ip:
+                match = re.match(r'([^\(]+)\(([^\)]+)\)', record.dst_ip)
+                if match:
+                    record.dst_ip = match.group(1).strip()  # IP address
+                    record.dst_hostname = match.group(2).strip()  # Hostname from parentheses
+
             # Parse protocol and port
             # [SUCCESS] FIX: Handle NaN values from CSV (pandas reads empty cells as float NaN)
             protocol = row.get('Protocol', 'TCP')
@@ -283,6 +292,14 @@ class IncrementalLearningSystem:
                 protocol = 'TCP'
             if pd.isna(port):
                 port = ''
+
+            # [SUCCESS] FIX: Protocol can be "TCP" or "TCP:443" (protocol:port format)
+            # Extract port from protocol if it contains a colon
+            if ':' in str(protocol):
+                parts = str(protocol).split(':', 1)
+                protocol = parts[0].strip()  # Protocol (e.g., "TCP")
+                if not port:  # Only use protocol port if Port column is empty
+                    port = parts[1].strip()  # Port (e.g., "443")
 
             record.protocol = protocol
             record.port = port if port else None
