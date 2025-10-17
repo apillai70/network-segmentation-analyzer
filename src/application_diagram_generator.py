@@ -827,33 +827,31 @@ class ApplicationDiagramGenerator:
             opacity: 0.9;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }}
-        .pan-arrow:active {{
-            transform: scale(0.95);
-        }}
         .pan-up {{
-            top: 2px;
+            top: 5px;
             left: 50%;
-            transform: translateX(-50%);
+            margin-left: -10px;
         }}
         .pan-down {{
-            bottom: 2px;
+            bottom: 5px;
             left: 50%;
-            transform: translateX(-50%);
+            margin-left: -10px;
         }}
         .pan-left {{
-            left: 2px;
+            left: 5px;
             top: 50%;
-            transform: translateY(-50%);
+            margin-top: -10px;
         }}
         .pan-right {{
-            right: 2px;
+            right: 5px;
             top: 50%;
-            transform: translateY(-50%);
+            margin-top: -10px;
         }}
         .pan-center {{
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            margin-left: -14px;
+            margin-top: -14px;
             width: 28px;
             height: 28px;
             font-size: 13px;
