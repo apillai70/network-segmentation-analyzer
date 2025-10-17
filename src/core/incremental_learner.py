@@ -261,11 +261,11 @@ class IncrementalLearningSystem:
             record.app_name = app_id
 
             # [SUCCESS] FIX: Correct column names for your CSV format
-            # Your CSV has: App,Source IP,Source Hostname,Dest IP,Dest Hostname,Port,Protocol,Bytes In,Bytes Out
-            src_ip = row.get('Source IP', '')  # Source IP
-            dst_ip = row.get('Dest IP', '')  # Destination IP
-            src_hostname = row.get('Source Hostname', '')  # Source Hostname
-            dst_hostname = row.get('Dest Hostname', '')
+            # Your CSV has: IP, Peer, Name, Protocol, Bytes In, Bytes Out
+            src_ip = row.get('IP', '')  # Source IP
+            dst_ip = row.get('Peer', '')  # Destination IP (Peer)
+            src_hostname = row.get('Name', '')  # Hostname
+            dst_hostname = ''  # Not in your CSV
 
             # Convert NaN to empty string, ensure all are strings
             record.src_ip = str(src_ip).strip() if pd.notna(src_ip) else ''
