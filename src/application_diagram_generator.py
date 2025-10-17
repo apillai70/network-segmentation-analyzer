@@ -798,8 +798,8 @@ class ApplicationDiagramGenerator:
             transform: translateY(0);
         }}
         .pan-control {{
-            width: 120px;
-            height: 120px;
+            width: 90px;
+            height: 90px;
             margin: 15px auto;
             position: relative;
             background: radial-gradient(circle, #ecf0f1 0%, #bdc3c7 100%);
@@ -808,14 +808,14 @@ class ApplicationDiagramGenerator:
         }}
         .pan-arrow {{
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 11px;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -831,22 +831,22 @@ class ApplicationDiagramGenerator:
             transform: scale(0.95);
         }}
         .pan-up {{
-            top: 5px;
+            top: 2px;
             left: 50%;
             transform: translateX(-50%);
         }}
         .pan-down {{
-            bottom: 5px;
+            bottom: 2px;
             left: 50%;
             transform: translateX(-50%);
         }}
         .pan-left {{
-            left: 5px;
+            left: 2px;
             top: 50%;
             transform: translateY(-50%);
         }}
         .pan-right {{
-            right: 5px;
+            right: 2px;
             top: 50%;
             transform: translateY(-50%);
         }}
@@ -854,9 +854,9 @@ class ApplicationDiagramGenerator:
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
+            width: 28px;
+            height: 28px;
+            font-size: 13px;
             background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
         }}
         .legend {{
@@ -955,9 +955,9 @@ class ApplicationDiagramGenerator:
             <button class="pan-arrow pan-center" onclick="fitView()" title="Fit to Screen">⊕</button>
         </div>
 
-        <button onclick="zoomIn()">[SEARCH] Zoom In</button>
-        <button onclick="zoomOut()">[SEARCH] Zoom Out</button>
-        <button onclick="resetView()">[RESET] Reset View</button>
+        <button onclick="zoomIn()">Zoom In</button>
+        <button onclick="zoomOut()">Zoom Out</button>
+        <button onclick="resetView()">Reset View</button>
     </div>
 
     <div class="legend">
