@@ -1003,24 +1003,33 @@ class ApplicationDiagramGenerator:
         let controlsStartX, controlsStartY, controlsInitialX, controlsInitialY;
 
         mermaid.initialize({{
-            startOnLoad: true,
+            startOnLoad: false,
             theme: 'default',
+            maxTextSize: 90000,
             flowchart: {{
                 curve: 'basis',
                 padding: 20,
-                useMaxWidth: false
-            }}
+                useMaxWidth: false,
+                htmlLabels: true
+            }},
+            securityLevel: 'loose'
         }});
 
         // Initialize after Mermaid renders
         window.addEventListener('load', function() {{
             const mermaidDiv = document.querySelector('.mermaid');
             if (mermaidDiv) {{
+                // Force render
                 mermaid.run({{ nodes: [mermaidDiv] }}).then(() => {{
+                    console.log('Mermaid rendered successfully');
                     initControls();
                 }}).catch(err => {{
                     console.error('Mermaid rendering failed:', err);
+                    // Show error message to user
+                    mermaidDiv.innerHTML = '<div style="padding: 40px; text-align: center; color: #e74c3c;"><h2>Diagram Rendering Error</h2><p>' + err.message + '</p><p>Check browser console for details.</p></div>';
                 }});
+            }} else {{
+                console.error('Mermaid div not found');
             }}
         }});
 
