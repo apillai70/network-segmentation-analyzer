@@ -25,6 +25,7 @@ models/checkpoints/*.pth
 
 # Data - exclude entire directories
 data/
+!tests/fixtures/
 persistent_data/
 outputs_final/
 

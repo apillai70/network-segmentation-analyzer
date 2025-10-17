@@ -72,7 +72,7 @@ jobs:
 
     - name: Run analysis on sample data
       run: |
-        python bin/run_analysis.py --data-dir data/input --output-dir outputs
+        python bin/run_analysis.py --data-dir tests/fixtures/sample_data --output-dir outputs
 
     - name: Upload analysis artifacts
       uses: actions/upload-artifact@v4
