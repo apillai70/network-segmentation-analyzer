@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.parser import FlowRecord
 from src.diagrams import MermaidDiagramGenerator
+from src.analysis import NetworkZone
 
 
 class TestMermaidDiagramGenerator:
@@ -49,27 +50,27 @@ class TestMermaidDiagramGenerator:
     def sample_zones(self):
         """Create sample zones"""
         return {
-            'WEB_TIER': {
-                'zone_name': 'WEB_TIER',
-                'zone_type': 'micro',
-                'members': ['10.1.1.10'],
-                'description': 'Web servers',
-                'security_level': 2
-            },
-            'APP_TIER': {
-                'zone_name': 'APP_TIER',
-                'zone_type': 'micro',
-                'members': ['10.1.2.20'],
-                'description': 'App servers',
-                'security_level': 3
-            },
-            'DATA_TIER': {
-                'zone_name': 'DATA_TIER',
-                'zone_type': 'micro',
-                'members': ['10.1.3.30'],
-                'description': 'Databases',
-                'security_level': 4
-            }
+            'WEB_TIER': NetworkZone(
+                zone_name='WEB_TIER',
+                zone_type='micro',
+                members={'10.1.1.10'},
+                description='Web servers',
+                security_level=2
+            ),
+            'APP_TIER': NetworkZone(
+                zone_name='APP_TIER',
+                zone_type='micro',
+                members={'10.1.2.20'},
+                description='App servers',
+                security_level=3
+            ),
+            'DATA_TIER': NetworkZone(
+                zone_name='DATA_TIER',
+                zone_type='micro',
+                members={'10.1.3.30'},
+                description='Databases',
+                security_level=4
+            )
         }
 
     def test_generator_initialization(self, sample_records, sample_zones):
