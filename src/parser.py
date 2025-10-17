@@ -80,15 +80,16 @@ class NetworkLogParser:
 
     # Column name mappings (various formats -> normalized)
     COLUMN_MAPPINGS = {
-        'src_hostname': ['src_hostname', 'source_hostname', 'src_host', 'source_host'],
-        'src_ip': ['src_ip', 'source_ip', 'src_addr', 'source_address', 'source_addr'],
-        'dst_hostname': ['dst_hostname', 'destination_hostname', 'dst_host', 'dest_host', 'destination_host'],
-        'dst_ip': ['dst_ip', 'destination_ip', 'dst_addr', 'dest_ip', 'destination_address', 'destination_addr'],
+        'src_hostname': ['src_hostname', 'source_hostname', 'src_host', 'source_host', 'source hostname'],
+        'src_ip': ['src_ip', 'source_ip', 'src_addr', 'source_address', 'source_addr', 'source ip'],
+        'dst_hostname': ['dst_hostname', 'destination_hostname', 'dst_host', 'dest_host', 'destination_host', 'dest hostname'],
+        'dst_ip': ['dst_ip', 'destination_ip', 'dst_addr', 'dest_ip', 'destination_address', 'destination_addr', 'dest ip'],
         'protocol': ['protocol', 'proto', 'proto_port', 'protocol_port'],
-        'bytes': ['bytes', 'bytes_transferred', 'bytes_in', 'byte_count', 'octets'],
+        'bytes': ['bytes', 'bytes_transferred', 'bytes_in', 'byte_count', 'octets', 'bytes in', 'bytes out'],
         'packets': ['packets', 'packet_count', 'pkts', 'pkt_count'],
         'timestamp': ['timestamp', 'time', 'datetime', 'ts', 'event_time'],
-        'duration': ['duration', 'elapsed_time', 'session_duration']
+        'duration': ['duration', 'elapsed_time', 'session_duration'],
+        'port': ['port', 'dst_port', 'dest_port', 'destination_port']
     }
 
     # Known internal IP ranges (RFC1918 + additional)
