@@ -291,7 +291,7 @@ class ThreatSurfaceNetSegDocument:
             dep_type = dep.get('type', 'unknown')
             if dep_type == 'unknown':
                 unknown_count += 1
-            dep_by_type[dep_type].append(dep.get('name', 'Unknown'))
+            dep_by_type[dep_type].append(dep.get('name', 'Unknown*'))
 
         for dep_type, dep_names in dep_by_type.items():
             if dep_type == 'unknown':
@@ -1467,7 +1467,7 @@ class ThreatSurfaceNetSegDocument:
         # Add dependency-specific rules
         for dep in dependencies[:5]:  # Limit to first 5 for brevity
             dep_type = dep.get('type', 'service')
-            dep_name = dep.get('name', 'Unknown')
+            dep_name = dep.get('name', 'Unknown*')
             port = self._guess_port(dep_type)
             allow_rules.append((
                 f'App Tier → {dep_name}',

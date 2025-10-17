@@ -538,7 +538,7 @@ downstream applications that {self.app_name} communicates with.
 
             # Data rows
             for idx, dep in enumerate(observed_deps, 1):
-                obs_table.rows[idx].cells[0].text = dep.get('name', 'Unknown')
+                obs_table.rows[idx].cells[0].text = dep.get('name', 'Unknown*')
                 obs_table.rows[idx].cells[1].text = dep.get('type', 'unknown')
                 obs_table.rows[idx].cells[2].text = dep.get('purpose', '')
                 obs_table.rows[idx].cells[3].text = f"{dep.get('confidence', 0)*100:.0f}%"
@@ -561,7 +561,7 @@ downstream applications that {self.app_name} communicates with.
             # Data rows
             for idx, dep in enumerate(inferred_deps, 1):
                 inf_table.rows[idx].cells[0].text = dep.get('type', 'unknown')
-                inf_table.rows[idx].cells[1].text = dep.get('name', 'Unknown')
+                inf_table.rows[idx].cells[1].text = dep.get('name', 'Unknown*')
                 inf_table.rows[idx].cells[2].text = dep.get('purpose', '')
                 inf_table.rows[idx].cells[3].text = f"{dep.get('confidence', 0)*100:.0f}%"
 

@@ -298,7 +298,7 @@ class ApplicationDiagramGenerator:
         if topology_data:
             topology_deps = topology_data.get('predicted_dependencies', [])
             for dep in topology_deps:
-                dep_name = dep.get('name', 'Unknown')
+                dep_name = dep.get('name', 'Unknown*')
                 dep_type = dep.get('type', 'service')
                 dep_source = dep.get('source', 'unknown')  # network_observation, type_inference, or unknown
 
@@ -333,7 +333,7 @@ class ApplicationDiagramGenerator:
         if predictions:
             predicted_deps = predictions.get('predicted_dependencies', [])
             for pred in predicted_deps:
-                pred_name = pred.get('name', 'Unknown')
+                pred_name = pred.get('name', 'Unknown*')
                 pred_type = pred.get('type', 'service')
 
                 # Add to infrastructure (since predictions are typically for backends/databases)

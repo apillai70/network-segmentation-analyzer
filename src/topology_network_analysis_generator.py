@@ -310,7 +310,7 @@ class TopologyNetworkAnalysisDocument:
                 cell.paragraphs[0].runs[0].bold = True
 
             for idx, dep in enumerate(dependencies[:20], 1):
-                dep_name = dep.get('name', 'Unknown')
+                dep_name = dep.get('name', 'Unknown*')
                 dep_type = dep.get('type', 'unknown')
                 purpose = self._get_dependency_purpose(dep_type)
 
