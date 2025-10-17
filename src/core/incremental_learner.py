@@ -261,17 +261,17 @@ class IncrementalLearningSystem:
             record.app_name = app_id
 
             # [SUCCESS] FIX: Correct column names for your CSV format
-            # Your CSV has: IP,Name,Peer,Protocol,Bytes In,Bytes Out
-            src_ip = row.get('IP', '')  # Source IP
-            dst_ip = row.get('Peer', '')  # Destination IP (Peer)
-            src_hostname = row.get('Name', '')  # Hostname
-            dst_hostname = ''  # Not in your CSV
+            # Your CSV has: App,Source IP,Source Hostname,Dest IP,Dest Hostname,Port,Protocol,Bytes In,Bytes Out
+            src_ip = row.get('Source IP', '')  # Source IP
+            dst_ip = row.get('Dest IP', '')  # Destination IP
+            src_hostname = row.get('Source Hostname', '')  # Source Hostname
+            dst_hostname = row.get('Dest Hostname', '')
 
             # Convert NaN to empty string, ensure all are strings
             record.src_ip = str(src_ip).strip() if pd.notna(src_ip) else ''
             record.src_hostname = str(src_hostname).strip() if pd.notna(src_hostname) else ''
             record.dst_ip = str(dst_ip).strip() if pd.notna(dst_ip) else ''
-            record.dst_hostname = ''  # Not available in CSV
+            record.dst_hostname = str(dst_hostname).strip() if pd.notna(dst_hostname) else ''
 
             # Parse protocol and port
             # [SUCCESS] FIX: Handle NaN values from CSV (pandas reads empty cells as float NaN)
