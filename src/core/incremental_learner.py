@@ -271,7 +271,7 @@ class IncrementalLearningSystem:
             record.src_ip = str(src_ip).strip() if pd.notna(src_ip) else ''
             record.src_hostname = str(src_hostname).strip() if pd.notna(src_hostname) else ''
             record.dst_ip = str(dst_ip).strip() if pd.notna(dst_ip) else ''
-            record.dst_hostname = ''  # Not available in CSV
+            record.dst_hostname = str(dst_hostname).strip() if pd.notna(dst_hostname) else ''
 
             # Parse protocol and port
             # [SUCCESS] FIX: Handle NaN values from CSV (pandas reads empty cells as float NaN)
