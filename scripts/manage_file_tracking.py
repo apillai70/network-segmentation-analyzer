@@ -87,7 +87,7 @@ def show_statistics(tracker: FileTracker):
 
 def forget_file(tracker: FileTracker, filename: str):
     """Forget a specific file"""
-    print(f"\n🔄 Forgetting {filename}...")
+    print(f"\n[REFRESH] Forgetting {filename}...")
 
     if tracker.forget_file(filename):
         print(f"\n[SUCCESS] Success!")

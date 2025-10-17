@@ -121,7 +121,7 @@ class EnterpriseNetworkReportGenerator:
             except Exception as e:
                 logger.warning(f"  Failed to load {json_file.name}: {e}")
 
-        logger.info(f"✓ Loaded {len(self.applications)} applications")
+        logger.info(f"[OK] Loaded {len(self.applications)} applications")
 
     def analyze_network_topology(self):
         """Analyze enterprise network topology"""
@@ -187,7 +187,7 @@ class EnterpriseNetworkReportGenerator:
 
         self.stats['dns_validation_summary'] = dns_stats
 
-        logger.info(f"✓ Analysis complete")
+        logger.info(f"[OK] Analysis complete")
         logger.info(f"  Applications: {self.stats['total_applications']}")
         logger.info(f"  Dependencies: {self.stats['total_dependencies']}")
         logger.info(f"  Unique IPs: {self.stats['total_unique_ips']}")
@@ -239,7 +239,7 @@ class EnterpriseNetworkReportGenerator:
         with open(output_path, 'w') as f:
             json.dump(report, f, indent=2, default=str)
 
-        logger.info(f"✓ JSON report saved: {output_path}")
+        logger.info(f"[OK] JSON report saved: {output_path}")
         return str(output_path)
 
     def _summarize_dependencies_by_type(self) -> Dict:
@@ -371,7 +371,7 @@ class EnterpriseNetworkReportGenerator:
 
         # Save document
         doc.save(output_path)
-        logger.info(f"✓ Word report saved: {output_path}")
+        logger.info(f"[OK] Word report saved: {output_path}")
 
         return str(output_path)
 

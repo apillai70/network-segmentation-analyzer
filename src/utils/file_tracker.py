@@ -73,7 +73,7 @@ class FileTracker:
         # Load tracking database
         self.processed_files = self._load_tracking_db()
 
-        logger.info(f"✓ FileTracker initialized")
+        logger.info(f"[OK] FileTracker initialized")
         logger.info(f"  Watch: {self.watch_dir}")
         logger.info(f"  Tracked files: {len(self.processed_files)}")
 
@@ -284,7 +284,7 @@ class FileTracker:
                 dest_path = self.processed_dir / f"{file_path.stem}_{timestamp}{file_path.suffix}"
 
             shutil.move(str(file_path), str(dest_path))
-            logger.info(f"  ✓ Moved to: {dest_path.relative_to(self.watch_dir)}")
+            logger.info(f"  [OK] Moved to: {dest_path.relative_to(self.watch_dir)}")
 
             return dest_path
 
@@ -312,8 +312,8 @@ class FileTracker:
                 dest_path = self.duplicates_dir / f"{file_path.stem}_{timestamp}{file_path.suffix}"
 
             shutil.move(str(file_path), str(dest_path))
-            logger.info(f"  ⚠ Duplicate detected: {reason}")
-            logger.info(f"  ✓ Moved to: {dest_path.relative_to(self.watch_dir)}")
+            logger.info(f"  [WARNING] Duplicate detected: {reason}")
+            logger.info(f"  [OK] Moved to: {dest_path.relative_to(self.watch_dir)}")
 
             return dest_path
 
@@ -349,8 +349,8 @@ class FileTracker:
                 f.write(f"Timestamp: {datetime.now().isoformat()}\n")
                 f.write(f"Error: {error}\n")
 
-            logger.error(f"  ✗ Processing failed: {error}")
-            logger.info(f"  ✓ Moved to: {dest_path.relative_to(self.watch_dir)}")
+            logger.error(f"  [FAIL] Processing failed: {error}")
+            logger.info(f"  [OK] Moved to: {dest_path.relative_to(self.watch_dir)}")
 
             return dest_path
 
@@ -391,7 +391,7 @@ class FileTracker:
         if filename in self.processed_files:
             del self.processed_files[filename]
             self._save_tracking_db()
-            logger.info(f"✓ Removed {filename} from tracking database")
+            logger.info(f"[OK] Removed {filename} from tracking database")
             logger.info(f"  File can now be reprocessed if placed in {self.watch_dir}")
             return True
         else:
@@ -411,7 +411,7 @@ class FileTracker:
 
         self.processed_files = {}
         self._save_tracking_db()
-        logger.warning("⚠ All file tracking data cleared!")
+        logger.warning("[WARNING] All file tracking data cleared!")
         logger.info("  All files can now be reprocessed")
         return True
 

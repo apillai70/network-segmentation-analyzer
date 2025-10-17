@@ -101,7 +101,7 @@ class SyntheticFlowGenerator:
             'DNS': [53]
         }
 
-        logger.info("✓ Synthetic Flow Generator initialized")
+        logger.info("[OK] Synthetic Flow Generator initialized")
 
     def identify_app_type(self, app_id: str, app_name: str) -> str:
         """
@@ -370,7 +370,7 @@ class SyntheticFlowGenerator:
             if generated_count % 10 == 0:
                 logger.info(f"  Progress: {generated_count}/{num_apps} files generated")
 
-        logger.info(f"\n✅ Generated {generated_count} application flow files")
+        logger.info(f"\n[SUCCESS] Generated {generated_count} application flow files")
         logger.info(f"  Output directory: {output_path}")
         logger.info(f"  File naming: App_Code_{{APP_ID}}.csv")
 

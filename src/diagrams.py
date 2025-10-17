@@ -308,21 +308,13 @@ class MermaidDiagramGenerator:
             if tier not in app_components_by_tier:
                 continue
 
-            # Special handling for UNKNOWN tier - use detailed ExtraHop explanation
-            if tier == 'UNKNOWN':
-                server_count = len(app_components_by_tier[tier])
-                tier_label = f"* Unknown Connections: {server_count} connection(s)"
-                tier_id = self._safe_name(f"{app_name}_{tier}")
-                tier_class = tier_classes.get(tier, 'mgmtTier')
+            # Consistent formatting for all tiers (including UNKNOWN)
+            tier_label = tier.replace('_TIER', '').replace('_', ' ').title() if tier != 'UNKNOWN' else 'Unknown'
+            tier_id = self._safe_name(f"{app_name}_{tier}")
+            tier_class = tier_classes.get(tier, 'mgmtTier')
+            server_count = len(app_components_by_tier[tier])
 
-                lines.append(f"    subgraph {tier_id}[\"{tier_label}<br/>These could not be definitively classified<br/>based on available ExtraHop network flow data\"]")
-            else:
-                tier_label = tier.replace('_TIER', '').replace('_', ' ').title()
-                tier_id = self._safe_name(f"{app_name}_{tier}")
-                tier_class = tier_classes.get(tier, 'mgmtTier')
-                server_count = len(app_components_by_tier[tier])
-
-                lines.append(f"    subgraph {tier_id}[\"{tier_label}<br/>{server_count} server(s)\"]")
+            lines.append(f"    subgraph {tier_id}[\"{tier_label}<br/>{server_count} server(s)\"]")
             lines.append("        direction LR")
 
             # Show servers in this tier (limit to 10 for readability)
@@ -780,7 +772,7 @@ class MermaidDiagramGenerator:
     </style>
 </head>
 <body>
-    <h1>🔒 {title}</h1>
+    <h1>[SECURITY] {title}</h1>
 
     <div class="info">
         <div class="theme-toggle">
@@ -815,9 +807,9 @@ class MermaidDiagramGenerator:
             <div class="legend-item">
                 <div class="legend-title">Data Source Attribution</div>
                 <span>
-                <strong>⬛ Black solid</strong> = Observed from network flows (ExtraHop)<br>
-                <strong>🔵 Blue dashed</strong> = ML inference/predictions<br>
-                <strong>⬜ Gray dashed</strong> = Unknown/unclassified
+                <strong>[BLACK] Black solid</strong> = Observed from network flows (ExtraHop)<br>
+                <strong>[BLUE] Blue dashed</strong> = ML inference/predictions<br>
+                <strong>[WHITE] Gray dashed</strong> = Unknown/unclassified
                 </span>
             </div>
             <div class="legend-item" style="grid-column: 1 / -1; border-left-color: #9e9e9e; padding: 20px; font-size: 14px;">

@@ -87,7 +87,7 @@ class UnifiedPersistenceManager:
         # Initialize storage backend
         self._initialize_backend()
 
-        logger.info(f"✓ Unified Persistence Manager initialized")
+        logger.info(f"[OK] Unified Persistence Manager initialized")
         logger.info(f"  Backend: {self.backend}")
         logger.info(f"  Auto-fallback: {self.auto_fallback}")
 
@@ -109,14 +109,14 @@ class UnifiedPersistenceManager:
             if self._try_postgres_connection():
                 self.backend = 'postgres'
                 self._initialize_postgres_schema()
-                logger.info("✓ Using PostgreSQL backend")
+                logger.info("[OK] Using PostgreSQL backend")
                 return
 
         # Fallback to JSON
         if self.auto_fallback:
             self.backend = 'json'
             self._initialize_json_storage()
-            logger.info("✓ Using JSON file backend (fallback)")
+            logger.info("[OK] Using JSON file backend (fallback)")
         else:
             raise RuntimeError("PostgreSQL connection failed and auto_fallback is disabled")
 
@@ -143,7 +143,7 @@ class UnifiedPersistenceManager:
                 with conn.cursor() as cur:
                     cur.execute("SELECT 1")
 
-            logger.info("✓ PostgreSQL connection successful")
+            logger.info("[OK] PostgreSQL connection successful")
             return True
 
         except Exception as e:
@@ -241,7 +241,7 @@ class UnifiedPersistenceManager:
             with self._get_connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(schema_sql)
-            logger.info("✓ PostgreSQL schema initialized")
+            logger.info("[OK] PostgreSQL schema initialized")
         except Exception as e:
             logger.error(f"Failed to initialize PostgreSQL schema: {e}")
             raise
@@ -256,7 +256,7 @@ class UnifiedPersistenceManager:
         (self.json_storage_path / 'topology').mkdir(exist_ok=True)
         (self.json_storage_path / 'models').mkdir(exist_ok=True)
 
-        logger.info("✓ JSON storage structure initialized")
+        logger.info("[OK] JSON storage structure initialized")
 
     # ========================================================================
     # Public API - Backend Agnostic
@@ -403,7 +403,7 @@ class UnifiedPersistenceManager:
                         row.get('Bytes Out', 0)
                     ))
 
-        logger.info(f"✓ Saved application {app_id} to PostgreSQL ({len(flows_df)} flows)")
+        logger.info(f"[OK] Saved application {app_id} to PostgreSQL ({len(flows_df)} flows)")
         return True
 
     def _get_application_postgres(self, app_id: str) -> Optional[Dict]:
@@ -603,7 +603,7 @@ class UnifiedPersistenceManager:
         # Save flows as CSV
         flows_df.to_csv(app_dir / 'flows.csv', index=False)
 
-        logger.info(f"✓ Saved application {app_id} to JSON ({len(flows_df)} flows)")
+        logger.info(f"[OK] Saved application {app_id} to JSON ({len(flows_df)} flows)")
         return True
 
     def _get_application_json(self, app_id: str) -> Optional[Dict]:
@@ -808,7 +808,7 @@ class UnifiedPersistenceManager:
                         topo['characteristics']
                     )
 
-            logger.info(f"✓ Migration complete: {len(apps)} applications migrated")
+            logger.info(f"[OK] Migration complete: {len(apps)} applications migrated")
             return True
 
         except Exception as e:
@@ -835,14 +835,14 @@ class UnifiedPersistenceManager:
         with open(output_dir / 'backup.json', 'w') as f:
             json.dump(export_data, f, indent=2)
 
-        logger.info(f"✓ Data exported to {output_path}/backup.json")
+        logger.info(f"[OK] Data exported to {output_path}/backup.json")
         return True
 
     def close(self):
         """Close connections and cleanup"""
         if self.connection_pool:
             self.connection_pool.closeall()
-            logger.info("✓ PostgreSQL connections closed")
+            logger.info("[OK] PostgreSQL connections closed")
 
 
 # ============================================================================

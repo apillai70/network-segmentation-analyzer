@@ -122,7 +122,7 @@ class MLNetworkPredictor:
             'peer_correlations': len(self.peer_correlation_matrix)
         }
 
-        logger.info(f"✅ Training complete with Markov chain!")
+        logger.info(f"[SUCCESS] Training complete with Markov chain!")
         return training_results
 
     def predict_missing_apps(self, app_catalog: List[str]) -> Dict[str, Dict]:
@@ -135,7 +135,7 @@ class MLNetworkPredictor:
         Returns:
             Dictionary mapping app_name -> predicted_patterns
         """
-        logger.info(f"🔮 Predicting patterns for applications without data...")
+        logger.info(f"[PREDICT] Predicting patterns for applications without data...")
 
         # Identify apps without data
         all_apps = set(app_catalog)
@@ -157,7 +157,7 @@ class MLNetworkPredictor:
             # Add predicted nodes to graph
             self._add_predicted_app_to_graph(app_name, prediction)
 
-        logger.info(f"✅ Predictions complete for {len(predictions)} apps!")
+        logger.info(f"[SUCCESS] Predictions complete for {len(predictions)} apps!")
         return predictions
 
     def _build_network_graph(self, records: List):
@@ -730,7 +730,7 @@ class MLNetworkPredictor:
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(predictions_export, f, indent=2)
 
-        logger.info(f"✅ Predictions exported to {output_path}")
+        logger.info(f"[SUCCESS] Predictions exported to {output_path}")
 
 
 # Import Counter

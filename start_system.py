@@ -64,14 +64,14 @@ def print_banner():
     print("NETWORK SEGMENTATION ANALYZER v3.0")
     print("Complete Network + Application Topology Discovery")
     print("=" * 80)
-    print("🔒 100% LOCAL PROCESSING - NO EXTERNAL APIs")
-    print("🧠 Deep Learning + Agentic AI + Incremental Learning")
+    print("[SECURITY] 100% LOCAL PROCESSING - NO EXTERNAL APIs")
+    print("[AI] Deep Learning + Agentic AI + Incremental Learning")
     print("=" * 80 + "\n")
 
 
 def cleanup_previous_run():
     """Clean up previous run data to start fresh"""
-    logger.info("🧹 Cleaning up previous run...")
+    logger.info("[CLEANUP] Cleaning up previous run...")
 
     import shutil
 
@@ -101,17 +101,17 @@ def cleanup_previous_run():
                 for file_path in Path('.').glob(item):
                     if file_path.exists():
                         file_path.unlink()
-                        logger.info(f"  ✓ Deleted {file_path}")
+                        logger.info(f"  [OK] Deleted {file_path}")
             elif item_type == 'file':
                 file_path = Path(item)
                 if file_path.exists():
                     file_path.unlink()
-                    logger.info(f"  ✓ Deleted {file_path}")
+                    logger.info(f"  [OK] Deleted {file_path}")
             elif item_type == 'dir':
                 dir_path = Path(item)
                 if dir_path.exists():
                     shutil.rmtree(dir_path)
-                    logger.info(f"  ✓ Deleted {dir_path}/")
+                    logger.info(f"  [OK] Deleted {dir_path}/")
         except Exception as e:
             logger.debug(f"  Skip: {item} ({e})")
 
@@ -123,12 +123,12 @@ def cleanup_previous_run():
     for dir_path in essential_dirs:
         Path(dir_path).mkdir(parents=True, exist_ok=True)
 
-    logger.info("✓ Ready to start fresh\n")
+    logger.info("[OK] Ready to start fresh\n")
 
 
 def check_dependencies():
     """Check if required dependencies are installed"""
-    logger.info("📦 Checking dependencies...")
+    logger.info("[DEPS] Checking dependencies...")
 
     required_packages = [
         'pandas', 'numpy', 'networkx', 'sklearn',
@@ -146,30 +146,30 @@ def check_dependencies():
     for package in required_packages:
         try:
             __import__(package)
-            logger.info(f"  ✓ {package}")
+            logger.info(f"  [OK] {package}")
         except ImportError:
             missing.append(package)
-            logger.warning(f"  ✗ {package} - REQUIRED")
+            logger.warning(f"  [FAIL] {package} - REQUIRED")
 
     for package, description in optional_packages.items():
         try:
             __import__(package)
-            logger.info(f"  ✓ {package} ({description})")
+            logger.info(f"  [OK] {package} ({description})")
         except ImportError:
-            logger.info(f"  ⚠ {package} - OPTIONAL ({description})")
+            logger.info(f"  [WARNING] {package} - OPTIONAL ({description})")
 
     if missing:
-        logger.error(f"\n❌ Missing required packages: {', '.join(missing)}")
+        logger.error(f"\n[ERROR] Missing required packages: {', '.join(missing)}")
         logger.error("Install with: pip install -r requirements.txt")
         return False
 
-    logger.info("✓ All required dependencies installed\n")
+    logger.info("[OK] All required dependencies installed\n")
     return True
 
 
 def initialize_directories():
     """Create necessary directories"""
-    logger.info("📁 Initializing directories...")
+    logger.info("[FOLDER] Initializing directories...")
 
     directories = [
         'data/input',
@@ -185,32 +185,32 @@ def initialize_directories():
 
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)
-        logger.info(f"  ✓ {directory}")
+        logger.info(f"  [OK] {directory}")
 
-    logger.info("✓ Directories ready\n")
+    logger.info("[OK] Directories ready\n")
 
 
 def check_database():
     """Check database connectivity"""
-    logger.info("💾 Checking database...")
+    logger.info("[DATABASE] Checking database...")
 
     # Try PostgreSQL first
     try:
         import psycopg2
         # Try to connect (will use environment variables or defaults)
         # Not actually connecting here, just checking availability
-        logger.info("  ✓ PostgreSQL driver available")
-        logger.info("  ℹ Will attempt PostgreSQL connection at runtime")
+        logger.info("  [OK] PostgreSQL driver available")
+        logger.info("  [INFO] Will attempt PostgreSQL connection at runtime")
         return 'postgresql'
     except ImportError:
-        logger.info("  ⚠ PostgreSQL driver not installed")
-        logger.info("  ✓ Will use JSON file-based persistence")
+        logger.info("  [WARNING] PostgreSQL driver not installed")
+        logger.info("  [OK] Will use JSON file-based persistence")
         return 'json'
 
 
 def generate_synthetic_data(num_apps):
     """Generate synthetic flow files"""
-    logger.info(f"🎲 Generating {num_apps} synthetic flow files...\n")
+    logger.info(f"[DATA] Generating {num_apps} synthetic flow files...\n")
 
     try:
         result = subprocess.run(
@@ -221,18 +221,18 @@ def generate_synthetic_data(num_apps):
         )
 
         logger.info(result.stdout)
-        logger.info("✓ Synthetic data generated\n")
+        logger.info("[OK] Synthetic data generated\n")
         return True
 
     except subprocess.CalledProcessError as e:
-        logger.error(f"❌ Failed to generate data: {e}")
+        logger.error(f"[ERROR] Failed to generate data: {e}")
         logger.error(e.stderr)
         return False
 
 
 def run_batch_analysis(enable_all=False):
     """Run complete batch analysis"""
-    logger.info("📊 Running batch analysis...\n")
+    logger.info("[CHART] Running batch analysis...\n")
 
     cmd = [sys.executable, 'run_complete_analysis.py']
     if enable_all:
@@ -240,18 +240,18 @@ def run_batch_analysis(enable_all=False):
 
     try:
         result = subprocess.run(cmd, check=True)
-        logger.info("✓ Batch analysis complete\n")
+        logger.info("[OK] Batch analysis complete\n")
         return True
 
     except subprocess.CalledProcessError as e:
-        logger.error(f"❌ Batch analysis failed: {e}")
+        logger.error(f"[ERROR] Batch analysis failed: {e}")
         return False
 
 
 def start_incremental_learning(continuous=True, enable_all=False):
     """Start incremental learning (background process)"""
     mode = "continuous" if continuous else "batch"
-    logger.info(f"🔄 Starting incremental learning ({mode} mode)...\n")
+    logger.info(f"[REFRESH] Starting incremental learning ({mode} mode)...\n")
 
     cmd = [sys.executable, 'run_incremental_learning.py']
 
@@ -272,23 +272,23 @@ def start_incremental_learning(continuous=True, enable_all=False):
                 stderr=subprocess.PIPE,
                 text=True
             )
-            logger.info(f"✓ Incremental learning started (PID: {process.pid})")
+            logger.info(f"[OK] Incremental learning started (PID: {process.pid})")
             logger.info("  Check logs/incremental_*.log for details\n")
             return process
         else:
             # Run synchronously for batch mode
             result = subprocess.run(cmd, check=True)
-            logger.info("✓ Incremental batch complete\n")
+            logger.info("[OK] Incremental batch complete\n")
             return None
 
     except subprocess.CalledProcessError as e:
-        logger.error(f"❌ Incremental learning failed: {e}")
+        logger.error(f"[ERROR] Incremental learning failed: {e}")
         return None
 
 
 def start_web_ui(host='0.0.0.0', port=5000, debug=False):
     """Start Flask web UI"""
-    logger.info(f"🌐 Starting web UI on http://{host}:{port}...\n")
+    logger.info(f"[WEB] Starting web UI on http://{host}:{port}...\n")
 
     # Set environment variables for Flask
     os.environ['FLASK_APP'] = 'web_app.py'
@@ -315,7 +315,7 @@ def start_web_ui(host='0.0.0.0', port=5000, debug=False):
             raise ValueError("Flask app object is None - web_app.py may have initialization errors")
 
         logger.info("=" * 80)
-        logger.info("🚀 WEB UI STARTED")
+        logger.info("[START] WEB UI STARTED")
         logger.info("=" * 80)
         logger.info(f"  URL: http://{host}:{port}")
         logger.info("  Dashboard: http://{host}:{port}/")
@@ -327,7 +327,7 @@ def start_web_ui(host='0.0.0.0', port=5000, debug=False):
         app.run(host=host, port=port, debug=debug)
 
     except Exception as e:
-        logger.error(f"❌ Failed to start web UI: {e}")
+        logger.error(f"[ERROR] Failed to start web UI: {e}")
         logger.error("  Check if port is already in use")
         import traceback
         logger.error(traceback.format_exc())
@@ -432,7 +432,7 @@ def main():
 
     # If no mode specified, show help
     if not any([args.web, args.batch, args.incremental, args.generate_data]):
-        logger.warning("⚠️  No operation mode specified")
+        logger.warning("[WARNING] No operation mode specified")
         logger.info("Use --help to see available options")
         logger.info("\nQuick start: python start_system.py --web")
         return 1
@@ -442,7 +442,7 @@ def main():
         if not args.skip_cleanup:
             cleanup_previous_run()
         else:
-            logger.info("⏭️  Skipping cleanup (--skip-cleanup flag set)\n")
+            logger.info("[SKIP] Skipping cleanup (--skip-cleanup flag set)\n")
 
         # Pre-flight checks
         if not args.skip_checks:
@@ -452,7 +452,7 @@ def main():
             initialize_directories()
             db_type = check_database()
 
-            logger.info(f"ℹ️  Using {db_type.upper()} persistence\n")
+            logger.info(f"[INFO] Using {db_type.upper()} persistence\n")
 
         # Generate synthetic data if requested
         if args.generate_data:
@@ -482,24 +482,24 @@ def main():
                     debug=args.debug
                 )
             except KeyboardInterrupt:
-                logger.info("\n⚠️  Shutting down web UI...")
+                logger.info("\n[WARNING] Shutting down web UI...")
             finally:
                 # Clean up incremental learning process if running
                 if incremental_process:
                     logger.info("Stopping incremental learning...")
                     incremental_process.terminate()
                     incremental_process.wait(timeout=5)
-                    logger.info("✓ Incremental learning stopped")
+                    logger.info("[OK] Incremental learning stopped")
 
-        logger.info("\n✨ System shutdown complete")
+        logger.info("\n[SUCCESS] System shutdown complete")
         return 0
 
     except KeyboardInterrupt:
-        logger.info("\n⚠️  Interrupted by user")
+        logger.info("\n[WARNING] Interrupted by user")
         return 0
 
     except Exception as e:
-        logger.error(f"\n❌ Unexpected error: {e}", exc_info=True)
+        logger.error(f"\n[ERROR] Unexpected error: {e}", exc_info=True)
         return 1
 
 

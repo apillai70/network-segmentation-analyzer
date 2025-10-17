@@ -48,7 +48,7 @@ class ApplicationKnowledgeGraph:
         self.compliance_rules = self._build_compliance_rules()
         self.tech_stack_patterns = self._build_tech_stack_patterns()
 
-        logger.info("✓ Application Knowledge Graph initialized (local)")
+        logger.info("[OK] Application Knowledge Graph initialized (local)")
 
     def _build_knowledge_graph(self) -> Dict:
         """Build comprehensive knowledge graph"""
@@ -295,7 +295,7 @@ class LocalSemanticAnalyzer:
         # Cache
         self.analysis_cache = {}
 
-        logger.info("✓ Local Semantic Analyzer initialized (no external APIs)")
+        logger.info("[OK] Local Semantic Analyzer initialized (no external APIs)")
 
     def analyze_application(
         self,
@@ -321,7 +321,7 @@ class LocalSemanticAnalyzer:
         if cache_key in self.analysis_cache:
             return self.analysis_cache[cache_key]
 
-        logger.info(f"🔍 Analyzing application: {app_name} (local)")
+        logger.info(f"[SEARCH] Analyzing application: {app_name} (local)")
 
         app_lower = app_name.lower()
 
@@ -332,7 +332,7 @@ class LocalSemanticAnalyzer:
         characteristics = self._identify_characteristics(app_lower, metadata)
 
         # Step 3: Determine security zone with IP-based inference
-        # ✅ FIX: Prioritize IP-based zone inference over naming patterns
+        # [SUCCESS] FIX: Prioritize IP-based zone inference over naming patterns
         ip_inferred_zone = self._infer_zone_from_ips(observed_peers)
         if ip_inferred_zone:
             security_zone = ip_inferred_zone
@@ -385,7 +385,7 @@ class LocalSemanticAnalyzer:
         # Cache result
         self.analysis_cache[cache_key] = analysis
 
-        logger.info(f"✓ Analysis complete: {app_name} → {security_zone} "
+        logger.info(f"[OK] Analysis complete: {app_name} → {security_zone} "
                    f"(type: {app_type}, confidence: {confidence:.2f})")
 
         return analysis
@@ -442,7 +442,7 @@ class LocalSemanticAnalyzer:
 
     def _infer_zone_from_ips(self, observed_peers: Optional[List[str]]) -> Optional[str]:
         """
-        ✅ NEW: Infer security zone from IP address patterns in flow data
+        [SUCCESS] NEW: Infer security zone from IP address patterns in flow data
 
         This improves classification by using actual network topology information
         from observed connections instead of relying solely on app naming.
@@ -609,7 +609,7 @@ class LocalSemanticAnalyzer:
         # Detect database from observed peers
         if observed_peers:
             for peer in observed_peers:
-                # ✅ FIX: Skip NaN/None/non-string values
+                # [SUCCESS] FIX: Skip NaN/None/non-string values
                 if not peer or not isinstance(peer, str):
                     continue
 
@@ -724,7 +724,7 @@ class LocalSemanticAnalyzer:
     ) -> Dict[str, Dict]:
         """Batch analyze multiple applications"""
 
-        logger.info(f"🔍 Batch analyzing {len(applications)} applications (local)...")
+        logger.info(f"[SEARCH] Batch analyzing {len(applications)} applications (local)...")
 
         results = {}
         for item in applications:
@@ -738,7 +738,7 @@ class LocalSemanticAnalyzer:
                 logger.error(f"Failed to analyze {app_name}: {e}")
                 results[app_name] = {'error': str(e)}
 
-        logger.info(f"✓ Batch analysis complete: {len(results)} applications")
+        logger.info(f"[OK] Batch analysis complete: {len(results)} applications")
         return results
 
     def export_analysis(self, output_path: str):
@@ -749,7 +749,7 @@ class LocalSemanticAnalyzer:
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(self.analysis_cache, f, indent=2)
 
-        logger.info(f"✓ Analysis exported to {output_path}")
+        logger.info(f"[OK] Analysis exported to {output_path}")
 
 
 class DependencyReasoner:
@@ -800,7 +800,7 @@ class DependencyReasoner:
         # Dependencies from observed peers
         if observed_peers:
             for peer in observed_peers:
-                # ✅ FIX: Skip NaN/None/non-string values
+                # [SUCCESS] FIX: Skip NaN/None/non-string values
                 if not peer or not isinstance(peer, str):
                     continue
 
@@ -854,7 +854,7 @@ class PatternLearner:
         self.storage_path = Path(storage_path)
         self.patterns = self._load_patterns()
 
-        logger.info(f"✓ Pattern Learner initialized ({len(self.patterns)} patterns)")
+        logger.info(f"[OK] Pattern Learner initialized ({len(self.patterns)} patterns)")
 
     def learn(self, app_name: str, analysis: Dict, observed_peers: Optional[List[str]]):
         """Learn from analysis"""

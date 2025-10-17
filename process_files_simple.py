@@ -77,12 +77,12 @@ class SimpleFileProcessor:
             'start_time': datetime.now()
         }
 
-        logger.info("✓ Simple File Processor initialized")
+        logger.info("[OK] Simple File Processor initialized")
         logger.info(f"  Watch directory: {self.watch_dir}")
 
     def process_file(self, file_path: Path) -> dict:
         """Process a single file"""
-        logger.info(f"📄 Processing: {file_path.name}")
+        logger.info(f"[FILE] Processing: {file_path.name}")
 
         # Extract app_id
         app_id = file_path.stem.replace('App_Code_', '')
@@ -91,7 +91,7 @@ class SimpleFileProcessor:
         is_dup, dup_reason = self.file_tracker.is_duplicate(file_path)
 
         if is_dup:
-            logger.warning(f"  ⚠ DUPLICATE: {dup_reason}")
+            logger.warning(f"  [WARNING] DUPLICATE: {dup_reason}")
             self.file_tracker.move_to_duplicates(file_path, dup_reason)
             self.stats['total_duplicates'] += 1
 
@@ -106,7 +106,7 @@ class SimpleFileProcessor:
         try:
             # Read CSV
             df = pd.read_csv(file_path)
-            logger.info(f"  ✓ Loaded {len(df)} flows for {app_id}")
+            logger.info(f"  [OK] Loaded {len(df)} flows for {app_id}")
 
             # Basic validation
             required_cols = ['App', 'Source IP', 'Dest IP']
@@ -131,7 +131,7 @@ class SimpleFileProcessor:
             self.stats['total_processed'] += 1
             self.stats['total_flows'] += len(df)
 
-            logger.info(f"  ✓ Successfully processed {app_id} in {process_time:.2f}s")
+            logger.info(f"  [OK] Successfully processed {app_id} in {process_time:.2f}s")
 
             return {
                 'app_id': app_id,
@@ -142,7 +142,7 @@ class SimpleFileProcessor:
             }
 
         except Exception as e:
-            logger.error(f"  ❌ Error processing {file_path.name}: {e}")
+            logger.error(f"  [ERROR] Error processing {file_path.name}: {e}")
 
             # Move to errors directory
             self.file_tracker.move_to_errors(file_path, str(e))
@@ -157,7 +157,7 @@ class SimpleFileProcessor:
     def process_batch(self, max_files=None):
         """Process a batch of pending files"""
         logger.info("\n" + "=" * 80)
-        logger.info("📊 BATCH FILE PROCESSING")
+        logger.info("[CHART] BATCH FILE PROCESSING")
         logger.info("=" * 80)
 
         # Get pending files
@@ -186,12 +186,12 @@ class SimpleFileProcessor:
 
         # Summary
         logger.info("\n" + "=" * 80)
-        logger.info("✅ BATCH PROCESSING COMPLETE")
+        logger.info("[SUCCESS] BATCH PROCESSING COMPLETE")
         logger.info("=" * 80)
         logger.info(f"  Files processed: {len(results)}")
-        logger.info(f"  ✓ Successful: {successful}")
-        logger.info(f"  ⚠ Duplicates: {duplicates}")
-        logger.info(f"  ✗ Errors: {errors}")
+        logger.info(f"  [OK] Successful: {successful}")
+        logger.info(f"  [WARNING] Duplicates: {duplicates}")
+        logger.info(f"  [FAIL] Errors: {errors}")
         logger.info(f"  Total flows: {self.stats['total_flows']:,}")
         logger.info("=" * 80 + "\n")
 
@@ -207,7 +207,7 @@ class SimpleFileProcessor:
     def process_continuous(self, check_interval=30):
         """Process files continuously (watch mode)"""
         logger.info("\n" + "=" * 80)
-        logger.info("🔄 CONTINUOUS FILE PROCESSING")
+        logger.info("[REFRESH] CONTINUOUS FILE PROCESSING")
         logger.info("=" * 80)
         logger.info(f"  Watching: {self.watch_dir}")
         logger.info(f"  Check interval: {check_interval}s")
@@ -233,7 +233,7 @@ class SimpleFileProcessor:
                 time.sleep(check_interval)
 
         except KeyboardInterrupt:
-            logger.info("\n⚠️  Continuous processing stopped by user")
+            logger.info("\n[WARNING]  Continuous processing stopped by user")
             self.print_final_stats()
 
     def print_final_stats(self):
@@ -241,7 +241,7 @@ class SimpleFileProcessor:
         duration = (datetime.now() - self.stats['start_time']).total_seconds()
 
         logger.info("\n" + "=" * 80)
-        logger.info("📊 FINAL STATISTICS")
+        logger.info("[CHART] FINAL STATISTICS")
         logger.info("=" * 80)
         logger.info(f"  Files processed: {self.stats['total_processed']}")
         logger.info(f"  Total flows: {self.stats['total_flows']:,}")
@@ -291,8 +291,8 @@ def main():
     print("\n" + "=" * 80)
     print("SIMPLE FILE PROCESSOR v3.0")
     print("=" * 80)
-    print("📁 File Management with Duplicate Detection")
-    print("🔄 Automatic Moving to processed/duplicates/errors/")
+    print("[FOLDER] File Management with Duplicate Detection")
+    print("[REFRESH] Automatic Moving to processed/duplicates/errors/")
     print("=" * 80 + "\n")
 
     # Initialize processor
@@ -308,7 +308,7 @@ def main():
             processor.print_final_stats()
 
     except Exception as e:
-        logger.error(f"❌ Error: {e}", exc_info=True)
+        logger.error(f"[ERROR] Error: {e}", exc_info=True)
         return 1
 
     return 0

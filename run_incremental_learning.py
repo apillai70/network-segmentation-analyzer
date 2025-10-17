@@ -229,7 +229,7 @@ def main():
         # ====================================================================
         # Initialize Components
         # ====================================================================
-        logger.info("\n📦 Initializing components...")
+        logger.info("\n[DEPS] Initializing components...")
 
         from persistence import UnifiedPersistenceManager, create_persistence_manager
         from core.ensemble_model import EnsembleNetworkModel
@@ -266,7 +266,7 @@ def main():
             checkpoint_dir=str(models_dir)
         )
 
-        logger.info("✓ All components initialized")
+        logger.info("[OK] All components initialized")
 
         # ====================================================================
         # Run Learning
@@ -274,12 +274,12 @@ def main():
 
         if mode == 'batch':
             # Batch mode: Process all new files once
-            logger.info("\n📊 Running in BATCH mode...")
+            logger.info("\n[CHART] Running in BATCH mode...")
 
             result = incremental_learner.run_incremental_batch(max_files=args.max_files)
 
             if result['status'] == 'success':
-                logger.info(f"\n✅ Batch processing complete!")
+                logger.info(f"\n[SUCCESS] Batch processing complete!")
                 logger.info(f"  Files processed: {result['files_processed']}")
                 logger.info(f"  Successful: {result['successful']}")
                 logger.info(f"  Failed: {result['failed']}")
@@ -289,11 +289,11 @@ def main():
                     str(output_dir / 'incremental_topology.json')
                 )
             else:
-                logger.info(f"\n⚠️  No new files to process")
+                logger.info(f"\n[WARNING] No new files to process")
 
         else:
             # Continuous mode: Watch forever
-            logger.info("\n🔄 Running in CONTINUOUS mode...")
+            logger.info("\n[REFRESH] Running in CONTINUOUS mode...")
             logger.info(f"  Check interval: {args.check_interval} seconds")
             logger.info(f"  Press Ctrl+C to stop")
 
@@ -322,11 +322,11 @@ def main():
         print(f"\n[SUCCESS] Results saved to: {output_dir}")
 
     except KeyboardInterrupt:
-        logger.warning("\n⚠️  Interrupted by user")
+        logger.warning("\n[WARNING] Interrupted by user")
         sys.exit(0)
 
     except Exception as e:
-        logger.error(f"\n❌ Error: {e}", exc_info=True)
+        logger.error(f"\n[ERROR] Error: {e}", exc_info=True)
         sys.exit(1)
 
 

@@ -430,7 +430,7 @@ class NetworkSegmentationAnalyzer:
                         'confidence': 'MEDIUM'
                     })
         
-        print(f"  └─ Detected {len(self.infrastructure['firewalls'])} potential firewalls/gateways")
+        print(f"  └- Detected {len(self.infrastructure['firewalls'])} potential firewalls/gateways")
     
     def _detect_soa_patterns(self):
         """
@@ -477,7 +477,7 @@ class NetworkSegmentationAnalyzer:
         - Security requirements
         - Infrastructure roles
         """
-        print("\n🔒 Performing Network Segmentation...")
+        print("\n[SECURITY] Performing Network Segmentation...")
         
         # Define segmentation zones
         zones = {
@@ -591,21 +591,21 @@ class NetworkSegmentationAnalyzer:
     def _print_infrastructure_summary(self):
         """Print infrastructure detection summary"""
         print("\n[DATA] Infrastructure Components Detected:")
-        print(f"  ├─ Load Balancers: {len(self.infrastructure['load_balancers'])}")
-        print(f"  ├─ Message Queues: {len(self.infrastructure['message_queues'])}")
-        print(f"  ├─ Databases: {len(self.infrastructure['databases'])}")
-        print(f"  ├─ Caches: {len(self.infrastructure['caches'])}")
-        print(f"  ├─ API Gateways: {len(self.infrastructure['api_gateways'])}")
-        print(f"  ├─ Firewalls: {len(self.infrastructure['firewalls'])}")
-        print(f"  ├─ Container Platforms: {len(self.infrastructure['containers'])}")
-        print(f"  └─ SOA/Microservices Clusters: {len(self.infrastructure['soa_services'])}")
+        print(f"  ├- Load Balancers: {len(self.infrastructure['load_balancers'])}")
+        print(f"  ├- Message Queues: {len(self.infrastructure['message_queues'])}")
+        print(f"  ├- Databases: {len(self.infrastructure['databases'])}")
+        print(f"  ├- Caches: {len(self.infrastructure['caches'])}")
+        print(f"  ├- API Gateways: {len(self.infrastructure['api_gateways'])}")
+        print(f"  ├- Firewalls: {len(self.infrastructure['firewalls'])}")
+        print(f"  ├- Container Platforms: {len(self.infrastructure['containers'])}")
+        print(f"  └- SOA/Microservices Clusters: {len(self.infrastructure['soa_services'])}")
     
     def _print_segmentation_summary(self):
         """Print segmentation summary"""
         print("\n[INFO] Network Segmentation Zones:")
         for segment in self.segments:
-            print(f"  ├─ {segment['zone']}: {segment['member_count']} members")
-            print(f"  │  └─ {segment['description']}")
+            print(f"  ├- {segment['zone']}: {segment['member_count']} members")
+            print(f"  │  └- {segment['description']}")
     
     def export_full_report(self, filename='network_segmentation_report.json'):
         """Export comprehensive analysis report"""

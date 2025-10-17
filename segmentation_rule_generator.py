@@ -319,7 +319,7 @@ spec:
     
     def generate_all_outputs(self):
         """Generate all segmentation artifacts"""
-        print("\n🔧 Generating Network Segmentation Artifacts...")
+        print("\n[CONFIG] Generating Network Segmentation Artifacts...")
         print("="*60)
         
         self.generate_iptables_rules()
@@ -342,9 +342,9 @@ if __name__ == "__main__":
     generator.generate_all_outputs()
     
     print("\n[STEP] Generated Files:")
-    print("  ├─ iptables_rules.sh - Linux firewall rules")
-    print("  ├─ aws_security_groups.json - AWS security group definitions")
-    print("  ├─ cisco_acls.txt - Cisco ACL configurations")
-    print("  ├─ openshift_network_policies.yaml - K8s/OpenShift policies")
-    print("  ├─ application_labels.csv - Application zone mappings")
-    print("  └─ zero_trust_matrix.csv - Zero-trust access matrix")
+    print("  ├- iptables_rules.sh - Linux firewall rules")
+    print("  ├- aws_security_groups.json - AWS security group definitions")
+    print("  ├- cisco_acls.txt - Cisco ACL configurations")
+    print("  ├- openshift_network_policies.yaml - K8s/OpenShift policies")
+    print("  ├- application_labels.csv - Application zone mappings")
+    print("  └- zero_trust_matrix.csv - Zero-trust access matrix")

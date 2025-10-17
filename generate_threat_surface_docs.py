@@ -135,7 +135,7 @@ def main():
     print(f"Duration: {duration:.1f} seconds")
     print(f"Average: {duration/len(topology):.1f} seconds per document")
     print()
-    print(f"📁 Output Location: {output_dir}")
+    print(f"[FOLDER] Output Location: {output_dir}")
     print("="*80)
 
     if failed_apps:

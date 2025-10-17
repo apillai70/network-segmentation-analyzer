@@ -130,10 +130,10 @@ def generate_all_solution_docs(
             )
 
             successful += 1
-            logger.info(f"  ✓ Document generated: {output_path.name}")
+            logger.info(f"  [OK] Document generated: {output_path.name}")
 
         except Exception as e:
-            logger.error(f"  ✗ Failed to generate document: {e}")
+            logger.error(f"  [FAIL] Failed to generate document: {e}")
             failed += 1
 
     # Summary
@@ -197,16 +197,16 @@ def main():
     end_time = datetime.now()
     elapsed = (end_time - start_time).total_seconds()
 
-    logger.info(f"\n✅ All done! Time elapsed: {elapsed:.1f} seconds")
-    logger.info(f"📁 Documents saved to: {output_dir}")
+    logger.info(f"\n[SUCCESS] All done! Time elapsed: {elapsed:.1f} seconds")
+    logger.info(f"[FOLDER] Documents saved to: {output_dir}")
 
 
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        logger.info("\n\n⚠️  Process interrupted by user")
+        logger.info("\n\n[WARNING]  Process interrupted by user")
         sys.exit(1)
     except Exception as e:
-        logger.error(f"\n❌ Fatal error: {e}", exc_info=True)
+        logger.error(f"\n[ERROR] Fatal error: {e}", exc_info=True)
         sys.exit(1)

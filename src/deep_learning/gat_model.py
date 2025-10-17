@@ -169,7 +169,7 @@ class ApplicationTopologyGAT(nn.Module if TORCH_AVAILABLE else object):
         # Initialize weights
         self._init_weights()
 
-        logger.info(f"✓ GAT model initialized (input: {input_dim}, output: {output_dim}, zones: {num_zones})")
+        logger.info(f"[OK] GAT model initialized (input: {input_dim}, output: {output_dim}, zones: {num_zones})")
 
     def _init_weights(self):
         """Initialize model weights"""
@@ -269,7 +269,7 @@ class GATTrainer:
             'val_acc': []
         }
 
-        logger.info(f"✓ GAT Trainer initialized (device: {device})")
+        logger.info(f"[OK] GAT Trainer initialized (device: {device})")
 
     def train_epoch(
         self,
@@ -405,7 +405,7 @@ class GATTrainer:
                 logger.info(f"  Early stopping at epoch {epoch}")
                 break
 
-        logger.info(f"✓ Training complete! Best val_loss: {best_val_loss:.4f}")
+        logger.info(f"[OK] Training complete! Best val_loss: {best_val_loss:.4f}")
 
         return self.training_history
 
@@ -430,7 +430,7 @@ class GATTrainer:
         self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         self.training_history = checkpoint.get('training_history', self.training_history)
 
-        logger.info(f"✓ Checkpoint loaded: {path}")
+        logger.info(f"[OK] Checkpoint loaded: {path}")
 
 
 class GATApplicationAnalyzer:
@@ -471,7 +471,7 @@ class GATApplicationAnalyzer:
             6: 'INFRASTRUCTURE_TIER'
         }
 
-        logger.info("✓ GAT Application Analyzer initialized")
+        logger.info("[OK] GAT Application Analyzer initialized")
 
     def analyze_topology(
         self,
@@ -494,7 +494,7 @@ class GATApplicationAnalyzer:
             logger.warning("GAT analysis not available")
             return {}
 
-        logger.info(f"🔍 Analyzing topology with GAT ({len(node_names)} applications)...")
+        logger.info(f"[SEARCH] Analyzing topology with GAT ({len(node_names)} applications)...")
 
         # Convert to tensors
         x = torch.FloatTensor(node_features)
@@ -520,7 +520,7 @@ class GATApplicationAnalyzer:
                 'centrality': float(np.sum(adjacency_matrix[i]))
             }
 
-        logger.info(f"✓ GAT analysis complete")
+        logger.info(f"[OK] GAT analysis complete")
 
         return results
 
@@ -619,7 +619,7 @@ class GATApplicationAnalyzer:
         model.load_state_dict(checkpoint['model_state_dict'])
         model.eval()
 
-        logger.info(f"✓ Pre-trained GAT model loaded from {path}")
+        logger.info(f"[OK] Pre-trained GAT model loaded from {path}")
 
         return model
 
@@ -631,4 +631,4 @@ class GATApplicationAnalyzer:
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(results, f, indent=2)
 
-        logger.info(f"✓ GAT analysis exported to {output_path}")
+        logger.info(f"[OK] GAT analysis exported to {output_path}")

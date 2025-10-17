@@ -45,7 +45,7 @@ def load_flow_records(csv_path):
         )
         records.append(record)
 
-    logger.info(f"  ✓ Loaded {len(records)} flow records")
+    logger.info(f"  [OK] Loaded {len(records)} flow records")
     return records
 
 
@@ -133,7 +133,7 @@ def main():
             apps[record.app_name] = []
         apps[record.app_name].append(record)
 
-    logger.info(f"  ✓ Found {len(apps)} applications")
+    logger.info(f"  [OK] Found {len(apps)} applications")
 
     # Mock zones for diagram generation
     class MockZone:
@@ -201,8 +201,8 @@ def main():
 
         diagram_gen.generate_app_diagram(app_name, str(diagram_path))
 
-        logger.info(f"  ✓ Mermaid: {diagram_path}")
-        logger.info(f"  ✓ HTML: {diagram_path.with_suffix('.html')}")
+        logger.info(f"  [OK] Mermaid: {diagram_path}")
+        logger.info(f"  [OK] HTML: {diagram_path.with_suffix('.html')}")
 
     # Generate overall network diagram
     logger.info(f"\nGenerating overall network diagram")
@@ -211,8 +211,8 @@ def main():
 
     diagram_gen.generate_overall_network_diagram(str(overall_mmd))
 
-    logger.info(f"  ✓ Mermaid: {overall_mmd}")
-    logger.info(f"  ✓ HTML: {overall_mmd.with_suffix('.html')}")
+    logger.info(f"  [OK] Mermaid: {overall_mmd}")
+    logger.info(f"  [OK] HTML: {overall_mmd.with_suffix('.html')}")
 
     # Generate zone flows diagram
     logger.info(f"\nGenerating zone flows diagram")
@@ -221,11 +221,11 @@ def main():
 
     diagram_gen.generate_zone_flow_diagram(str(zone_mmd))
 
-    logger.info(f"  ✓ Mermaid: {zone_mmd}")
-    logger.info(f"  ✓ HTML: {zone_mmd.with_suffix('.html')}")
+    logger.info(f"  [OK] Mermaid: {zone_mmd}")
+    logger.info(f"  [OK] HTML: {zone_mmd.with_suffix('.html')}")
 
     logger.info("\n" + "="*80)
-    logger.info("✅ DIAGRAMS REGENERATED WITH HOSTNAMES!")
+    logger.info("[SUCCESS] DIAGRAMS REGENERATED WITH HOSTNAMES!")
     logger.info("="*80)
     logger.info(f"\nOutput location: {output_dir}")
     logger.info("\nHostnames are now displayed in format: hostname<br/>(IP)")

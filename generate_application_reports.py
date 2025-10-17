@@ -227,12 +227,12 @@ def main():
     print("=" * 80)
     print()
     print("Following Data Flow Diagram template format:")
-    print("  ⚪ Circles = Services/APIs")
-    print("  ▭ Rectangles = Data stores")
-    print("  ▢ Rounded Rectangles = External systems")
-    print("  ─── Solid lines = Observed flows (actual data)")
-    print("  ╌╌╌ Dashed lines = Predicted flows (Markov chain)")
-    print("  🎨 Color-coded by security zone")
+    print("  [WHITE] Circles = Services/APIs")
+    print("  [RECT] Rectangles = Data stores")
+    print("  [ROUNDRECT] Rounded Rectangles = External systems")
+    print("  --- Solid lines = Observed flows (actual data)")
+    print("  --- Dashed lines = Predicted flows (Markov chain)")
+    print("  [VISUAL] Color-coded by security zone")
     print()
     print("=" * 80)
 
@@ -308,7 +308,7 @@ def main():
 
         if diagram_success:
             stats['diagrams_success'] += 1
-            pred_indicator = "[DATA]+🔮" if predictions else "[DATA]"
+            pred_indicator = "[DATA]+[PREDICT]" if predictions else "[DATA]"
             print(f"[{pred_indicator} [OK]]", end=' ', flush=True)
         else:
             stats['diagrams_failed'] += 1

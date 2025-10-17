@@ -127,13 +127,13 @@ Examples:
         reports = reporter.generate_all_reports()
     elif args.format == 'word':
         reports['word'] = reporter.generate_word_report()
-        logger.info(f"\n✓ Word report generated: {reports['word']}")
+        logger.info(f"\n[OK] Word report generated: {reports['word']}")
     elif args.format == 'csv':
         reports['csv'] = reporter.export_to_csv()
-        logger.info(f"\n✓ CSV export generated: {reports['csv']}")
+        logger.info(f"\n[OK] CSV export generated: {reports['csv']}")
     elif args.format == 'json':
         reports['json'] = reporter.export_to_json()
-        logger.info(f"\n✓ JSON export generated: {reports['json']}")
+        logger.info(f"\n[OK] JSON export generated: {reports['json']}")
 
     # Print summary
     logger.info("\n" + "="*80)
@@ -154,7 +154,7 @@ Examples:
         for format_type, path in reports.items():
             logger.info(f"  {format_type.upper():6} - {path}")
 
-    logger.info("\n✅ DNS Validation Report Generation Complete\n")
+    logger.info("\n[SUCCESS] DNS Validation Report Generation Complete\n")
 
     return 0
 
@@ -163,10 +163,10 @@ if __name__ == '__main__':
     try:
         sys.exit(main())
     except KeyboardInterrupt:
-        logger.info("\n\n⚠️  Report generation cancelled by user")
+        logger.info("\n\n[WARNING]  Report generation cancelled by user")
         sys.exit(1)
     except Exception as e:
-        logger.error(f"\n\n❌ ERROR: {e}")
+        logger.error(f"\n\n[ERROR] ERROR: {e}")
         import traceback
         traceback.print_exc()
         sys.exit(1)

@@ -101,7 +101,7 @@ class FutureStateGenerator:
     
     def generate_future_state(self):
         """Generate ideal future state based on best practices"""
-        print("\n🔮 Generating Future State (Ideal Segmentation)...")
+        print("\n[PREDICT] Generating Future State (Ideal Segmentation)...")
         
         nodes_df = self.pm.get_all_nodes()
         
@@ -274,7 +274,7 @@ class FutureStateGenerator:
         Use Markov chain predictions to validate future state
         Ensures allowed flows match predicted communication patterns
         """
-        print("\n🔗 Validating Future State with Markov Predictions...")
+        print("\n[LINK] Validating Future State with Markov Predictions...")
         
         flows_df = self.pm.get_all_flows()
         
@@ -519,7 +519,7 @@ class UnifiedVisualizationGenerator:
     
     def generate_unified_app(self):
         """Generate single-page application with all views"""
-        print("\n🎨 Generating Unified Web Application...")
+        print("\n[VISUAL] Generating Unified Web Application...")
         
         # Prepare all data
         current_data = self._prepare_current_state_data()
@@ -792,17 +792,17 @@ class UnifiedVisualizationGenerator:
 </head>
 <body>
     <div class="header">
-        <h1>🔒 Network Segmentation Analysis</h1>
+        <h1>[SECURITY] Network Segmentation Analysis</h1>
         <p>Current State → Future State Migration Plan</p>
     </div>
     
     <div class="tabs">
         <div class="tab active" onclick="showTab('overview')">[DATA] Overview</div>
-        <div class="tab" onclick="showTab('current')">🔵 Current State</div>
-        <div class="tab" onclick="showTab('future')">🟢 Future State</div>
+        <div class="tab" onclick="showTab('current')">[BLUE] Current State</div>
+        <div class="tab" onclick="showTab('future')">[GREEN] Future State</div>
         <div class="tab" onclick="showTab('gap')">[WARNING]️ Gap Analysis</div>
         <div class="tab" onclick="showTab('migration')">[START] Migration Plan</div>
-        <div class="tab" onclick="showTab('markov')">🔗 Markov Predictions</div>
+        <div class="tab" onclick="showTab('markov')">[LINK] Markov Predictions</div>
     </div>
     
     <!-- OVERVIEW TAB -->
@@ -1188,7 +1188,7 @@ class MasterUnifiedOrchestrator:
         print("\n" + "="*60)
         print("[SUCCESS] COMPLETE ANALYSIS FINISHED")
         print("="*60)
-        print(f"\n🌐 Open Unified App: {app_path}")
+        print(f"\n[WEB] Open Unified App: {app_path}")
         print(f"[DATA] View Current vs Future state")
         print(f"[WARNING]️  Review {len(gaps['zone_migrations'])} required migrations")
         print(f"[START] {migration_plan['total_duration_weeks']}-week migration plan generated")

@@ -57,7 +57,7 @@ class ProductionNetworkAnalyzer:
         - Automatically persisted
         - Incrementally updates models
         """
-        print(f"\n📥 Adding application: {app_name}")
+        print(f"\n[FILE] Adding application: {app_name}")
         
         # Load CSV
         flows_df = pd.read_csv(flows_csv_path)
@@ -81,7 +81,7 @@ class ProductionNetworkAnalyzer:
     
     def add_applications_bulk(self, csv_directory):
         """Add all CSV files from directory"""
-        print(f"\n📂 Bulk loading from: {csv_directory}")
+        print(f"\n[FOLDER] Bulk loading from: {csv_directory}")
         
         csv_files = list(Path(csv_directory).glob('*.csv'))
         print(f"Found {len(csv_files)} CSV files")
@@ -101,7 +101,7 @@ class ProductionNetworkAnalyzer:
         4. Generate visualizations
         """
         print("\n" + "="*60)
-        print("🔬 COMPREHENSIVE ANALYSIS PIPELINE")
+        print("[SEARCH] COMPREHENSIVE ANALYSIS PIPELINE")
         print("="*60)
         
         # Start analysis record
@@ -421,7 +421,7 @@ class ProductionNetworkAnalyzer:
     
     def export_segmentation_rules(self, output_dir='./segmentation_rules'):
         """Export firewall rules, ACLs, etc. based on segmentation"""
-        print(f"\n📤 Exporting segmentation rules to {output_dir}")
+        print(f"\n[FILE] Exporting segmentation rules to {output_dir}")
         
         output_path = Path(output_dir)
         output_path.mkdir(exist_ok=True)
@@ -504,8 +504,8 @@ if __name__ == '__main__':
         
         print("\n[SUCCESS] COMPLETE!")
         print(f"[DATA] Report: {report['report_path']}")
-        print(f"🎨 D3 Visualization: {report['visualizations']['d3_network']}")
-        print(f"🎨 Mermaid Diagram: {report['visualizations']['mermaid_segmentation']}")
+        print(f"[VISUAL] D3 Visualization: {report['visualizations']['d3_network']}")
+        print(f"[VISUAL] Mermaid Diagram: {report['visualizations']['mermaid_segmentation']}")
         
     else:
         print("\nUsage:")

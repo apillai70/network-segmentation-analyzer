@@ -107,7 +107,7 @@ def main():
             if csv_path.exists():
                 csv_files.append(csv_path)
             else:
-                print(f"⚠ Warning: App_Code_{app_code}.csv not found in {input_dir} or {processed_dir}")
+                print(f"[WARNING] Warning: App_Code_{app_code}.csv not found in {input_dir} or {processed_dir}")
     else:
         # Process all apps (check both directories)
         csv_files = list(input_dir.glob('App_Code_*.csv'))

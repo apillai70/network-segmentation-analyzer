@@ -55,7 +55,7 @@ def print_error(text: str):
 
 def print_info(text: str):
     """Print info message"""
-    print(f"{Colors.OKCYAN}ℹ{Colors.ENDC} {text}")
+    print(f"{Colors.OKCYAN}[INFO]{Colors.ENDC} {text}")
 
 
 def check_dependencies() -> Tuple[bool, List[str]]:

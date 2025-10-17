@@ -192,7 +192,7 @@ class UnifiedTopologyDiscoverySystem:
         # ====================================================================
         # PHASE 2: Application Semantic Analysis (NEW)
         # ====================================================================
-        logger.info("\n🧠 PHASE 2: Application Semantic Analysis")
+        logger.info("\n[AI] PHASE 2: Application Semantic Analysis")
         logger.info("-" * 80)
 
         application_semantics = self._analyze_application_semantics(
@@ -237,7 +237,7 @@ class UnifiedTopologyDiscoverySystem:
         # ====================================================================
         # PHASE 5: Integration & Confidence Scoring
         # ====================================================================
-        logger.info("\n🔗 PHASE 5: Integration & Confidence Scoring")
+        logger.info("\n[LINK] PHASE 5: Integration & Confidence Scoring")
         logger.info("-" * 80)
 
         integrated_topology = self._integrate_all_analyses(

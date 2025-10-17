@@ -15,7 +15,7 @@ from pathlib import Path
 
 def setup_environment():
     """Install required packages"""
-    print("🔧 Setting up environment...")
+    print("[CONFIG] Setting up environment...")
     
     packages = [
         'pandas',
@@ -54,7 +54,7 @@ def validate_csv_files(data_dir):
     missing = [col for col in required_cols if col not in sample.columns.str.lower()]
     
     if missing:
-        print(f"[WARNING]️  Missing columns: {missing}")
+        print(f"[WARNING] Missing columns: {missing}")
         print(f"Available columns: {list(sample.columns)}")
         print("Will attempt to proceed with available columns...")
     
@@ -71,11 +71,11 @@ def run_fast_analysis(csv_files, output_dir):
     analyzer = EnterpriseNetworkAnalyzer()
     
     # Load data (limit to first 50 apps for speed)
-    print(f"\n📂 Loading up to 50 applications for quick analysis...")
+    print(f"\n[FOLDER] Loading up to 50 applications for quick analysis...")
     analyzer.load_data(csv_files[:50])
-    
+
     # Run analysis with reduced iterations for speed
-    print("\n⚡ Running optimized analysis pipeline...")
+    print("\n[START] Running optimized analysis pipeline...")
     
     # GNN with fewer epochs
     print("  1/5 Training GNN (20 epochs)...")
@@ -199,7 +199,7 @@ def run_fast_analysis(csv_files, output_dir):
 def run_full_analysis(csv_files, output_dir):
     """Run complete analysis with all 135 apps"""
     print("\n[START] Starting Full Analysis Mode (ALL 135 apps)...")
-    print("[WARNING]️  This will take 30-60 minutes")
+    print("[WARNING] This will take 30-60 minutes")
     print("="*60)
     
     from enterprise_network_analyzer import EnterpriseNetworkAnalyzer

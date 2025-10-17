@@ -156,7 +156,7 @@ def run_analysis(args):
         print(f"   Top talkers identified: {len(analysis_results.get('top_talkers', {}).get('top_sources_by_bytes', {}))}")
 
         # Export analysis artifacts
-        print(f"\n📤 Exporting analysis artifacts...")
+        print(f"\n[FILE] Exporting analysis artifacts...")
         analyzer.export_rules_csv(str(output_dir / 'segmentation_rules.csv'))
         analyzer.export_iptables_rules(str(output_dir / 'iptables_rules.sh'))
         analyzer.export_aws_security_groups(str(output_dir / 'aws_security_groups.json'))
@@ -206,7 +206,7 @@ def run_analysis(args):
                     print(f"   • Network zones: {training_results.get('zones_identified', 0)}")
 
                     # Predict missing apps
-                    print(f"\n🔮 Predicting network patterns for {len(apps_without_data)} apps...")
+                    print(f"\n[PREDICT] Predicting network patterns for {len(apps_without_data)} apps...")
                     ml_predictions = ml_predictor.predict_missing_apps(all_apps)
 
                     print(f"\n[SUCCESS] ML Prediction Complete!")
@@ -241,9 +241,9 @@ def run_analysis(args):
                     logger.warning(f"ML prediction error: {e}", exc_info=True)
                     print(f"   Continuing without ML predictions...")
             else:
-                print(f"ℹ️  All {len(all_apps)} applications have traffic data - no prediction needed")
+                print(f"[INFO]  All {len(all_apps)} applications have traffic data - no prediction needed")
         else:
-            print(f"ℹ️  App catalog not found at {app_catalog_path}")
+            print(f"[INFO]  App catalog not found at {app_catalog_path}")
             print(f"   Skipping ML prediction step")
 
         # Step 3: Generate Diagrams
@@ -272,7 +272,7 @@ def run_analysis(args):
             diagrams = diagram_gen.generate_all_app_diagrams(str(output_dir / 'diagrams'))
             print(f"   [OK] Generated {len(diagrams)} application diagrams")
 
-        print(f"\n💡 Tip: Open the .html files in a browser to view interactive diagrams")
+        print(f"\n[IDEA] Tip: Open the .html files in a browser to view interactive diagrams")
 
         # Step 4: Generate Solutions Architecture Document
         print_section("STEP 4: Creating Solutions Architecture Document")
@@ -306,19 +306,19 @@ def run_analysis(args):
 
         print(f"\n[FOLDER] Output Directory: {output_dir}")
         print(f"\n   Key Files:")
-        print(f"   ├── network_segmentation_solution.docx  (Solutions Document)")
-        print(f"   ├── segmentation_rules.csv               (All rules in CSV)")
-        print(f"   ├── iptables_rules.sh                    (Linux firewall rules)")
-        print(f"   ├── aws_security_groups.json             (AWS security groups)")
-        print(f"   ├── analysis_report.json                 (Full analysis data)")
+        print(f"   ├-- network_segmentation_solution.docx  (Solutions Document)")
+        print(f"   ├-- segmentation_rules.csv               (All rules in CSV)")
+        print(f"   ├-- iptables_rules.sh                    (Linux firewall rules)")
+        print(f"   ├-- aws_security_groups.json             (AWS security groups)")
+        print(f"   ├-- analysis_report.json                 (Full analysis data)")
         if ml_predictions:
-            print(f"   ├── ml_predictions.json                  (ML predictions for apps without data)")
-        print(f"   └── diagrams/")
-        print(f"       ├── overall_network.html             (Interactive network map)")
-        print(f"       ├── zone_flows.html                  (Zone traffic flows)")
-        print(f"       └── app_*.html                       (Per-app diagrams)")
+            print(f"   ├-- ml_predictions.json                  (ML predictions for apps without data)")
+        print(f"   └-- diagrams/")
+        print(f"       ├-- overall_network.html             (Interactive network map)")
+        print(f"       ├-- zone_flows.html                  (Zone traffic flows)")
+        print(f"       └-- app_*.html                       (Per-app diagrams)")
 
-        print(f"\n🎯 Next Steps:")
+        print(f"\n[TARGET] Next Steps:")
         print(f"   1. Review the Solutions Architecture Document")
         print(f"   2. Validate the segmentation rules with your team")
         print(f"   3. Test rules in staging environment")

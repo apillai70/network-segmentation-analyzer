@@ -58,7 +58,7 @@ class EnsembleNetworkModel:
         # Initialize models
         self._initialize_models()
 
-        logger.info("✓ Ensemble Network Model initialized")
+        logger.info("[OK] Ensemble Network Model initialized")
         logger.info(f"  Deep Learning: {use_deep_learning}")
         logger.info(f"  Active models: {list(self.models.keys())}")
 
@@ -82,10 +82,10 @@ class EnsembleNetworkModel:
                 'trained': False
             }
 
-            logger.info("  ✓ Classical ML models loaded")
+            logger.info("  [OK] Classical ML models loaded")
 
         except ImportError:
-            logger.warning("  ⚠ scikit-learn not available")
+            logger.warning("  [WARNING] scikit-learn not available")
 
         # Optional: Deep Learning models
         if self.use_deep_learning:
@@ -98,10 +98,10 @@ class EnsembleNetworkModel:
                     'trained': False
                 }
 
-                logger.info("  ✓ GAT model loaded")
+                logger.info("  [OK] GAT model loaded")
 
             except ImportError as e:
-                logger.warning(f"  ⚠ GAT model not available: {e}")
+                logger.warning(f"  [WARNING] GAT model not available: {e}")
 
             try:
                 from deep_learning.transformer_model import TemporalTrafficAnalyzer
@@ -112,10 +112,10 @@ class EnsembleNetworkModel:
                     'trained': False
                 }
 
-                logger.info("  ✓ Transformer model loaded")
+                logger.info("  [OK] Transformer model loaded")
 
             except ImportError as e:
-                logger.warning(f"  ⚠ Transformer model not available: {e}")
+                logger.warning(f"  [WARNING] Transformer model not available: {e}")
 
             try:
                 from deep_learning.vae_model import ApplicationBehaviorAnalyzer
@@ -126,10 +126,10 @@ class EnsembleNetworkModel:
                     'trained': False
                 }
 
-                logger.info("  ✓ VAE model loaded")
+                logger.info("  [OK] VAE model loaded")
 
             except ImportError as e:
-                logger.warning(f"  ⚠ VAE model not available: {e}")
+                logger.warning(f"  [WARNING] VAE model not available: {e}")
 
     def predict_zone(self, app_features: np.ndarray, app_name: str) -> Dict:
         """
@@ -267,12 +267,12 @@ class EnsembleNetworkModel:
                     score = classifier.score(X, y)
                     self.model_scores[model_name] = score
 
-                    logger.info(f"  ✓ {model_name} trained (score: {score:.3f})")
+                    logger.info(f"  [OK] {model_name} trained (score: {score:.3f})")
 
                 except Exception as e:
-                    logger.error(f"  ✗ {model_name} training failed: {e}")
+                    logger.error(f"  [FAIL] {model_name} training failed: {e}")
 
-        logger.info("✓ Classical models training complete")
+        logger.info("[OK] Classical models training complete")
 
     def train_deep_learning_models(
         self,
@@ -305,15 +305,15 @@ class EnsembleNetworkModel:
                 )
 
                 self.models['gat']['trained'] = True
-                logger.info("  ✓ GAT model trained")
+                logger.info("  [OK] GAT model trained")
 
             except Exception as e:
-                logger.error(f"  ✗ GAT training failed: {e}")
+                logger.error(f"  [FAIL] GAT training failed: {e}")
 
         # Train other DL models (Transformer, VAE)
         # (Similar pattern for each model)
 
-        logger.info("✓ Deep learning models training complete")
+        logger.info("[OK] Deep learning models training complete")
 
     def save_all_models(self, output_dir='./models/ensemble'):
         """Save all trained models"""
@@ -334,7 +334,7 @@ class EnsembleNetworkModel:
         with open(scores_file, 'w') as f:
             json.dump(self.model_scores, f, indent=2)
 
-        logger.info(f"✓ Models saved to {output_dir}")
+        logger.info(f"[OK] Models saved to {output_dir}")
 
     def load_all_models(self, input_dir='./models/ensemble'):
         """Load all trained models"""
@@ -364,7 +364,7 @@ class EnsembleNetworkModel:
             with open(scores_file) as f:
                 self.model_scores = json.load(f)
 
-        logger.info(f"✓ Models loaded from {input_dir}")
+        logger.info(f"[OK] Models loaded from {input_dir}")
 
     @staticmethod
     def _zone_index_to_name(index: int) -> str:

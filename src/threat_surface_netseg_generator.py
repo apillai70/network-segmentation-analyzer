@@ -130,7 +130,7 @@ class ThreatSurfaceNetSegDocument:
         output_file.parent.mkdir(parents=True, exist_ok=True)
 
         self.doc.save(str(output_file))
-        logger.info(f"✓ Threat surface document saved: {output_path}")
+        logger.info(f"[OK] Threat surface document saved: {output_path}")
 
     def _add_cover_page(self):
         """Add professional cover page"""
@@ -148,7 +148,7 @@ class ThreatSurfaceNetSegDocument:
         # Security classification
         classification = self.doc.add_paragraph()
         classification.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        run = classification.add_run('🔒 CONFIDENTIAL - SECURITY ANALYSIS 🔒')
+        run = classification.add_run('[SECURITY] CONFIDENTIAL - SECURITY ANALYSIS [SECURITY]')
         run.bold = True
         run.font.size = Pt(14)
         run.font.color.rgb = RGBColor(139, 0, 0)
@@ -263,13 +263,13 @@ class ThreatSurfaceNetSegDocument:
 
             self.doc.add_paragraph()
             self.doc.add_paragraph(
-                '⚠️ CRITICAL: All internet-facing components must have WAF, DDoS protection, '
+                '[WARNING] CRITICAL: All internet-facing components must have WAF, DDoS protection, '
                 'rate limiting, and comprehensive logging enabled.',
                 style='Intense Quote'
             )
         else:
             self.doc.add_paragraph(
-                f'✓ Application is deployed in {zone} - No direct internet exposure detected. '
+                f'[OK] Application is deployed in {zone} - No direct internet exposure detected. '
                 'This significantly reduces external attack surface.'
             )
 
@@ -352,7 +352,7 @@ class ThreatSurfaceNetSegDocument:
 
         if not dns_validation or dns_validation.get('total_validated', 0) == 0:
             para = self.doc.add_paragraph()
-            para.add_run("⚠️ DNS validation data not available. ").bold = True
+            para.add_run("[WARNING] DNS validation data not available. ").bold = True
             para.add_run(
                 "DNS validation was not performed during analysis. This gap prevents "
                 "identification of potential DNS misconfigurations, split-brain DNS scenarios, "
@@ -393,11 +393,11 @@ class ThreatSurfaceNetSegDocument:
 
         assessment_para = self.doc.add_paragraph()
         if total_issues == 0:
-            assessment_para.add_run("✓ DNS Security Status: HEALTHY").bold = True
+            assessment_para.add_run("[OK] DNS Security Status: HEALTHY").bold = True
             assessment_para.add_run("\n\nNo DNS configuration issues detected. All forward and reverse DNS lookups match correctly.")
             assessment_para.font.color.rgb = RGBColor(0, 128, 0)
         elif total_issues <= 5:
-            assessment_para.add_run("⚠️ DNS Security Status: MINOR ISSUES").bold = True
+            assessment_para.add_run("[WARNING] DNS Security Status: MINOR ISSUES").bold = True
             assessment_para.font.color.rgb = RGBColor(255, 165, 0)
             assessment_para.add_run(f"\n\n{total_issues} DNS configuration issue(s) detected. These should be addressed to improve network reliability and security posture.")
         else:
@@ -425,7 +425,7 @@ class ThreatSurfaceNetSegDocument:
 
             for risk in risks:
                 para = self.doc.add_paragraph(style='List Bullet')
-                para.add_run('⚠️ ').font.color.rgb = RGBColor(255, 165, 0)
+                para.add_run('[WARNING] ').font.color.rgb = RGBColor(255, 165, 0)
                 para.add_run(risk)
 
             self.doc.add_paragraph()
@@ -734,7 +734,7 @@ class ThreatSurfaceNetSegDocument:
             # Mitigations
             self.doc.add_heading('Recommended Mitigations:', level=3)
             for m in vector['mitigations']:
-                self.doc.add_paragraph(f'✓ {m}', style='List Bullet')
+                self.doc.add_paragraph(f'[OK] {m}', style='List Bullet')
 
             if idx < len(attack_vectors):
                 self.doc.add_paragraph()
@@ -1403,7 +1403,7 @@ class ThreatSurfaceNetSegDocument:
 
         for action in p3_actions:
             para = self.doc.add_paragraph(style='List Bullet')
-            para.add_run('🟢 ').font.color.rgb = RGBColor(0, 128, 0)
+            para.add_run('[GREEN] ').font.color.rgb = RGBColor(0, 128, 0)
             para.add_run(action)
 
     def _add_firewall_rules(self):
@@ -1742,7 +1742,7 @@ class ThreatSurfaceNetSegDocument:
 
         for criteria in success_criteria:
             para = self.doc.add_paragraph(style='List Bullet')
-            para.add_run('✓ ').bold = True
+            para.add_run('[OK] ').bold = True
             para.add_run(criteria)
 
     # Helper methods

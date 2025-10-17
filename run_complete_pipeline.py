@@ -511,7 +511,7 @@ class CompletePipeline:
         """Train ML models on collected data"""
 
         print("\n" + "=" * 80)
-        print("🧠 TRAINING ML MODELS")
+        print("[AI] TRAINING ML MODELS")
         print("=" * 80)
 
         if len(self.app_zones) < 5:
@@ -566,7 +566,7 @@ class CompletePipeline:
         """Generate Mermaid network diagrams"""
 
         print("\n" + "=" * 80)
-        print("🔷 GENERATING MERMAID DIAGRAMS")
+        print("[VISUAL] GENERATING MERMAID DIAGRAMS")
         print("=" * 80)
 
         if not self.flow_records:
@@ -622,7 +622,7 @@ class CompletePipeline:
         """Generate Lucidchart CSV export"""
 
         print("\n" + "=" * 80)
-        print("💎 GENERATING LUCIDCHART EXPORT")
+        print("[VISUAL] GENERATING LUCIDCHART EXPORT")
         print("=" * 80)
 
         if not self.app_zones:
@@ -671,7 +671,7 @@ class CompletePipeline:
         # Clean up temp file
         temp_json.unlink()
 
-        print(f"\n💡 To import into Lucidchart:")
+        print(f"\n[IDEA] To import into Lucidchart:")
         print(f"   1. Open Lucidchart → File → Import Data")
         print(f"   2. Select 'Import from CSV'")
         print(f"   3. Upload the generated CSV file")

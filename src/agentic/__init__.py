@@ -93,9 +93,9 @@ __all__ = [
 # Package initialization
 logger.info(f"Agentic AI Components v{__version__} loaded")
 if SEMANTIC_AVAILABLE:
-    logger.info("  ✓ Local Semantic Analyzer available")
+    logger.info("  [OK] Local Semantic Analyzer available")
 if GRAPH_AVAILABLE:
-    logger.info("  ✓ Graph Topology Analyzer available")
+    logger.info("  [OK] Graph Topology Analyzer available")
 
 
 def get_available_components() -> dict:

@@ -70,7 +70,7 @@ try:
     # Initialize incremental learner (optional)
     # Note: ensemble_model and topology_system would need to be initialized
     # For web app, we'll make it optional
-    logger.info("✓ Semantic analyzer initialized")
+    logger.info("[OK] Semantic analyzer initialized")
 except Exception as e:
     logger.warning(f"Could not initialize incremental learning: {e}")
 

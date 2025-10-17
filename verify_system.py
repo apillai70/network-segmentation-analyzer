@@ -60,7 +60,7 @@ def verify_installation():
     print("\n[SUCCESS] All required packages installed!")
     
     # Test imports from main system
-    print("\n🔧 Testing System Components...")
+    print("\n[CONFIG] Testing System Components...")
     
     try:
         print("  Testing GNN...")

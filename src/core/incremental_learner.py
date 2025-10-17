@@ -97,7 +97,7 @@ class IncrementalLearningSystem:
         self.current_apps_observed = set()
         self.current_topology = {}
 
-        logger.info("✓ Incremental Learning System initialized")
+        logger.info("[OK] Incremental Learning System initialized")
         logger.info(f"  Watch directory: {self.watch_dir}")
         logger.info(f"  Previously processed: {len(self.processed_files)} files")
         logger.info(f"  Duplicate detection: ENABLED")
@@ -138,7 +138,7 @@ class IncrementalLearningSystem:
         new_files = self.file_tracker.get_pending_files(pattern='App_Code_*.csv')
 
         if new_files:
-            logger.info(f"🔍 Found {len(new_files)} new files to process")
+            logger.info(f"[SEARCH] Found {len(new_files)} new files to process")
 
         return new_files
 
@@ -152,7 +152,7 @@ class IncrementalLearningSystem:
         Returns:
             Processing results
         """
-        logger.info(f"📄 Processing: {file_path.name}")
+        logger.info(f"[FILE] Processing: {file_path.name}")
 
         # Extract app_id from filename: App_Code_XECHK.csv → XECHK
         app_id = file_path.stem.replace('App_Code_', '')
@@ -161,7 +161,7 @@ class IncrementalLearningSystem:
         is_dup, dup_reason = self.file_tracker.is_duplicate(file_path)
 
         if is_dup:
-            logger.warning(f"  ⚠ DUPLICATE: {dup_reason}")
+            logger.warning(f"  [WARNING] DUPLICATE: {dup_reason}")
             self.file_tracker.move_to_duplicates(file_path, dup_reason)
             self.stats['duplicates_skipped'] += 1
 
@@ -179,7 +179,7 @@ class IncrementalLearningSystem:
             # Load flow data
             flows_df = pd.read_csv(file_path)
 
-            # ✅ FIX: Remove completely blank rows
+            # [SUCCESS] FIX: Remove completely blank rows
             original_count = len(flows_df)
             flows_df = flows_df.dropna(how='all')  # Drop rows where ALL columns are NaN
             flows_df = flows_df.reset_index(drop=True)  # Reset index after dropping
@@ -230,12 +230,12 @@ class IncrementalLearningSystem:
                 'timestamp': datetime.now().isoformat()
             }
 
-            logger.info(f"  ✓ Successfully processed {app_id} in {process_time:.2f}s")
+            logger.info(f"  [OK] Successfully processed {app_id} in {process_time:.2f}s")
 
             return result
 
         except Exception as e:
-            logger.error(f"  ❌ Failed to process {file_path.name}: {e}")
+            logger.error(f"  [ERROR] Failed to process {file_path.name}: {e}")
 
             # Move to errors directory
             self.file_tracker.move_to_errors(file_path, str(e))
@@ -260,7 +260,7 @@ class IncrementalLearningSystem:
 
             record.app_name = app_id
 
-            # ✅ FIX: Correct column names for your CSV format
+            # [SUCCESS] FIX: Correct column names for your CSV format
             # Your CSV has: IP, Peer, Name, Protocol, Bytes In, Bytes Out
             src_ip = row.get('IP', '')  # Source IP
             dst_ip = row.get('Peer', '')  # Destination IP (Peer)
@@ -274,7 +274,7 @@ class IncrementalLearningSystem:
             record.dst_hostname = ''  # Not available in CSV
 
             # Parse protocol and port
-            # ✅ FIX: Handle NaN values from CSV (pandas reads empty cells as float NaN)
+            # [SUCCESS] FIX: Handle NaN values from CSV (pandas reads empty cells as float NaN)
             protocol = row.get('Protocol', 'TCP')
             port = row.get('Port', '')
 
@@ -306,7 +306,7 @@ class IncrementalLearningSystem:
 
         This is the KEY feature - we don't retrain from scratch!
         """
-        logger.info(f"  🔄 Incrementally updating models for {app_id}...")
+        logger.info(f"  [REFRESH] Incrementally updating models for {app_id}...")
 
         # Build features from new flows
         node_features = self._extract_features(flow_records)
@@ -322,7 +322,7 @@ class IncrementalLearningSystem:
 
         # Save updated model checkpoint
         if self.stats['model_updates'] % 10 == 0:
-            logger.info(f"  💾 Saving model checkpoint (update #{self.stats['model_updates']})")
+            logger.info(f"  [SAVE] Saving model checkpoint (update #{self.stats['model_updates']})")
             self.ensemble.save_all_models()
 
     def _extract_features(self, flow_records: List) -> Dict:
@@ -340,7 +340,7 @@ class IncrementalLearningSystem:
 
     def _update_topology(self, app_id: str, flow_records: List):
         """Update topology with new application"""
-        logger.info(f"  🕸️  Updating topology for {app_id}...")
+        logger.info(f"  [NETWORK] Updating topology for {app_id}...")
 
         # Get observed peers
         observed_peers = list(set(r.dst_ip for r in flow_records))[:10]
@@ -359,7 +359,7 @@ class IncrementalLearningSystem:
         logger.info(f"    Confidence: {analysis['confidence']:.2f}")
         logger.info(f"    Dependencies: {len(analysis['predicted_dependencies'])}")
 
-        # ✅ FIX: Persist topology to database for web UI
+        # [SUCCESS] FIX: Persist topology to database for web UI
         try:
             self.pm.save_topology_data(
                 app_id=app_id,
@@ -371,16 +371,16 @@ class IncrementalLearningSystem:
         except Exception as e:
             logger.error(f"    [ERROR] Failed to save topology: {e}")
 
-        # ✅ NEW: Save topology to JSON file (will be updated with DNS validation data later)
+        # [SUCCESS] NEW: Save topology to JSON file (will be updated with DNS validation data later)
         topology_json_dir = Path('persistent_data/topology')
         topology_json_dir.mkdir(parents=True, exist_ok=True)
         topology_json_file = topology_json_dir / f"{app_id}.json"
 
-        # ✅ NEW: Generate Markov predictions (if enough data)
+        # [SUCCESS] NEW: Generate Markov predictions (if enough data)
         markov_predictions = None
         try:
             if len(self.current_topology) >= 5:  # Need at least 5 apps for Markov
-                logger.info(f"    🔮 Generating Markov predictions for {app_id}...")
+                logger.info(f"    [PREDICT] Generating Markov predictions for {app_id}...")
 
                 # Use semantic analyzer's predicted dependencies as Markov input
                 if analysis['predicted_dependencies']:
@@ -398,13 +398,13 @@ class IncrementalLearningSystem:
             logger.warning(f"    [WARN] Markov prediction failed: {e}")
             markov_predictions = None
 
-        # ✅ NEW: Generate application diagram with template format
+        # [SUCCESS] NEW: Generate application diagram with template format
         try:
             from application_diagram_generator import generate_application_diagram
             from utils.hostname_resolver import HostnameResolver
 
             # Create hostname resolver with REAL DNS lookups (not demo mode!)
-            # ✅ NEW: Enable forward DNS and bidirectional validation
+            # [SUCCESS] NEW: Enable forward DNS and bidirectional validation
             hostname_resolver = HostnameResolver(
                 demo_mode=False,
                 enable_dns_lookup=True,
@@ -427,8 +427,8 @@ class IncrementalLearningSystem:
             cache_stats = hostname_resolver.get_cache_stats()
             logger.info(f"    Loaded {cache_stats['provided_hostnames']} hostnames from CSV")
 
-            # ✅ NEW: Perform DNS validation on unique IPs
-            logger.info(f"    🔍 Validating DNS (forward + reverse) for unique IPs...")
+            # [SUCCESS] NEW: Perform DNS validation on unique IPs
+            logger.info(f"    [SEARCH] Validating DNS (forward + reverse) for unique IPs...")
             unique_ips = set()
             for record in flow_records:
                 if record.src_ip:
@@ -457,7 +457,7 @@ class IncrementalLearningSystem:
 
             # Get validation summary
             validation_summary = hostname_resolver.get_validation_summary()
-            logger.info(f"    ✓ DNS Validation complete:")
+            logger.info(f"    [OK] DNS Validation complete:")
             logger.info(f"      - Validated: {validation_summary['total_validated']} IPs")
             logger.info(f"      - Valid: {validation_summary['valid']}")
             logger.info(f"      - Valid (multiple IPs): {validation_summary['valid_multiple_ips']}")
@@ -467,10 +467,10 @@ class IncrementalLearningSystem:
             # Save validation summary to topology analysis
             analysis['dns_validation'] = validation_summary
 
-            # ✅ NEW: Save detailed validation metadata for DNS validation reporting
+            # [SUCCESS] NEW: Save detailed validation metadata for DNS validation reporting
             analysis['validation_metadata'] = hostname_resolver._validation_metadata
 
-            # ✅ NEW: Save complete topology (with DNS validation) to JSON file
+            # [SUCCESS] NEW: Save complete topology (with DNS validation) to JSON file
             try:
                 topology_export = {
                     'app_id': app_id,
@@ -494,7 +494,7 @@ class IncrementalLearningSystem:
             diagram_output = Path('outputs_final/diagrams') / f"{app_id}_application_diagram.mmd"
             diagram_output.parent.mkdir(parents=True, exist_ok=True)
 
-            # ✅ FIX: PASS MARKOV PREDICTIONS (not None!)
+            # [SUCCESS] FIX: PASS MARKOV PREDICTIONS (not None!)
             generate_application_diagram(
                 app_name=app_id,
                 flow_records=flow_records,
@@ -524,7 +524,7 @@ class IncrementalLearningSystem:
             Batch processing results
         """
         logger.info("\n" + "=" * 80)
-        logger.info("🔄 INCREMENTAL LEARNING - BATCH PROCESSING")
+        logger.info("[REFRESH] INCREMENTAL LEARNING - BATCH PROCESSING")
         logger.info("=" * 80)
 
         # Scan for new files
@@ -559,7 +559,7 @@ class IncrementalLearningSystem:
 
         # Summary
         logger.info("\n" + "=" * 80)
-        logger.info("✅ BATCH PROCESSING COMPLETE")
+        logger.info("[SUCCESS] BATCH PROCESSING COMPLETE")
         logger.info("=" * 80)
         logger.info(f"  Files processed: {successful + failed + duplicates}")
         logger.info(f"  Successful: {successful}")
@@ -594,7 +594,7 @@ class IncrementalLearningSystem:
         with open(output_file, 'w') as f:
             json.dump(export_data, f, indent=2)
 
-        logger.info(f"✓ Topology exported: {output_file}")
+        logger.info(f"[OK] Topology exported: {output_file}")
 
     def get_statistics(self) -> Dict:
         """Get current learning statistics"""
@@ -623,12 +623,12 @@ class ContinuousLearner:
         self.check_interval = check_interval
         self.running = False
 
-        logger.info(f"✓ Continuous Learner initialized (check every {check_interval}s)")
+        logger.info(f"[OK] Continuous Learner initialized (check every {check_interval}s)")
 
     def start(self):
         """Start continuous learning loop"""
         logger.info("\n" + "=" * 80)
-        logger.info("🔄 CONTINUOUS LEARNING MODE - STARTED")
+        logger.info("[REFRESH] CONTINUOUS LEARNING MODE - STARTED")
         logger.info("=" * 80)
         logger.info(f"  Watching: {self.learner.watch_dir}")
         logger.info(f"  Check interval: {self.check_interval}s")
@@ -655,7 +655,7 @@ class ContinuousLearner:
                 time.sleep(self.check_interval)
 
         except KeyboardInterrupt:
-            logger.info("\n⚠️  Continuous learning stopped by user")
+            logger.info("\n[WARNING] Continuous learning stopped by user")
             self.stop()
 
     def stop(self):
@@ -669,7 +669,7 @@ class ContinuousLearner:
         stats = self.learner.get_statistics()
 
         logger.info("\n" + "=" * 80)
-        logger.info("📊 FINAL STATISTICS")
+        logger.info("[CHART] FINAL STATISTICS")
         logger.info("=" * 80)
         logger.info(f"  Total files processed: {stats['total_files_processed']}")
         logger.info(f"  Total flows analyzed: {stats['total_flows_processed']}")
@@ -678,4 +678,4 @@ class ContinuousLearner:
         logger.info(f"  Runtime: Started at {stats['start_time']}")
         logger.info("=" * 80 + "\n")
 
-        logger.info("✅ Continuous learning shutdown complete")
+        logger.info("[SUCCESS] Continuous learning shutdown complete")

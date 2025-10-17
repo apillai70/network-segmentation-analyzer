@@ -1183,7 +1183,7 @@ class VisualizationGenerator:
     </style>
 </head>
 <body>
-    <h1>🔒 Network Segmentation Architecture</h1>
+    <h1>[SECURITY] Network Segmentation Architecture</h1>
     
     <div class="info">
         <h2>Segmentation Overview</h2>

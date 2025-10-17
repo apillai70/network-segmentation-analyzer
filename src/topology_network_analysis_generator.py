@@ -123,7 +123,7 @@ class TopologyNetworkAnalysisDocument:
         output_file.parent.mkdir(parents=True, exist_ok=True)
 
         self.doc.save(str(output_file))
-        logger.info(f"✓ Topology and network analysis document saved: {output_path}")
+        logger.info(f"[OK] Topology and network analysis document saved: {output_path}")
 
     def _add_cover_page(self):
         """Add professional cover page"""
@@ -757,7 +757,7 @@ class TopologyNetworkAnalysisDocument:
 
         for criteria in success_criteria:
             para = self.doc.add_paragraph(style='List Bullet')
-            para.add_run('✓ ').bold = True
+            para.add_run('[OK] ').bold = True
             para.add_run(criteria)
 
         # Final recommendations

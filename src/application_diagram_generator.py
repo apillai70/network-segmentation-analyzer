@@ -184,7 +184,7 @@ class ApplicationDiagramGenerator:
         internal_tiers = defaultdict(set)
 
         for record in flow_records:
-            # ✅ FIX: Skip if src_ip is missing, invalid, or string 'nan'
+            # [SUCCESS] FIX: Skip if src_ip is missing, invalid, or string 'nan'
             if not record.src_ip or not isinstance(record.src_ip, str) or record.src_ip == 'nan':
                 continue
 
@@ -203,7 +203,7 @@ class ApplicationDiagramGenerator:
         })
 
         for record in flow_records:
-            # ✅ FIX: Skip if dst_ip is missing, invalid, or string 'nan'
+            # [SUCCESS] FIX: Skip if dst_ip is missing, invalid, or string 'nan'
             if not record.dst_ip or not isinstance(record.dst_ip, str) or record.dst_ip == 'nan':
                 continue
 
@@ -294,7 +294,7 @@ class ApplicationDiagramGenerator:
                 'flow_type': 'app_to_infra'
             })
 
-        # ✅ NEW: Add dependencies from topology data with source-based styling
+        # [SUCCESS] NEW: Add dependencies from topology data with source-based styling
         if topology_data:
             topology_deps = topology_data.get('predicted_dependencies', [])
             for dep in topology_deps:
@@ -365,7 +365,7 @@ class ApplicationDiagramGenerator:
             with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(mermaid)
 
-            logger.info(f"✓ Application diagram saved: {output_path}")
+            logger.info(f"[OK] Application diagram saved: {output_path}")
 
             # Also generate HTML version
             self._generate_html_diagram(mermaid, str(output_file.with_suffix('.html')))
@@ -425,7 +425,7 @@ class ApplicationDiagramGenerator:
                     )
 
                     if result.returncode == 0:
-                        logger.info(f"✓ PNG diagram generated: {Path(png_path).name}")
+                        logger.info(f"[OK] PNG diagram generated: {Path(png_path).name}")
                         success = True
                         break
                     elif 'UnknownDiagramError' in result.stderr:
@@ -540,7 +540,7 @@ class ApplicationDiagramGenerator:
 
                 lines.append(f"        {node_id}{shape_template.format(label)}")
 
-                # ✅ Color-code stroke based on data source
+                # [SUCCESS] Color-code stroke based on data source
                 if comp_source == 'network_observation':
                     # Observed data: Black solid stroke (ExtraHop flows)
                     lines.append(f"        style {node_id} fill:{color},stroke:#333,stroke-width:2px")
@@ -573,7 +573,7 @@ class ApplicationDiagramGenerator:
 
                     lines.append(f"        {node_id}{shape_template.format(label)}")
 
-                    # ✅ Color-code stroke based on data source
+                    # [SUCCESS] Color-code stroke based on data source
                     if comp_source == 'network_observation':
                         # Observed data: Black solid stroke (ExtraHop flows)
                         lines.append(f"        style {node_id} fill:{color},stroke:#333,stroke-width:2px")
@@ -603,7 +603,7 @@ class ApplicationDiagramGenerator:
 
             # Color code based on data source
             if flow_source == 'network_observation':
-                # ✅ OBSERVED DATA: Solid lines, standard style (black)
+                # [SUCCESS] OBSERVED DATA: Solid lines, standard style (black)
                 if flow_type == 'app_to_app':
                     lines.append(f"    {app_node} =={label}==> {target_id}")
                     lines.append(f"    linkStyle {flow_index} stroke:#333,stroke-width:3px")
@@ -612,17 +612,17 @@ class ApplicationDiagramGenerator:
                     lines.append(f"    linkStyle {flow_index} stroke:#333,stroke-width:2px")
 
             elif flow_source == 'type_inference':
-                # ✅ ML INFERRED: Blue dashed lines (ML predictions)
+                # [SUCCESS] ML INFERRED: Blue dashed lines (ML predictions)
                 lines.append(f"    {app_node} -.{label}.-> {target_id}")
                 lines.append(f"    linkStyle {flow_index} stroke:#3498db,stroke-width:2px,stroke-dasharray:5")
 
             elif flow_source == 'markov_prediction':
-                # ✅ MARKOV PREDICTION: Blue dashed lines
+                # [SUCCESS] MARKOV PREDICTION: Blue dashed lines
                 lines.append(f"    {app_node} -.{label}.-> {target_id}")
                 lines.append(f"    linkStyle {flow_index} stroke:#3498db,stroke-width:2px,stroke-dasharray:5")
 
             else:
-                # ✅ UNKNOWN: Gray dashed lines
+                # [SUCCESS] UNKNOWN: Gray dashed lines
                 lines.append(f"    {app_node} -.{label}.-> {target_id}")
                 lines.append(f"    linkStyle {flow_index} stroke:#95a5a6,stroke-width:2px,stroke-dasharray:5")
 
@@ -640,19 +640,19 @@ class ApplicationDiagramGenerator:
             "- **Application Box** = Internal architecture (web/app/db tiers)",
             "- **Downstream Apps** = Applications this app calls",
             "- **Infrastructure** = Databases, caches, queues",
-            "- ⚪ Circles = Services/Applications",
-            "- ▭ Rectangles = Data Stores",
+            "- [WHITE] Circles = Services/Applications",
+            "- [RECT] Rectangles = Data Stores",
             "",
             "**Data Source Colors:**",
-            "- ⬛ Black solid = Observed from network flows (ExtraHop)",
-            "- 🔵 Blue dashed = ML type inference (predicted dependency type)",
-            "- 🔵 Blue dashed = Markov chain prediction (usage pattern predictions)",
-            "- ⬜ Gray dashed = Unknown/unclassified",
+            "- [BLACK] Black solid = Observed from network flows (ExtraHop)",
+            "- [BLUE] Blue dashed = ML type inference (predicted dependency type)",
+            "- [BLUE] Blue dashed = Markov chain prediction (usage pattern predictions)",
+            "- [WHITE] Gray dashed = Unknown/unclassified",
             "",
             "**Lines:**",
             "- === Thick solid lines = App-to-app calls (observed)",
-            "- ─── Solid lines = Infrastructure dependencies (observed)",
-            "- ╌╌╌ Dashed lines = Predicted/inferred connections",
+            "- --- Solid lines = Infrastructure dependencies (observed)",
+            "- --- Dashed lines = Predicted/inferred connections",
             "",
             "**Colors:** Background colors indicate security zones (Web, App, Data tiers)",
             "",
@@ -824,7 +824,7 @@ class ApplicationDiagramGenerator:
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }}
         .pan-arrow:hover {{
-            transform: scale(1.15);
+            opacity: 0.9;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }}
         .pan-arrow:active {{
@@ -871,8 +871,56 @@ class ApplicationDiagramGenerator:
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             font-size: 13px;
             z-index: 1001;
-            max-height: 500px;
+            max-height: 60vh;
             overflow-y: auto;
+            position: relative;
+            transition: opacity 0.3s, transform 0.3s;
+        }}
+        .legend.hidden {{
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }}
+        .legend-close-btn {{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }}
+        .legend-close-btn:hover {{
+            background: #c0392b;
+        }}
+        .legend-toggle-btn {{
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            display: none;
+        }}
+        .legend-toggle-btn.show {{
+            display: block;
         }}
         .legend h3 {{
             margin-top: 0;
@@ -892,12 +940,12 @@ class ApplicationDiagramGenerator:
     <h1>Application Data Flow Diagram</h1>
 
     <div class="instructions">
-        <strong>🖱️ Navigation:</strong>
+        <strong>Navigation:</strong>
         <span>Use 4-way arrows to pan • Mouse wheel to zoom • Use controls on right</span>
     </div>
 
     <div class="controls">
-        <h4>🎛️ Controls</h4>
+        <h4>Controls</h4>
 
         <div class="pan-control">
             <button class="pan-arrow pan-up" onclick="panDirection('up')" title="Pan Up">↑</button>
@@ -907,19 +955,20 @@ class ApplicationDiagramGenerator:
             <button class="pan-arrow pan-center" onclick="fitView()" title="Fit to Screen">⊕</button>
         </div>
 
-        <button onclick="zoomIn()">🔍 Zoom In</button>
-        <button onclick="zoomOut()">🔍 Zoom Out</button>
-        <button onclick="resetView()">↺ Reset View</button>
+        <button onclick="zoomIn()">[SEARCH] Zoom In</button>
+        <button onclick="zoomOut()">[SEARCH] Zoom Out</button>
+        <button onclick="resetView()">[RESET] Reset View</button>
     </div>
 
     <div class="legend">
+        <button class="legend-close-btn" onclick="toggleLegend()" title="Close Legend">×</button>
         <h3>Legend</h3>
         <ul>
-            <li><strong>⚪ Circles</strong> = Services/APIs</li>
-            <li><strong>▭ Rectangles</strong> = Data Stores</li>
-            <li><strong>⬛ Black solid</strong> = Observed flows (ExtraHop)</li>
-            <li><strong>🔵 Blue dashed</strong> = ML inference/predictions</li>
-            <li><strong>🎨 Colors</strong> = Security zones</li>
+            <li><strong>[WHITE] Circles</strong> = Services/APIs</li>
+            <li><strong>[RECT] Rectangles</strong> = Data Stores</li>
+            <li><strong>[BLACK] Black solid</strong> = Observed flows (ExtraHop)</li>
+            <li><strong>[BLUE] Blue dashed</strong> = ML inference/predictions</li>
+            <li><strong>[VISUAL] Colors</strong> = Security zones</li>
         </ul>
         <div style="margin-top: 15px; padding: 18px; background: rgba(158, 158, 158, 0.15); border-radius: 6px; border-left: 4px solid #9e9e9e;">
             <strong style="color: #2c3e50; font-size: 14px;">* Unknown Connections:</strong>
@@ -934,6 +983,8 @@ class ApplicationDiagramGenerator:
             </p>
         </div>
     </div>
+
+    <button class="legend-toggle-btn" id="legendToggle" onclick="toggleLegend()">Show Legend</button>
 
     <div class="diagram-container">
         <div class="mermaid">
@@ -1036,21 +1087,23 @@ class ApplicationDiagramGenerator:
         }}
 
         function panDirection(direction) {{
-            switch(direction) {{
-                case 'up':
-                    translateY += PAN_STEP;
-                    break;
-                case 'down':
-                    translateY -= PAN_STEP;
-                    break;
-                case 'left':
-                    translateX += PAN_STEP;
-                    break;
-                case 'right':
-                    translateX -= PAN_STEP;
-                    break;
-            }}
-            updateTransform();
+            requestAnimationFrame(() => {{
+                switch(direction) {{
+                    case 'up':
+                        translateY += PAN_STEP;
+                        break;
+                    case 'down':
+                        translateY -= PAN_STEP;
+                        break;
+                    case 'left':
+                        translateX += PAN_STEP;
+                        break;
+                    case 'right':
+                        translateX -= PAN_STEP;
+                        break;
+                }}
+                updateTransform();
+            }});
         }}
 
         function zoomIn() {{
@@ -1107,7 +1160,21 @@ class ApplicationDiagramGenerator:
             const svg = document.querySelector('.diagram-container svg');
             if (svg) {{
                 svg.style.transformOrigin = '0 0';
+                svg.style.transition = 'transform 0.2s ease-out';
                 svg.style.transform = `translate(${{translateX}}px, ${{translateY}}px) scale(${{scale}})`;
+            }}
+        }}
+
+        function toggleLegend() {{
+            const legend = document.querySelector('.legend');
+            const toggleBtn = document.getElementById('legendToggle');
+
+            if (legend.classList.contains('hidden')) {{
+                legend.classList.remove('hidden');
+                toggleBtn.classList.remove('show');
+            }} else {{
+                legend.classList.add('hidden');
+                toggleBtn.classList.add('show');
             }}
         }}
     </script>
@@ -1118,7 +1185,7 @@ class ApplicationDiagramGenerator:
         with open(html_path, 'w', encoding='utf-8') as f:
             f.write(html_template)
 
-        logger.info(f"✓ HTML diagram saved: {html_path}")
+        logger.info(f"[OK] HTML diagram saved: {html_path}")
 
     def _infer_zone_from_ip(self, ip: str) -> str:
         """Infer security zone from IP address"""

@@ -56,7 +56,7 @@ def check_dependencies():
     # Check optional dependencies
     try:
         import psycopg2
-        logger.info("✓ PostgreSQL support available (psycopg2)")
+        logger.info("[OK] PostgreSQL support available (psycopg2)")
     except ImportError:
         logger.warning("PostgreSQL support not available (will use JSON fallback)")
         logger.warning("Install with: pip install psycopg2-binary")
@@ -82,7 +82,7 @@ def setup_directories():
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)
 
-    logger.info("✓ Directories initialized")
+    logger.info("[OK] Directories initialized")
 
 
 def main():

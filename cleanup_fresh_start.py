@@ -17,7 +17,7 @@ from pathlib import Path
 
 def print_header():
     print("=" * 80)
-    print("🧹 CLEANUP FOR FRESH START")
+    print("[CLEANUP] CLEANUP FOR FRESH START")
     print("=" * 80)
     print()
 

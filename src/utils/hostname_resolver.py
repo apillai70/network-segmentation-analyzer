@@ -168,8 +168,8 @@ class HostnameResolver:
 
         Returns:
             Tuple of (hostname, display_name)
-            display_name is formatted hostname with IP
-            For multiple IPs: "ESXi:IP1 - Hostname - VM:IP2"
+            display_name is formatted as "IP - Hostname" for real hostnames, just "IP" for synthetic
+            For multiple IPs: "IP - ESXi:IP1 / VM:IP2"
         """
         hostname = self.resolve(ip_address, zone)
 
@@ -180,13 +180,26 @@ class HostnameResolver:
                 display_name = self.format_multiple_ips_display(hostname, ip_address)
                 return hostname, display_name
 
-            # Got a real hostname - format based on output type
+            # Check if this is a synthetic hostname (e.g., web-1, mgmt-12, app-34)
+            # Synthetic hostnames match pattern: (web|app|db|mgmt|cache|mq|api|server)-\d+
+            import re
+            synthetic_pattern = r'^(web|app|db|mgmt|cache|mq|api|server|ipv6)-\d+$'
+            if re.match(synthetic_pattern, hostname):
+                # Synthetic hostname - just show IP address
+                display_name = ip_address
+                return hostname, display_name
+
+            # Got a real hostname - strip suffixes like -web21, -mgmt36, etc.
+            # Pattern: remove -<type><digits> suffixes where type is web, app, db, mgmt, cache, mq, api, server
+            cleaned_hostname = re.sub(r'-(web|app|db|mgmt|cache|mq|api|server)\d+', '', hostname)
+
+            # Show "IP - Hostname" format with cleaned hostname
             if format == 'mermaid':
-                display_name = f"{hostname}<br/>({ip_address})"
+                display_name = f"{ip_address} - {cleaned_hostname}"
             elif format == 'html':
-                display_name = f"{hostname}<br/>({ip_address})"
+                display_name = f"{ip_address} - {cleaned_hostname}"
             else:  # text
-                display_name = f"{hostname} ({ip_address})"
+                display_name = f"{ip_address} - {cleaned_hostname}"
 
             return hostname, display_name
         else:

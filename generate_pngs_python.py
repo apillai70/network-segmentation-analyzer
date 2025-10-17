@@ -98,7 +98,7 @@ def main():
             if mmd_path.exists():
                 all_mmd_files.append(mmd_path)
             else:
-                print(f"⚠ Warning: {mmd_path.name} not found")
+                print(f"[WARNING] Warning: {mmd_path.name} not found")
 
             # Check for application diagram
             app_mmd_path = diagram_dir / f'{app_code}_application_diagram.mmd'

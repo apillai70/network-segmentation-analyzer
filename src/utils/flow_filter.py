@@ -119,7 +119,7 @@ def filter_flows_by_dns_status(
     }
 
     # Log summary
-    logger.info(f"✓ Flow filtering complete:")
+    logger.info(f"[OK] Flow filtering complete:")
     logger.info(f"  Total flows: {total_flows:,}")
     logger.info(f"  Flows kept: {flows_kept:,}")
     logger.info(f"  Flows filtered: {filtered_count:,} ({filter_percentage:.1f}%)")

@@ -81,11 +81,48 @@
         border-radius: 8px;
         box-shadow: var(--shadow-sm);
         padding: 0.75rem;
+        position: relative;
     }
 
     .legend h5 {
         font-size: 1rem;
         margin-bottom: 0.5rem !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .legend-toggle-btn {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        font-size: 1.2rem;
+        padding: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
+
+    .legend-toggle-btn:hover {
+        background-color: var(--border-color);
+        color: var(--text-primary);
+    }
+
+    .legend-content {
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .legend-content.collapsed {
+        max-height: 0;
+        opacity: 0;
+        margin: 0;
+        padding: 0;
     }
 
     .legend-item {
@@ -246,7 +283,13 @@
         <div class="col-lg-3">
             <!-- Legend -->
             <div class="legend">
-                <h5 class="mb-3"><i class="bi bi-palette"></i> Security Zones</h5>
+                <h5 class="mb-3">
+                    <span><i class="bi bi-palette"></i> Security Zones</span>
+                    <button class="legend-toggle-btn" onclick="toggleLegend()" title="Collapse/Expand">
+                        <i class="bi bi-chevron-up" id="legend-toggle-icon"></i>
+                    </button>
+                </h5>
+                <div class="legend-content" id="legend-content">
                 <div class="legend-item">
                     <span class="legend-color zone-WEB_TIER"></span>
                     <span style="flex: 1;">WEB_TIER</span>
@@ -287,6 +330,7 @@
                     <span style="flex: 1;">UNKNOWN</span>
                     <span class="badge bg-secondary" id="count-UNKNOWN">0</span>
                 </div>
+                </div>
             </div>
 
             <!-- Node Details -->
@@ -297,7 +341,13 @@
 
             <!-- Statistics -->
             <div class="legend mt-3">
-                <h5 class="mb-3"><i class="bi bi-graph-up"></i> Statistics</h5>
+                <h5 class="mb-3">
+                    <span><i class="bi bi-graph-up"></i> Statistics</span>
+                    <button class="legend-toggle-btn" onclick="toggleStatistics()" title="Collapse/Expand">
+                        <i class="bi bi-chevron-up" id="stats-toggle-icon"></i>
+                    </button>
+                </h5>
+                <div class="legend-content" id="stats-content">
                 <div class="mb-2 d-flex justify-content-between">
                     <small class="text-muted">Total Nodes:</small>
                     <strong id="stat-nodes">0</strong>
@@ -309,6 +359,7 @@
                 <div class="mb-2 d-flex justify-content-between">
                     <small class="text-muted">Avg Dependencies:</small>
                     <strong id="stat-avg-deps">0</strong>
+                </div>
                 </div>
             </div>
         </div>
@@ -576,6 +627,34 @@
 
         infoDiv.innerHTML = html;
         detailsPanel.style.display = 'block';
+    }
+
+    // Toggle legend visibility
+    function toggleLegend() {
+        const content = document.getElementById('legend-content');
+        const icon = document.getElementById('legend-toggle-icon');
+
+        if (content.classList.contains('collapsed')) {
+            content.classList.remove('collapsed');
+            icon.className = 'bi bi-chevron-up';
+        } else {
+            content.classList.add('collapsed');
+            icon.className = 'bi bi-chevron-down';
+        }
+    }
+
+    // Toggle statistics visibility
+    function toggleStatistics() {
+        const content = document.getElementById('stats-content');
+        const icon = document.getElementById('stats-toggle-icon');
+
+        if (content.classList.contains('collapsed')) {
+            content.classList.remove('collapsed');
+            icon.className = 'bi bi-chevron-up';
+        } else {
+            content.classList.add('collapsed');
+            icon.className = 'bi bi-chevron-down';
+        }
     }
 </script>
 {% endblock %}
