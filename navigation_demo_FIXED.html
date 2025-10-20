@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Navigation Controls - FIXED VERSION</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            color: #333;
+            overflow: hidden;
+            height: 100vh;
+        }
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+            padding: 15px 20px;
+            font-size: 22px;
+            background: white;
+            border-bottom: 3px solid #3498db;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .instructions {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .instructions strong {
+            font-size: 15px;
+        }
+        .diagram-container {
+            background: #fafafa;
+            padding: 0;
+            margin: 0;
+            height: calc(100vh - 100px);
+            position: relative;
+            overflow: hidden;
+        }
+        .diagram-container .mermaid {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .diagram-container svg {
+            max-width: none !important;
+            width: auto !important;
+            height: auto !important;
+        }
+        .controls {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            border: 2px solid #3498db;
+            cursor: move;
+        }
+        .controls h4 {
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            color: #2c3e50;
+            text-align: center;
+            font-weight: 600;
+            cursor: move;
+            user-select: none;
+        }
+        .controls button {
+            display: block;
+            width: 140px;
+            margin: 8px 0;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .controls button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        }
+        .controls button:active {
+            transform: translateY(0);
+        }
+        /* FIXED: Increased from 90px to 110px */
+        .pan-control {
+            width: 110px;
+            height: 110px;
+            margin: 15px auto;
+            position: relative;
+            background: radial-gradient(circle, #ecf0f1 0%, #bdc3c7 100%);
+            border-radius: 50%;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .pan-arrow {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .pan-arrow:hover {
+            opacity: 0.9;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .pan-up {
+            top: 5px;
+            left: 50%;
+            margin-left: -10px;
+        }
+        .pan-down {
+            bottom: 5px;
+            left: 50%;
+            margin-left: -10px;
+        }
+        .pan-left {
+            left: 5px;
+            top: 50%;
+            margin-top: -10px;
+        }
+        .pan-right {
+            right: 5px;
+            top: 50%;
+            margin-top: -10px;
+        }
+        /* FIXED: Reduced from 28px to 24px */
+        .pan-center {
+            top: 50%;
+            left: 50%;
+            margin-left: -12px;
+            margin-top: -12px;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+        .legend {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            max-width: 450px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-size: 13px;
+            z-index: 1001;
+            max-height: 60vh;
+            overflow-y: auto;
+            position: relative;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .legend.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        .legend-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .legend-close-btn:hover {
+            background: #c0392b;
+        }
+        .legend-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            display: none;
+        }
+        .legend-toggle-btn.show {
+            display: block;
+        }
+        .legend h3 {
+            margin-top: 0;
+            font-size: 14px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        .legend ul {
+            margin: 8px 0;
+            padding-left: 18px;
+            line-height: 1.6;
+        }
+        .fix-badge {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+    <div class="fix-badge">✓ NAVIGATION FIXED</div>
+
+    <h1>Navigation Demo - FIXED VERSION</h1>
+
+    <div class="instructions">
+        <strong>Navigation:</strong>
+        <span>Use 4-way arrows to pan • Mouse wheel to zoom • All buttons now visible!</span>
+    </div>
+
+    <div class="controls">
+        <h4>Controls</h4>
+
+        <div class="pan-control">
+            <button class="pan-arrow pan-up" onclick="panDirection('up')" title="Pan Up">↑</button>
+            <button class="pan-arrow pan-down" onclick="panDirection('down')" title="Pan Down">↓</button>
+            <button class="pan-arrow pan-left" onclick="panDirection('left')" title="Pan Left">←</button>
+            <button class="pan-arrow pan-right" onclick="panDirection('right')" title="Pan Right">→</button>
+            <button class="pan-arrow pan-center" onclick="fitView()" title="Fit to Screen">⊕</button>
+        </div>
+
+        <button onclick="zoomIn()">Zoom In</button>
+        <button onclick="zoomOut()">Zoom Out</button>
+        <button onclick="resetView()">Reset View</button>
+    </div>
+
+    <div class="legend">
+        <button class="legend-close-btn" onclick="toggleLegend()" title="Close Legend">×</button>
+        <h3>Legend</h3>
+        <ul>
+            <li><strong>Pan Control: 110px</strong> (was 90px)</li>
+            <li><strong>Center Button: 24px</strong> (was 28px)</li>
+            <li><strong>All Arrows: 20px</strong> (clearly visible)</li>
+            <li><strong>Auto-Recenter:</strong> When legend toggled</li>
+        </ul>
+        <div style="margin-top: 15px; padding: 12px; background: rgba(39, 174, 96, 0.1); border-radius: 6px; border-left: 4px solid #27ae60;">
+            <strong style="color: #27ae60; font-size: 14px;">✓ Fixes Applied:</strong>
+            <p style="margin: 8px 0 0 0; font-size: 13px; line-height: 1.7;">
+                <strong>1.</strong> Pan control enlarged (90px → 110px)<br>
+                <strong>2.</strong> Center button reduced (28px → 24px)<br>
+                <strong>3.</strong> Left arrow no longer hidden<br>
+                <strong>4.</strong> Diagram recenters when legend is toggled
+            </p>
+        </div>
+    </div>
+
+    <button class="legend-toggle-btn" id="legendToggle" onclick="toggleLegend()">Show Legend</button>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+graph TB
+    subgraph demo["Demo Application"]
+        web[Web Tier]
+        app[App Tier]
+        db[Database]
+
+        web --> app
+        app --> db
+
+        style web fill:#ffcccc,stroke:#333,stroke-width:2px
+        style app fill:#cce5ff,stroke:#333,stroke-width:2px
+        style db fill:#ff9966,stroke:#333,stroke-width:2px
+    end
+        </div>
+    </div>
+
+    <script>
+        let translateX = 0;
+        let translateY = 0;
+        let scale = 1;
+        const PAN_STEP = 100;
+
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            flowchart: {
+                curve: 'basis',
+                padding: 20,
+                useMaxWidth: false,
+                htmlLabels: true
+            }
+        });
+
+        window.addEventListener('load', function() {
+            const mermaidDiv = document.querySelector('.mermaid');
+            if (mermaidDiv) {
+                mermaid.run({ nodes: [mermaidDiv] }).then(() => {
+                    console.log('Mermaid rendered successfully');
+                    initControls();
+                }).catch(err => {
+                    console.error('Mermaid rendering failed:', err);
+                });
+            }
+        });
+
+        function initControls() {
+            const container = document.querySelector('.diagram-container');
+            const svg = document.querySelector('.diagram-container svg');
+
+            if (!svg) return;
+
+            container.addEventListener('wheel', zoom);
+
+            setTimeout(() => {
+                fitView();
+            }, 500);
+        }
+
+        function zoom(e) {
+            e.preventDefault();
+            const svg = document.querySelector('.diagram-container svg');
+            if (!svg) return;
+
+            const delta = e.deltaY > 0 ? 0.9 : 1.1;
+            scale = Math.min(Math.max(0.1, scale * delta), 5);
+
+            updateTransform();
+        }
+
+        function panDirection(direction) {
+            requestAnimationFrame(() => {
+                switch(direction) {
+                    case 'up':
+                        translateY += PAN_STEP;
+                        break;
+                    case 'down':
+                        translateY -= PAN_STEP;
+                        break;
+                    case 'left':
+                        translateX += PAN_STEP;
+                        break;
+                    case 'right':
+                        translateX -= PAN_STEP;
+                        break;
+                }
+                updateTransform();
+            });
+        }
+
+        function zoomIn() {
+            scale = Math.min(scale * 1.2, 5);
+            updateTransform();
+        }
+
+        function zoomOut() {
+            scale = Math.max(scale * 0.8, 0.1);
+            updateTransform();
+        }
+
+        function resetView() {
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateTransform();
+        }
+
+        function fitView() {
+            const container = document.querySelector('.diagram-container');
+            const svg = document.querySelector('.diagram-container svg');
+            if (!svg || !container) {
+                return;
+            }
+
+            svg.style.transform = '';
+
+            setTimeout(() => {
+                const svgRect = svg.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+
+                const scaleX = containerRect.width / svgRect.width;
+                const scaleY = containerRect.height / svgRect.height;
+                scale = Math.min(scaleX, scaleY, 1) * 0.9;
+
+                translateX = (containerRect.width - svgRect.width * scale) / 2;
+                translateY = (containerRect.height - svgRect.height * scale) / 2;
+
+                updateTransform();
+            }, 100);
+        }
+
+        function updateTransform() {
+            const svg = document.querySelector('.diagram-container svg');
+            if (svg) {
+                svg.style.transformOrigin = '0 0';
+                svg.style.transition = 'transform 0.2s ease-out';
+                svg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            }
+        }
+
+        // FIXED: Auto-recenter when legend toggled
+        function toggleLegend() {
+            const legend = document.querySelector('.legend');
+            const toggleBtn = document.getElementById('legendToggle');
+
+            if (legend.classList.contains('hidden')) {
+                legend.classList.remove('hidden');
+                toggleBtn.classList.remove('show');
+            } else {
+                legend.classList.add('hidden');
+                toggleBtn.classList.add('show');
+            }
+
+            // NEW: Recenter diagram after legend toggle
+            setTimeout(() => {
+                fitView();
+            }, 350);  // Wait for legend animation to complete
+        }
+    </script>
+</body>
+</html>

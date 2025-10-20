@@ -408,14 +408,9 @@ class ApplicationDiagramGenerator:
                 tmp.write(content)
                 tmp_path = tmp.name
 
-            # Try mmdc with full path first (Windows)
-            mmdc_paths = [
-                r"C:\Users\AjayPillai\AppData\Roaming\npm\mmdc.cmd",
-                'mmdc'
-            ]
-
+            # Try mmdc command
             success = False
-            for mmdc_cmd in mmdc_paths:
+            for mmdc_cmd in ['mmdc']:
                 try:
                     result = subprocess.run(
                         [mmdc_cmd, '-i', tmp_path, '-o', png_path],
@@ -434,7 +429,7 @@ class ApplicationDiagramGenerator:
                 except FileNotFoundError:
                     continue
 
-            if not success and all(not Path(p).exists() for p in mmdc_paths if not p == 'mmdc'):
+            if not success:
                 logger.warning("mmdc not found - PNG generation skipped")
 
             # Clean up temp file
@@ -797,9 +792,22 @@ class ApplicationDiagramGenerator:
         .controls button:active {{
             transform: translateY(0);
         }}
+        /* Override hover for pan arrows - keep them centered */
+        .pan-arrow.pan-up:hover {{
+            transform: translateX(-50%) !important;
+        }}
+        .pan-arrow.pan-down:hover {{
+            transform: translateX(-50%) !important;
+        }}
+        .pan-arrow.pan-left:hover {{
+            transform: translateY(-50%) !important;
+        }}
+        .pan-arrow.pan-right:hover {{
+            transform: translateY(-50%) !important;
+        }}
         .pan-control {{
-            width: 90px;
-            height: 90px;
+            width: 110px;
+            height: 110px;
             margin: 15px auto;
             position: relative;
             background: radial-gradient(circle, #ecf0f1 0%, #bdc3c7 100%);
@@ -808,12 +816,10 @@ class ApplicationDiagramGenerator:
         }}
         .pan-arrow {{
             position: absolute;
-            width: 20px;
-            height: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 50%;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 11px;
             font-weight: bold;
@@ -824,44 +830,44 @@ class ApplicationDiagramGenerator:
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }}
         .pan-arrow:hover {{
-            opacity: 0.9;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }}
         .pan-up {{
-            top: 5px;
+            top: 10px;
             left: 50%;
-            margin-left: -10px;
+            width: 20px;
+            height: 10px;
+            transform: translateX(-50%) !important;
         }}
         .pan-down {{
-            bottom: 5px;
+            bottom: 10px;
             left: 50%;
-            margin-left: -10px;
+            width: 20px;
+            height: 10px;
+            transform: translateX(-50%) !important;
         }}
         .pan-left {{
-            left: 5px;
+            left: 10px;
             top: 50%;
-            margin-top: -10px;
+            width: 10px;
+            height: 20px;
+            transform: translateY(-50%) !important;
         }}
         .pan-right {{
-            right: 5px;
+            right: 10px;
             top: 50%;
-            margin-top: -10px;
-        }}
-        .pan-center {{
-            top: 50%;
-            left: 50%;
-            margin-left: -14px;
-            margin-top: -14px;
-            width: 28px;
-            height: 28px;
-            font-size: 13px;
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            width: 10px;
+            height: 20px;
+            transform: translateY(-50%) !important;
         }}
         .legend {{
             position: fixed;
             bottom: 20px;
             left: 20px;
-            max-width: 450px;
+            max-width: 650px;
+            width: auto;
+            max-height: 320px;
             padding: 18px;
             background: rgba(255, 255, 255, 0.96);
             border: 2px solid #3498db;
@@ -869,7 +875,6 @@ class ApplicationDiagramGenerator:
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             font-size: 13px;
             z-index: 1001;
-            max-height: 60vh;
             overflow-y: auto;
             position: relative;
             transition: opacity 0.3s, transform 0.3s;
@@ -950,7 +955,6 @@ class ApplicationDiagramGenerator:
             <button class="pan-arrow pan-down" onclick="panDirection('down')" title="Pan Down">↓</button>
             <button class="pan-arrow pan-left" onclick="panDirection('left')" title="Pan Left">←</button>
             <button class="pan-arrow pan-right" onclick="panDirection('right')" title="Pan Right">→</button>
-            <button class="pan-arrow pan-center" onclick="fitView()" title="Fit to Screen">⊕</button>
         </div>
 
         <button onclick="zoomIn()">Zoom In</button>
@@ -1128,6 +1132,10 @@ class ApplicationDiagramGenerator:
             translateX = 0;
             translateY = 0;
             updateTransform();
+            // Center the diagram after reset
+            setTimeout(() => {{
+                fitView();
+            }}, 100);
         }}
 
         function fitView() {{
@@ -1183,6 +1191,11 @@ class ApplicationDiagramGenerator:
                 legend.classList.add('hidden');
                 toggleBtn.classList.add('show');
             }}
+            
+            // Recenter diagram after legend toggle
+            setTimeout(() => {{
+                fitView();
+            }}, 350);  // Wait for legend animation to complete
         }}
     </script>
 </body>

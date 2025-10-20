@@ -17,6 +17,14 @@ from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 from collections import defaultdict
 
+# Import encoding helper for robust CSV file handling
+try:
+    from encoding_helper import open_csv_with_fallback
+except ImportError:
+    # Fallback if encoding_helper not available
+    def open_csv_with_fallback(file_path, mode='r', **kwargs):
+        return open(file_path, mode, encoding='utf-8', **kwargs)
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -143,7 +151,7 @@ class NetworkLogParser:
         app_name = self._extract_app_name(file_path.name)
 
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open_csv_with_fallback(str(file_path)) as f:
                 # Detect delimiter
                 delimiter = self._detect_delimiter(f)
                 f.seek(0)

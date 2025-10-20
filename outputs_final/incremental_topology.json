@@ -1,12 +1,410 @@
 {
-  "timestamp": "2025-10-12T14:27:48.201672",
-  "total_apps": 1,
+  "timestamp": "2025-10-17T16:56:01.167414",
+  "total_apps": 9,
   "apps_observed": [
-    "ACDA"
+    "AODSVY",
+    "APSE",
+    "ACDA",
+    "ARA",
+    "AV",
+    "BCA",
+    "BKO",
+    "BLND",
+    "BLZD"
   ],
   "topology": {
     "ACDA": {
       "app_name": "ACDA",
+      "app_type": "api_service",
+      "characteristics": [],
+      "primary_function": "Backend API and business logic service",
+      "tech_stack": {
+        "language": "unknown",
+        "framework": "unknown",
+        "database": "unknown"
+      },
+      "security_zone": "DATA_TIER",
+      "predicted_dependencies": [
+        {
+          "type": "database",
+          "name": "database_service",
+          "purpose": "Standard database dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "cache",
+          "name": "cache_service",
+          "purpose": "Standard cache dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "message_queue",
+          "name": "message_queue_service",
+          "purpose": "Standard message_queue dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "other_apis",
+          "name": "other_apis_service",
+          "purpose": "Standard other_apis dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.238",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.109",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.174",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.82",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.139",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.191",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.216",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.105.128",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.111",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:2bda:f8d3:8d72:48e2:951f:58d0",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        }
+      ],
+      "compliance_requirements": [
+        "SOC2"
+      ],
+      "risk_level": "MEDIUM",
+      "confidence": 0.6,
+      "reasoning": "Application 'ACDA' classified as api service. Assigned to DATA_TIER for appropriate network segmentation. Predicted dependencies: cache, unknown, database, message_queue, other_apis.",
+      "analysis_method": "local_semantic",
+      "knowledge_graph_version": "3.0",
+      "dns_validation": {
+        "total_validated": 0,
+        "valid": 0,
+        "valid_multiple_ips": 0,
+        "mismatch": 0,
+        "nxdomain": 0,
+        "failed": 0,
+        "validation_disabled": 0
+      },
+      "validation_metadata": {}
+    },
+    "AODSVY": {
+      "app_name": "AODSVY",
+      "app_type": "api_service",
+      "characteristics": [],
+      "primary_function": "Backend API and business logic service",
+      "tech_stack": {
+        "language": "unknown",
+        "framework": "unknown",
+        "database": "unknown"
+      },
+      "security_zone": "APP_TIER",
+      "predicted_dependencies": [
+        {
+          "type": "database",
+          "name": "database_service",
+          "purpose": "Standard database dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "cache",
+          "name": "cache_service",
+          "purpose": "Standard cache dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "message_queue",
+          "name": "message_queue_service",
+          "purpose": "Standard message_queue dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "other_apis",
+          "name": "other_apis_service",
+          "purpose": "Standard other_apis dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:4c3a:9f21:b303:f438:fe21:10d0",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.216",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.105.89",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.144.73",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.105.53",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.144.139",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.151",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:2582:6d22:97fa:7f04:8363:9007",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.46",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.212",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        }
+      ],
+      "compliance_requirements": [
+        "SOC2"
+      ],
+      "risk_level": "LOW",
+      "confidence": 0.6,
+      "reasoning": "Application 'AODSVY' classified as api service. Assigned to APP_TIER for appropriate network segmentation. Predicted dependencies: cache, unknown, database, message_queue, other_apis.",
+      "analysis_method": "local_semantic",
+      "knowledge_graph_version": "3.0",
+      "dns_validation": {
+        "total_validated": 0,
+        "valid": 0,
+        "valid_multiple_ips": 0,
+        "mismatch": 0,
+        "nxdomain": 0,
+        "failed": 0,
+        "validation_disabled": 0
+      },
+      "validation_metadata": {}
+    },
+    "APSE": {
+      "app_name": "APSE",
+      "app_type": "api_service",
+      "characteristics": [],
+      "primary_function": "Backend API and business logic service",
+      "tech_stack": {
+        "language": "unknown",
+        "framework": "unknown",
+        "database": "unknown"
+      },
+      "security_zone": "APP_TIER",
+      "predicted_dependencies": [
+        {
+          "type": "database",
+          "name": "database_service",
+          "purpose": "Standard database dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "cache",
+          "name": "cache_service",
+          "purpose": "Standard cache dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "message_queue",
+          "name": "message_queue_service",
+          "purpose": "Standard message_queue dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "other_apis",
+          "name": "other_apis_service",
+          "purpose": "Standard other_apis dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:4c3a:9f21:4758:367b:a649:9cdc",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.246.153",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.121",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.120",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.68",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.144.222",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.105.254",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.191",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.246.176",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:548b:87b5:b596:ca7c:ef4a:fa88",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        }
+      ],
+      "compliance_requirements": [
+        "SOC2"
+      ],
+      "risk_level": "LOW",
+      "confidence": 0.6,
+      "reasoning": "Application 'APSE' classified as api service. Assigned to APP_TIER for appropriate network segmentation. Predicted dependencies: cache, unknown, database, message_queue, other_apis.",
+      "analysis_method": "local_semantic",
+      "knowledge_graph_version": "3.0",
+      "dns_validation": {
+        "total_validated": 0,
+        "valid": 0,
+        "valid_multiple_ips": 0,
+        "mismatch": 0,
+        "nxdomain": 0,
+        "failed": 0,
+        "validation_disabled": 0
+      },
+      "validation_metadata": {}
+    },
+    "ARA": {
+      "app_name": "ARA",
       "app_type": "api_service",
       "characteristics": [],
       "primary_function": "Backend API and business logic service",
@@ -47,70 +445,70 @@
         },
         {
           "type": "unknown",
-          "name": "10.165.116.169",
+          "name": "10.164.105.39",
           "purpose": "Observed network connection",
           "confidence": 0.95,
           "source": "network_observation"
         },
         {
           "type": "unknown",
-          "name": "10.164.116.238",
+          "name": "10.100.160.249",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.105.198",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.86",
           "purpose": "Observed network connection",
           "confidence": 0.95,
           "source": "network_observation"
         },
         {
           "type": "database",
-          "name": "2001:db8:2bda:f8d3:43cf:2fde:2493:3b83",
+          "name": "2001:db8:2582:6d22:16f1:42a2:6b9:19aa",
           "purpose": "Observed network connection",
           "confidence": 0.95,
           "source": "network_observation"
         },
         {
           "type": "unknown",
-          "name": "10.164.116.109",
+          "name": "10.165.116.245",
           "purpose": "Observed network connection",
           "confidence": 0.95,
           "source": "network_observation"
         },
         {
           "type": "unknown",
-          "name": "10.165.116.25",
+          "name": "10.164.145.160",
           "purpose": "Observed network connection",
           "confidence": 0.95,
           "source": "network_observation"
         },
         {
           "type": "unknown",
-          "name": "10.100.246.146",
+          "name": "10.164.144.223",
           "purpose": "Observed network connection",
           "confidence": 0.95,
           "source": "network_observation"
         },
         {
           "type": "unknown",
-          "name": "10.165.116.139",
-          "purpose": "Observed network connection",
-          "confidence": 0.95,
-          "source": "network_observation"
-        },
-        {
-          "type": "unknown",
-          "name": "10.164.105.128",
-          "purpose": "Observed network connection",
-          "confidence": 0.95,
-          "source": "network_observation"
-        },
-        {
-          "type": "unknown",
-          "name": "10.100.160.122",
+          "name": "10.100.246.39",
           "purpose": "Observed network connection",
           "confidence": 0.95,
           "source": "network_observation"
         },
         {
           "type": "database",
-          "name": "2001:db8:548b:87b5:cf8d:446a:bc2c:bb0d",
+          "name": "2001:db8:2bda:f8d3:176d:e21f:1b46:ebdc",
           "purpose": "Observed network connection",
           "confidence": 0.95,
           "source": "network_observation"
@@ -121,19 +519,679 @@
       ],
       "risk_level": "LOW",
       "confidence": 0.6,
-      "reasoning": "Application 'ACDA' classified as api service. Assigned to APP_TIER for appropriate network segmentation. Predicted dependencies: database, unknown, cache, message_queue, other_apis.",
+      "reasoning": "Application 'ARA' classified as api service. Assigned to APP_TIER for appropriate network segmentation. Predicted dependencies: cache, unknown, database, message_queue, other_apis.",
       "analysis_method": "local_semantic",
-      "knowledge_graph_version": "3.0"
+      "knowledge_graph_version": "3.0",
+      "dns_validation": {
+        "total_validated": 0,
+        "valid": 0,
+        "valid_multiple_ips": 0,
+        "mismatch": 0,
+        "nxdomain": 0,
+        "failed": 0,
+        "validation_disabled": 0
+      },
+      "validation_metadata": {}
+    },
+    "AV": {
+      "app_name": "AV",
+      "app_type": "api_service",
+      "characteristics": [],
+      "primary_function": "Backend API and business logic service",
+      "tech_stack": {
+        "language": "unknown",
+        "framework": "unknown",
+        "database": "unknown"
+      },
+      "security_zone": "APP_TIER",
+      "predicted_dependencies": [
+        {
+          "type": "database",
+          "name": "database_service",
+          "purpose": "Standard database dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "cache",
+          "name": "cache_service",
+          "purpose": "Standard cache dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "message_queue",
+          "name": "message_queue_service",
+          "purpose": "Standard message_queue dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "other_apis",
+          "name": "other_apis_service",
+          "purpose": "Standard other_apis dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.68",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.120",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:ea19:a1e1:4204:d733:9855:b1e",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:1a2b:3c4d:465c:c2cb:85e:b489",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:2bda:f8d3:35ad:de88:43e4:f668",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.65",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.162",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:1a2b:3c4d:3dbc:3093:a828:4442",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.119",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.164",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        }
+      ],
+      "compliance_requirements": [
+        "SOC2"
+      ],
+      "risk_level": "LOW",
+      "confidence": 0.6,
+      "reasoning": "Application 'AV' classified as api service. Assigned to APP_TIER for appropriate network segmentation. Predicted dependencies: cache, unknown, database, message_queue, other_apis.",
+      "analysis_method": "local_semantic",
+      "knowledge_graph_version": "3.0",
+      "dns_validation": {
+        "total_validated": 0,
+        "valid": 0,
+        "valid_multiple_ips": 0,
+        "mismatch": 0,
+        "nxdomain": 0,
+        "failed": 0,
+        "validation_disabled": 0
+      },
+      "validation_metadata": {}
+    },
+    "BCA": {
+      "app_name": "BCA",
+      "app_type": "api_service",
+      "characteristics": [],
+      "primary_function": "Backend API and business logic service",
+      "tech_stack": {
+        "language": "unknown",
+        "framework": "unknown",
+        "database": "unknown"
+      },
+      "security_zone": "APP_TIER",
+      "predicted_dependencies": [
+        {
+          "type": "database",
+          "name": "database_service",
+          "purpose": "Standard database dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "cache",
+          "name": "cache_service",
+          "purpose": "Standard cache dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "message_queue",
+          "name": "message_queue_service",
+          "purpose": "Standard message_queue dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "other_apis",
+          "name": "other_apis_service",
+          "purpose": "Standard other_apis dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.246.27",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.246.99",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.57",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.105.254",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.18",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.71",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.164",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.169",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.144.99",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.145",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        }
+      ],
+      "compliance_requirements": [
+        "SOC2"
+      ],
+      "risk_level": "LOW",
+      "confidence": 0.6,
+      "reasoning": "Application 'BCA' classified as api service. Assigned to APP_TIER for appropriate network segmentation. Predicted dependencies: cache, unknown, database, message_queue, other_apis.",
+      "analysis_method": "local_semantic",
+      "knowledge_graph_version": "3.0",
+      "dns_validation": {
+        "total_validated": 0,
+        "valid": 0,
+        "valid_multiple_ips": 0,
+        "mismatch": 0,
+        "nxdomain": 0,
+        "failed": 0,
+        "validation_disabled": 0
+      },
+      "validation_metadata": {}
+    },
+    "BKO": {
+      "app_name": "BKO",
+      "app_type": "api_service",
+      "characteristics": [],
+      "primary_function": "Backend API and business logic service",
+      "tech_stack": {
+        "language": "unknown",
+        "framework": "unknown",
+        "database": "unknown"
+      },
+      "security_zone": "MANAGEMENT_TIER",
+      "predicted_dependencies": [
+        {
+          "type": "database",
+          "name": "database_service",
+          "purpose": "Standard database dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "cache",
+          "name": "cache_service",
+          "purpose": "Standard cache dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "message_queue",
+          "name": "message_queue_service",
+          "purpose": "Standard message_queue dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "other_apis",
+          "name": "other_apis_service",
+          "purpose": "Standard other_apis dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.126",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.216",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.202",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.93",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.105.204",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.86",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.30",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.90",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:2bda:f8d3:1243:9b0f:e835:f080",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.161",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        }
+      ],
+      "compliance_requirements": [
+        "SOC2"
+      ],
+      "risk_level": "LOW",
+      "confidence": 0.6,
+      "reasoning": "Application 'BKO' classified as api service. Assigned to MANAGEMENT_TIER for appropriate network segmentation. Predicted dependencies: cache, unknown, database, message_queue, other_apis.",
+      "analysis_method": "local_semantic",
+      "knowledge_graph_version": "3.0",
+      "dns_validation": {
+        "total_validated": 0,
+        "valid": 0,
+        "valid_multiple_ips": 0,
+        "mismatch": 0,
+        "nxdomain": 0,
+        "failed": 0,
+        "validation_disabled": 0
+      },
+      "validation_metadata": {}
+    },
+    "BLND": {
+      "app_name": "BLND",
+      "app_type": "api_service",
+      "characteristics": [],
+      "primary_function": "Backend API and business logic service",
+      "tech_stack": {
+        "language": "unknown",
+        "framework": "unknown",
+        "database": "unknown"
+      },
+      "security_zone": "APP_TIER",
+      "predicted_dependencies": [
+        {
+          "type": "database",
+          "name": "database_service",
+          "purpose": "Standard database dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "cache",
+          "name": "cache_service",
+          "purpose": "Standard cache dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "message_queue",
+          "name": "message_queue_service",
+          "purpose": "Standard message_queue dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "other_apis",
+          "name": "other_apis_service",
+          "purpose": "Standard other_apis dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:2582:6d22:d3de:f87c:c60f:b252",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.246.67",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.145.181",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.55",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.233",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.246.193",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:1a2b:3c4d:1b55:5f6d:301c:6abf",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.144.58",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.105.198",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.218",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        }
+      ],
+      "compliance_requirements": [
+        "SOC2"
+      ],
+      "risk_level": "LOW",
+      "confidence": 0.6,
+      "reasoning": "Application 'BLND' classified as api service. Assigned to APP_TIER for appropriate network segmentation. Predicted dependencies: cache, unknown, database, message_queue, other_apis.",
+      "analysis_method": "local_semantic",
+      "knowledge_graph_version": "3.0",
+      "dns_validation": {
+        "total_validated": 0,
+        "valid": 0,
+        "valid_multiple_ips": 0,
+        "mismatch": 0,
+        "nxdomain": 0,
+        "failed": 0,
+        "validation_disabled": 0
+      },
+      "validation_metadata": {}
+    },
+    "BLZD": {
+      "app_name": "BLZD",
+      "app_type": "api_service",
+      "characteristics": [],
+      "primary_function": "Backend API and business logic service",
+      "tech_stack": {
+        "language": "unknown",
+        "framework": "unknown",
+        "database": "unknown"
+      },
+      "security_zone": "APP_TIER",
+      "predicted_dependencies": [
+        {
+          "type": "database",
+          "name": "database_service",
+          "purpose": "Standard database dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "cache",
+          "name": "cache_service",
+          "purpose": "Standard cache dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "message_queue",
+          "name": "message_queue_service",
+          "purpose": "Standard message_queue dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "other_apis",
+          "name": "other_apis_service",
+          "purpose": "Standard other_apis dependency",
+          "confidence": 0.7,
+          "source": "type_inference"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:4c3a:9f21:878:9ef0:dcac:fa54",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.246.56",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:4c3a:9f21:dc7a:bd16:1c15:3057",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.105.148",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.249",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.116.218",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.100.160.226",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.165.116.91",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "database",
+          "name": "2001:db8:2bda:f8d3:4534:17b5:55c0:6c8e",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        },
+        {
+          "type": "unknown",
+          "name": "10.164.144.5",
+          "purpose": "Observed network connection",
+          "confidence": 0.95,
+          "source": "network_observation"
+        }
+      ],
+      "compliance_requirements": [
+        "SOC2"
+      ],
+      "risk_level": "LOW",
+      "confidence": 0.6,
+      "reasoning": "Application 'BLZD' classified as api service. Assigned to APP_TIER for appropriate network segmentation. Predicted dependencies: cache, unknown, database, message_queue, other_apis.",
+      "analysis_method": "local_semantic",
+      "knowledge_graph_version": "3.0",
+      "dns_validation": {
+        "total_validated": 0,
+        "valid": 0,
+        "valid_multiple_ips": 0,
+        "mismatch": 0,
+        "nxdomain": 0,
+        "failed": 0,
+        "validation_disabled": 0
+      },
+      "validation_metadata": {}
     }
   },
   "stats": {
     "total_files_processed": 0,
-    "total_flows_processed": 44,
-    "total_apps_analyzed": 1,
-    "model_updates": 1,
+    "total_flows_processed": 590,
+    "total_apps_analyzed": 9,
+    "model_updates": 9,
     "duplicates_skipped": 0,
-    "errors_encountered": 0,
-    "last_update": "2025-10-12T14:27:48.200939",
-    "start_time": "2025-10-12T14:27:48.149199"
+    "errors_encountered": 1,
+    "last_update": "2025-10-17T16:56:01.158078",
+    "start_time": "2025-10-17T15:16:02.133975"
   }
 }
