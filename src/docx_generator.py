@@ -407,7 +407,7 @@ class SolutionsArchitectureDocument:
         # Architecture diagram - embed PNG with landscape orientation
         self.doc.add_heading('Application Architecture Diagram', level=2)
 
-        # If PNG path is provided, embed it in landscape orientation with rotation
+        # If PNG path is provided, try SVG first (better quality), fallback to PNG
         if self.png_path and Path(self.png_path).exists():
             # Change this section to landscape orientation
             section = self.doc.sections[-1]
@@ -425,15 +425,25 @@ class SolutionsArchitectureDocument:
             self.doc.add_paragraph()
 
             try:
-                # NO rotation - keep image horizontal as generated
-                # Landscape page: 11" wide x 8.5" tall, with 1" margins = 9" usable width
-                # Set width to 8.5 inches (95% of page width)
-                # Height auto-scales to preserve aspect ratio (will be 1.5-2x larger)
-                self.doc.add_picture(self.png_path, width=Inches(8.5))
-                logger.info(f"  PNG embedded (horizontal, width=8.5in, height=auto): {Path(self.png_path).name}")
+                # Try SVG first (vector format - infinite zoom without quality loss)
+                svg_path = self.png_path.replace('.png', '.svg')
+
+                if Path(svg_path).exists():
+                    # SVG format - perfect quality at any zoom level
+                    self.doc.add_picture(svg_path, width=Inches(8.5))
+                    logger.info(f"  ✓ SVG embedded (vector format, infinite zoom): {Path(svg_path).name}")
+                else:
+                    # Fallback to PNG if SVG not available
+                    # NO rotation - keep image horizontal as generated
+                    # Landscape page: 11" wide x 8.5" tall, with 1" margins = 9" usable width
+                    # Set width to 8.5 inches (95% of page width)
+                    # Height auto-scales to preserve aspect ratio (will be 1.5-2x larger)
+                    self.doc.add_picture(self.png_path, width=Inches(8.5))
+                    logger.info(f"  PNG embedded (raster format, width=8.5in): {Path(self.png_path).name}")
+                    logger.warning("  Consider generating SVG for better quality: python generate_pngs_python.py --format svg")
 
             except Exception as e:
-                logger.error(f"  Failed to embed PNG: {e}")
+                logger.error(f"  Failed to embed diagram: {e}")
                 self.doc.add_paragraph(f'Note: Diagram could not be embedded - {e}')
 
             self.doc.add_paragraph()
