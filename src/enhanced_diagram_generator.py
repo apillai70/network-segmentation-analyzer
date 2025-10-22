@@ -29,6 +29,48 @@ logger = logging.getLogger(__name__)
 class EnhancedDiagramGenerator:
     """Enhanced diagram generator with server classification and layered architecture"""
 
+    # Mermaid shape definitions for different server types
+    SHAPE_DEFINITIONS = {
+        # Infrastructure shapes
+        'DNS': '{{{}}}',                      # Hexagon - Network infrastructure
+        'LDAP Server': '{{{}}}',              # Hexagon - Network infrastructure
+        'Active Directory': '{{{}}}',         # Hexagon - Network infrastructure
+        'CDN': '[/{}\\]',                     # Trapezoid - Edge/distribution
+
+        # Load balancer shapes
+        'F5 Load Balancer': '[\\{}/]',        # Inverted trapezoid - Load distribution
+        'Traffic Manager': '[\\{}/]',         # Inverted trapezoid - Load distribution
+        'Azure Traffic Manager': '[\\{}/]',   # Inverted trapezoid - Load distribution
+
+        # Monitoring/Security shapes
+        'Splunk': '[({})]',                   # Stadium (pill) - Monitoring
+        'CyberArk': '>{}]',                   # Flag - Security
+        'Azure Key Vault': '>{}]',            # Flag - Security
+        'DB Auditor': '>{}]',                 # Flag - Security
+        'Rapid7': '>{}]',                     # Flag - Security
+
+        # Application service shapes
+        'ServiceNow': '(({}))',               # Circle - Application service
+        'CIFS Server': '(({}))',              # Circle - Application service
+        'Mail Server': '(({}))',              # Circle - Application service
+        'SSRS': '(({}))',                     # Circle - Application service
+
+        # Database shapes
+        'MySQL/Oracle': '[{}]',               # Rectangle (renders as cylinder)
+
+        # Cloud shapes
+        'AWS': '({})',                        # Rounded rectangle - External
+
+        # Tier fallback shapes
+        'web': '(({}))',                      # Circle - Web services
+        'app': '(({}))',                      # Circle - App services
+        'database': '[{}]',                   # Rectangle - Databases
+        'infrastructure': '{{{}}}',           # Hexagon - Infrastructure
+        'security': '>{}]',                   # Flag - Security
+        'cloud': '({})',                      # Rounded rectangle - Cloud
+        'unknown': '(({}))'                   # Circle - Unknown
+    }
+
     # Color scheme matching application_diagram_generator.py
     SERVER_TYPE_COLORS = {
         # Infrastructure servers
@@ -279,11 +321,12 @@ class EnhancedDiagramGenerator:
                     ]
                     label = '<br/>'.join(label_lines)
 
-                    # Determine shape based on tier
-                    if server['tier'] == 'database':
-                        shape = f"[{label}]"  # Rectangle for databases
-                    else:
-                        shape = f"({label})"  # Rounded rectangle for others
+                    # Get shape for server type (use tier as fallback)
+                    shape_template = self.SHAPE_DEFINITIONS.get(
+                        server_type,
+                        self.SHAPE_DEFINITIONS.get(server['tier'], '(({}))')
+                    )
+                    shape = shape_template.format(label)
 
                     lines.append(f"        {node_id}{shape}")
                     lines.append(f"        style {node_id} fill:{type_color},stroke:#333,stroke-width:2px")
@@ -358,19 +401,24 @@ class EnhancedDiagramGenerator:
             "",
             "**Legend:**",
             "",
-            "**Shapes:**",
-            "- **Application Node** = Source application (blue)",
-            "- **Rounded Rectangles** = Services/Servers",
-            "- **Rectangles** = Databases",
+            "**Shapes by Server Type:**",
+            "- **Hexagon** = Infrastructure (DNS, LDAP, Active Directory)",
+            "- **Trapezoid** = Edge/Distribution (CDN)",
+            "- **Inverted Trapezoid** = Load Balancers (F5, Traffic Manager)",
+            "- **Stadium (Pill)** = Monitoring (Splunk)",
+            "- **Flag** = Security (CyberArk, Azure Key Vault, Rapid7, DB Auditor)",
+            "- **Circle** = Application Services (ServiceNow, CIFS, Mail, SSRS, Web, App)",
+            "- **Rectangle** = Databases (MySQL/Oracle) *renders as cylinder*",
+            "- **Rounded Rectangle** = Cloud/External (AWS, Azure)",
             "",
-            "**Server Types:**",
-            "- DNS, LDAP, Active Directory, CDN = Network Services (Mint)",
-            "- F5 Load Balancer, Traffic Manager = Load Balancers (Pink)",
-            "- Splunk = Monitoring/Logging (Peach)",
-            "- CyberArk, Azure Key Vault, Rapid7, DB Auditor = Security Services (Coral)",
-            "- ServiceNow, CIFS, Mail, SSRS = Application Services (Blue)",
-            "- MySQL/Oracle = Database Tier (Orange)",
-            "- AWS, Azure Traffic Manager = Cloud/External (Light Purple)",
+            "**Server Types by Category:**",
+            "- **Network Services** (Mint #99ffcc): DNS, LDAP, Active Directory, CDN",
+            "- **Load Balancers** (Pink #ffb3d9): F5, Traffic Manager",
+            "- **Monitoring** (Peach #ffe6cc): Splunk",
+            "- **Security** (Coral #ff9999): CyberArk, Azure Key Vault, Rapid7, DB Auditor",
+            "- **Applications** (Blue #cce5ff): ServiceNow, CIFS, Mail, SSRS",
+            "- **Databases** (Orange #ff9966): MySQL/Oracle",
+            "- **Cloud** (Light Purple #e6ccff): AWS, Azure Traffic Manager",
             "",
             "**Colors (matching application_diagram_generator.py):**",
             "- Red (#ffcccc) = Web Tier (frontend)",
