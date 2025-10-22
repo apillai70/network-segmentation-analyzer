@@ -425,22 +425,32 @@ class SolutionsArchitectureDocument:
             self.doc.add_paragraph()
 
             try:
-                # Try SVG first (vector format - infinite zoom without quality loss)
-                svg_path = self.png_path.replace('.png', '.svg')
+                # NOTE: python-docx does NOT support SVG directly
+                # Word 2016+ supports SVG, but python-docx only supports: PNG, JPEG, BMP, GIF, TIFF
+                #
+                # Strategy: Use high-resolution PNG (4800px width)
+                # SVG files are still useful for:
+                # - HTML diagrams (infinite zoom in browser)
+                # - Manual import into Word (Insert > Pictures > select SVG)
+                # - Export to other tools (Visio, Lucidchart, etc.)
 
+                # Check if PNG exists
+                if not Path(self.png_path).exists():
+                    raise FileNotFoundError(f"PNG file not found: {self.png_path}")
+
+                # Embed PNG (high resolution 4800px for best quality)
+                # NO rotation - keep image horizontal as generated
+                # Landscape page: 11" wide x 8.5" tall, with 1" margins = 9" usable width
+                # Set width to 8.5 inches (95% of page width)
+                # Height auto-scales to preserve aspect ratio
+                self.doc.add_picture(self.png_path, width=Inches(8.5))
+                logger.info(f"  ✓ PNG embedded (4800px width for high quality): {Path(self.png_path).name}")
+
+                # Check if SVG also exists (for reference)
+                svg_path = self.png_path.replace('.png', '.svg')
                 if Path(svg_path).exists():
-                    # SVG format - perfect quality at any zoom level
-                    self.doc.add_picture(svg_path, width=Inches(8.5))
-                    logger.info(f"  ✓ SVG embedded (vector format, infinite zoom): {Path(svg_path).name}")
-                else:
-                    # Fallback to PNG if SVG not available
-                    # NO rotation - keep image horizontal as generated
-                    # Landscape page: 11" wide x 8.5" tall, with 1" margins = 9" usable width
-                    # Set width to 8.5 inches (95% of page width)
-                    # Height auto-scales to preserve aspect ratio (will be 1.5-2x larger)
-                    self.doc.add_picture(self.png_path, width=Inches(8.5))
-                    logger.info(f"  PNG embedded (raster format, width=8.5in): {Path(self.png_path).name}")
-                    logger.warning("  Consider generating SVG for better quality: python generate_pngs_python.py --format svg")
+                    logger.info(f"  ℹ SVG file available for manual import: {Path(svg_path).name}")
+                    logger.info(f"    (Word 2016+: Insert > Pictures > select SVG for infinite zoom)")
 
             except Exception as e:
                 logger.error(f"  Failed to embed diagram: {e}")
