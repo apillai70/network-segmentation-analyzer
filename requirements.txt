@@ -62,9 +62,10 @@ flask>=3.0.0
 # gunicorn>=21.0.0  # Production WSGI server (Linux/Mac only)
 
 # ============================================================================
-# Database Support (Optional)
+# Database Support (PostgreSQL)
 # ============================================================================
-# psycopg2-binary>=2.9.0  # PostgreSQL adapter (optional)
+psycopg2-binary>=2.9.0  # PostgreSQL adapter for flow persistence
+pyyaml>=6.0  # Already listed above, needed for config
 
 # ============================================================================
 # Testing

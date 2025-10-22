@@ -1,0 +1,127 @@
+UTF-8 ENCODING ISSUES REPORT
+================================================================================
+
+Files scanned: 54
+Files with issues: 15
+Total issues: 45
+
+
+src\dns_validation_reporter.py
+  Line 511: with open(output_path, 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 572: with open(json_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+
+src\encoding_helper.py
+  Line 36: with open(file_path, 'rb') as f:
+    Fix: Add encoding='utf-8' parameter
+
+src\enterprise_report_generator.py
+  Line 91: with open(json_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 239: with open(output_path, 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+
+src\agentic\graph_topology_analyzer.py
+  Line 916: with open(output_file, 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+
+src\agentic\local_semantic_analyzer.py
+  Line 880: with open(self.storage_path, 'rb') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 891: with open(self.storage_path, 'wb') as f:
+    Fix: Add encoding='utf-8' parameter
+
+src\agentic\unified_topology_system.py
+  Line 727: with open(output_path / 'unified_topology.json', 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 774: with open(output_path / 'SUMMARY.txt', 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+
+src\core\ensemble_model.py
+  Line 334: with open(scores_file, 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 364: with open(scores_file) as f:
+    Fix: Add encoding='utf-8' parameter
+
+src\core\incremental_learner.py
+  Line 111: with open(processed_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 127: with open(processed_file, 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 503: with open(topology_json_file, 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 611: with open(output_file, 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 180: flows_df = pd.read_csv(file_path)
+    Fix: Add encoding='utf-8' parameter
+
+src\exporters\lucidchart_exporter.py
+  Line 89: with open(topology_json_path, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 262: with open(topology_json_path, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+
+src\orchestration\production_orchestrator.py
+  Line 374: with open(report_path, 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 466: with open(rules_path, 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 63: flows_df = pd.read_csv(flows_csv_path)
+    Fix: Add encoding='utf-8' parameter
+
+src\persistence\unified_persistence.py
+  Line 600: with open(app_dir / 'application.json', 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 617: with open(app_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 630: with open(app_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 653: with open(analysis_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 661: with open(analysis_file, 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 680: with open(analysis_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 694: with open(analysis_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 719: with open(topology_dir / f'{app_id}.json', 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 733: with open(topology_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 737: with open(topology_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 835: with open(output_dir / 'backup.json', 'w') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 755: df = pd.read_csv(flow_file)
+    Fix: Add encoding='utf-8' parameter
+  Line 798: flows_df = pd.read_csv(flow_file)
+    Fix: Add encoding='utf-8' parameter
+
+src\utils\file_tracker.py
+  Line 112: with open(file_path, 'rb') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 136: df = pd.read_csv(file_path, nrows=max_rows)
+    Fix: Add encoding='utf-8' parameter
+
+tests\test_analysis.py
+  Line 270: with open(output_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 230: content = output_file.read_text()
+    Fix: Change to .read_text(encoding='utf-8')
+  Line 243: content = output_file.read_text()
+    Fix: Change to .read_text(encoding='utf-8')
+  Line 256: content = output_file.read_text()
+    Fix: Change to .read_text(encoding='utf-8')
+
+tests\test_diagrams.py
+  Line 133: content = html_file.read_text()
+    Fix: Change to .read_text(encoding='utf-8')
+
+tests\test_parser.py
+  Line 66: with open(csv_file1, 'w', newline='') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 74: with open(csv_file2, 'w', newline='') as f:
+    Fix: Add encoding='utf-8' parameter
+  Line 212: with open(output_file, 'r') as f:
+    Fix: Add encoding='utf-8' parameter

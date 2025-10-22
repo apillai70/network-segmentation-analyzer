@@ -4,18 +4,22 @@ Analysis Module
 Re-exports core analysis classes from parent analysis module.
 """
 
-import sys
-from pathlib import Path
-
-# Add parent directory to path to import from src.analysis (the file, not this package)
-parent_dir = Path(__file__).parent.parent
-sys.path.insert(0, str(parent_dir))
-
 # Import from the analysis.py file in the parent src/ directory
-import analysis as _analysis_module
-
-TrafficAnalyzer = _analysis_module.TrafficAnalyzer
-SegmentationRule = _analysis_module.SegmentationRule
-NetworkZone = _analysis_module.NetworkZone
+# Using relative import to avoid conflicts
+try:
+    # Try importing from parent src directory
+    from ..analysis import TrafficAnalyzer, SegmentationRule, NetworkZone
+except ImportError:
+    # Fallback: try absolute import (for backwards compatibility)
+    try:
+        from src.analysis import TrafficAnalyzer, SegmentationRule, NetworkZone
+    except ImportError:
+        # Last resort: manipulate path
+        import sys
+        from pathlib import Path
+        parent_dir = Path(__file__).parent.parent
+        if str(parent_dir) not in sys.path:
+            sys.path.insert(0, str(parent_dir))
+        from analysis import TrafficAnalyzer, SegmentationRule, NetworkZone
 
 __all__ = ['TrafficAnalyzer', 'SegmentationRule', 'NetworkZone']

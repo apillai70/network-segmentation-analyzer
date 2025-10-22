@@ -14,6 +14,13 @@ build/
 
 *claude
 
+# Environment files (NEVER COMMIT CREDENTIALS!)
+.env
+.env.production
+.env.development
+.env.local
+postgresqldb.env
+
 # Database
 database/*.db
 database/backups/*.db

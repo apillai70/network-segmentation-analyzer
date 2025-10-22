@@ -11,7 +11,21 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.parser import FlowRecord
-from src.analysis import TrafficAnalyzer, SegmentationRule, NetworkZone
+
+# Import analysis classes - try multiple approaches for compatibility
+try:
+    # Try importing from analysis.py file directly
+    from src.analysis import TrafficAnalyzer, SegmentationRule, NetworkZone
+except ImportError:
+    try:
+        # Fallback: if analysis is a package, try importing from it
+        from src.analysis_modules import TrafficAnalyzer, SegmentationRule, NetworkZone
+    except ImportError:
+        # Last resort: direct import
+        import analysis
+        TrafficAnalyzer = analysis.TrafficAnalyzer
+        SegmentationRule = analysis.SegmentationRule
+        NetworkZone = analysis.NetworkZone
 
 
 class TestSegmentationRule:
