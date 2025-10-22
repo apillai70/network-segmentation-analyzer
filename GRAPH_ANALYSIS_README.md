@@ -347,6 +347,3 @@ pip install networkx
 - See [src/diagrams.py](src/diagrams.py) for Mermaid diagram generation
 - See [REQUIREMENTS_ROADMAP.md](REQUIREMENTS_ROADMAP.md) for feature roadmap
 
----
-
-**🎉 Enjoy graph analysis without the database overhead!**
