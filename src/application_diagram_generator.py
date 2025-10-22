@@ -834,31 +834,31 @@ class ApplicationDiagramGenerator:
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }}
         .pan-up {{
-            top: 10px;
+            top: 5px;
             left: 50%;
-            width: 20px;
-            height: 10px;
+            width: 10px;
+            height: 20px;
             transform: translateX(-50%) !important;
         }}
         .pan-down {{
-            bottom: 10px;
+            bottom: 5px;
             left: 50%;
-            width: 20px;
-            height: 10px;
+            width: 10px;
+            height: 20px;
             transform: translateX(-50%) !important;
         }}
         .pan-left {{
-            left: 10px;
+            left: 5px;
             top: 50%;
-            width: 10px;
-            height: 20px;
+            width: 20px;
+            height: 10px;
             transform: translateY(-50%) !important;
         }}
         .pan-right {{
-            right: 10px;
+            right: 5px;
             top: 50%;
-            width: 10px;
-            height: 20px;
+            width: 20px;
+            height: 10px;
             transform: translateY(-50%) !important;
         }}
         .legend {{
