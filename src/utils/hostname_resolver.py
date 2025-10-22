@@ -170,6 +170,7 @@ class HostnameResolver:
             Tuple of (hostname, display_name)
             display_name is formatted as "IP - Hostname" for real hostnames, just "IP" for synthetic
             For multiple IPs: "IP - ESXi:IP1 / VM:IP2"
+            REQUIREMENT 9: Missing hostnames are indicated with red color coding
         """
         hostname = self.resolve(ip_address, zone)
 
@@ -203,8 +204,16 @@ class HostnameResolver:
 
             return hostname, display_name
         else:
-            # No hostname, just show IP
-            return ip_address, ip_address
+            # REQUIREMENT 9: No hostname found - indicate with ⚠️ marker
+            # This visual indicator helps identify nodes requiring manual investigation
+            if format == 'mermaid':
+                display_name = f"⚠️ {ip_address} [NO DNS]"
+            elif format == 'html':
+                display_name = f"⚠️ {ip_address} [NO DNS]"
+            else:  # text
+                display_name = f"⚠️ {ip_address} [NO DNS]"
+
+            return ip_address, display_name
 
     def _reverse_dns_lookup(self, ip_address: str) -> Optional[str]:
         """

@@ -149,21 +149,31 @@ class MermaidDiagramGenerator:
         lines.append("    EXTERNAL -->|Filtered Traffic| DMZ")
         lines.append("    DMZ -->|Firewall| INTERNAL")
 
-        # Add micro zone relationships based on traffic flows
+        # Add micro zone relationships based on traffic flows (with protocol/port info - REQUIREMENT 4)
         flow_summary = self._summarize_zone_flows()
 
-        for (src_zone, dst_zone), flow_count in flow_summary.items():
+        for (src_zone, dst_zone), stats in flow_summary.items():
             if src_zone and dst_zone and src_zone != dst_zone:
                 src_safe = self._safe_name(src_zone)
                 dst_safe = self._safe_name(dst_zone)
+                flow_count = stats['count']
+
+                # Build protocol/port string
+                proto_str = ""
+                if stats['protocols']:
+                    proto_list = sorted(stats['protocols'])
+                    # Limit to top 2 protocols for overall diagram readability
+                    proto_str = '<br/>' + ', '.join(proto_list[:2])
+                    if len(proto_list) > 2:
+                        proto_str += f' +{len(proto_list)-2}'
 
                 # Determine line style based on flow count
                 if flow_count > 100:
-                    lines.append(f"    {src_safe} ==>|{flow_count} flows| {dst_safe}")
+                    lines.append(f"    {src_safe} ==>|{flow_count} flows{proto_str}| {dst_safe}")
                 elif flow_count > 10:
-                    lines.append(f"    {src_safe} -->|{flow_count} flows| {dst_safe}")
+                    lines.append(f"    {src_safe} -->|{flow_count} flows{proto_str}| {dst_safe}")
                 else:
-                    lines.append(f"    {src_safe} -.->|{flow_count} flows| {dst_safe}")
+                    lines.append(f"    {src_safe} -.->|{flow_count} flows{proto_str}| {dst_safe}")
 
         mermaid_content = '\n'.join(lines)
 
@@ -186,7 +196,11 @@ class MermaidDiagramGenerator:
         return mermaid_content
 
     def generate_app_diagram(self, app_name: str, output_path: str) -> str:
-        """Generate per-application diagram with upstream/downstream view"""
+        """
+        Generate per-application diagram with upstream/downstream view
+
+        REQUIREMENTS 1-2: Shows app codes on nodes and edges
+        """
         logger.info(f"Generating upstream/downstream diagram for application: {app_name}")
 
         app_records = self.records
@@ -226,14 +240,19 @@ class MermaidDiagramGenerator:
         # Classify external dependencies by service type
         dependency_types = {}
         for dep_ip in external_dependencies:
-            # Find ports used for this dependency
+            # Find ports and protocols used for this dependency
             ports_used = set()
+            protocols_used = set()
             for (src, dst), stats in flow_summary.items():
                 if dst == dep_ip:
                     ports_used.update(stats['ports'])
+                    protocols_used.update(stats['protocols'])
 
-            # Classify by port
-            if any(p in [3306, 5432, 27017, 1433, 1521] for p in ports_used):
+            # Check for TDS protocol (SQL Server) - User clarification: TDS indicates database connection
+            has_tds = any('TDS' in str(proto).upper() for proto in protocols_used)
+
+            # Classify by port or protocol
+            if has_tds or any(p in [3306, 5432, 27017, 1433, 1521] for p in ports_used):
                 dependency_types[dep_ip] = 'database'
             elif 6379 in ports_used:
                 dependency_types[dep_ip] = 'cache'
@@ -261,67 +280,78 @@ class MermaidDiagramGenerator:
         lines.append("    classDef queue fill:#cc99ff,stroke:#9933ff,stroke-width:2px,color:#000")  # Purple - Queues
         lines.append("    classDef downstream fill:#cce5ff,stroke:#0066cc,stroke-width:2px,color:#000")  # Blue - Downstream Apps
         lines.append("    classDef lowRisk fill:#ccffcc,stroke:#009900,stroke-width:2px,color:#000")  # Green - Low Risk/Internal
+        lines.append("    classDef missingData fill:#ff4444,stroke:#cc0000,stroke-width:4px,color:#fff,stroke-dasharray: 5 5")  # REQUIREMENT 9: Red dashed - Missing hostname/data
         lines.append("")
 
-        # Group application components by tier (LEFT SIDE)
-        app_components_by_tier = defaultdict(list)
+        # Group application components by service type (web, app, db, cache, etc.)
+        # User request: Classify source components by type to show intra-app flows (web→app→db)
+        app_components_by_type = defaultdict(list)
 
         for comp_ip in application_components:
-            tier = None
-            # Try to find tier from zone membership first
-            for zone_name, zone_obj in self.zones.items():
-                if hasattr(zone_obj, 'members') and comp_ip in zone_obj.members:
-                    tier = zone_name
-                    break
+            # Find ports this component USES (as a client, outbound)
+            outbound_ports = set()
+            inbound_ports = set()  # Ports this component listens on (as a server)
 
-            # If not in a zone, infer from IP address pattern
-            if not tier:
-                tier = self._infer_tier_from_ip(comp_ip)
+            for (src, dst), stats in flow_summary.items():
+                if src == comp_ip:
+                    outbound_ports.update(stats['ports'])
+                # Check if this IP receives connections (is a destination in other flows)
+                if dst == comp_ip:
+                    inbound_ports.update(stats['ports'])
 
-            hostname, display_label = self.hostname_resolver.resolve_with_display(comp_ip, tier)
+            # Classify by service type based on ports and hostname
+            hostname, display_label = self.hostname_resolver.resolve_with_display(comp_ip, None)
+            service_type = self._classify_service_type(comp_ip, hostname, inbound_ports, outbound_ports)
 
-            app_components_by_tier[tier].append({
+            # REQUIREMENTS 1-2: Add app code to display label
+            display_label_with_app = f"{display_label} [{app_name}]"
+
+            app_components_by_type[service_type].append({
                 'ip': comp_ip,
                 'safe_name': self._safe_name(comp_ip),
-                'display_label': display_label
+                'display_label': display_label_with_app
             })
 
-        # Define tier order (top to bottom)
-        tier_order = ['WEB_TIER', 'APP_TIER', 'DATA_TIER', 'CACHE_TIER',
-                     'MESSAGING_TIER', 'MANAGEMENT_TIER', 'INFRASTRUCTURE_TIER', 'UNKNOWN']
+        # Define service type order (top to bottom) - User request: Show intra-app architecture
+        service_order = ['LOADBALANCER', 'WEB', 'APP', 'DATABASE', 'CACHE', 'QUEUE', 'MANAGEMENT', 'UNKNOWN']
 
-        # Map tiers to class names
-        tier_classes = {
-            'WEB_TIER': 'webTier',
-            'APP_TIER': 'appTier',
-            'DATA_TIER': 'dataTier',
-            'CACHE_TIER': 'cacheTier',
-            'MESSAGING_TIER': 'msgTier',
-            'MANAGEMENT_TIER': 'mgmtTier',
-            'INFRASTRUCTURE_TIER': 'mgmtTier',
-            'UNKNOWN': 'mgmtTier'
+        # Map service types to class names and labels
+        service_config = {
+            'LOADBALANCER': {'class': 'webTier', 'label': 'Load Balancers', 'icon': 'LB'},
+            'WEB': {'class': 'webTier', 'label': 'Web Tier', 'icon': 'WEB'},
+            'APP': {'class': 'appTier', 'label': 'Application Tier', 'icon': 'APP'},
+            'DATABASE': {'class': 'dataTier', 'label': 'Database Tier', 'icon': 'DB'},
+            'CACHE': {'class': 'cacheTier', 'label': 'Cache Tier', 'icon': 'CACHE'},
+            'QUEUE': {'class': 'msgTier', 'label': 'Message Queue Tier', 'icon': 'MQ'},
+            'MANAGEMENT': {'class': 'mgmtTier', 'label': 'Management Tier', 'icon': 'MGMT'},
+            'UNKNOWN': {'class': 'mgmtTier', 'label': 'Unknown/Other', 'icon': '?'}
         }
 
-        # Add application tiers as SEPARATE subgraphs (LEFT SIDE - stacked vertically)
-        lines.append(f"    %% Application Tiers (Vertical Stack)")
-        for tier in tier_order:
-            if tier not in app_components_by_tier:
+        # Add application service tiers as SEPARATE subgraphs (LEFT SIDE - stacked vertically)
+        lines.append(f"    %% Application Components by Service Type")
+        for service_type in service_order:
+            if service_type not in app_components_by_type:
                 continue
 
-            # Consistent formatting for all tiers (including UNKNOWN)
-            tier_label = tier.replace('_TIER', '').replace('_', ' ').title() if tier != 'UNKNOWN' else 'Unknown'
-            tier_id = self._safe_name(f"{app_name}_{tier}")
-            tier_class = tier_classes.get(tier, 'mgmtTier')
-            server_count = len(app_components_by_tier[tier])
+            config = service_config.get(service_type, {'class': 'mgmtTier', 'label': service_type, 'icon': '?'})
+            tier_label = config['label']
+            tier_id = self._safe_name(f"{app_name}_{service_type}")
+            tier_class = config['class']
+            server_count = len(app_components_by_type[service_type])
 
             lines.append(f"    subgraph {tier_id}[\"{tier_label}<br/>{server_count} server(s)\"]")
             lines.append("        direction LR")
 
             # Show servers in this tier (limit to 10 for readability)
-            for comp_info in sorted(app_components_by_tier[tier], key=lambda x: x['ip'])[:10]:
+            for comp_info in sorted(app_components_by_type[service_type], key=lambda x: x['ip'])[:10]:
                 safe_name = comp_info['safe_name']
                 display_label = self._sanitize_label(comp_info['display_label'])
-                lines.append(f"        {safe_name}[\"{display_label}\"]:::{tier_class}")
+
+                # REQUIREMENT 9: Apply red styling if hostname is missing (has ⚠️ marker)
+                if '⚠️' in display_label or '[NO DNS]' in display_label:
+                    lines.append(f"        {safe_name}[\"{display_label}\"]:::missingData")
+                else:
+                    lines.append(f"        {safe_name}[\"{display_label}\"]:::{tier_class}")
 
             lines.append("    end")
             lines.append("")
@@ -362,19 +392,27 @@ class MermaidDiagramGenerator:
                 safe_name = dep_info['safe_name']
                 display_label = self._sanitize_label(dep_info['display_label'])
 
+                # REQUIREMENT 9: Check if hostname is missing
+                has_missing_data = '⚠️' in display_label or '[NO DNS]' in display_label
+                style_class = 'missingData' if has_missing_data else (
+                    'database' if dep_type == 'database' else
+                    'downstream' if dep_type == 'downstream_app' else
+                    'queue' if dep_type == 'queue' else 'cache'
+                )
+
                 # Use different shapes for different service types
                 if dep_type == 'database':
                     # Cylinder shape for databases
-                    lines.append(f"        {safe_name}[(\"{display_label}\")]:::database")
+                    lines.append(f"        {safe_name}[(\"{display_label}\")]:::{style_class}")
                 elif dep_type == 'downstream_app':
                     # Circle shape for downstream applications
-                    lines.append(f"        {safe_name}((\"{display_label}\")):::downstream")
+                    lines.append(f"        {safe_name}((\"{display_label}\")):::{style_class}")
                 elif dep_type == 'queue':
                     # Rectangle for queues
-                    lines.append(f"        {safe_name}[\"{display_label}\"]:::queue")
+                    lines.append(f"        {safe_name}[\"{display_label}\"]:::{style_class}")
                 else:
                     # Rectangle for caches
-                    lines.append(f"        {safe_name}[\"{display_label}\"]:::cache")
+                    lines.append(f"        {safe_name}[\"{display_label}\"]:::{style_class}")
 
             lines.append("    end")
             lines.append("")
@@ -393,9 +431,9 @@ class MermaidDiagramGenerator:
         # Collect displayed node IPs (those that are actually rendered in the diagram)
         # IMPORTANT: Must match EXACT sorting/filtering used when rendering!
         displayed_app_components = set()
-        for tier_comps in app_components_by_tier.values():
-            # Match line 304: sorted by IP, first 10
-            for comp in sorted(tier_comps, key=lambda x: x['ip'])[:10]:
+        for service_comps in app_components_by_type.values():
+            # Match rendering logic: sorted by IP, first 10
+            for comp in sorted(service_comps, key=lambda x: x['ip'])[:10]:
                 displayed_app_components.add(comp['ip'])
 
         displayed_dependencies = set()
@@ -405,17 +443,54 @@ class MermaidDiagramGenerator:
                 displayed_dependencies.add(dep['ip'])
 
         flows_added = set()
-        # Sort flows by count to show most important connections first
+
+        # FIRST: Show intra-application flows (user request: web→app→db within same app)
+        lines.append("    %% Intra-Application Flows (within same app)")
+        intra_app_count = 0
         for (src, dst), stats in sorted(flow_summary.items(), key=lambda x: x[1]['count'], reverse=True):
             if src is None or dst is None:
                 continue
 
-            # Only show flows where BOTH source and destination are displayed nodes
+            # Check if BOTH are application components (intra-app flow)
+            if src in displayed_app_components and dst in displayed_app_components:
+                src_safe = self._safe_name(src)
+                dst_safe = self._safe_name(dst)
+
+                # Build protocol/port string with flow direction (REQUIREMENT 6)
+                if stats['protocols']:
+                    proto_list = sorted(stats['protocols'])
+                    proto_str = ', '.join(proto_list[:2])
+                    if len(proto_list) > 2:
+                        proto_str += f' +{len(proto_list)-2}'
+                    edge_label = f"INTRA-APP<br/>{proto_str}"
+                else:
+                    edge_label = "INTRA-APP"
+
+                lines.append(f"    {src_safe} -->|{edge_label}| {dst_safe}")
+                flows_added.add((src, dst))
+                intra_app_count += 1
+
+                if intra_app_count >= 30:  # Limit intra-app flows to avoid clutter
+                    break
+
+        lines.append("")
+        lines.append("    %% External Dependencies (to infrastructure/other apps)")
+
+        # SECOND: Show flows to external dependencies
+        for (src, dst), stats in sorted(flow_summary.items(), key=lambda x: x[1]['count'], reverse=True):
+            if src is None or dst is None:
+                continue
+
+            # Only show flows from app components to external dependencies
             if src not in displayed_app_components or dst not in displayed_dependencies:
                 continue
 
-            # Limit total flows displayed to avoid clutter
-            if len(flows_added) >= 50:
+            # Skip if already added (intra-app)
+            if (src, dst) in flows_added:
+                continue
+
+            # Limit total external flows
+            if len(flows_added) >= 80:  # 30 intra + 50 external
                 break
 
             src_safe = self._safe_name(src)
@@ -423,8 +498,28 @@ class MermaidDiagramGenerator:
             dep_type = dependency_types.get(dst, 'downstream_app')
             edge_label = edge_labels.get(dep_type, 'app calls')
 
+            # REQUIREMENT 6: Determine flow direction (EGRESS from app to external dependency)
+            # Check if destination is internal or external
+            is_dst_external = not self._is_internal_ip_check(dst)
+            flow_direction = "EGRESS" if is_dst_external else "INTER-APP"
+
+            # REQUIREMENT 4: Add port/protocol information to flow labels
+            # Build protocol/port string from collected stats
+            if stats['protocols']:
+                # Get unique protocols/ports, sort for consistency
+                proto_list = sorted(stats['protocols'])
+                # Limit to first 3 protocols to avoid clutter
+                proto_str = ', '.join(proto_list[:3])
+                if len(proto_list) > 3:
+                    proto_str += f' +{len(proto_list)-3} more'
+
+                # Enhanced label with port/protocol info and flow direction
+                edge_label_full = f"{flow_direction}<br/>{edge_label}<br/>{proto_str}"
+            else:
+                edge_label_full = f"{flow_direction}<br/>{edge_label}"
+
             # Use straight arrows with labels (vertical layout works better with simple arrows)
-            lines.append(f"    {src_safe} -->|{edge_label}| {dst_safe}")
+            lines.append(f"    {src_safe} -->|{edge_label_full}| {dst_safe}")
             flows_added.add((src, dst))
 
         mermaid_content = '\n'.join(lines)
@@ -502,20 +597,30 @@ class MermaidDiagramGenerator:
 
         lines.append("")
 
-        # Add flows
+        # Add flows with protocol/port information (REQUIREMENT 4)
         lines.append("    %% Traffic Flows")
-        for (src_zone, dst_zone), count in sorted(flow_summary.items(), key=lambda x: x[1], reverse=True):
+        for (src_zone, dst_zone), stats in sorted(flow_summary.items(), key=lambda x: x[1]['count'], reverse=True):
             if src_zone and dst_zone and src_zone != dst_zone:
                 src_safe = self._safe_name(src_zone)
                 dst_safe = self._safe_name(dst_zone)
+                count = stats['count']
+
+                # Build protocol/port string
+                proto_str = ""
+                if stats['protocols']:
+                    proto_list = sorted(stats['protocols'])
+                    # Limit to top 3 protocols for readability
+                    proto_str = '<br/>' + ', '.join(proto_list[:3])
+                    if len(proto_list) > 3:
+                        proto_str += f' +{len(proto_list)-3}'
 
                 # Classify flow volume
                 if count > 100:
-                    lines.append(f"    {src_safe} ==>|{count} flows<br/>HIGH| {dst_safe}")
+                    lines.append(f"    {src_safe} ==>|{count} flows<br/>HIGH{proto_str}| {dst_safe}")
                 elif count > 10:
-                    lines.append(f"    {src_safe} -->|{count} flows<br/>MEDIUM| {dst_safe}")
+                    lines.append(f"    {src_safe} -->|{count} flows<br/>MEDIUM{proto_str}| {dst_safe}")
                 else:
-                    lines.append(f"    {src_safe} -.->|{count} flows<br/>LOW| {dst_safe}")
+                    lines.append(f"    {src_safe} -.->|{count} flows<br/>LOW{proto_str}| {dst_safe}")
 
         mermaid_content = '\n'.join(lines)
 
@@ -537,9 +642,9 @@ class MermaidDiagramGenerator:
 
         return mermaid_content
 
-    def _summarize_zone_flows(self) -> Dict[Tuple[str, str], int]:
-        """Summarize traffic flows between zones"""
-        zone_flows = defaultdict(int)
+    def _summarize_zone_flows(self) -> Dict[Tuple[str, str], Dict]:
+        """Summarize traffic flows between zones with protocol/port information"""
+        zone_flows = defaultdict(lambda: {'count': 0, 'protocols': set(), 'ports': set()})
 
         # Map IPs to zones
         ip_to_zone = {}
@@ -547,7 +652,7 @@ class MermaidDiagramGenerator:
             for member in zone.members:
                 ip_to_zone[member] = zone_name
 
-        # Count flows between zones
+        # Count flows between zones and collect protocol/port info
         for record in self.records:
             src_zone = ip_to_zone.get(record.src_ip)
             dst_zone = ip_to_zone.get(record.dst_ip)
@@ -558,28 +663,85 @@ class MermaidDiagramGenerator:
             if not dst_zone:
                 dst_zone = 'EXTERNAL' if not record.is_internal else 'INTERNAL'
 
-            zone_flows[(src_zone, dst_zone)] += 1
+            key = (src_zone, dst_zone)
+            zone_flows[key]['count'] += 1
+
+            # Collect protocol and port information
+            if hasattr(record, 'port') and record.port:
+                proto = getattr(record, 'protocol', 'TCP')
+                zone_flows[key]['protocols'].add(f"{proto}:{record.port}")
+                zone_flows[key]['ports'].add(record.port)
+            else:
+                zone_flows[key]['protocols'].add(getattr(record, 'protocol', 'TCP'))
 
         return dict(zone_flows)
 
+    def _classify_service_type(self, ip: str, hostname: str, inbound_ports: set, outbound_ports: set) -> str:
+        """
+        Classify service type based on ports and hostname patterns
+        User request: Identify web, app, db, cache, queue, loadbalancer, etc.
+        """
+        hostname_lower = hostname.lower() if hostname else ''
+
+        # Load Balancer detection (user request)
+        if any(keyword in hostname_lower for keyword in ['lb', 'loadbalancer', 'load-balancer', 'haproxy', 'nginx', 'f5']):
+            return 'LOADBALANCER'
+        if any(p in inbound_ports for p in [80, 443, 8080, 8443]):  # Common LB ports
+            # Check if it's a simple proxy/LB (high connection count to backends)
+            if len(outbound_ports) > 5:  # LBs connect to many backends
+                return 'LOADBALANCER'
+
+        # Database detection (listens on DB ports)
+        if any(p in inbound_ports for p in [3306, 5432, 27017, 1433, 1521, 5433]):
+            return 'DATABASE'
+        if any(keyword in hostname_lower for keyword in ['db', 'database', 'sql', 'postgres', 'mysql', 'oracle', 'mongo']):
+            return 'DATABASE'
+
+        # Cache detection
+        if 6379 in inbound_ports or 11211 in inbound_ports:
+            return 'CACHE'
+        if any(keyword in hostname_lower for keyword in ['redis', 'memcache', 'cache']):
+            return 'CACHE'
+
+        # Message queue detection
+        if any(p in inbound_ports for p in [5672, 5671, 9092, 9093, 61616]):
+            return 'QUEUE'
+        if any(keyword in hostname_lower for keyword in ['mq', 'queue', 'rabbit', 'kafka', 'activemq']):
+            return 'QUEUE'
+
+        # Web tier detection (listens on HTTP/HTTPS)
+        if any(p in inbound_ports for p in [80, 443, 8080, 8443]):
+            return 'WEB'
+        if any(keyword in hostname_lower for keyword in ['web', 'www', 'nginx', 'apache', 'iis']):
+            return 'WEB'
+
+        # App tier (connects to databases, doesn't listen on web ports)
+        if any(p in outbound_ports for p in [3306, 5432, 27017, 1433, 1521, 6379]):
+            return 'APP'
+        if any(keyword in hostname_lower for keyword in ['app', 'api', 'service']):
+            return 'APP'
+
+        # IP-based tier inference (fallback)
+        return self._infer_tier_from_ip(ip)
+
     def _infer_tier_from_ip(self, ip: str) -> str:
-        """Infer network tier from IP address pattern"""
+        """Infer network tier from IP address pattern (fallback method)"""
         if not ip or not isinstance(ip, str):
             return 'UNKNOWN'
 
         # Standard tier IP ranges
         if ip.startswith('10.100.160.'):
-            return 'MANAGEMENT_TIER'
+            return 'MANAGEMENT'
         elif ip.startswith('10.164.105.'):
-            return 'WEB_TIER'
+            return 'WEB'
         elif ip.startswith('10.100.246.') or ip.startswith('10.165.116.'):
-            return 'APP_TIER'
+            return 'APP'
         elif ip.startswith('10.164.116.'):
-            return 'DATA_TIER'
+            return 'DATABASE'
         elif ip.startswith('10.164.144.'):
-            return 'CACHE_TIER'
+            return 'CACHE'
         elif ip.startswith('10.164.145.'):
-            return 'MESSAGING_TIER'
+            return 'QUEUE'
         else:
             return 'UNKNOWN'
 
@@ -782,7 +944,16 @@ class MermaidDiagramGenerator:
         </div>
         <h2>Network Segmentation Diagram</h2>
         <p>This diagram visualizes the network topology and traffic flows for security analysis and segmentation planning.</p>
-        <p><strong>Controls:</strong> Use mouse wheel to zoom, click and drag to pan. Use buttons on right for zoom controls.</p>
+        <p><strong>Mouse Controls:</strong> Use mouse wheel to zoom, click and drag to pan. Use buttons on right for zoom controls.</p>
+        <p><strong>Keyboard Shortcuts (Requirement 8):</strong>
+            <code>+</code>=Zoom in,
+            <code>-</code>=Zoom out,
+            <code>0</code>/<code>R</code>=Reset,
+            <code>F</code>=Fit to screen,
+            <code>C</code>=Center,
+            <code>Arrow keys</code>=Pan,
+            <code>?</code>=Help
+        </p>
 
         <div class="legend">
             <div class="legend-item">
@@ -790,6 +961,15 @@ class MermaidDiagramGenerator:
                 <span><strong>=====></strong> High volume (>100 flows) - Thick solid lines<br>
                 <strong>-----></strong> Medium volume (10-100 flows) - Solid lines<br>
                 <strong>-.-.-></strong> Low volume (<10 flows) - Dotted/dashed lines</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-title">Flow Direction Indicators (Requirement 6)</div>
+                <span>
+                <strong>INTRA-APP:</strong> Internal communication within same application (web→app→db)<br>
+                <strong>INTER-APP:</strong> Communication between different applications (internal network)<br>
+                <strong>EGRESS:</strong> Outbound traffic to external networks/internet<br>
+                <strong>INGRESS:</strong> Inbound traffic from external networks/internet (if shown)
+                </span>
             </div>
             <div class="legend-item">
                 <div class="legend-title">Security Zone Colors</div>
@@ -810,6 +990,14 @@ class MermaidDiagramGenerator:
                 <strong>[BLACK] Black solid</strong> = Observed from network flows (ExtraHop)<br>
                 <strong>[BLUE] Blue dashed</strong> = ML inference/predictions<br>
                 <strong>[WHITE] Gray dashed</strong> = Unknown/unclassified
+                </span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-title">⚠️ Missing Data Indicators (Requirement 9)</div>
+                <span>
+                <strong style="color: #ff4444;">⚠️ IP [NO DNS]</strong> = Hostname not resolved - DNS lookup failed or no PTR record<br>
+                <span style="color: #ff4444;">■</span> Red dashed border indicates nodes requiring manual investigation<br>
+                These nodes may need hostname mapping, DNS configuration, or infrastructure review
                 </span>
             </div>
             <div class="legend-item" style="grid-column: 1 / -1; border-left-color: #9e9e9e; padding: 20px; font-size: 14px;">
@@ -990,6 +1178,85 @@ class MermaidDiagramGenerator:
         if (savedTheme === 'dark') {{
             document.body.classList.add('dark');
         }}
+
+        // REQUIREMENT 8: Keyboard navigation
+        document.addEventListener('keydown', function(e) {{
+            // Prevent default browser shortcuts for these keys
+            const handledKeys = ['+', '-', '=', '0', 'r', 'R', 'c', 'C', 'f', 'F'];
+            if (handledKeys.includes(e.key)) {{
+                e.preventDefault();
+            }}
+
+            switch(e.key) {{
+                case '+':
+                case '=':  // Also handle = key (same as + without shift)
+                    zoomIn();
+                    console.log('Keyboard: Zoom in (+)');
+                    break;
+                case '-':
+                case '_':
+                    zoomOut();
+                    console.log('Keyboard: Zoom out (-)');
+                    break;
+                case '0':
+                    resetView();
+                    console.log('Keyboard: Reset view (0)');
+                    break;
+                case 'r':
+                case 'R':
+                    resetView();
+                    console.log('Keyboard: Reset view (R)');
+                    break;
+                case 'c':
+                case 'C':
+                    centerView();
+                    console.log('Keyboard: Center view (C)');
+                    break;
+                case 'f':
+                case 'F':
+                    fitView();
+                    console.log('Keyboard: Fit to screen (F)');
+                    break;
+                case 'ArrowUp':
+                    if (panZoom) {{
+                        panZoom.panBy({{x: 0, y: 50}});
+                    }}
+                    break;
+                case 'ArrowDown':
+                    if (panZoom) {{
+                        panZoom.panBy({{x: 0, y: -50}});
+                    }}
+                    break;
+                case 'ArrowLeft':
+                    if (panZoom) {{
+                        panZoom.panBy({{x: 50, y: 0}});
+                    }}
+                    break;
+                case 'ArrowRight':
+                    if (panZoom) {{
+                        panZoom.panBy({{x: -50, y: 0}});
+                    }}
+                    break;
+                case '?':
+                    // Show keyboard shortcuts help
+                    alert(
+                        'KEYBOARD SHORTCUTS:\\n\\n' +
+                        'Zoom:\\n' +
+                        '  + or = : Zoom in\\n' +
+                        '  - : Zoom out\\n' +
+                        '  0 or R : Reset view\\n' +
+                        '  F : Fit to screen\\n' +
+                        '  C : Center view\\n\\n' +
+                        'Pan:\\n' +
+                        '  Arrow keys : Pan in direction\\n\\n' +
+                        'Help:\\n' +
+                        '  ? : Show this help'
+                    );
+                    break;
+            }}
+        }});
+
+        console.log('Keyboard navigation enabled. Press ? for help.');
     </script>
 </body>
 </html>'''
