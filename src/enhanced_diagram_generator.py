@@ -22,6 +22,7 @@ from typing import List, Dict, Set, Optional, Tuple
 from collections import defaultdict
 
 from src.server_classifier import ServerClassifier
+from src.diagram_format_generator import DiagramFormatGenerator
 
 logger = logging.getLogger(__name__)
 
@@ -119,7 +120,8 @@ class EnhancedDiagramGenerator:
         """
         self.hostname_resolver = hostname_resolver
         self.classifier = ServerClassifier()
-        logger.info("EnhancedDiagramGenerator initialized with ServerClassifier")
+        self.format_generator = DiagramFormatGenerator()
+        logger.info("EnhancedDiagramGenerator initialized with ServerClassifier and DiagramFormatGenerator")
 
     def generate_enhanced_diagram(
         self,
@@ -134,14 +136,15 @@ class EnhancedDiagramGenerator:
             app_name: Application name
             flow_records: List of FlowRecord objects
             output_dir: Output directory path
-            output_formats: List of formats to generate ['mmd', 'png', 'svg', 'docx']
+            output_formats: List of formats to generate ['mmd', 'html', 'png', 'svg', 'docx']
+                          Default: ['mmd', 'html', 'png', 'svg', 'docx'] (all formats)
 
         Returns:
             Dict of format → output path
         """
         logger.info(f"Generating enhanced diagram for: {app_name}")
 
-        output_formats = output_formats or ['mmd', 'html']
+        output_formats = output_formats or ['mmd', 'html', 'png', 'svg', 'docx']
         output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -169,8 +172,37 @@ class EnhancedDiagramGenerator:
             output_paths['html'] = str(html_path)
             logger.info(f"  [OK] Saved HTML diagram: {html_path.name}")
 
-        # PNG and SVG generation will be added later
-        # DOCX generation will be added later
+        # Generate PNG
+        if 'png' in output_formats:
+            png_path = output_dir / f"{app_name}_enhanced.png"
+            if self.format_generator.generate_png(mermaid_content, png_path):
+                output_paths['png'] = str(png_path)
+                logger.info(f"  [OK] Saved PNG diagram: {png_path.name}")
+            else:
+                logger.warning(f"  [FAILED] Could not generate PNG: {png_path.name}")
+
+        # Generate SVG
+        if 'svg' in output_formats:
+            svg_path = output_dir / f"{app_name}_enhanced.svg"
+            if self.format_generator.generate_svg(mermaid_content, svg_path):
+                output_paths['svg'] = str(svg_path)
+                logger.info(f"  [OK] Saved SVG diagram: {svg_path.name}")
+            else:
+                logger.warning(f"  [FAILED] Could not generate SVG: {svg_path.name}")
+
+        # Generate DOCX (requires PNG to be generated first)
+        if 'docx' in output_formats:
+            docx_path = output_dir / f"{app_name}_enhanced.docx"
+            png_path = output_dir / f"{app_name}_enhanced.png"
+
+            # Generate classification summary for DOCX
+            classification_summary = self._generate_classification_summary(classified_servers)
+
+            if self.format_generator.generate_docx(app_name, png_path, docx_path, classification_summary):
+                output_paths['docx'] = str(docx_path)
+                logger.info(f"  [OK] Saved DOCX document: {docx_path.name}")
+            else:
+                logger.warning(f"  [FAILED] Could not generate DOCX: {docx_path.name}")
 
         return output_paths
 
@@ -546,6 +578,39 @@ class EnhancedDiagramGenerator:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html_template)
 
+    def _generate_classification_summary(self, classified_servers: Dict) -> str:
+        """Generate text summary of server classification for DOCX
+
+        Args:
+            classified_servers: Dict of tier → list of server info
+
+        Returns:
+            Formatted text summary
+        """
+        lines = []
+
+        # Count servers by tier
+        tier_counts = {tier: len(servers) for tier, servers in classified_servers.items() if servers}
+
+        lines.append("Server Classification Summary:\n")
+
+        for tier, count in sorted(tier_counts.items(), key=lambda x: x[1], reverse=True):
+            tier_label = tier.replace('_', ' ').title()
+            lines.append(f"  • {tier_label}: {count} server(s)")
+
+            # List top 5 servers in this tier
+            servers = classified_servers[tier]
+            for server in servers[:5]:
+                server_type = server['server_type'] or 'Unknown'
+                lines.append(f"    - {server['hostname'][:60]} ({server_type})")
+
+            if len(servers) > 5:
+                lines.append(f"    ... and {len(servers) - 5} more")
+
+            lines.append("")
+
+        return '\n'.join(lines)
+
     def _sanitize_id(self, name: str) -> str:
         """Sanitize name for use as Mermaid node ID
 
@@ -579,6 +644,7 @@ def generate_enhanced_diagram(app_name: str, flow_records: List,
         hostname_resolver: Optional hostname resolver
         output_dir: Output directory
         output_formats: List of formats ['mmd', 'html', 'png', 'svg', 'docx']
+                       Default: ['mmd', 'html', 'png', 'svg', 'docx'] (all formats)
 
     Returns:
         Dict of format → output path
