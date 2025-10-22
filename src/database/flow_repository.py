@@ -138,6 +138,14 @@ class FlowRepository:
                         has_missing_data BOOLEAN DEFAULT FALSE,
                         missing_fields TEXT[],
 
+                        -- Server Classification (added 2025-10-22)
+                        source_server_type VARCHAR(50),
+                        source_server_tier VARCHAR(50),
+                        source_server_category VARCHAR(50),
+                        dest_server_type VARCHAR(50),
+                        dest_server_tier VARCHAR(50),
+                        dest_server_category VARCHAR(50),
+
                         -- Batch tracking
                         batch_id VARCHAR(100),
                         file_source VARCHAR(255)
@@ -173,6 +181,27 @@ class FlowRepository:
                 cur.execute(f"""
                     CREATE INDEX IF NOT EXISTS idx_enriched_flows_created_at
                     ON {self.schema}.enriched_flows(created_at)
+                """)
+
+                # Indexes for server classification (added 2025-10-22)
+                cur.execute(f"""
+                    CREATE INDEX IF NOT EXISTS idx_enriched_flows_src_server_type
+                    ON {self.schema}.enriched_flows(source_server_type)
+                """)
+
+                cur.execute(f"""
+                    CREATE INDEX IF NOT EXISTS idx_enriched_flows_dst_server_type
+                    ON {self.schema}.enriched_flows(dest_server_type)
+                """)
+
+                cur.execute(f"""
+                    CREATE INDEX IF NOT EXISTS idx_enriched_flows_src_server_tier
+                    ON {self.schema}.enriched_flows(source_server_tier)
+                """)
+
+                cur.execute(f"""
+                    CREATE INDEX IF NOT EXISTS idx_enriched_flows_dst_server_tier
+                    ON {self.schema}.enriched_flows(dest_server_tier)
                 """)
 
                 # DNS cache table
@@ -244,6 +273,12 @@ class FlowRepository:
                 int(row.get('flow_count', 1)),
                 bool(row.get('has_missing_data', False)),
                 row.get('missing_fields', []) if isinstance(row.get('missing_fields'), list) else [],
+                row.get('source_server_type'),  # Added 2025-10-22
+                row.get('source_server_tier'),   # Added 2025-10-22
+                row.get('source_server_category'),  # Added 2025-10-22
+                row.get('dest_server_type'),     # Added 2025-10-22
+                row.get('dest_server_tier'),      # Added 2025-10-22
+                row.get('dest_server_category'),   # Added 2025-10-22
                 batch_id,
                 file_source
             ))
@@ -259,6 +294,8 @@ class FlowRepository:
                         dest_ip, dest_hostname, dest_device_type, dest_app_code,
                         protocol, port, bytes_in, bytes_out,
                         flow_direction, flow_count, has_missing_data, missing_fields,
+                        source_server_type, source_server_tier, source_server_category,
+                        dest_server_type, dest_server_tier, dest_server_category,
                         batch_id, file_source
                     ) VALUES %s
                     """,
