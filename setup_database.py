@@ -35,7 +35,7 @@ import os
 from pathlib import Path
 import logging
 from typing import Optional, Dict, Tuple
-
+import 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent / 'src'))
 
@@ -82,7 +82,7 @@ class DatabaseSetup:
         # Host
         host = input("PostgreSQL Host [localhost]: ").strip()
         if not host:
-            host = "localhost"
+            host = "udideapdb01.unix.rgbk.com"
 
         # Port
         port_input = input("PostgreSQL Port [5432]: ").strip()
@@ -91,24 +91,25 @@ class DatabaseSetup:
         # Database
         database = input("Database Name [network_segmentation]: ").strip()
         if not database:
-            database = "network_segmentation"
+            database = "prutech_bais"
 
         # User
-        user = input("Username [postgres]: ").strip()
+        user = input("Username [activenet_admin]: ").strip()
         if not user:
-            user = "postgres"
+            user = "activenet_admin"
 
         # Password
         import getpass
-        password = getpass.getpass("Password: ").strip()
+        #password = getpass.getpass("Password: ").strip()
+        password= "Xm9Kp2Nq7Rt4Wv8Yz3Lh6Jc5"
 
         # Schema (IMPORTANT: not 'public')
         print()
         print("⚠️  IMPORTANT: Schema name must NOT be 'public'")
         print("   Use a dedicated schema (e.g., 'network_analysis', 'activenet')")
-        schema = input("Schema Name [network_analysis]: ").strip()
+        schema = input("Schema Name [activenet]: ").strip()
         if not schema:
-            schema = "network_analysis"
+            schema = "activenet"
 
         if schema.lower() == 'public':
             print()
@@ -289,11 +290,11 @@ class DatabaseSetup:
 
         try:
             # Set environment variables for FlowRepository
-            os.environ['POSTGRES_HOST'] = params['host']
-            os.environ['POSTGRES_PORT'] = str(params['port'])
-            os.environ['POSTGRES_DB'] = params['database']
-            os.environ['POSTGRES_USER'] = params['user']
-            os.environ['POSTGRES_PASSWORD'] = params['password']
+            os.environ['DB_HOST'] = params['host']
+            os.environ['DB_PORT'] = str(params['port'])
+            os.environ['DB_NAME'] = params['database']
+            os.environ['DB_USER'] = params['user']
+            os.environ['DB_PASSWORD'] = params['password']  # Fixed: was DBPASSWORD (missing underscore)
             os.environ['DB_SCHEMA'] = params['schema']
             os.environ['DB_ENABLED'] = 'true'
 
@@ -461,8 +462,8 @@ class DatabaseSetup:
             filtered_lines = [
                 line for line in existing_lines
                 if not any(line.startswith(key) for key in [
-                    'DB_ENABLED=', 'POSTGRES_HOST=', 'POSTGRES_PORT=',
-                    'POSTGRES_DB=', 'POSTGRES_USER=', 'POSTGRES_PASSWORD=',
+                    'DB_ENABLED=', 'DB_HOST=', 'DB_PORT=',
+                    'DB_NAME=', 'DB_USER=', 'DB_PASSWORD=',
                     'DB_SCHEMA='
                 ])
             ]
@@ -475,11 +476,11 @@ class DatabaseSetup:
                 # Add database configuration
                 f.write("\n# PostgreSQL Database Configuration\n")
                 f.write("DB_ENABLED=true\n")
-                f.write(f"POSTGRES_HOST={params['host']}\n")
-                f.write(f"POSTGRES_PORT={params['port']}\n")
-                f.write(f"POSTGRES_DB={params['database']}\n")
-                f.write(f"POSTGRES_USER={params['user']}\n")
-                f.write(f"POSTGRES_PASSWORD={params['password']}\n")
+                f.write(f"DB_HOST={params['host']}\n")
+                f.write(f"DB_PORT={params['port']}\n")
+                f.write(f"DB_NAME={params['database']}\n")
+                f.write(f"DB_USERR={params['user']}\n")
+                f.write(f"DB_PASSWORD={params['password']}\n")
                 f.write(f"DB_SCHEMA={params['schema']}\n")
 
             print(f"✓ Configuration saved to {env_file}")
