@@ -198,6 +198,9 @@ class IncrementalLearningSystem:
             # Save to database (now includes server classification)
             self.pm.save_application(app_id, flows_df)
 
+            # ALSO save enriched flows to JSON (fallback when PostgreSQL not available)
+            self._save_enriched_flows_to_json(flows_df, app_id)
+
             # ALSO save to PostgreSQL enriched_flows table if enabled
             self._save_to_postgresql_if_enabled(flows_df, app_id)
 
@@ -686,6 +689,116 @@ class IncrementalLearningSystem:
         except Exception as e:
             logger.warning(f"  [WARNING] Failed to enrich flows with classification: {e}")
             return flows_df  # Return original DataFrame if classification fails
+
+    def _save_enriched_flows_to_json(self, flows_df: pd.DataFrame, app_id: str):
+        """
+        Save enriched flows to JSON files with all server classification fields
+        This provides a fallback when PostgreSQL is not available
+
+        Args:
+            flows_df: Enriched DataFrame with server classification
+            app_id: Application ID
+        """
+        try:
+            import json
+            from pathlib import Path
+
+            # Create enriched_flows directory
+            output_dir = Path(self.output_dir) / "enriched_flows"
+            output_dir.mkdir(parents=True, exist_ok=True)
+
+            # Prepare data structure matching PostgreSQL schema
+            enriched_records = []
+
+            for idx, row in flows_df.iterrows():
+                record = {
+                    # Source information
+                    "source_app_code": app_id,
+                    "source_ip": str(row.get('Source IP', '')),
+                    "source_hostname": str(row.get('Source', '')),
+
+                    # Destination information
+                    "dest_ip": str(row.get('Destination IP', '')),
+                    "dest_hostname": str(row.get('Destination', '')),
+
+                    # Flow details
+                    "protocol": str(row.get('Protocol', '')),
+                    "port": int(row.get('Port', 0)) if pd.notna(row.get('Port')) else None,
+                    "bytes_in": int(row.get('Bytes In', 0)) if pd.notna(row.get('Bytes In')) else 0,
+                    "bytes_out": int(row.get('Bytes Out', 0)) if pd.notna(row.get('Bytes Out')) else 0,
+
+                    # Server Classification - Source
+                    "source_server_type": str(row.get('source_server_type', 'Unknown')),
+                    "source_server_tier": str(row.get('source_server_tier', 'Unknown')),
+                    "source_server_category": str(row.get('source_server_category', 'Unknown')),
+
+                    # Server Classification - Destination
+                    "dest_server_type": str(row.get('dest_server_type', 'Unknown')),
+                    "dest_server_tier": str(row.get('dest_server_tier', 'Unknown')),
+                    "dest_server_category": str(row.get('dest_server_category', 'Unknown')),
+
+                    # Metadata
+                    "flow_direction": "outbound",
+                    "flow_count": 1,
+                    "batch_id": f"incremental_{app_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                    "file_source": f"App_Code_{app_id}.csv",
+                    "created_at": datetime.now().isoformat()
+                }
+
+                enriched_records.append(record)
+
+            # Save to JSON file per application
+            output_file = output_dir / f"{app_id}_enriched_flows.json"
+
+            # If file exists, append to it
+            if output_file.exists():
+                with open(output_file, 'r') as f:
+                    existing_data = json.load(f)
+                enriched_records = existing_data + enriched_records
+
+            with open(output_file, 'w') as f:
+                json.dump(enriched_records, f, indent=2)
+
+            logger.info(f"  [OK] Saved {len(flows_df)} enriched flows to JSON: {output_file}")
+
+            # Also save a consolidated file with all apps
+            self._update_consolidated_enriched_flows(enriched_records, output_dir)
+
+        except Exception as e:
+            logger.warning(f"  [WARNING] Failed to save enriched flows to JSON: {e}")
+            # Don't fail the entire process if JSON save fails
+
+    def _update_consolidated_enriched_flows(self, new_records: list, output_dir: Path):
+        """
+        Update consolidated enriched_flows.json with all applications
+
+        Args:
+            new_records: New enriched flow records to add
+            output_dir: Output directory
+        """
+        try:
+            import json
+
+            consolidated_file = output_dir / "enriched_flows_all.json"
+
+            # Load existing consolidated file
+            if consolidated_file.exists():
+                with open(consolidated_file, 'r') as f:
+                    all_records = json.load(f)
+            else:
+                all_records = []
+
+            # Append new records
+            all_records.extend(new_records)
+
+            # Save consolidated file
+            with open(consolidated_file, 'w') as f:
+                json.dump(all_records, f, indent=2)
+
+            logger.debug(f"  Updated consolidated enriched flows: {len(all_records)} total records")
+
+        except Exception as e:
+            logger.warning(f"  Failed to update consolidated enriched flows: {e}")
 
     def _save_to_postgresql_if_enabled(self, flows_df: pd.DataFrame, app_id: str):
         """
