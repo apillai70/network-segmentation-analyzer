@@ -101,8 +101,37 @@ class FlowRepository:
         """Create schema if it doesn't exist"""
         with self.get_connection() as conn:
             with conn.cursor() as cur:
-                cur.execute(f"CREATE SCHEMA IF NOT EXISTS {self.schema}")
-                logger.info(f"✓ Schema '{self.schema}' ready")
+                try:
+                    # First check if schema exists
+                    cur.execute("""
+                        SELECT schema_name
+                        FROM information_schema.schemata
+                        WHERE schema_name = %s
+                    """, (self.schema,))
+
+                    if cur.fetchone():
+                        logger.info(f"✓ Schema '{self.schema}' already exists")
+                    else:
+                        # Try to create schema
+                        cur.execute(f"CREATE SCHEMA IF NOT EXISTS {self.schema}")
+                        logger.info(f"✓ Schema '{self.schema}' created")
+                except Exception as e:
+                    # If we don't have CREATE permission but schema exists, that's OK
+                    if "permission denied" in str(e).lower():
+                        # Verify schema exists
+                        cur.execute("""
+                            SELECT schema_name
+                            FROM information_schema.schemata
+                            WHERE schema_name = %s
+                        """, (self.schema,))
+
+                        if cur.fetchone():
+                            logger.warning(f"⚠ No CREATE permission, but schema '{self.schema}' exists - continuing")
+                        else:
+                            logger.error(f"❌ Schema '{self.schema}' does not exist and cannot create it (no permission)")
+                            raise
+                    else:
+                        raise
 
     def _create_tables(self):
         """Create database tables if they don't exist"""
