@@ -35,7 +35,6 @@ import os
 from pathlib import Path
 import logging
 from typing import Optional, Dict, Tuple
-import 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent / 'src'))
 
@@ -313,29 +312,66 @@ class DatabaseSetup:
             if force_recreate:
                 self._drop_tables(repo, params['schema'])
 
-            # Tables are created by FlowRepository.__init__
-            print("\n✓ Tables created/verified:")
-            print(f"  - {params['schema']}.enriched_flows")
-            print(f"  - {params['schema']}.dns_cache")
-            print(f"  - {params['schema']}.flow_aggregates")
+            # Verify tables actually exist
+            print("\nVerifying tables...")
+            tables_verified = self._verify_tables(repo, params['schema'])
 
-            print("\n✓ Indexes created/verified:")
-            print("  - idx_enriched_flows_src_app")
-            print("  - idx_enriched_flows_dst_app")
-            print("  - idx_enriched_flows_src_ip")
-            print("  - idx_enriched_flows_dst_ip")
-            print("  - idx_enriched_flows_flow_direction")
-            print("  - idx_enriched_flows_src_server_type")
-            print("  - idx_enriched_flows_dst_server_type")
-            print("  - idx_enriched_flows_src_server_tier")
-            print("  - idx_enriched_flows_dst_server_tier")
+            if not tables_verified:
+                print("\n❌ TABLES NOT CREATED")
+                print("\nYou do NOT have CREATE TABLE permission on this schema.")
+                print("\nREQUIRED ACTION:")
+                print("  1. Send 'create_tables.sql' to your DBA")
+                print("  2. Ask DBA to run the SQL script")
+                print("  3. Run this setup script again")
+                print("\nSQL script location: create_tables.sql")
+                return False
 
+            print("\n✓ All tables verified and accessible!")
             return True
 
         except Exception as e:
             print(f"❌ Failed to initialize tables: {e}")
             import traceback
             traceback.print_exc()
+            return False
+
+    def _verify_tables(self, repo, schema: str) -> bool:
+        """
+        Verify that all required tables exist and are accessible
+
+        Returns:
+            True if all tables exist, False otherwise
+        """
+        required_tables = ['enriched_flows', 'dns_cache', 'flow_aggregates']
+
+        try:
+            with repo.get_connection() as conn:
+                with conn.cursor() as cur:
+                    # Check each table
+                    for table_name in required_tables:
+                        cur.execute("""
+                            SELECT table_name
+                            FROM information_schema.tables
+                            WHERE table_schema = %s AND table_name = %s
+                        """, (schema, table_name))
+
+                        if not cur.fetchone():
+                            print(f"  ❌ {schema}.{table_name} - NOT FOUND")
+                            return False
+
+                        # Try to access the table
+                        try:
+                            cur.execute(f"SELECT COUNT(*) FROM {schema}.{table_name}")
+                            count = cur.fetchone()[0]
+                            print(f"  ✓ {schema}.{table_name} - exists ({count} rows)")
+                        except Exception as e:
+                            print(f"  ❌ {schema}.{table_name} - cannot access: {e}")
+                            return False
+
+                    return True
+
+        except Exception as e:
+            print(f"❌ Verification failed: {e}")
             return False
 
     def _drop_tables(self, repo, schema: str):

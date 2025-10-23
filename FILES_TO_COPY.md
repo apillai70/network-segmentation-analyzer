@@ -25,53 +25,60 @@ This will get all changes automatically!
    - Creates enhanced diagrams with server grouping
    - Generates MMD, HTML, PNG, SVG formats
 
-**2. `setup_database.py`** (NEW - 600+ lines)
+**2. `setup_database.py`** (MODIFIED - 650+ lines)
    - One-command database setup
    - Tests connection
-   - Creates schema and tables
-   - Verifies setup
+   - FIXED: Now properly verifies tables exist
+   - FIXED: Detects missing CREATE TABLE permissions
+   - Provides clear guidance for DBA
 
 **3. `test_db_connection.py`** (NEW - 172 lines)
    - Quick database connection test
    - Lists available databases
    - No psql required
 
+**4. `create_tables.sql`** (NEW - FOR DBA)
+   - SQL script for DBA to create tables
+   - Use this if you lack CREATE TABLE permission
+   - Safe to run multiple times (uses IF NOT EXISTS)
+   - Includes all indexes and grants
+
 ### 📝 Documentation Files (4 files)
 
-**4. `POST_PROCESSING_DIAGRAMS.md`** (NEW)
+**5. `POST_PROCESSING_DIAGRAMS.md`** (NEW)
    - Complete guide for post-processing diagrams
    - How server grouping works
    - Usage examples
    - Troubleshooting
 
-**5. `POSTGRESQL_INTEGRATION.md`** (NEW)
+**6. `POSTGRESQL_INTEGRATION.md`** (NEW)
    - How PostgreSQL integration works
    - What data gets populated
    - Verification steps
 
-**6. `DATABASE_SETUP_QUICK_START.md`** (NEW)
+**7. `DATABASE_SETUP_QUICK_START.md`** (NEW)
    - Quick start guide for database setup
    - Step-by-step instructions
    - Troubleshooting common issues
 
-**7. `WHATS_MISSING_ANALYSIS.md`** (NEW)
+**8. `WHATS_MISSING_ANALYSIS.md`** (NEW)
    - Analysis of what files exist vs missing
    - Status of different output formats
 
 ### 🔧 Modified Source Files (3 files)
 
-**8. `src/core/incremental_learner.py`** (MODIFIED)
+**9. `src/core/incremental_learner.py`** (MODIFIED)
    - Added: `_enrich_flows_with_classification()` method
    - Added: `_save_to_postgresql_if_enabled()` method
    - Now automatically classifies servers during batch processing
    - Saves to PostgreSQL enriched_flows table
 
-**9. `src/database/flow_repository.py`** (MODIFIED)
+**10. `src/database/flow_repository.py`** (MODIFIED)
    - Fixed: `_ensure_schema_exists()` method
    - Now handles missing CREATE permission gracefully
    - Checks if schema exists before trying to create
 
-**10. `config.yaml`** (MODIFIED - Security Fix)
+**11. `config.yaml`** (MODIFIED - Security Fix)
    - Removed exposed database credentials
    - Now only contains `enabled: true` flag
    - Credentials must be in `.env.production` (not committed to git)
@@ -83,8 +90,9 @@ This will get all changes automatically!
 ### Scripts You Can Run
 ```
 generate_diagrams_from_db.py   ← Generate enhanced diagrams from DB
-setup_database.py              ← Setup PostgreSQL database
+setup_database.py              ← Setup PostgreSQL database (FIXED)
 test_db_connection.py          ← Test database connection
+create_tables.sql              ← SQL for DBA to create tables (NEW)
 ```
 
 ### Documentation to Read
@@ -233,13 +241,20 @@ All changes were committed in these commits:
 ⚠️ **CRITICAL FILES** - Must be copied:
 1. `src/core/incremental_learner.py` - Without this, PostgreSQL won't be populated!
 2. `src/database/flow_repository.py` - Without this, permission errors!
+3. `setup_database.py` - FIXED version with proper verification
+4. `create_tables.sql` - For DBA if you lack CREATE TABLE permission
 
 ✅ **Nice to Have** - Documentation files are helpful but optional
 
 🎯 **Test First** - Run `test_db_connection.py` before anything else
 
+💡 **If Tables Won't Create:**
+   - The FIXED `setup_database.py` will now detect this
+   - It will tell you to send `create_tables.sql` to your DBA
+   - DBA runs the SQL script, then you re-run setup
+
 ---
 
 **Created:** 2025-10-23
 **Session:** Continuous from 2025-10-22
-**Total files changed:** 9 files
+**Total files changed:** 11 files (9 original + 2 new fixes)
