@@ -49,7 +49,8 @@ class IncrementalLearningSystem:
         semantic_analyzer,
         topology_system,
         watch_dir: str = './data/input',
-        checkpoint_dir: str = './models/incremental'
+        checkpoint_dir: str = './models/incremental',
+        only_json: bool = False
     ):
         """
         Initialize incremental learning system
@@ -61,11 +62,13 @@ class IncrementalLearningSystem:
             topology_system: Unified topology system
             watch_dir: Directory to watch for new files
             checkpoint_dir: Directory for checkpoints
+            only_json: If True, save enriched flows to JSON only (skip PostgreSQL)
         """
         self.pm = persistence_manager
         self.ensemble = ensemble_model
         self.semantic_analyzer = semantic_analyzer
         self.topology_system = topology_system
+        self.only_json = only_json  # Store the only-json flag
 
         self.watch_dir = Path(watch_dir)
         self.checkpoint_dir = Path(checkpoint_dir)
@@ -809,6 +812,11 @@ class IncrementalLearningSystem:
             app_id: Application ID
         """
         try:
+            # Check if --only-json flag is set
+            if self.only_json:
+                logger.debug(f"  --only-json flag set, skipping PostgreSQL save")
+                return
+
             from src.config import get_config
             from src.database import FlowRepository
 

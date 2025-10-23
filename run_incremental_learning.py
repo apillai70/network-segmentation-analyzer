@@ -168,6 +168,12 @@ Examples:
         help='Verbose logging'
     )
 
+    parser.add_argument(
+        '--only-json',
+        action='store_true',
+        help='Save enriched flows to JSON only (skip PostgreSQL entirely, even if tables exist)'
+    )
+
     return parser.parse_args()
 
 
@@ -263,7 +269,8 @@ def main():
             semantic_analyzer=semantic_analyzer,
             topology_system=topology_system,
             watch_dir=args.watch_dir,
-            checkpoint_dir=str(models_dir)
+            checkpoint_dir=str(models_dir),
+            only_json=args.only_json  # Pass the only-json flag
         )
 
         logger.info("[OK] All components initialized")

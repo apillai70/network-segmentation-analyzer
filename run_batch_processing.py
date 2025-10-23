@@ -191,8 +191,12 @@ def clear_file_tracking():
     return success
 
 
-def process_batch(batch_size=10):
+def process_batch(batch_size=10, only_json=False):
     """Process a batch of files with real-time per-file status
+
+    Args:
+        batch_size: Number of files to process
+        only_json: If True, save to JSON only (skip PostgreSQL)
 
     Returns:
         tuple: (success, list of app_codes processed)
@@ -230,6 +234,10 @@ def process_batch(batch_size=10):
         '--batch',
         '--max-files', str(batch_size)
     ]
+
+    # Add --only-json flag if specified
+    if only_json:
+        cmd.append('--only-json')
 
     # Use real-time output to show per-file status
     success, output = run_command(
@@ -472,6 +480,12 @@ def main():
         help='Show raw IP addresses for non-existent domains'
     )
 
+    parser.add_argument(
+        '--only-json',
+        action='store_true',
+        help='Save enriched flows to JSON only (skip PostgreSQL entirely, even if tables exist)'
+    )
+
     args = parser.parse_args()
 
     print("\n" + "="*80)
@@ -535,7 +549,7 @@ def main():
         logger.info("="*80)
 
         # Step 1: Process batch
-        batch_success, app_codes_processed = process_batch(args.batch_size)
+        batch_success, app_codes_processed = process_batch(args.batch_size, args.only_json)
 
         if batch_success:
             stats['batches_processed'] += 1

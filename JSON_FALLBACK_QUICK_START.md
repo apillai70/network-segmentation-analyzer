@@ -67,21 +67,32 @@ Each flow record contains ALL server classification fields:
 ### Step 1: Run Batch Processing (Saves to JSON Automatically)
 
 ```bash
-# Process your CSV files - JSON is saved automatically
+# OPTION 1: JSON + PostgreSQL (default - dual mode)
 python run_batch_processing.py --batch-size 10
+
+# OPTION 2: JSON ONLY (skip PostgreSQL entirely for faster processing)
+python run_batch_processing.py --batch-size 10 --only-json
 ```
 
 **What happens:**
 - Reads CSV files from `data/input/`
 - Enriches flows with server classification
-- Saves to JSON: `outputs_final/enriched_flows/`
-- ALSO tries PostgreSQL (fails silently if tables don't exist)
+- **Always saves to JSON:** `outputs_final/enriched_flows/`
+- **Default (no flag):** Also tries PostgreSQL (fails silently if tables don't exist)
+- **With --only-json:** Skips PostgreSQL entirely (faster, cleaner logs)
 
-**Output:**
+**Output (default mode):**
 ```
 Processing batch 1/14...
   [OK] Saved 150 enriched flows to JSON: outputs_final/enriched_flows/AODSVY_enriched_flows.json
   [WARNING] Failed to save to PostgreSQL: relation "activenet.enriched_flows" does not exist
+  ...continuing normally...
+```
+
+**Output (--only-json mode):**
+```
+Processing batch 1/14...
+  [OK] Saved 150 enriched flows to JSON: outputs_final/enriched_flows/AODSVY_enriched_flows.json
   ...continuing normally...
 ```
 
