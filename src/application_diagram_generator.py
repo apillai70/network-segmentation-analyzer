@@ -772,7 +772,7 @@ class ApplicationDiagramGenerator:
         }}
         .controls button {{
             display: block;
-            width: 140px;
+            width: 70px;  /* Half of original 140px */
             margin: 8px 0;
             padding: 10px 16px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -806,8 +806,8 @@ class ApplicationDiagramGenerator:
             transform: translateY(-50%) !important;
         }}
         .pan-control {{
-            width: 110px;
-            height: 110px;
+            width: 55px;  /* Half of original 110px */
+            height: 55px;
             margin: 15px auto;
             position: relative;
             background: radial-gradient(circle, #ecf0f1 0%, #bdc3c7 100%);
@@ -819,45 +819,51 @@ class ApplicationDiagramGenerator:
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 14px;  /* Larger arrow symbols */
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: all 0.15s;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            user-select: none;
         }}
         .pan-arrow:hover {{
             background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transform: scale(1.05) !important;
+        }}
+        .pan-arrow:active {{
+            transform: scale(0.95) !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }}
         .pan-up {{
-            top: 5px;
+            top: 2px;
             left: 50%;
-            width: 10px;
-            height: 20px;
-            transform: translateX(-50%) !important;
+            width: 10px;  /* Vertical arrow - rotated 90° */
+            height: 18px; /* Half of original */
+            transform: translateX(-50%) rotate(0deg) !important;
         }}
         .pan-down {{
-            bottom: 5px;
+            bottom: 2px;
             left: 50%;
-            width: 10px;
-            height: 20px;
-            transform: translateX(-50%) !important;
+            width: 10px;  /* Vertical arrow - rotated 90° */
+            height: 18px; /* Half of original */
+            transform: translateX(-50%) rotate(0deg) !important;
         }}
         .pan-left {{
-            left: 5px;
+            left: 2px;
             top: 50%;
-            width: 20px;
+            width: 18px; /* Horizontal arrow - half size */
             height: 10px;
             transform: translateY(-50%) !important;
         }}
         .pan-right {{
-            right: 5px;
+            right: 2px;
             top: 50%;
-            width: 20px;
+            width: 18px; /* Horizontal arrow - half size */
             height: 10px;
             transform: translateY(-50%) !important;
         }}
@@ -951,15 +957,15 @@ class ApplicationDiagramGenerator:
         <h4>Controls</h4>
 
         <div class="pan-control">
-            <button class="pan-arrow pan-up" onclick="panDirection('up')" title="Pan Up">↑</button>
-            <button class="pan-arrow pan-down" onclick="panDirection('down')" title="Pan Down">↓</button>
-            <button class="pan-arrow pan-left" onclick="panDirection('left')" title="Pan Left">←</button>
-            <button class="pan-arrow pan-right" onclick="panDirection('right')" title="Pan Right">→</button>
+            <button class="pan-arrow pan-up" onclick="panDirection('up')" title="Move view up (content down)">↓</button>
+            <button class="pan-arrow pan-down" onclick="panDirection('down')" title="Move view down (content up)">↑</button>
+            <button class="pan-arrow pan-left" onclick="panDirection('left')" title="Move view left (content right)">→</button>
+            <button class="pan-arrow pan-right" onclick="panDirection('right')" title="Move view right (content left)">←</button>
         </div>
 
-        <button onclick="zoomIn()">Zoom In</button>
-        <button onclick="zoomOut()">Zoom Out</button>
-        <button onclick="resetView()">Reset View</button>
+        <button onclick="zoomIn()">+ Zoom</button>
+        <button onclick="zoomOut()">− Zoom</button>
+        <button onclick="resetView()">Reset</button>
     </div>
 
     <div class="legend">
@@ -1101,16 +1107,16 @@ class ApplicationDiagramGenerator:
             requestAnimationFrame(() => {{
                 switch(direction) {{
                     case 'up':
-                        translateY += PAN_STEP;
+                        translateY -= PAN_STEP;  // Fixed: up arrow moves view down (content up)
                         break;
                     case 'down':
-                        translateY -= PAN_STEP;
+                        translateY += PAN_STEP;  // Fixed: down arrow moves view up (content down)
                         break;
                     case 'left':
-                        translateX += PAN_STEP;
+                        translateX -= PAN_STEP;  // Fixed: left arrow moves view right (content left)
                         break;
                     case 'right':
-                        translateX -= PAN_STEP;
+                        translateX += PAN_STEP;  // Fixed: right arrow moves view left (content right)
                         break;
                 }}
                 updateTransform();
