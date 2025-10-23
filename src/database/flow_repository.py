@@ -74,7 +74,7 @@ class FlowRepository:
                 # This ensures all tables are created in the dedicated schema
                 options=f'-c search_path={self.schema},public'
             )
-            logger.info(f"✓ Connected to PostgreSQL: {self.config.db_host}:{self.config.db_port}/{self.config.db_name}")
+            logger.info(f"[OK] Connected to PostgreSQL: {self.config.db_host}:{self.config.db_port}/{self.config.db_name}")
             logger.info(f"  Schema: {self.schema}")
         except Exception as e:
             logger.error(f"Failed to connect to PostgreSQL: {e}")
@@ -111,11 +111,11 @@ class FlowRepository:
                     """, (self.schema,))
 
                     if cur.fetchone():
-                        logger.info(f"✓ Schema '{self.schema}' already exists")
+                        logger.info(f"[OK] Schema '{self.schema}' already exists")
                     else:
                         # Try to create schema
                         cur.execute(f"CREATE SCHEMA IF NOT EXISTS {self.schema}")
-                        logger.info(f"✓ Schema '{self.schema}' created")
+                        logger.info(f"[OK] Schema '{self.schema}' created")
                 except Exception as e:
                     # If we don't have CREATE permission but schema exists, that's OK
                     if "permission denied" in str(e).lower():
@@ -263,7 +263,7 @@ class FlowRepository:
                     )
                 """)
 
-                logger.info(f"✓ Database tables created in schema '{self.schema}'")
+                logger.info(f"[OK] Database tables created in schema '{self.schema}'")
 
     def insert_flows_batch(self, df: pd.DataFrame, batch_id: str = None,
                           file_source: str = None) -> int:
@@ -335,7 +335,7 @@ class FlowRepository:
 
                 inserted_count = cur.rowcount
 
-        logger.info(f"✓ Inserted {inserted_count} flows to PostgreSQL (batch: {batch_id})")
+        logger.info(f"[OK] Inserted {inserted_count} flows to PostgreSQL (batch: {batch_id})")
         return inserted_count
 
     def get_flows_by_app(self, app_code: str) -> pd.DataFrame:
@@ -429,7 +429,7 @@ class FlowRepository:
                         last_updated = CURRENT_TIMESTAMP
                 """)
 
-        logger.info("✓ Flow aggregates updated")
+        logger.info("[OK] Flow aggregates updated")
 
     def cache_dns_lookup(self, ip: str, hostname: str, ttl: int = 86400):
         """
@@ -515,7 +515,7 @@ class FlowRepository:
         """Close all database connections"""
         if self.connection_pool:
             self.connection_pool.closeall()
-            logger.info("✓ Database connections closed")
+            logger.info("[OK] Database connections closed")
 
 
 # Example usage

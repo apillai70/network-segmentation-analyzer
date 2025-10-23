@@ -100,7 +100,7 @@ class AppSpecificThreatSurfaceDocument:
         output_file.parent.mkdir(parents=True, exist_ok=True)
 
         self.doc.save(str(output_file))
-        logger.info(f"✓ App-specific threat surface document saved: {output_path}")
+        logger.info(f"[OK] App-specific threat surface document saved: {output_path}")
 
     def _add_cover_page(self):
         """Add professional cover page"""
@@ -181,11 +181,11 @@ class AppSpecificThreatSurfaceDocument:
 
         # Zone-specific finding
         if self.zone == 'WEB_TIER':
-            findings.append("✓ Internet-facing application - requires WAF and DDoS protection")
+            findings.append("[OK] Internet-facing application - requires WAF and DDoS protection")
         elif self.zone == 'APP_TIER':
-            findings.append("✓ Application tier - focus on service-to-service authentication")
+            findings.append("[OK] Application tier - focus on service-to-service authentication")
         elif self.zone == 'DATA_TIER':
-            findings.append("✓ Data tier - requires strict access controls and monitoring")
+            findings.append("[OK] Data tier - requires strict access controls and monitoring")
         else:
             findings.append(f"⚠ Classified as {self.zone} - needs zone validation")
 
@@ -195,11 +195,11 @@ class AppSpecificThreatSurfaceDocument:
         elif len(self.dependencies) > 15:
             findings.append(f"⚠ {len(self.dependencies)} dependencies detected - complex attack surface")
         else:
-            findings.append(f"✓ {len(self.dependencies)} dependencies - manageable complexity")
+            findings.append(f"[OK] {len(self.dependencies)} dependencies - manageable complexity")
 
         # DNS findings
         if dns_issues == 0:
-            findings.append("✓ No DNS configuration issues detected")
+            findings.append("[OK] No DNS configuration issues detected")
         elif dns_issues <= 3:
             findings.append(f"⚠ {dns_issues} DNS configuration issues - review recommended")
         else:
@@ -336,7 +336,7 @@ class AppSpecificThreatSurfaceDocument:
 
         if total_issues == 0:
             good_news = self.doc.add_paragraph()
-            run = good_news.add_run("✓ Good news! ")
+            run = good_news.add_run("[OK] Good news! ")
             run.bold = True
             run.font.color.rgb = RGBColor(0, 128, 0)
             good_news.add_run("No DNS configuration issues detected for your application.")
@@ -434,7 +434,7 @@ class AppSpecificThreatSurfaceDocument:
             self.doc.add_paragraph("• Regular security scanning and penetration testing", style='List Bullet')
         elif self.zone == 'DATA_TIER':
             exposure = self.doc.add_paragraph()
-            run = exposure.add_run("✓ Your application is in the Data Tier (not internet-facing). ")
+            run = exposure.add_run("[OK] Your application is in the Data Tier (not internet-facing). ")
             run.bold = True
             run.font.color.rgb = RGBColor(0, 128, 0)
 

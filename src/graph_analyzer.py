@@ -160,7 +160,7 @@ class GraphAnalyzer:
                 'hops': hops
             }
 
-            logger.info(f"  ✓ Path found: {len(path)} nodes, {len(path)-1} hops")
+            logger.info(f"  [OK] Path found: {len(path)} nodes, {len(path)-1} hops")
             return result
 
         except nx.NetworkXNoPath:
@@ -186,7 +186,7 @@ class GraphAnalyzer:
             paths = list(nx.all_simple_paths(
                 self.graph, source_ip, target_ip, cutoff=max_depth
             ))
-            logger.info(f"  ✓ Found {len(paths)} paths")
+            logger.info(f"  [OK] Found {len(paths)} paths")
             return paths
 
         except (nx.NodeNotFound, nx.NetworkXNoPath):
@@ -360,7 +360,7 @@ class GraphAnalyzer:
                 'out_degree': self.graph.out_degree(node)
             }
 
-        logger.info(f"  ✓ Calculated metrics for {len(metrics)} nodes")
+        logger.info(f"  [OK] Calculated metrics for {len(metrics)} nodes")
         return metrics
 
     def export_for_visualization(self, output_path: str):
@@ -413,7 +413,7 @@ class GraphAnalyzer:
         with open(output_file, 'w') as f:
             json.dump(graph_data, f, indent=2)
 
-        logger.info(f"  ✓ Graph data exported: {output_path}")
+        logger.info(f"  [OK] Graph data exported: {output_path}")
 
     def _classify_node_tier(self, ip_address: str) -> str:
         """Classify node into tier based on IP pattern"""

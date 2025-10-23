@@ -444,7 +444,7 @@ class SolutionsArchitectureDocument:
                 # Set width to 8.5 inches (95% of page width)
                 # Height auto-scales to preserve aspect ratio
                 self.doc.add_picture(self.png_path, width=Inches(8.5))
-                logger.info(f"  ✓ PNG embedded (4800px width for high quality): {Path(self.png_path).name}")
+                logger.info(f"  [OK] PNG embedded (4800px width for high quality): {Path(self.png_path).name}")
 
                 # Check if SVG also exists (for reference)
                 svg_path = self.png_path.replace('.png', '.svg')

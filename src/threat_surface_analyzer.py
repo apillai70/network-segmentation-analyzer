@@ -89,7 +89,7 @@ class ThreatSurfaceAnalyzer:
             'high_threat_nodes': len([s for s in results['threat_scores'].values() if s >= 7.0])
         }
 
-        logger.info(f"  ✓ Analysis complete: {results['summary']['total_attack_paths']} attack paths found")
+        logger.info(f"  [OK] Analysis complete: {results['summary']['total_attack_paths']} attack paths found")
         return results
 
     def _discover_attack_paths(self) -> List[Dict]:
@@ -144,7 +144,7 @@ class ThreatSurfaceAnalyzer:
             -x['path_length']  # Shorter paths = higher risk
         ), reverse=True)
 
-        logger.info(f"    ✓ Discovered {len(attack_paths)} attack paths")
+        logger.info(f"    [OK] Discovered {len(attack_paths)} attack paths")
         return attack_paths
 
     def _analyze_exposure(self) -> Dict[str, Dict]:
@@ -207,7 +207,7 @@ class ThreatSurfaceAnalyzer:
                 'out_degree': out_degree
             }
 
-        logger.info(f"    ✓ Analyzed exposure for {len(exposure_analysis)} nodes")
+        logger.info(f"    [OK] Analyzed exposure for {len(exposure_analysis)} nodes")
         return exposure_analysis
 
     def _calculate_threat_scores(self) -> Dict[str, float]:
@@ -242,7 +242,7 @@ class ThreatSurfaceAnalyzer:
 
             threat_scores[ip] = round(threat_score, 2)
 
-        logger.info(f"    ✓ Calculated threat scores for {len(threat_scores)} nodes")
+        logger.info(f"    [OK] Calculated threat scores for {len(threat_scores)} nodes")
         return threat_scores
 
     def _identify_chokepoints(self) -> List[Dict]:
@@ -279,7 +279,7 @@ class ThreatSurfaceAnalyzer:
                     'mitigation_priority': 'HIGH' if impact['reduction_percentage'] > 50 else 'MEDIUM'
                 })
 
-        logger.info(f"    ✓ Identified {len(chokepoints)} critical chokepoints")
+        logger.info(f"    [OK] Identified {len(chokepoints)} critical chokepoints")
         return chokepoints
 
     def _generate_mitigations(self) -> List[Dict]:
@@ -352,7 +352,7 @@ class ThreatSurfaceAnalyzer:
                 'impact': 'Improves both security (distributed attack surface) and availability'
             })
 
-        logger.info(f"    ✓ Generated {len(mitigations)} mitigation recommendations")
+        logger.info(f"    [OK] Generated {len(mitigations)} mitigation recommendations")
         return mitigations
 
     def _assess_path_risk(self, path: List[str]) -> str:
@@ -447,7 +447,7 @@ class ThreatSurfaceAnalyzer:
         with open(output_file, 'w') as f:
             json.dump(export_data, f, indent=2)
 
-        logger.info(f"  ✓ Analysis exported: {output_path}")
+        logger.info(f"  [OK] Analysis exported: {output_path}")
 
 
 if __name__ == '__main__':

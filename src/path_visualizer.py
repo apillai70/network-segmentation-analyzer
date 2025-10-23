@@ -64,7 +64,7 @@ class PathVisualizer:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
 
-        logger.info(f"  ✓ Path visualization saved: {output_path}")
+        logger.info(f"  [OK] Path visualization saved: {output_path}")
         return str(output_path)
 
     def visualize_all_paths(self, source_ip: str, target_ip: str,
@@ -101,7 +101,7 @@ class PathVisualizer:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
 
-        logger.info(f"  ✓ Multi-path visualization saved: {output_path}")
+        logger.info(f"  [OK] Multi-path visualization saved: {output_path}")
         return str(output_path)
 
     def visualize_gaps(self, gaps: List[Dict],
@@ -124,7 +124,7 @@ class PathVisualizer:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
 
-        logger.info(f"  ✓ Gap analysis visualization saved: {output_path}")
+        logger.info(f"  [OK] Gap analysis visualization saved: {output_path}")
         return str(output_path)
 
     def _generate_path_html(self, path_result: Dict, source: str, target: str) -> str:
