@@ -1,0 +1,43 @@
+```mermaid
+graph TB
+
+    App_Code_I3SQL["App_Code_I3SQL<br/>Application"]
+    style App_Code_I3SQL fill:#3498db,stroke:#333,stroke-width:3px,color:#fff
+
+    subgraph App_Code_I3SQL_web_group["Web"]
+        direction TB
+        server_not_found(server-not-found<br/>Type: Unknown<br/>Protocols: DB2, MYSQL, ORACLE, POSTGRESQL, SQL, TLS)
+        style server_not_found fill:#ffcccc,stroke:#333,stroke-width:2px
+    end
+
+    App_Code_I3SQL --HTTP/S--> server_not_found
+    linkStyle 0 stroke:#333,stroke-width:2px
+```
+
+
+**Legend:**
+
+**Shapes:**
+- **Application Node** = Source application (blue)
+- **Rounded Rectangles** = Services/Servers
+- **Rectangles** = Databases
+
+**Server Types:**
+- DNS, LDAP, Active Directory, CDN = Network Services (Mint)
+- F5 Load Balancer, Traffic Manager = Load Balancers (Pink)
+- Splunk = Monitoring/Logging (Peach)
+- CyberArk, Azure Key Vault, Rapid7, DB Auditor = Security Services (Coral)
+- ServiceNow, CIFS, Mail, SSRS = Application Services (Blue)
+- MySQL/Oracle = Database Tier (Orange)
+- AWS, Azure Traffic Manager = Cloud/External (Light Purple)
+
+**Colors (matching application_diagram_generator.py):**
+- Red (#ffcccc) = Web Tier (frontend)
+- Blue (#cce5ff) = Application Tier
+- Orange (#ff9966) = Data Tier (databases)
+- Mint (#99ffcc) = Network Services
+- Pink (#ffb3d9) = Load Balancers
+- Peach (#ffe6cc) = Monitoring/Logging
+- Coral (#ff9999) = Security Services
+- Light Purple (#e6ccff) = External Systems
+- Gray (#e0e0e0) = Unknown

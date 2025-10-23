@@ -88,10 +88,10 @@ class NetworkLogParser:
 
     # Column name mappings (various formats -> normalized)
     COLUMN_MAPPINGS = {
-        'src_hostname': ['src_hostname', 'source_hostname', 'src_host', 'source_host', 'source hostname'],
-        'src_ip': ['src_ip', 'source_ip', 'src_addr', 'source_address', 'source_addr', 'source ip'],
+        'src_hostname': ['src_hostname', 'source_hostname', 'src_host', 'source_host', 'source hostname', 'name'],
+        'src_ip': ['src_ip', 'source_ip', 'src_addr', 'source_address', 'source_addr', 'source ip', 'ip'],
         'dst_hostname': ['dst_hostname', 'destination_hostname', 'dst_host', 'dest_host', 'destination_host', 'dest hostname'],
-        'dst_ip': ['dst_ip', 'destination_ip', 'dst_addr', 'dest_ip', 'destination_address', 'destination_addr', 'dest ip'],
+        'dst_ip': ['dst_ip', 'destination_ip', 'dst_addr', 'dest_ip', 'destination_address', 'destination_addr', 'dest ip', 'peer'],
         'protocol': ['protocol', 'proto', 'proto_port', 'protocol_port'],
         'bytes': ['bytes', 'bytes_transferred', 'bytes_in', 'byte_count', 'octets', 'bytes in', 'bytes out'],
         'packets': ['packets', 'packet_count', 'pkts', 'pkt_count'],

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Application Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .diagram-container {
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enhanced Application Diagram - Server Classification</h1>
+
+        <div class="controls">
+            <button onclick="zoomIn()">Zoom In</button>
+            <button onclick="zoomOut()">Zoom Out</button>
+            <button onclick="resetZoom()">Reset</button>
+            <button onclick="window.print()">Print</button>
+        </div>
+
+        <div class="diagram-container" id="diagram">
+            <pre class="mermaid">
+graph TB
+
+    App_Code_DM_RDOM["App_Code_DM_RDOM<br/>Application"]
+    style App_Code_DM_RDOM fill:#3498db,stroke:#333,stroke-width:3px,color:#fff
+
+    subgraph App_Code_DM_RDOM_web_group["Web"]
+        direction TB
+        server_not_found(server-not-found<br/>Type: Unknown<br/>Protocols: DB2, JDBC, ODBC, ORACLE, SQL, TLS)
+        style server_not_found fill:#ffcccc,stroke:#333,stroke-width:2px
+    end
+
+    App_Code_DM_RDOM --HTTP/S--> server_not_found
+    linkStyle 0 stroke:#333,stroke-width:2px
+
+
+
+**Legend:**
+
+**Shapes:**
+- **Application Node** = Source application (blue)
+- **Rounded Rectangles** = Services/Servers
+- **Rectangles** = Databases
+
+**Server Types:**
+- DNS, LDAP, Active Directory, CDN = Network Services (Mint)
+- F5 Load Balancer, Traffic Manager = Load Balancers (Pink)
+- Splunk = Monitoring/Logging (Peach)
+- CyberArk, Azure Key Vault, Rapid7, DB Auditor = Security Services (Coral)
+- ServiceNow, CIFS, Mail, SSRS = Application Services (Blue)
+- MySQL/Oracle = Database Tier (Orange)
+- AWS, Azure Traffic Manager = Cloud/External (Light Purple)
+
+**Colors (matching application_diagram_generator.py):**
+- Red (#ffcccc) = Web Tier (frontend)
+- Blue (#cce5ff) = Application Tier
+- Orange (#ff9966) = Data Tier (databases)
+- Mint (#99ffcc) = Network Services
+- Pink (#ffb3d9) = Load Balancers
+- Peach (#ffe6cc) = Monitoring/Logging
+- Coral (#ff9999) = Security Services
+- Light Purple (#e6ccff) = External Systems
+- Gray (#e0e0e0) = Unknown
+            </pre>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        let currentZoom = 1.0;
+
+        function zoomIn() {
+            currentZoom += 0.1;
+            document.getElementById('diagram').style.transform = `scale(${currentZoom})`;
+            document.getElementById('diagram').style.transformOrigin = 'top left';
+        }
+
+        function zoomOut() {
+            if (currentZoom > 0.3) {
+                currentZoom -= 0.1;
+                document.getElementById('diagram').style.transform = `scale(${currentZoom})`;
+                document.getElementById('diagram').style.transformOrigin = 'top left';
+            }
+        }
+
+        function resetZoom() {
+            currentZoom = 1.0;
+            document.getElementById('diagram').style.transform = 'scale(1)';
+        }
+    </script>
+</body>
+</html>

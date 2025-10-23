@@ -67,22 +67,51 @@ def run_networkx_threat_analysis():
         from src.graph_analyzer import GraphAnalyzer
         from src.threat_surface_analyzer import ThreatSurfaceAnalyzer
 
-        # Parse network flows from processed files OR master topology
-        logger.info("Loading network flows...")
+        # Parse network flows from ENRICHED persistent data (not raw source files!)
+        logger.info("Loading network flows from enriched persistent data...")
 
-        # Try data/input/processed first (where files are moved after processing)
-        processed_dir = Path('data/input/processed')
-        if processed_dir.exists() and list(processed_dir.glob('*.csv')):
-            logger.info("  Reading from data/input/processed/...")
-            parser = parse_network_logs('data/input/processed')
-        # Fallback to data/input if files haven't been moved yet
-        elif Path('data/input').exists() and list(Path('data/input').glob('*.csv')):
-            logger.info("  Reading from data/input/...")
-            parser = parse_network_logs('data/input')
-        else:
-            logger.error("  No CSV files found in data/input/ or data/input/processed/")
+        # IMPORTANT: We read from persistent_data/applications/*/flows.csv
+        # These files have the enriched columns: Source IP, Dest IP, Source Hostname, etc.
+        # NOT the raw source files which only have: IP, Name, Peer, Protocol
+
+        persistent_apps_dir = Path('persistent_data/applications')
+
+        if not persistent_apps_dir.exists():
+            logger.error(f"  Persistent data directory not found: {persistent_apps_dir}")
             logger.error("  Please run batch processing first: python run_batch_processing.py --batch-size 10")
             return None
+
+        # Collect all flows.csv files from all application directories
+        app_dirs = [d for d in persistent_apps_dir.iterdir() if d.is_dir()]
+        flows_files = []
+
+        for app_dir in app_dirs:
+            flows_csv = app_dir / 'flows.csv'
+            if flows_csv.exists():
+                flows_files.append(flows_csv)
+
+        if not flows_files:
+            logger.error(f"  No flows.csv files found in {persistent_apps_dir}/*/")
+            logger.error("  Please run batch processing first to create enriched data")
+            return None
+
+        logger.info(f"  Found {len(flows_files)} enriched flows.csv files")
+
+        # Create a temporary directory with symlinks/copies for parsing
+        import tempfile
+        import shutil
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+
+            # Copy all flows.csv to temp directory with unique names
+            for i, flows_file in enumerate(flows_files):
+                app_name = flows_file.parent.name
+                dest = temp_path / f"{app_name}_flows.csv"
+                shutil.copy2(flows_file, dest)
+
+            logger.info(f"  Parsing enriched data from {len(flows_files)} applications...")
+            parser = parse_network_logs(str(temp_path))
 
         logger.info(f"  [OK] Loaded {len(parser.records)} flow records")
 
