@@ -67,9 +67,23 @@ def run_networkx_threat_analysis():
         from src.graph_analyzer import GraphAnalyzer
         from src.threat_surface_analyzer import ThreatSurfaceAnalyzer
 
-        # Parse network flows from data/input
-        logger.info("Parsing network flows from data/input/...")
-        parser = parse_network_logs('data/input')
+        # Parse network flows from processed files OR master topology
+        logger.info("Loading network flows...")
+
+        # Try data/input/processed first (where files are moved after processing)
+        processed_dir = Path('data/input/processed')
+        if processed_dir.exists() and list(processed_dir.glob('*.csv')):
+            logger.info("  Reading from data/input/processed/...")
+            parser = parse_network_logs('data/input/processed')
+        # Fallback to data/input if files haven't been moved yet
+        elif Path('data/input').exists() and list(Path('data/input').glob('*.csv')):
+            logger.info("  Reading from data/input/...")
+            parser = parse_network_logs('data/input')
+        else:
+            logger.error("  No CSV files found in data/input/ or data/input/processed/")
+            logger.error("  Please run batch processing first: python run_batch_processing.py --batch-size 10")
+            return None
+
         logger.info(f"  ✓ Loaded {len(parser.records)} flow records")
 
         # Build graph
