@@ -58,7 +58,7 @@ This will get all changes automatically!
    - Analysis of what files exist vs missing
    - Status of different output formats
 
-### 🔧 Modified Source Files (2 files)
+### 🔧 Modified Source Files (3 files)
 
 **8. `src/core/incremental_learner.py`** (MODIFIED)
    - Added: `_enrich_flows_with_classification()` method
@@ -70,6 +70,11 @@ This will get all changes automatically!
    - Fixed: `_ensure_schema_exists()` method
    - Now handles missing CREATE permission gracefully
    - Checks if schema exists before trying to create
+
+**10. `config.yaml`** (MODIFIED - Security Fix)
+   - Removed exposed database credentials
+   - Now only contains `enabled: true` flag
+   - Credentials must be in `.env.production` (not committed to git)
 
 ---
 
@@ -94,6 +99,7 @@ WHATS_MISSING_ANALYSIS.md           ← File status analysis
 ```
 src/core/incremental_learner.py     ← Batch processing integration
 src/database/flow_repository.py     ← Schema permission fix
+config.yaml                          ← Security fix (removed credentials)
 ```
 
 ---
@@ -116,7 +122,8 @@ git archive --format=zip --output=changed_files.zip HEAD \
   DATABASE_SETUP_QUICK_START.md \
   WHATS_MISSING_ANALYSIS.md \
   src/core/incremental_learner.py \
-  src/database/flow_repository.py
+  src/database/flow_repository.py \
+  config.yaml
 ```
 
 **Or copy individual files:**
