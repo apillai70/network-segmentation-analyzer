@@ -208,13 +208,24 @@ class NetworkLogParser:
         """Detect which columns map to our normalized fields"""
         mapping = {}
 
+        # Log the actual fieldnames from CSV
+        logger.info(f"CSV columns found: {fieldnames}")
+
         for normalized_field, possible_names in self.COLUMN_MAPPINGS.items():
             for field in fieldnames:
                 if field.lower() in [name.lower() for name in possible_names]:
                     mapping[normalized_field] = field
                     break
 
-        logger.debug(f"Detected column mapping: {mapping}")
+        # Log what was mapped
+        logger.info(f"Column mapping result: {mapping}")
+
+        # Warn about critical missing fields
+        if 'src_ip' not in mapping:
+            logger.warning(f"WARNING: 'src_ip' column not found! Available: {fieldnames}")
+        if 'dst_ip' not in mapping:
+            logger.warning(f"WARNING: 'dst_ip' column not found! Available: {fieldnames}")
+
         return mapping
 
     def _parse_row(self, row: Dict, column_mapping: Dict, app_name: str) -> Optional[FlowRecord]:
