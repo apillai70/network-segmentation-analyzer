@@ -26,6 +26,14 @@ from pathlib import Path
 from datetime import datetime
 from src.threat_surface_netseg_generator import generate_threat_surface_document
 
+# Force UTF-8 encoding for Windows console
+if sys.platform == 'win32':
+    import codecs
+    if hasattr(sys.stdout, 'buffer'):
+        sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
+    if hasattr(sys.stderr, 'buffer'):
+        sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
+
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).parent / 'src'))
 
