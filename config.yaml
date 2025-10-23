@@ -8,11 +8,17 @@ database:
 
   postgresql:
     enabled: true  # Set to false to force JSON mode
-    host: localhost
-    port: 5432
-    database: network_analysis
-    user: postgres
-    password: postgres  # CHANGE IN PRODUCTION!
+
+    # NOTE: Database credentials are loaded from .env.production
+    # DO NOT put credentials in this file (it's committed to git)
+    #
+    # Set these in .env.production:
+    #   DB_HOST=your-server.com
+    #   DB_PORT=5432
+    #   DB_NAME=your_database
+    #   DB_USER=your_username
+    #   DB_PASSWORD=your_password
+    #   DB_SCHEMA=your_schema
 
     # Connection pool settings
     min_connections: 2
