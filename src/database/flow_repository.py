@@ -38,6 +38,7 @@ class FlowRepository:
         self.config = config or get_config()
         self.connection_pool = None
         self.schema = self.config.db_schema
+        self.database = self.config.db_name  # Store database name for fully qualified table names
 
         # IMPORTANT: Validate schema is NOT public
         if self.schema.lower() == 'public':
@@ -138,8 +139,9 @@ class FlowRepository:
         with self.get_connection() as conn:
             with conn.cursor() as cur:
                 # Main enriched flows table
+                # IMPORTANT: Use fully qualified name: database.schema.table
                 cur.execute(f"""
-                    CREATE TABLE IF NOT EXISTS {self.schema}.enriched_flows (
+                    CREATE TABLE IF NOT EXISTS {self.database}.{self.schema}.enriched_flows (
                         id BIGSERIAL PRIMARY KEY,
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
@@ -235,7 +237,7 @@ class FlowRepository:
 
                 # DNS cache table
                 cur.execute(f"""
-                    CREATE TABLE IF NOT EXISTS {self.schema}.dns_cache (
+                    CREATE TABLE IF NOT EXISTS {self.database}.{self.schema}.dns_cache (
                         ip INET PRIMARY KEY,
                         hostname VARCHAR(255),
                         resolved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -245,7 +247,7 @@ class FlowRepository:
 
                 # Flow aggregates (for fast queries)
                 cur.execute(f"""
-                    CREATE TABLE IF NOT EXISTS {self.schema}.flow_aggregates (
+                    CREATE TABLE IF NOT EXISTS {self.database}.{self.schema}.flow_aggregates (
                         id SERIAL PRIMARY KEY,
                         source_app_code VARCHAR(50),
                         dest_app_code VARCHAR(50),

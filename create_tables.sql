@@ -13,7 +13,8 @@
 -- NOTE: This script is SAFE to run multiple times (uses IF NOT EXISTS)
 
 -- 1. Create main enriched flows table with server classification
-CREATE TABLE IF NOT EXISTS activenet.enriched_flows (
+-- Using fully qualified name: database.schema.table
+CREATE TABLE IF NOT EXISTS prutech_bais.activenet.enriched_flows (
     id BIGSERIAL PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
@@ -55,7 +56,7 @@ CREATE TABLE IF NOT EXISTS activenet.enriched_flows (
 );
 
 -- 2. Create DNS cache table
-CREATE TABLE IF NOT EXISTS activenet.dns_cache (
+CREATE TABLE IF NOT EXISTS prutech_bais.activenet.dns_cache (
     ip INET PRIMARY KEY,
     hostname VARCHAR(255),
     resolved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -63,7 +64,7 @@ CREATE TABLE IF NOT EXISTS activenet.dns_cache (
 );
 
 -- 3. Create flow aggregates table
-CREATE TABLE IF NOT EXISTS activenet.flow_aggregates (
+CREATE TABLE IF NOT EXISTS prutech_bais.activenet.flow_aggregates (
     id SERIAL PRIMARY KEY,
     source_app_code VARCHAR(50),
     dest_app_code VARCHAR(50),
