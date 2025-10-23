@@ -84,12 +84,12 @@ def run_networkx_threat_analysis():
             logger.error("  Please run batch processing first: python run_batch_processing.py --batch-size 10")
             return None
 
-        logger.info(f"  ✓ Loaded {len(parser.records)} flow records")
+        logger.info(f"  [OK] Loaded {len(parser.records)} flow records")
 
         # Build graph
         logger.info("Building network graph with NetworkX...")
         graph_analyzer = GraphAnalyzer(parser.records)
-        logger.info(f"  ✓ Graph built: {graph_analyzer.graph.number_of_nodes()} nodes, "
+        logger.info(f"  [OK] Graph built: {graph_analyzer.graph.number_of_nodes()} nodes, "
                    f"{graph_analyzer.graph.number_of_edges()} edges")
 
         # Perform threat surface analysis
@@ -98,9 +98,9 @@ def run_networkx_threat_analysis():
         results = threat_analyzer.analyze_attack_surface()
 
         summary = results.get('summary', {})
-        logger.info(f"  ✓ Found {summary.get('total_attack_paths', 0)} attack paths")
-        logger.info(f"  ✓ Identified {summary.get('exposed_nodes', 0)} high-exposure nodes")
-        logger.info(f"  ✓ {summary.get('critical_assets_at_risk', 0)} critical assets at risk")
+        logger.info(f"  [OK] Found {summary.get('total_attack_paths', 0)} attack paths")
+        logger.info(f"  [OK] Identified {summary.get('exposed_nodes', 0)} high-exposure nodes")
+        logger.info(f"  [OK] {summary.get('critical_assets_at_risk', 0)} critical assets at risk")
 
         # Export results to JSON
         output_dir = Path('outputs/threat_analysis')
@@ -108,7 +108,7 @@ def run_networkx_threat_analysis():
 
         json_output = output_dir / 'threat_surface_analysis.json'
         threat_analyzer.export_analysis(str(json_output))
-        logger.info(f"  ✓ JSON exported to: {json_output}")
+        logger.info(f"  [OK] JSON exported to: {json_output}")
 
         logger.info("[OK] NetworkX threat analysis completed successfully")
         return True
@@ -163,7 +163,7 @@ def generate_threat_html_visualization():
         output_path = threat_html_module.generate_threat_html()
 
         if output_path:
-            logger.info(f"  ✓ HTML generated: {output_path}")
+            logger.info(f"  [OK] HTML generated: {output_path}")
             logger.info("[OK] HTML visualization completed successfully")
             return True
         else:
