@@ -192,8 +192,14 @@ class IncrementalLearningSystem:
             # Parse flows into records
             flow_records = self._parse_flows(flows_df, app_id)
 
-            # Save to database
+            # IMPORTANT: Enrich flows with server classification BEFORE saving to database
+            flows_df = self._enrich_flows_with_classification(flows_df, app_id)
+
+            # Save to database (now includes server classification)
             self.pm.save_application(app_id, flows_df)
+
+            # ALSO save to PostgreSQL enriched_flows table if enabled
+            self._save_to_postgresql_if_enabled(flows_df, app_id)
 
             # Update observed apps
             self.current_apps_observed.add(app_id)
@@ -621,6 +627,127 @@ class IncrementalLearningSystem:
             'topology_apps': len(self.current_topology),
             'processed_files_count': len(self.processed_files)
         }
+
+    def _enrich_flows_with_classification(self, flows_df: pd.DataFrame, app_id: str) -> pd.DataFrame:
+        """
+        Enrich flows with server classification
+
+        Adds columns:
+        - source_server_type, source_server_tier, source_server_category
+        - dest_server_type, dest_server_tier, dest_server_category
+
+        Args:
+            flows_df: DataFrame with flow data
+            app_id: Application ID
+
+        Returns:
+            Enriched DataFrame
+        """
+        try:
+            from src.server_classifier import ServerClassifier
+            from src.source_component_analyzer import SourceComponentAnalyzer
+
+            classifier = ServerClassifier()
+            source_analyzer = SourceComponentAnalyzer()
+
+            # Initialize new columns
+            flows_df['source_server_type'] = 'Unknown'
+            flows_df['source_server_tier'] = 'Unknown'
+            flows_df['source_server_category'] = 'Unknown'
+            flows_df['dest_server_type'] = 'Unknown'
+            flows_df['dest_server_tier'] = 'Unknown'
+            flows_df['dest_server_category'] = 'Unknown'
+
+            # Classify each row
+            for idx, row in flows_df.iterrows():
+                # Classify destination
+                dest_hostname = row.get('Destination', '') or row.get('dest_hostname', '') or ''
+                dest_ip = row.get('Destination IP', '') or row.get('dest_ip', '') or ''
+
+                if dest_hostname or dest_ip:
+                    dest_info = classifier.classify_server(dest_hostname, dest_ip)
+                    flows_df.at[idx, 'dest_server_type'] = dest_info.get('type', 'Unknown')
+                    flows_df.at[idx, 'dest_server_tier'] = dest_info.get('tier', 'Unknown')
+                    flows_df.at[idx, 'dest_server_category'] = dest_info.get('category', 'Unknown')
+
+                # Classify source (for source component analysis)
+                src_hostname = row.get('Source', '') or row.get('source_hostname', '') or ''
+                src_ip = row.get('Source IP', '') or row.get('source_ip', '') or ''
+
+                if src_hostname or src_ip:
+                    src_info = classifier.classify_server(src_hostname, src_ip)
+                    flows_df.at[idx, 'source_server_type'] = src_info.get('type', 'Unknown')
+                    flows_df.at[idx, 'source_server_tier'] = src_info.get('tier', 'Unknown')
+                    flows_df.at[idx, 'source_server_category'] = src_info.get('category', 'Unknown')
+
+            logger.info(f"  [OK] Enriched {len(flows_df)} flows with server classification")
+            return flows_df
+
+        except Exception as e:
+            logger.warning(f"  [WARNING] Failed to enrich flows with classification: {e}")
+            return flows_df  # Return original DataFrame if classification fails
+
+    def _save_to_postgresql_if_enabled(self, flows_df: pd.DataFrame, app_id: str):
+        """
+        Save enriched flows to PostgreSQL if enabled
+
+        Args:
+            flows_df: Enriched DataFrame with server classification
+            app_id: Application ID
+        """
+        try:
+            from src.config import get_config
+            from src.database import FlowRepository
+
+            config = get_config()
+
+            # Check if PostgreSQL is enabled
+            if not config.db_enabled:
+                logger.debug(f"  PostgreSQL disabled, skipping enriched_flows save")
+                return
+
+            # Initialize FlowRepository
+            flow_repo = FlowRepository(config)
+
+            if not flow_repo.connection_pool:
+                logger.warning(f"  PostgreSQL connection not available")
+                return
+
+            # Prepare DataFrame for PostgreSQL
+            # Map CSV column names to PostgreSQL column names
+            pg_df = flows_df.copy()
+
+            # Standardize column names
+            column_mapping = {
+                'Source': 'source_hostname',
+                'Source IP': 'source_ip',
+                'Destination': 'dest_hostname',
+                'Destination IP': 'dest_ip',
+                'Protocol': 'protocol',
+                'Port': 'port',
+                'Bytes In': 'bytes_in',
+                'Bytes Out': 'bytes_out'
+            }
+
+            pg_df = pg_df.rename(columns=column_mapping)
+
+            # Add required columns
+            pg_df['source_app_code'] = app_id
+            pg_df['flow_direction'] = 'outbound'  # Source app -> Destination
+            pg_df['flow_count'] = 1
+
+            # Insert into PostgreSQL
+            rows_inserted = flow_repo.insert_flows_batch(
+                pg_df,
+                batch_id=f"incremental_{app_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                file_source=f"App_Code_{app_id}.csv"
+            )
+
+            logger.info(f"  [OK] Saved {rows_inserted} flows to PostgreSQL enriched_flows table")
+
+        except Exception as e:
+            logger.warning(f"  [WARNING] Failed to save to PostgreSQL: {e}")
+            # Don't fail the entire process if PostgreSQL save fails
 
 
 class ContinuousLearner:
