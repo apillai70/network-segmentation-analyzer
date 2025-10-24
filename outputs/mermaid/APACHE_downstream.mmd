@@ -1,0 +1,21 @@
+graph LR
+    %% DOWNSTREAM: Where APACHE sends data
+
+    SOURCE["<b>APACHE</b><br/>172.16.0.13 (APP-VM-01.rgbk.com)<br/>10.164.92.169 (WAPRCG.rgbk.com)<br/>10.10.10.50 (vm-host-01.corp.local)<br/>... (+13 more)<br/>12 Servers | 16 Flows"]:::sourceapp
+
+    INTERNAL["<b>Internal Traffic</b><br/>2 Flows"]:::internal
+    SOURCE .->|2| INTERNAL
+
+    DEST_APP_0["<b>ANSIBLE</b><br/>10.100.246.18 (APP-SERVER-01.rgbk.com)<br/>1 Servers | 1 Flows"]:::destapp
+    SOURCE .->|1| DEST_APP_0
+
+    EXTERNAL["<b>External / Internet</b><br/>10.100.246.30<br/>1.1.1.1<br/>... (+10 more)<br/>12 Destinations | 13 Flows"]:::external
+    SOURCE -->|13| EXTERNAL
+
+    %% Styles
+    classDef sourceapp fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef destapp fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef vmware fill:#FF9800,stroke:#E65100,stroke-width:1.5px,color:#fff
+    classDef internal fill:#9C27B0,stroke:#6A1B9A,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:2px,color:#000,rx:2,ry:2

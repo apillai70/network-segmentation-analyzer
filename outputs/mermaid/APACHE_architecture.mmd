@@ -1,0 +1,58 @@
+graph TD
+    %% APACHE Architecture Diagram (Vertical Layout)
+
+    subgraph UPSTREAM["⬆️ UPSTREAM SOURCES"]
+        UP0["APACHE<br/>2 flows"]:::upstream
+        UP1["APIGTW<br/>1 flows"]:::upstream
+        UP2["APM<br/>1 flows"]:::upstream
+    end
+
+    subgraph CENTER["APACHE APPLICATION"]
+        subgraph NLB["⚖️ NETWORK LOAD BALANCER (Inferred)"]
+            NLB_NODE["External/Internal Gateway<br/>Distributes traffic to Web Tier"]:::loadbalancer
+        end
+        subgraph WEB["🌐 WEB TIER"]
+            W0["10.10.10.50<br/>(vm-host-01.corp.local)"]:::web
+            W1["192.168.1.102<br/>(host02.corp.local)"]:::web
+            WMORE["... (+3 more)"]:::webmore
+            click WMORE showWebServers
+        end
+        subgraph APP["⚙️ APPLICATION TIER"]
+            A0["172.16.0.13<br/>(APP-VM-01.rgbk.com)"]:::app
+        end
+        subgraph DB["🗄️ DATABASE TIER"]
+            D0["10.164.92.169<br/>(WAPRCG.rgbk.com)"]:::database
+            D1["10.10.10.51<br/>(host02.corp.local)"]:::database
+            DMORE["... (+5 more)"]:::dbmore
+            click DMORE showDatabaseServers
+        end
+        subgraph OTHER["🖥️ OTHER SERVICES"]
+            OTH_Domain_Controller["Domain Controller<br/>1 servers"]:::other
+            OTH_General["General<br/>3 servers"]:::other
+        end
+    end
+
+    subgraph DOWNSTREAM["⬇️ DOWNSTREAM DESTINATIONS"]
+        DOWN0["ANSIBLE<br/>1 servers | 1 flows"]:::downstream
+    end
+
+    EXTERNAL["🌍 EXTERNAL / INTERNET<br/>13 destinations | 15 flows"]:::external
+
+    UP0 --> CENTER
+    UP1 --> CENTER
+    UP2 --> CENTER
+    CENTER --> DOWN0
+    CENTER --> EXTERNAL
+
+    %% Styles (thinner strokes for professional appearance)
+    classDef upstream fill:#E3F2FD,stroke:#1976D2,stroke-width:1.5px,color:#000
+    classDef web fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef webmore fill:#81C784,stroke:#2E7D32,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef app fill:#FF9800,stroke:#E65100,stroke-width:2px,color:#fff
+    classDef appmore fill:#FFB74D,stroke:#E65100,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef database fill:#9C27B0,stroke:#6A1B9A,stroke-width:2px,color:#fff
+    classDef dbmore fill:#BA68C8,stroke:#6A1B9A,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:2px,color:#000
+    classDef other fill:#607D8B,stroke:#37474F,stroke-width:1.5px,color:#fff
+    classDef downstream fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff

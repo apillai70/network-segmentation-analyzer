@@ -1,0 +1,22 @@
+graph LR
+    %% FULL FLOW: Source Apps → APIGTW → Destination Apps
+
+    SRC_APP_0["<b>APIGTW</b><br/>10.164.92.169 (host01.rgbk.com)<br/>1 Servers | 1 Flows"]:::upstream
+    SRC_APP_1["<b>APM</b><br/>192.168.1.102 (API-GATEWAY.rgbk.com)<br/>1 Servers | 1 Flows"]:::upstream
+
+    CENTER["<b>APIGTW (CENTER)</b><br/>172.16.0.10 (ESXi-Host-01.rgbk.com)<br/>10.100.246.19 (vm-host-01.corp.local)<br/>... (+11 more)<br/>10 Servers | 13 Flows"]:::centerapp
+
+    SRC_APP_0 .->|1| CENTER
+    SRC_APP_1 .->|1| CENTER
+    DEST_APP_0[("<b>ALIBABA</b><br/>10.164.92.167 (ESXi-Host-02.corp.local)<br/>10.164.92.168 (vmhost-02.rgbk.com)<br/>2 Servers | 3 Flows | 3 VMware")]:::downstream
+    CENTER .->|3| DEST_APP_0
+    DEST_APP_1[("<b>APACHE</b><br/>10.10.10.51 (vm-host-01.corp.local)<br/>1 Servers | 1 Flows | 1 VMware")]:::downstream
+    CENTER .->|1| DEST_APP_1
+    EXTERNAL["<b>External / Internet</b><br/>1.1.1.1<br/>10.20.20.100<br/>... (+4 more)<br/>6 Destinations | 8 Flows"]:::external
+    CENTER .->|8| EXTERNAL
+
+    %% Styles
+    classDef centerapp fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef upstream fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef downstream fill:#9C27B0,stroke:#6A1B9A,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff

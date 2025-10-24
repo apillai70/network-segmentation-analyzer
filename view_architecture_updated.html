@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANSIBLE Architecture Diagram - UPDATED</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .diagram-container {
+            padding: 40px;
+            background: white;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 2px solid #e0e0e0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-weight: 500;
+            background: #2a5298;
+            color: white;
+        }
+
+        .btn:hover {
+            background: #1e3c72;
+            transform: scale(1.05);
+        }
+
+        .info {
+            padding: 20px 40px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            margin: 20px 40px;
+            border-radius: 5px;
+        }
+
+        .info h3 {
+            margin-top: 0;
+            color: #1976D2;
+        }
+
+        .info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .info li {
+            margin: 8px 0;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 15px 40px;
+            margin: 20px 40px;
+            border-left: 4px solid #ffc107;
+            border-radius: 5px;
+        }
+
+        .highlight h3 {
+            margin-top: 0;
+            color: #ff6f00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏗️ ANSIBLE Architecture Diagram</h1>
+            <p>Professional Tier-Based Network Architecture with IP (hostname) Format</p>
+        </div>
+
+        <div class="highlight">
+            <h3>✨ NEW FEATURES:</h3>
+            <ul>
+                <li><strong>IP (hostname) Format:</strong> Shows "10.100.246.20<br/>(WEB-SERVER-01.corp.local)"</li>
+                <li><strong>"... (+X more)" Indicators:</strong> Clickable boxes showing additional servers</li>
+                <li><strong>Dashed Borders:</strong> "+more" boxes have dashed borders for visual distinction</li>
+                <li><strong>Server Type Grouping:</strong> Web (Green) | App (Orange) | Database (Purple)</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h3>📊 Architecture Overview:</h3>
+            <ul>
+                <li><strong>🌐 WEB TIER:</strong> 3 servers (2 shown + 1 more)</li>
+                <li><strong>⚙️ APPLICATION TIER:</strong> 4 servers (2 shown + 2 more)</li>
+                <li><strong>🗄️ DATABASE TIER:</strong> 5 servers (2 shown + 3 more)</li>
+                <li><strong>⬅️ UPSTREAM:</strong> ANSIBLE, APACHE</li>
+                <li><strong>➡️ DOWNSTREAM:</strong> ALIBABA, External/Internet</li>
+            </ul>
+        </div>
+
+        <div class="diagram-container">
+            <div class="mermaid">
+graph LR
+    %% ANSIBLE Architecture Diagram
+
+    subgraph UPSTREAM["⬅️ UPSTREAM SOURCES"]
+        UP0["ANSIBLE<br/>2 flows"]:::upstream
+        UP1["APACHE<br/>1 flows"]:::upstream
+    end
+
+    subgraph CENTER["ANSIBLE APPLICATION"]
+        subgraph WEB["🌐 WEB TIER"]
+            W0["10.100.246.20<br/>(WEB-SERVER-01.corp.local)"]:::web
+            W1["192.168.1.102<br/>(WEB-VM-01.rgbk.com)"]:::web
+            WMORE["... (+1 more)"]:::webmore
+        end
+        subgraph APP["⚙️ APPLICATION TIER"]
+            A0["192.168.1.103<br/>(APP-SERVER-01.rgbk.com)"]:::app
+            A1["10.164.92.169<br/>(API-GATEWAY.rgbk.com)"]:::app
+            AMORE["... (+2 more)"]:::appmore
+        end
+        subgraph DB["🗄️ DATABASE TIER"]
+            D0["10.164.92.166<br/>(host01.rgbk.com)"]:::database
+            D1["172.16.0.12<br/>(DB-SERVER-01.rgbk.com)"]:::database
+            DMORE["... (+3 more)"]:::dbmore
+        end
+    end
+
+    subgraph DOWNSTREAM["DOWNSTREAM DESTINATIONS ➡️"]
+        DOWN0["ALIBABA<br/>2 servers | 2 flows"]:::downstream
+    end
+
+    EXTERNAL["🌍 EXTERNAL / INTERNET<br/>5 destinations | 8 flows"]:::external
+
+    UP0 --> CENTER
+    UP1 --> CENTER
+    CENTER --> DOWN0
+    CENTER --> EXTERNAL
+
+    %% Styles
+    classDef upstream fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#000
+    classDef web fill:#4CAF50,stroke:#2E7D32,stroke-width:3px,color:#fff
+    classDef webmore fill:#81C784,stroke:#2E7D32,stroke-width:2px,stroke-dasharray:5,color:#fff
+    classDef app fill:#FF9800,stroke:#E65100,stroke-width:3px,color:#fff
+    classDef appmore fill:#FFB74D,stroke:#E65100,stroke-width:2px,stroke-dasharray:5,color:#fff
+    classDef database fill:#9C27B0,stroke:#6A1B9A,stroke-width:3px,color:#fff
+    classDef dbmore fill:#BA68C8,stroke:#6A1B9A,stroke-width:2px,stroke-dasharray:5,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:4px,color:#000
+    classDef other fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
+    classDef downstream fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:3px,color:#fff
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="downloadSVG()">⬇️ Download SVG</button>
+            <button class="btn" onclick="window.print()">🖨️ Print</button>
+            <button class="btn" onclick="window.open('https://mermaid.live', '_blank')">✏️ Edit in Mermaid Live</button>
+            <button class="btn" onclick="window.open('outputs/html/ANSIBLE_application_diagram.html', '_blank')">🔍 View Interactive Version (with Clickable Modal)</button>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                fontSize: '14px',
+                fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif'
+            },
+            flowchart: {
+                nodeSpacing: 80,
+                rankSpacing: 120,
+                padding: 20,
+                useMaxWidth: true
+            }
+        });
+
+        function downloadSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ANSIBLE_architecture.svg';
+                a.click();
+            }
+        }
+    </script>
+</body>
+</html>

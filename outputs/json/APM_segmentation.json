@@ -1,0 +1,16 @@
+{
+  "application": "APM",
+  "generated": "2025-10-24T16:18:14.819911",
+  "statistics": {
+    "total_flows": 11,
+    "internal_flows": 0,
+    "outbound_flows": 2,
+    "external_flows": 9
+  },
+  "dependencies": [
+    "APACHE",
+    "APIGTW"
+  ],
+  "vmware_instances": 4,
+  "failed_dns_count": 11
+}

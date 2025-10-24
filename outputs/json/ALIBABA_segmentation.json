@@ -1,0 +1,15 @@
+{
+  "application": "ALIBABA",
+  "generated": "2025-10-24T16:18:05.415191",
+  "statistics": {
+    "total_flows": 20,
+    "internal_flows": 1,
+    "outbound_flows": 0,
+    "external_flows": 19
+  },
+  "dependencies": [
+    "ALIBABA"
+  ],
+  "vmware_instances": 14,
+  "failed_dns_count": 20
+}

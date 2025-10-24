@@ -19,6 +19,13 @@ import re
 from typing import Optional, Dict, Tuple, List
 from ipaddress import ip_address, IPv4Address, IPv6Address
 
+# Import new DNS Cache Manager
+try:
+    from .dns_cache_manager import DNSCacheManager
+    DNS_CACHE_AVAILABLE = True
+except ImportError:
+    DNS_CACHE_AVAILABLE = False
+
 logger = logging.getLogger(__name__)
 
 
@@ -43,7 +50,8 @@ class HostnameResolver:
                  dc_domain: Optional[str] = None,
                  timeout: float = 2.0,
                  filter_nonexistent: bool = True,
-                 mark_nonexistent: bool = True):
+                 mark_nonexistent: bool = True,
+                 use_dns_cache: bool = True):
         """
         Args:
             demo_mode: If True, generate synthetic hostnames instead of DNS lookups
@@ -55,6 +63,7 @@ class HostnameResolver:
             timeout: DNS lookup timeout in seconds
             filter_nonexistent: If True, mark non-existent domains for filtering (default: True)
             mark_nonexistent: If True, show "server-not-found" for failed DNS lookups (default: True)
+            use_dns_cache: If True, use DNSCacheManager for persistent caching (default: True)
         """
         self.demo_mode = demo_mode
         self.enable_dns_lookup = enable_dns_lookup
@@ -65,6 +74,7 @@ class HostnameResolver:
         self.timeout = timeout
         self.filter_nonexistent = filter_nonexistent
         self.mark_nonexistent = mark_nonexistent
+        self.use_dns_cache = use_dns_cache
 
         # Cache for resolved hostnames (IP → hostname)
         self._cache: Dict[str, str] = {}
@@ -83,6 +93,12 @@ class HostnameResolver:
 
         # Validation metadata
         self._validation_metadata: Dict[str, Dict] = {}  # IP → {status, timestamp, mismatch_details}
+
+        # DNS Cache Manager (NEW)
+        self.dns_cache_manager = None
+        if use_dns_cache and DNS_CACHE_AVAILABLE:
+            self.dns_cache_manager = DNSCacheManager(timeout=timeout)
+            logger.info(f"  DNS Cache Manager: Enabled")
 
         logger.info(f"HostnameResolver initialized")
         logger.info(f"  Demo mode: {demo_mode}")
@@ -103,6 +119,107 @@ class HostnameResolver:
         """
         self._provided_hostnames[ip_address] = hostname
         self._cache[ip_address] = hostname
+
+    def resolve_with_vmware_detection(self, ip_address: str, fallback_hostname: Optional[str] = None) -> Dict:
+        """
+        NEW: Resolve IP with DNS validation and VMware detection
+
+        Process:
+        1. Use DNSCacheManager for smart caching with validation
+        2. Perform reverse DNS lookup (IP → hostname)
+        3. If fails, try forward DNS on fallback_hostname (from Name column)
+        4. Detect VMware patterns in hostname
+        5. Return comprehensive result with status
+
+        Args:
+            ip_address: IP address to resolve
+            fallback_hostname: Fallback hostname to try if reverse DNS fails (from Name column)
+
+        Returns:
+            Dict with complete DNS information:
+            {
+                'ip': str,
+                'hostname': str or None,  # Use for comparisons (right side of pipe)
+                'hostname_full': str,  # "VMware AD6FD1 | WAPRCG.rgbk.com" or just hostname
+                'status': str,  # "valid", "valid_forward_only", "mismatch", "NXDOMAIN", "unknown"
+                'is_vmware': bool,
+                'vmware_info': str or None,
+                'changed': bool,  # True if DNS changed from cache
+                'timestamp': str
+            }
+        """
+        # Use DNSCacheManager if available
+        if self.dns_cache_manager:
+            result = self.dns_cache_manager.lookup_with_validation(ip_address, fallback_hostname)
+
+            # Update internal caches
+            if result['hostname']:
+                self._cache[ip_address] = result['hostname']
+
+            # Track validation metadata
+            self._validation_metadata[ip_address] = {
+                'status': result['status'],
+                'timestamp': result['timestamp'],
+                'is_vmware': result['is_vmware']
+            }
+
+            # Track non-existent
+            if result['status'] == 'NXDOMAIN':
+                self._nonexistent_ips.add(ip_address)
+
+            return result
+
+        # Fallback to legacy behavior if DNSCacheManager not available
+        logger.warning("DNSCacheManager not available, using legacy DNS resolution")
+
+        # Perform reverse DNS lookup
+        hostname = self._reverse_dns_lookup(ip_address)
+
+        if hostname == "NXDOMAIN" and fallback_hostname:
+            # Try forward DNS on fallback
+            forward_ip = self._forward_dns_lookup(fallback_hostname)
+            if forward_ip == ip_address:
+                hostname = fallback_hostname
+                status = "valid_forward_only"
+            else:
+                hostname = fallback_hostname if fallback_hostname else None
+                status = "NXDOMAIN"
+        elif hostname and hostname != "NXDOMAIN":
+            status = "valid"
+        else:
+            hostname = fallback_hostname if fallback_hostname else None
+            status = "NXDOMAIN" if hostname == "NXDOMAIN" else "unknown"
+
+        # Detect VMware (simple pattern matching)
+        is_vmware = False
+        vmware_info = None
+        if hostname:
+            hostname_lower = hostname.lower()
+            if 'vmware' in hostname_lower or 'vm-' in hostname_lower or 'vmhost' in hostname_lower:
+                is_vmware = True
+                if '|' in hostname:
+                    vmware_info = hostname.split('|')[0].strip()
+                elif '.' in hostname:
+                    vmware_info = hostname.split('.')[0].strip()
+                else:
+                    vmware_info = hostname
+
+        # Build hostname_full
+        if is_vmware and vmware_info:
+            hostname_full = f"{vmware_info} | {hostname}"
+        else:
+            hostname_full = hostname if hostname else "Unknown"
+
+        return {
+            'ip': ip_address,
+            'hostname': hostname,
+            'hostname_full': hostname_full,
+            'status': status,
+            'is_vmware': is_vmware,
+            'vmware_info': vmware_info,
+            'changed': False,
+            'timestamp': None
+        }
 
     def resolve(self, ip_address: str, zone: Optional[str] = None) -> str:
         """

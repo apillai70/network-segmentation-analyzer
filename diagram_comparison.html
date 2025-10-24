@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagram Comparison - Architecture vs Flow Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .diagram-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .diagram-box h2 {
+            margin-top: 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .diagram-box h2.new {
+            background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+        }
+
+        .features {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .features.new {
+            border-left: 4px solid #4CAF50;
+        }
+
+        .features h3 {
+            margin-top: 0;
+            color: #1976D2;
+            font-size: 1.1em;
+        }
+
+        .features.new h3 {
+            color: #388E3C;
+        }
+
+        .features ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .features li {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        .mermaid-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .verdict {
+            grid-column: 1 / -1;
+            background: #e8f5e9;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 6px solid #4CAF50;
+            margin: 20px 0;
+        }
+
+        .verdict h2 {
+            margin-top: 0;
+            color: #2E7D32;
+        }
+
+        .verdict table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .verdict th, .verdict td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .verdict th {
+            background: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        .verdict .winner {
+            background: #c8e6c9;
+            font-weight: bold;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Diagram Comparison</h1>
+            <p>Original Flow Diagram vs New Architecture Diagram</p>
+        </div>
+
+        <div class="comparison-grid">
+            <!-- ORIGINAL FLOW DIAGRAM -->
+            <div class="diagram-box">
+                <h2>📈 Original: Full Flow Diagram</h2>
+
+                <div class="features">
+                    <h3>✅ Features:</h3>
+                    <ul>
+                        <li>Shows end-to-end flow (Source → App → Destination)</li>
+                        <li>Aggregated server counts (e.g., "9 Servers | 12 Flows")</li>
+                        <li>Three views: Full Flow, Upstream, Downstream</li>
+                        <li>Interactive HTML with toggle buttons</li>
+                        <li>Clickable modal for detailed server lists</li>
+                    </ul>
+                    <h3>❌ What's Missing:</h3>
+                    <ul>
+                        <li>No IP addresses visible in diagram</li>
+                        <li>No hostnames visible in diagram</li>
+                        <li>No server type classification (Web/App/DB)</li>
+                        <li>Not optimized for Word document export</li>
+                        <li>All servers aggregated into single boxes</li>
+                    </ul>
+                </div>
+
+                <div class="mermaid-container">
+                    <div class="mermaid">
+graph LR
+    %% FULL FLOW: Source Apps → ANSIBLE → Destination Apps
+
+    SRC_APP_0["<b>ANSIBLE</b><br/>2 Servers | 2 Flows"]:::upstream
+    SRC_APP_1["<b>APACHE</b><br/>1 Servers | 1 Flows | 1 VMware"]:::upstream
+
+    CENTER["<b>ANSIBLE (CENTER)</b><br/>9 Servers | 12 Flows"]:::centerapp
+
+    SRC_APP_0 -->|2| CENTER
+    SRC_APP_1 -->|1| CENTER
+    DEST_APP_0["<b>ALIBABA</b><br/>2 Servers | 2 Flows | 2 VMware"]:::downstream
+    CENTER -->|2| DEST_APP_0
+    EXTERNAL["<b>External / Internet</b><br/>5 Destinations | 8 Flows"]:::external
+    CENTER -->|8| EXTERNAL
+
+    %% Styles
+    classDef centerapp fill:#4CAF50,stroke:#2E7D32,stroke-width:5px,color:#fff
+    classDef upstream fill:#2196F3,stroke:#1565C0,stroke-width:3px,color:#fff
+    classDef downstream fill:#9C27B0,stroke:#6A1B9A,stroke-width:3px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:3px,color:#fff
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW ARCHITECTURE DIAGRAM -->
+            <div class="diagram-box">
+                <h2 class="new">🏗️ NEW: Architecture Diagram (Tier-Based)</h2>
+
+                <div class="features new">
+                    <h3>✅ New Features:</h3>
+                    <ul>
+                        <li><strong>IP (hostname) format:</strong> Shows actual IPs and hostnames</li>
+                        <li><strong>Server type tiers:</strong> 🌐 Web | ⚙️ App | 🗄️ Database</li>
+                        <li><strong>Visual grouping:</strong> Nested subgraphs for each tier</li>
+                        <li><strong>"... (+X more)" indicators:</strong> With dashed borders</li>
+                        <li><strong>Horizontal layout:</strong> Perfect for Word/PowerPoint</li>
+                        <li><strong>Shows first 2 servers:</strong> Then aggregates the rest</li>
+                        <li><strong>Color-coded by server type:</strong> Green, Orange, Purple</li>
+                        <li><strong>Professional appearance:</strong> Suitable for executive reports</li>
+                    </ul>
+                    <h3>📋 Best For:</h3>
+                    <ul>
+                        <li>Architecture documentation</li>
+                        <li>Network segmentation reports</li>
+                        <li>Firewall rule planning (shows actual IPs)</li>
+                        <li>Word/PowerPoint presentations</li>
+                    </ul>
+                </div>
+
+                <div class="mermaid-container">
+                    <div class="mermaid">
+graph LR
+    %% ANSIBLE Architecture Diagram
+
+    subgraph UPSTREAM["⬅️ UPSTREAM SOURCES"]
+        UP0["ANSIBLE<br/>2 flows"]:::upstream
+        UP1["APACHE<br/>1 flows"]:::upstream
+    end
+
+    subgraph CENTER["ANSIBLE APPLICATION"]
+        subgraph WEB["🌐 WEB TIER"]
+            W0["10.100.246.20<br/>(WEB-SERVER-01.corp.local)"]:::web
+            W1["192.168.1.102<br/>(WEB-VM-01.rgbk.com)"]:::web
+            WMORE["... (+1 more)"]:::webmore
+        end
+        subgraph APP["⚙️ APPLICATION TIER"]
+            A0["192.168.1.103<br/>(APP-SERVER-01.rgbk.com)"]:::app
+            A1["10.164.92.169<br/>(API-GATEWAY.rgbk.com)"]:::app
+            AMORE["... (+2 more)"]:::appmore
+        end
+        subgraph DB["🗄️ DATABASE TIER"]
+            D0["10.164.92.166<br/>(host01.rgbk.com)"]:::database
+            D1["172.16.0.12<br/>(DB-SERVER-01.rgbk.com)"]:::database
+            DMORE["... (+3 more)"]:::dbmore
+        end
+    end
+
+    subgraph DOWNSTREAM["DOWNSTREAM DESTINATIONS ➡️"]
+        DOWN0["ALIBABA<br/>2 servers | 2 flows"]:::downstream
+    end
+
+    EXTERNAL["🌍 EXTERNAL / INTERNET<br/>5 destinations | 8 flows"]:::external
+
+    UP0 --> CENTER
+    UP1 --> CENTER
+    CENTER --> DOWN0
+    CENTER --> EXTERNAL
+
+    %% Styles
+    classDef upstream fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#000
+    classDef web fill:#4CAF50,stroke:#2E7D32,stroke-width:3px,color:#fff
+    classDef webmore fill:#81C784,stroke:#2E7D32,stroke-width:2px,stroke-dasharray:5,color:#fff
+    classDef app fill:#FF9800,stroke:#E65100,stroke-width:3px,color:#fff
+    classDef appmore fill:#FFB74D,stroke:#E65100,stroke-width:2px,stroke-dasharray:5,color:#fff
+    classDef database fill:#9C27B0,stroke:#6A1B9A,stroke-width:3px,color:#fff
+    classDef dbmore fill:#BA68C8,stroke:#6A1B9A,stroke-width:2px,stroke-dasharray:5,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:4px,color:#000
+    classDef other fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
+    classDef downstream fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:3px,color:#fff
+                    </div>
+                </div>
+            </div>
+
+            <!-- VERDICT -->
+            <div class="verdict">
+                <h2>🏆 Recommendation: Use BOTH!</h2>
+                <table>
+                    <tr>
+                        <th>Use Case</th>
+                        <th>Best Diagram</th>
+                        <th>Why?</th>
+                    </tr>
+                    <tr class="winner">
+                        <td>📄 Word/PowerPoint Docs</td>
+                        <td><strong>Architecture Diagram</strong></td>
+                        <td>Shows IPs/hostnames, tier-based, fits on page, professional</td>
+                    </tr>
+                    <tr class="winner">
+                        <td>🔥 Firewall Rule Planning</td>
+                        <td><strong>Architecture Diagram</strong></td>
+                        <td>Shows actual IP addresses and hostnames needed for rules</td>
+                    </tr>
+                    <tr>
+                        <td>🔄 Understanding Traffic Flows</td>
+                        <td><strong>Flow Diagram</strong></td>
+                        <td>Shows flow counts, directions, interactive toggles</td>
+                    </tr>
+                    <tr>
+                        <td>📊 Network Segmentation Analysis</td>
+                        <td><strong>Both Together</strong></td>
+                        <td>Architecture shows structure, Flow shows traffic patterns</td>
+                    </tr>
+                    <tr class="winner">
+                        <td>👔 Executive Presentations</td>
+                        <td><strong>Architecture Diagram</strong></td>
+                        <td>Clean, professional, color-coded tiers, easy to understand</td>
+                    </tr>
+                    <tr>
+                        <td>🔍 Detailed Investigation</td>
+                        <td><strong>Flow Diagram (Interactive)</strong></td>
+                        <td>Clickable modals show ALL servers with server types</td>
+                    </tr>
+                </table>
+
+                <h3>💡 Final Recommendation:</h3>
+                <p style="font-size: 1.1em; line-height: 1.6;">
+                    <strong>Architecture Diagram</strong> is BETTER for:
+                    <ul>
+                        <li>✅ Word documents (architecture/threat/segmentation reports)</li>
+                        <li>✅ Showing actual IP addresses and hostnames</li>
+                        <li>✅ Professional presentations</li>
+                        <li>✅ Understanding server tier structure (Web/App/DB)</li>
+                        <li>✅ Firewall rule documentation</li>
+                    </ul>
+
+                    Keep both! Use <strong>Architecture Diagram</strong> for documents/reports, and <strong>Flow Diagram</strong> for interactive analysis.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                fontSize: '14px',
+                fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif'
+            },
+            flowchart: {
+                nodeSpacing: 80,
+                rankSpacing: 120,
+                padding: 20,
+                useMaxWidth: true
+            }
+        });
+    </script>
+</body>
+</html>

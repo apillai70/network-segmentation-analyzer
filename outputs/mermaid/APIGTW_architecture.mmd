@@ -1,0 +1,62 @@
+graph TD
+    %% APIGTW Architecture Diagram (Vertical Layout)
+
+    subgraph UPSTREAM["⬆️ UPSTREAM SOURCES"]
+        UP0["APIGTW<br/>1 flows"]:::upstream
+        UP1["APM<br/>1 flows"]:::upstream
+    end
+
+    subgraph CENTER["APIGTW APPLICATION"]
+        subgraph NLB["⚖️ NETWORK LOAD BALANCER (Inferred)"]
+            NLB_NODE["External/Internal Gateway<br/>Distributes traffic to Web Tier"]:::loadbalancer
+        end
+        subgraph WEB["🌐 WEB TIER"]
+            W0["10.100.246.19<br/>(vm-host-01.corp.local)"]:::web
+            W1["10.164.92.169<br/>(server03.rgbk.com)"]:::web
+            WMORE["... (+3 more)"]:::webmore
+            click WMORE showWebServers
+        end
+        subgraph ALB["⚖️ APPLICATION LOAD BALANCER (Inferred)"]
+            ALB_NODE["Internal Gateway/API Gateway<br/>Distributes traffic to App Tier"]:::loadbalancer
+        end
+        subgraph APP["⚙️ APPLICATION TIER"]
+            A0["10.164.92.166<br/>(APP-SERVER-01.rgbk.com)"]:::app
+            A1["172.16.0.11<br/>(API-GATEWAY.rgbk.com)"]:::app
+            AMORE["... (+1 more)"]:::appmore
+            click AMORE showAppServers
+        end
+        subgraph DB["🗄️ DATABASE TIER"]
+            D0["10.100.246.18<br/>(DB-SERVER-01.rgbk.com)"]:::database
+            D1["192.168.1.103<br/>(host01.rgbk.com)"]:::database
+        end
+        subgraph OTHER["🖥️ OTHER SERVICES"]
+            OTH_DNS["DNS<br/>2 servers"]:::other
+            OTH_File["File<br/>1 servers"]:::other
+        end
+    end
+
+    subgraph DOWNSTREAM["⬇️ DOWNSTREAM DESTINATIONS"]
+        DOWN0["ALIBABA<br/>2 servers | 3 flows"]:::downstream
+        DOWN1["APACHE<br/>1 servers | 1 flows"]:::downstream
+    end
+
+    EXTERNAL["🌍 EXTERNAL / INTERNET<br/>6 destinations | 8 flows"]:::external
+
+    UP0 --> CENTER
+    UP1 --> CENTER
+    CENTER --> DOWN0
+    CENTER --> DOWN1
+    CENTER --> EXTERNAL
+
+    %% Styles (thinner strokes for professional appearance)
+    classDef upstream fill:#E3F2FD,stroke:#1976D2,stroke-width:1.5px,color:#000
+    classDef web fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef webmore fill:#81C784,stroke:#2E7D32,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef app fill:#FF9800,stroke:#E65100,stroke-width:2px,color:#fff
+    classDef appmore fill:#FFB74D,stroke:#E65100,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef database fill:#9C27B0,stroke:#6A1B9A,stroke-width:2px,color:#fff
+    classDef dbmore fill:#BA68C8,stroke:#6A1B9A,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:2px,color:#000
+    classDef other fill:#607D8B,stroke:#37474F,stroke-width:1.5px,color:#fff
+    classDef downstream fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff

@@ -27,6 +27,12 @@ import pandas as pd
 import numpy as np
 from collections import defaultdict
 
+# Import new DNS validation components
+from src.utils.hostname_resolver import HostnameResolver
+from src.utils.cross_reference_manager import CrossReferenceManager
+from src.utils.dns_cache_manager import DNSCacheManager
+from src.utils.retroactive_updater import RetroactiveUpdater
+
 logger = logging.getLogger(__name__)
 
 
@@ -100,11 +106,25 @@ class IncrementalLearningSystem:
         self.current_apps_observed = set()
         self.current_topology = {}
 
+        # NEW: DNS validation and cross-reference components
+        self.hostname_resolver = HostnameResolver(
+            demo_mode=False,
+            enable_dns_lookup=True,
+            enable_forward_dns=True,
+            timeout=2.0,
+            use_dns_cache=True
+        )
+        self.cross_ref_manager = CrossReferenceManager()
+        self.retroactive_updater = RetroactiveUpdater()
+
         logger.info("[OK] Incremental Learning System initialized")
         logger.info(f"  Watch directory: {self.watch_dir}")
         logger.info(f"  Previously processed: {len(self.processed_files)} files")
         logger.info(f"  Duplicate detection: ENABLED")
         logger.info(f"  Auto-move to processed/: ENABLED")
+        logger.info(f"  DNS validation: ENABLED")
+        logger.info(f"  VMware detection: ENABLED")
+        logger.info(f"  Cross-referencing: ENABLED")
 
     def _load_processed_files(self) -> Set[str]:
         """Load set of already processed files"""
@@ -192,8 +212,11 @@ class IncrementalLearningSystem:
 
             logger.info(f"  Loaded {len(flows_df)} flows for {app_id}")
 
-            # Parse flows into records
+            # Parse flows into records WITH DNS validation
             flow_records = self._parse_flows(flows_df, app_id)
+
+            # Convert flow_records back to DataFrame with new enriched columns
+            flows_df = self._flow_records_to_dataframe(flow_records, app_id)
 
             # IMPORTANT: Enrich flows with server classification BEFORE saving to database
             flows_df = self._enrich_flows_with_classification(flows_df, app_id)
@@ -261,41 +284,153 @@ class IncrementalLearningSystem:
             }
 
     def _parse_flows(self, flows_df: pd.DataFrame, app_id: str) -> List:
-        """Convert DataFrame to flow records"""
+        """
+        Convert DataFrame to flow records WITH DNS VALIDATION
+
+        NEW: Handles raw CSV format (IP, Name, Peer) and performs:
+        - DNS validation (reverse + forward)
+        - VMware detection
+        - Cross-referencing with other applications
+        - Retroactive updates when new hostname info discovered
+
+        Raw CSV Format: IP, Name, Peer, Protocol, Bytes In, Bytes Out
+        """
         from src.parser import FlowRecord
+        import re
 
         records = []
+        logger.info(f"  [DNS] Starting DNS validation for {len(flows_df)} flows...")
 
-        for _, row in flows_df.iterrows():
+        # Rate limiting: 0.1s between DNS lookups
+        import time
+        dns_lookup_count = 0
+
+        for idx, row in flows_df.iterrows():
             # Create flow record
-            record = type('FlowRecord', (), {})()  # Simple object
-
+            record = type('FlowRecord', (), {})()
             record.app_name = app_id
 
-            # [SUCCESS] FIX: Correct column names for your CSV format
-            # Your CSV has: App,Source IP,Source Hostname,Dest IP,Dest Hostname,Port,Protocol,Bytes In,Bytes Out
-            src_ip = row.get('Source IP', '')  # Source IP
-            dst_ip = row.get('Dest IP', '')  # Destination IP
-            src_hostname = row.get('Source Hostname', '')  # Source Hostname
-            dst_hostname = row.get('Dest Hostname', '')
+            # ===================================================================
+            # STEP 1: Extract raw data from CSV
+            # ===================================================================
+            # Raw format: IP (source), Name (source hostname), Peer (dest IP)
+            src_ip_raw = row.get('IP', row.get('Source IP', ''))
+            src_name_raw = row.get('Name', row.get('Source Hostname', ''))
+            dst_ip_raw = row.get('Peer', row.get('Dest IP', ''))
 
-            # Convert NaN to empty string, ensure all are strings
-            record.src_ip = str(src_ip).strip() if pd.notna(src_ip) else ''
-            record.src_hostname = str(src_hostname).strip() if pd.notna(src_hostname) else ''
-            record.dst_ip = str(dst_ip).strip() if pd.notna(dst_ip) else ''
-            record.dst_hostname = str(dst_hostname).strip() if pd.notna(dst_hostname) else ''
+            # Convert NaN to empty string
+            src_ip = str(src_ip_raw).strip() if pd.notna(src_ip_raw) else ''
+            src_name = str(src_name_raw).strip() if pd.notna(src_name_raw) else ''
+            dst_ip = str(dst_ip_raw).strip() if pd.notna(dst_ip_raw) else ''
 
-            # [SUCCESS] FIX: Parse format like "10.164.92.166(WPEVISQL02.corp.rgbk.com)"
-            # Extract hostname from parentheses if present in Dest IP column
-            import re
-            if '(' in record.dst_ip and ')' in record.dst_ip:
-                match = re.match(r'([^\(]+)\(([^\)]+)\)', record.dst_ip)
-                if match:
-                    record.dst_ip = match.group(1).strip()  # IP address
-                    record.dst_hostname = match.group(2).strip()  # Hostname from parentheses
+            # Clean IPs (remove any extra formatting)
+            src_ip = src_ip.split('(')[0].strip() if '(' in src_ip else src_ip
+            dst_ip = dst_ip.split('(')[0].strip() if '(' in dst_ip else dst_ip
 
-            # Parse protocol and port
-            # [SUCCESS] FIX: Handle NaN values from CSV (pandas reads empty cells as float NaN)
+            # ===================================================================
+            # STEP 2: DNS Validation for Source IP with VMware detection
+            # ===================================================================
+            if src_ip:
+                src_dns_result = self.hostname_resolver.resolve_with_vmware_detection(
+                    ip_address=src_ip,
+                    fallback_hostname=src_name
+                )
+
+                # Extract results
+                src_hostname = src_dns_result['hostname'] if src_dns_result['hostname'] else src_name
+                src_hostname_full = src_dns_result['hostname_full']
+                src_dns_status = src_dns_result['status']
+                src_is_vmware = src_dns_result['is_vmware']
+
+                # Track in cross-reference manager
+                self.cross_ref_manager.add_source_ip(
+                    app_id=app_id,
+                    ip=src_ip,
+                    hostname=src_hostname,
+                    hostname_full=src_hostname_full,
+                    dns_status=src_dns_status
+                )
+
+                dns_lookup_count += 1
+                time.sleep(0.1)  # Rate limiting
+
+            else:
+                src_hostname = ''
+                src_hostname_full = 'Unknown'
+                src_dns_status = 'unknown'
+                src_is_vmware = False
+
+            # ===================================================================
+            # STEP 3: DNS Validation for Dest IP with VMware detection
+            # ===================================================================
+            dst_app = ''  # Destination application
+            if dst_ip:
+                # First check cross-reference: Does this dest IP match a source IP from another app?
+                cross_ref = self.cross_ref_manager.check_cross_reference(dst_ip, is_source=False)
+
+                if cross_ref['found'] and cross_ref['is_valid_flow']:
+                    # Valid inter-app flow! Copy hostname from cross-reference
+                    dst_hostname = cross_ref['hostname']
+                    dst_hostname_full = cross_ref['hostname_full']
+                    dst_dns_status = cross_ref.get('dns_status', 'unknown')
+                    dst_is_vmware = cross_ref.get('is_vmware', False)
+
+                    # Get destination app (first app in referenced_apps list)
+                    referenced_apps = cross_ref.get('referenced_apps', [])
+                    if referenced_apps:
+                        dst_app = referenced_apps[0]  # Capture dest app!
+
+                    logger.debug(f"    Cross-ref match: {dst_ip} -> {dst_hostname} (app: {dst_app})")
+
+                else:
+                    # No cross-reference, perform DNS validation
+                    dst_dns_result = self.hostname_resolver.resolve_with_vmware_detection(
+                        ip_address=dst_ip,
+                        fallback_hostname=None
+                    )
+
+                    dst_hostname = dst_dns_result['hostname']
+                    dst_hostname_full = dst_dns_result['hostname_full']
+                    dst_dns_status = dst_dns_result['status']
+                    dst_is_vmware = dst_dns_result['is_vmware']
+
+                    dns_lookup_count += 1
+                    time.sleep(0.1)  # Rate limiting
+
+                # Track in cross-reference manager
+                self.cross_ref_manager.add_dest_ip(
+                    app_id=app_id,
+                    ip=dst_ip,
+                    hostname=dst_hostname,
+                    hostname_full=dst_hostname_full,
+                    dns_status=dst_dns_status
+                )
+
+            else:
+                dst_hostname = ''
+                dst_hostname_full = 'Unknown'
+                dst_dns_status = 'unknown'
+                dst_is_vmware = False
+
+            # ===================================================================
+            # STEP 4: Build flow record with enriched data
+            # ===================================================================
+            record.src_ip = src_ip
+            record.src_hostname = src_hostname
+            record.src_hostname_full = src_hostname_full
+            record.src_dns_status = src_dns_status
+            record.src_is_vmware = src_is_vmware
+
+            record.dst_app = dst_app  # NEW: Destination application
+            record.dst_ip = dst_ip
+            record.dst_hostname = dst_hostname
+            record.dst_hostname_full = dst_hostname_full
+            record.dst_dns_status = dst_dns_status
+            record.dst_is_vmware = dst_is_vmware
+
+            # ===================================================================
+            # STEP 5: Parse protocol and port
+            # ===================================================================
             protocol = row.get('Protocol', 'TCP')
             port = row.get('Port', '')
 
@@ -305,29 +440,92 @@ class IncrementalLearningSystem:
             if pd.isna(port):
                 port = ''
 
-            # [SUCCESS] FIX: Protocol can be "TCP" or "TCP:443" (protocol:port format)
-            # Extract port from protocol if it contains a colon
+            # Protocol can be "TCP" or "TCP:443" (protocol:port format)
             if ':' in str(protocol):
                 parts = str(protocol).split(':', 1)
-                protocol = parts[0].strip()  # Protocol (e.g., "TCP")
-                if not port:  # Only use protocol port if Port column is empty
-                    port = parts[1].strip()  # Port (e.g., "443")
+                protocol = parts[0].strip()
+                if not port:
+                    port = parts[1].strip()
 
             record.protocol = protocol
             record.port = port if port else None
             record.transport = protocol.split('/')[0] if '/' in protocol else protocol
 
-            # Traffic stats
+            # ===================================================================
+            # STEP 6: Traffic stats and classification
+            # ===================================================================
             record.bytes = int(row.get('Bytes In', 0)) + int(row.get('Bytes Out', 0))
-            record.packets = 0  # Not in data
+            record.packets = 0
             record.timestamp = None
-
-            # Internal/external detection
             record.is_internal = not str(record.dst_ip).startswith('10.100.')
 
             records.append(record)
 
+        logger.info(f"  [DNS] Completed {dns_lookup_count} DNS lookups")
+
+        # ===================================================================
+        # STEP 7: Check for DNS changes and trigger retroactive updates
+        # ===================================================================
+        if self.hostname_resolver.dns_cache_manager:
+            dns_changes = self.hostname_resolver.dns_cache_manager.get_changes()
+
+            if dns_changes:
+                logger.info(f"  [RETROACTIVE] Detected {len(dns_changes)} DNS changes, updating previous apps...")
+                self.retroactive_updater.update_flows_for_ip_changes(dns_changes)
+                self.hostname_resolver.dns_cache_manager.clear_changes()
+
+        # Save DNS cache and cross-reference database
+        if self.hostname_resolver.dns_cache_manager:
+            self.hostname_resolver.dns_cache_manager.save_cache()
+
+        self.cross_ref_manager.save_database()
+
         return records
+
+    def _flow_records_to_dataframe(self, flow_records: List, app_id: str) -> pd.DataFrame:
+        """
+        Convert flow records back to DataFrame with enriched DNS validation columns
+
+        New columns added:
+        - Source Hostname (Full): Full hostname with VMware info (e.g., "VMware AD6FD1 | WAPRCG.rgbk.com")
+        - Dest Hostname (Full): Full hostname with VMware info
+        - Source DNS Status: valid, valid_forward_only, mismatch, NXDOMAIN, unknown
+        - Dest DNS Status: DNS validation status
+        - Source Is VMware: Boolean
+        - Dest Is VMware: Boolean
+
+        Args:
+            flow_records: List of flow records from _parse_flows()
+            app_id: Application ID
+
+        Returns:
+            DataFrame with enriched columns
+        """
+        data = []
+
+        for record in flow_records:
+            row = {
+                'App': app_id,
+                'Source IP': record.src_ip,
+                'Source Hostname': record.src_hostname,
+                'Source Hostname (Full)': record.src_hostname_full,
+                'Source DNS Status': record.src_dns_status,
+                'Source Is VMware': record.src_is_vmware,
+                'Dest IP': record.dst_ip,
+                'Dest Hostname': record.dst_hostname,
+                'Dest Hostname (Full)': record.dst_hostname_full,
+                'Dest DNS Status': record.dst_dns_status,
+                'Dest Is VMware': record.dst_is_vmware,
+                'Port': record.port if record.port else '',
+                'Protocol': record.protocol,
+                'Bytes In': record.bytes // 2,  # Approximate split
+                'Bytes Out': record.bytes // 2
+            }
+            data.append(row)
+
+        df = pd.DataFrame(data)
+        logger.info(f"  [OK] Created enriched DataFrame with {len(df)} flows and {len(df.columns)} columns")
+        return df
 
     def _incremental_model_update(self, app_id: str, flow_records: List):
         """
@@ -666,9 +864,9 @@ class IncrementalLearningSystem:
 
             # Classify each row
             for idx, row in flows_df.iterrows():
-                # Classify destination
-                dest_hostname = row.get('Destination', '') or row.get('dest_hostname', '') or ''
-                dest_ip = row.get('Destination IP', '') or row.get('dest_ip', '') or ''
+                # Classify destination - use new column names
+                dest_hostname = row.get('Dest Hostname', '') or row.get('Destination', '') or row.get('dest_hostname', '') or ''
+                dest_ip = row.get('Dest IP', '') or row.get('Destination IP', '') or row.get('dest_ip', '') or ''
 
                 if dest_hostname or dest_ip:
                     dest_info = classifier.classify_server(dest_hostname, dest_ip)
@@ -676,8 +874,8 @@ class IncrementalLearningSystem:
                     flows_df.at[idx, 'dest_server_tier'] = dest_info.get('tier', 'Unknown')
                     flows_df.at[idx, 'dest_server_category'] = dest_info.get('category', 'Unknown')
 
-                # Classify source (for source component analysis)
-                src_hostname = row.get('Source', '') or row.get('source_hostname', '') or ''
+                # Classify source - use new column names
+                src_hostname = row.get('Source Hostname', '') or row.get('Source', '') or row.get('source_hostname', '') or ''
                 src_ip = row.get('Source IP', '') or row.get('source_ip', '') or ''
 
                 if src_hostname or src_ip:

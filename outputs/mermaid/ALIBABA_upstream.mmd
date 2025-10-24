@@ -1,0 +1,16 @@
+graph LR
+    %% UPSTREAM: Who sends data TO ALIBABA
+
+    SRC_APP_0["<b>ALIBABA</b><br/>192.168.1.100 (WEB-SERVER-01.corp.local)<br/>1 Servers | 1 Flows"]:::sourceapp
+    SRC_APP_1["<b>ANSIBLE</b><br/>10.10.10.51 (WPEVISQL02.corp.rgbk.com)<br/>10.10.10.50 (APP-SERVER-01.rgbk.com)<br/>2 Servers | 2 Flows"]:::sourceapp
+    SRC_APP_2["<b>APIGTW</b><br/>172.16.0.11 (host02.corp.local)<br/>172.16.0.11 (API-GATEWAY.rgbk.com)<br/>... (+1 more)<br/>2 Servers | 3 Flows"]:::sourceapp
+    TARGET[("<b>ALIBABA (TARGET)</b><br/>192.168.1.100 (WEB-SERVER-01.corp.local)<br/>172.16.0.13 (APP-VM-01.rgbk.com)<br/>... (+3 more)<br/>5 Servers | 6 Flows | 4 VMware")]:::targetapp
+
+    SRC_APP_0 -->|1| TARGET
+    SRC_APP_1 -->|2| TARGET
+    SRC_APP_2 -->|3| TARGET
+
+    %% Styles
+    classDef targetapp fill:#4CAF50,stroke:#2E7D32,stroke-width:4px,color:#fff
+    classDef sourceapp fill:#2196F3,stroke:#1565C0,stroke-width:3px,color:#fff
+    classDef vmware fill:#FF9800,stroke:#E65100,stroke-width:3px,color:#fff

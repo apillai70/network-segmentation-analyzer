@@ -883,3 +883,1048 @@
 2025-10-17 16:57:44,824 - INFO -   Duration: 85.8s
 2025-10-17 16:57:44,824 - INFO -   Output: outputs_final\word_reports\threat_surface
 2025-10-17 16:57:44,824 - INFO - ================================================================================
+2025-10-23 18:51:02,616 - INFO - ================================================================================
+2025-10-23 18:51:02,616 - INFO - STEP 1: Running NetworkX-based Threat Surface Analysis
+2025-10-23 18:51:02,616 - INFO - ================================================================================
+2025-10-23 18:51:03,097 - INFO - Loading network flows from enriched persistent data...
+2025-10-23 18:51:03,106 - INFO -   Found 140 enriched flows.csv files
+2025-10-23 18:51:03,266 - INFO -   Parsing enriched data from 140 applications...
+2025-10-23 18:51:03,266 - INFO - NetworkLogParser initialized with data_dir: C:\Users\AJAYPI~1\AppData\Local\Temp\tmppszxpnzq
+2025-10-23 18:51:03,267 - INFO - Found 140 CSV files to parse
+2025-10-23 18:51:03,267 - INFO - Parsing file: ACDA_flows.csv
+2025-10-23 18:51:03,268 - INFO - Successfully opened ACDA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,268 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,268 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,269 - INFO -   [OK] Parsed 35 records from ACDA_flows.csv
+2025-10-23 18:51:03,270 - INFO - Parsing file: ALE_flows.csv
+2025-10-23 18:51:03,270 - INFO - Successfully opened ALE_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,270 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,270 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,271 - INFO -   [OK] Parsed 44 records from ALE_flows.csv
+2025-10-23 18:51:03,271 - INFO - Parsing file: AODSVY_flows.csv
+2025-10-23 18:51:03,271 - INFO - Successfully opened AODSVY_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,271 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,271 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,272 - INFO -   [OK] Parsed 62 records from AODSVY_flows.csv
+2025-10-23 18:51:03,272 - INFO - Parsing file: APSE_flows.csv
+2025-10-23 18:51:03,272 - INFO - Successfully opened APSE_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,273 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,273 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,274 - INFO -   [OK] Parsed 64 records from APSE_flows.csv
+2025-10-23 18:51:03,274 - INFO - Parsing file: ARA_flows.csv
+2025-10-23 18:51:03,274 - INFO - Successfully opened ARA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,274 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,274 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,274 - INFO -   [OK] Parsed 33 records from ARA_flows.csv
+2025-10-23 18:51:03,275 - INFO - Parsing file: AV_flows.csv
+2025-10-23 18:51:03,275 - INFO - Successfully opened AV_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,275 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,275 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,276 - INFO -   [OK] Parsed 68 records from AV_flows.csv
+2025-10-23 18:51:03,276 - INFO - Parsing file: BCA_flows.csv
+2025-10-23 18:51:03,277 - INFO - Successfully opened BCA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,277 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,277 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,279 - INFO -   [OK] Parsed 89 records from BCA_flows.csv
+2025-10-23 18:51:03,279 - INFO - Parsing file: BKO_flows.csv
+2025-10-23 18:51:03,279 - INFO - Successfully opened BKO_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,280 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,280 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,281 - INFO -   [OK] Parsed 74 records from BKO_flows.csv
+2025-10-23 18:51:03,282 - INFO - Parsing file: BLND_flows.csv
+2025-10-23 18:51:03,282 - INFO - Successfully opened BLND_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,282 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,282 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,283 - INFO -   [OK] Parsed 37 records from BLND_flows.csv
+2025-10-23 18:51:03,284 - INFO - Parsing file: BLZD_flows.csv
+2025-10-23 18:51:03,284 - INFO - Successfully opened BLZD_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,284 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,284 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,285 - INFO -   [OK] Parsed 27 records from BLZD_flows.csv
+2025-10-23 18:51:03,285 - INFO - Parsing file: BLZE_flows.csv
+2025-10-23 18:51:03,285 - INFO - Successfully opened BLZE_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,285 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,285 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,286 - INFO -   [OK] Parsed 43 records from BLZE_flows.csv
+2025-10-23 18:51:03,287 - INFO - Parsing file: BM_flows.csv
+2025-10-23 18:51:03,287 - INFO - Successfully opened BM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,288 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,288 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,289 - INFO -   [OK] Parsed 73 records from BM_flows.csv
+2025-10-23 18:51:03,289 - INFO - Parsing file: BOD_flows.csv
+2025-10-23 18:51:03,289 - INFO - Successfully opened BOD_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,289 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,289 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,290 - INFO -   [OK] Parsed 77 records from BOD_flows.csv
+2025-10-23 18:51:03,291 - INFO - Parsing file: BO_flows.csv
+2025-10-23 18:51:03,291 - INFO - Successfully opened BO_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,291 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,291 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,291 - INFO -   [OK] Parsed 45 records from BO_flows.csv
+2025-10-23 18:51:03,292 - INFO - Parsing file: BP_flows.csv
+2025-10-23 18:51:03,292 - INFO - Successfully opened BP_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,292 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,292 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,292 - INFO -   [OK] Parsed 37 records from BP_flows.csv
+2025-10-23 18:51:03,292 - INFO - Parsing file: BTIF_flows.csv
+2025-10-23 18:51:03,293 - INFO - Successfully opened BTIF_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,293 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,293 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,294 - INFO -   [OK] Parsed 84 records from BTIF_flows.csv
+2025-10-23 18:51:03,294 - INFO - Parsing file: BW_flows.csv
+2025-10-23 18:51:03,294 - INFO - Successfully opened BW_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,294 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,294 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,295 - INFO -   [OK] Parsed 27 records from BW_flows.csv
+2025-10-23 18:51:03,295 - INFO - Parsing file: BX_flows.csv
+2025-10-23 18:51:03,295 - INFO - Successfully opened BX_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,295 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,295 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,296 - INFO -   [OK] Parsed 44 records from BX_flows.csv
+2025-10-23 18:51:03,296 - INFO - Parsing file: CACS_flows.csv
+2025-10-23 18:51:03,296 - INFO - Successfully opened CACS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,296 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,296 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,297 - INFO -   [OK] Parsed 78 records from CACS_flows.csv
+2025-10-23 18:51:03,297 - INFO - Parsing file: CAP_flows.csv
+2025-10-23 18:51:03,298 - INFO - Successfully opened CAP_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,298 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,298 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,299 - INFO -   [OK] Parsed 62 records from CAP_flows.csv
+2025-10-23 18:51:03,299 - INFO - Parsing file: CCA_flows.csv
+2025-10-23 18:51:03,300 - INFO - Successfully opened CCA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,300 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,300 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,302 - INFO -   [OK] Parsed 51 records from CCA_flows.csv
+2025-10-23 18:51:03,302 - INFO - Parsing file: CCLTR_flows.csv
+2025-10-23 18:51:03,302 - INFO - Successfully opened CCLTR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,303 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,303 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,304 - INFO -   [OK] Parsed 67 records from CCLTR_flows.csv
+2025-10-23 18:51:03,305 - INFO - Parsing file: CCPA_flows.csv
+2025-10-23 18:51:03,305 - INFO - Successfully opened CCPA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,305 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,305 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,305 - INFO -   [OK] Parsed 36 records from CCPA_flows.csv
+2025-10-23 18:51:03,305 - INFO - Parsing file: CCS_flows.csv
+2025-10-23 18:51:03,306 - INFO - Successfully opened CCS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,306 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,306 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,308 - INFO -   [OK] Parsed 69 records from CCS_flows.csv
+2025-10-23 18:51:03,308 - INFO - Parsing file: CDSA_flows.csv
+2025-10-23 18:51:03,308 - INFO - Successfully opened CDSA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,308 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,308 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,309 - INFO -   [OK] Parsed 49 records from CDSA_flows.csv
+2025-10-23 18:51:03,309 - INFO - Parsing file: CIRA_flows.csv
+2025-10-23 18:51:03,309 - INFO - Successfully opened CIRA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,309 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,309 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,310 - INFO -   [OK] Parsed 32 records from CIRA_flows.csv
+2025-10-23 18:51:03,310 - INFO - Parsing file: CLSP_flows.csv
+2025-10-23 18:51:03,310 - INFO - Successfully opened CLSP_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,310 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,310 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,311 - INFO -   [OK] Parsed 50 records from CLSP_flows.csv
+2025-10-23 18:51:03,311 - INFO - Parsing file: CMAR_flows.csv
+2025-10-23 18:51:03,312 - INFO - Successfully opened CMAR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,312 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,312 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,314 - INFO -   [OK] Parsed 98 records from CMAR_flows.csv
+2025-10-23 18:51:03,314 - INFO - Parsing file: CNET_flows.csv
+2025-10-23 18:51:03,314 - INFO - Successfully opened CNET_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,314 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,314 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,315 - INFO -   [OK] Parsed 40 records from CNET_flows.csv
+2025-10-23 18:51:03,315 - INFO - Parsing file: CP_flows.csv
+2025-10-23 18:51:03,315 - INFO - Successfully opened CP_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,315 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,315 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,317 - INFO -   [OK] Parsed 85 records from CP_flows.csv
+2025-10-23 18:51:03,317 - INFO - Parsing file: CRECL_flows.csv
+2025-10-23 18:51:03,317 - INFO - Successfully opened CRECL_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,317 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,318 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,319 - INFO -   [OK] Parsed 42 records from CRECL_flows.csv
+2025-10-23 18:51:03,319 - INFO - Parsing file: CSAA_flows.csv
+2025-10-23 18:51:03,319 - INFO - Successfully opened CSAA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,320 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,320 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,322 - INFO -   [OK] Parsed 55 records from CSAA_flows.csv
+2025-10-23 18:51:03,322 - INFO - Parsing file: CSAS_flows.csv
+2025-10-23 18:51:03,322 - INFO - Successfully opened CSAS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,322 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,322 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,324 - INFO -   [OK] Parsed 48 records from CSAS_flows.csv
+2025-10-23 18:51:03,324 - INFO - Parsing file: CT_flows.csv
+2025-10-23 18:51:03,325 - INFO - Successfully opened CT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,325 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,325 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,325 - INFO -   [OK] Parsed 37 records from CT_flows.csv
+2025-10-23 18:51:03,325 - INFO - Parsing file: CV_flows.csv
+2025-10-23 18:51:03,326 - INFO - Successfully opened CV_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,326 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,326 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,326 - INFO -   [OK] Parsed 51 records from CV_flows.csv
+2025-10-23 18:51:03,326 - INFO - Parsing file: CXI_flows.csv
+2025-10-23 18:51:03,327 - INFO - Successfully opened CXI_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,327 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,327 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,329 - INFO -   [OK] Parsed 68 records from CXI_flows.csv
+2025-10-23 18:51:03,329 - INFO - Parsing file: CXSI_flows.csv
+2025-10-23 18:51:03,329 - INFO - Successfully opened CXSI_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,329 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,330 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,330 - INFO -   [OK] Parsed 29 records from CXSI_flows.csv
+2025-10-23 18:51:03,330 - INFO - Parsing file: DAD_flows.csv
+2025-10-23 18:51:03,330 - INFO - Successfully opened DAD_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,330 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,330 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,331 - INFO -   [OK] Parsed 52 records from DAD_flows.csv
+2025-10-23 18:51:03,331 - INFO - Parsing file: DCDPP_flows.csv
+2025-10-23 18:51:03,331 - INFO - Successfully opened DCDPP_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,331 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,331 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,334 - INFO -   [OK] Parsed 54 records from DCDPP_flows.csv
+2025-10-23 18:51:03,334 - INFO - Parsing file: DCIDM_flows.csv
+2025-10-23 18:51:03,335 - INFO - Successfully opened DCIDM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,335 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,335 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,337 - INFO -   [OK] Parsed 63 records from DCIDM_flows.csv
+2025-10-23 18:51:03,337 - INFO - Parsing file: DCIFI_flows.csv
+2025-10-23 18:51:03,337 - INFO - Successfully opened DCIFI_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,337 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,337 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,339 - INFO -   [OK] Parsed 62 records from DCIFI_flows.csv
+2025-10-23 18:51:03,339 - INFO - Parsing file: DG_flows.csv
+2025-10-23 18:51:03,339 - INFO - Successfully opened DG_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,339 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,339 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,339 - INFO -   [OK] Parsed 42 records from DG_flows.csv
+2025-10-23 18:51:03,340 - INFO - Parsing file: DM_BAP_flows.csv
+2025-10-23 18:51:03,340 - INFO - Successfully opened DM_BAP_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,340 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,340 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,341 - INFO -   [OK] Parsed 103 records from DM_BAP_flows.csv
+2025-10-23 18:51:03,342 - INFO - Parsing file: DM_BLZE_flows.csv
+2025-10-23 18:51:03,342 - INFO - Successfully opened DM_BLZE_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,342 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,342 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,344 - INFO -   [OK] Parsed 117 records from DM_BLZE_flows.csv
+2025-10-23 18:51:03,344 - INFO - Parsing file: DM_CCRMBZ_flows.csv
+2025-10-23 18:51:03,344 - INFO - Successfully opened DM_CCRMBZ_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,344 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,344 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,346 - INFO -   [OK] Parsed 117 records from DM_CCRMBZ_flows.csv
+2025-10-23 18:51:03,346 - INFO - Parsing file: DM_CMDAT_flows.csv
+2025-10-23 18:51:03,346 - INFO - Successfully opened DM_CMDAT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,346 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,346 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,348 - INFO -   [OK] Parsed 124 records from DM_CMDAT_flows.csv
+2025-10-23 18:51:03,348 - INFO - Parsing file: DM_CMDF_flows.csv
+2025-10-23 18:51:03,348 - INFO - Successfully opened DM_CMDF_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,349 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,349 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,354 - INFO -   [OK] Parsed 117 records from DM_CMDF_flows.csv
+2025-10-23 18:51:03,354 - INFO - Parsing file: DM_CMRDB_flows.csv
+2025-10-23 18:51:03,354 - INFO - Successfully opened DM_CMRDB_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,355 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,355 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,359 - INFO -   [OK] Parsed 153 records from DM_CMRDB_flows.csv
+2025-10-23 18:51:03,359 - INFO - Parsing file: DM_CMREG_flows.csv
+2025-10-23 18:51:03,360 - INFO - Successfully opened DM_CMREG_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,360 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,360 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,363 - INFO -   [OK] Parsed 170 records from DM_CMREG_flows.csv
+2025-10-23 18:51:03,363 - INFO - Parsing file: DM_CORD_flows.csv
+2025-10-23 18:51:03,363 - INFO - Successfully opened DM_CORD_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,363 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,363 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,369 - INFO -   [OK] Parsed 154 records from DM_CORD_flows.csv
+2025-10-23 18:51:03,369 - INFO - Parsing file: DM_DNCCW_flows.csv
+2025-10-23 18:51:03,370 - INFO - Successfully opened DM_DNCCW_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,370 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,370 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,371 - INFO -   [OK] Parsed 114 records from DM_DNCCW_flows.csv
+2025-10-23 18:51:03,372 - INFO - Parsing file: DM_flows.csv
+2025-10-23 18:51:03,372 - INFO - Successfully opened DM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,372 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,372 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,373 - INFO -   [OK] Parsed 52 records from DM_flows.csv
+2025-10-23 18:51:03,373 - INFO - Parsing file: DM_LEDAT_flows.csv
+2025-10-23 18:51:03,373 - INFO - Successfully opened DM_LEDAT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,373 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,373 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,375 - INFO -   [OK] Parsed 107 records from DM_LEDAT_flows.csv
+2025-10-23 18:51:03,375 - INFO - Parsing file: DM_RDOM_flows.csv
+2025-10-23 18:51:03,375 - INFO - Successfully opened DM_RDOM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,375 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,375 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,377 - INFO -   [OK] Parsed 163 records from DM_RDOM_flows.csv
+2025-10-23 18:51:03,378 - INFO - Parsing file: DM_SBADJ_flows.csv
+2025-10-23 18:51:03,378 - INFO - Successfully opened DM_SBADJ_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,378 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,378 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,380 - INFO -   [OK] Parsed 136 records from DM_SBADJ_flows.csv
+2025-10-23 18:51:03,380 - INFO - Parsing file: DM_WMAHR_flows.csv
+2025-10-23 18:51:03,381 - INFO - Successfully opened DM_WMAHR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,381 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,381 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,384 - INFO -   [OK] Parsed 163 records from DM_WMAHR_flows.csv
+2025-10-23 18:51:03,384 - INFO - Parsing file: DNACA_flows.csv
+2025-10-23 18:51:03,384 - INFO - Successfully opened DNACA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,384 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,385 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,386 - INFO -   [OK] Parsed 63 records from DNACA_flows.csv
+2025-10-23 18:51:03,386 - INFO - Parsing file: DNADP_flows.csv
+2025-10-23 18:51:03,387 - INFO - Successfully opened DNADP_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,387 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,387 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,390 - INFO -   [OK] Parsed 90 records from DNADP_flows.csv
+2025-10-23 18:51:03,390 - INFO - Parsing file: DNAEP_flows.csv
+2025-10-23 18:51:03,391 - INFO - Successfully opened DNAEP_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,391 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,391 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,391 - INFO -   [OK] Parsed 30 records from DNAEP_flows.csv
+2025-10-23 18:51:03,391 - INFO - Parsing file: DNAGR_flows.csv
+2025-10-23 18:51:03,391 - INFO - Successfully opened DNAGR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,391 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,392 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,393 - INFO -   [OK] Parsed 73 records from DNAGR_flows.csv
+2025-10-23 18:51:03,393 - INFO - Parsing file: DNASA_flows.csv
+2025-10-23 18:51:03,393 - INFO - Successfully opened DNASA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,393 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,393 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,393 - INFO -   [OK] Parsed 26 records from DNASA_flows.csv
+2025-10-23 18:51:03,393 - INFO - Parsing file: DNBCI_flows.csv
+2025-10-23 18:51:03,394 - INFO - Successfully opened DNBCI_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,394 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,394 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,395 - INFO -   [OK] Parsed 64 records from DNBCI_flows.csv
+2025-10-23 18:51:03,395 - INFO - Parsing file: DNBIT_flows.csv
+2025-10-23 18:51:03,395 - INFO - Successfully opened DNBIT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,395 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,395 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,396 - INFO -   [OK] Parsed 44 records from DNBIT_flows.csv
+2025-10-23 18:51:03,396 - INFO - Parsing file: DNBLC_flows.csv
+2025-10-23 18:51:03,396 - INFO - Successfully opened DNBLC_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,396 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,396 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,397 - INFO -   [OK] Parsed 49 records from DNBLC_flows.csv
+2025-10-23 18:51:03,397 - INFO - Parsing file: DNBRI_flows.csv
+2025-10-23 18:51:03,397 - INFO - Successfully opened DNBRI_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,398 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,398 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,400 - INFO -   [OK] Parsed 68 records from DNBRI_flows.csv
+2025-10-23 18:51:03,401 - INFO - Parsing file: DNBUH_flows.csv
+2025-10-23 18:51:03,401 - INFO - Successfully opened DNBUH_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,401 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,401 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,405 - INFO -   [OK] Parsed 93 records from DNBUH_flows.csv
+2025-10-23 18:51:03,405 - INFO - Parsing file: DNCAC_flows.csv
+2025-10-23 18:51:03,405 - INFO - Successfully opened DNCAC_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,405 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,406 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,407 - INFO -   [OK] Parsed 82 records from DNCAC_flows.csv
+2025-10-23 18:51:03,407 - INFO - Parsing file: DNCCL_flows.csv
+2025-10-23 18:51:03,407 - INFO - Successfully opened DNCCL_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,407 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,407 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,408 - INFO -   [OK] Parsed 39 records from DNCCL_flows.csv
+2025-10-23 18:51:03,408 - INFO - Parsing file: DNCCO_flows.csv
+2025-10-23 18:51:03,408 - INFO - Successfully opened DNCCO_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,408 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,408 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,409 - INFO -   [OK] Parsed 74 records from DNCCO_flows.csv
+2025-10-23 18:51:03,409 - INFO - Parsing file: DNCCS_flows.csv
+2025-10-23 18:51:03,409 - INFO - Successfully opened DNCCS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,410 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,410 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,412 - INFO -   [OK] Parsed 135 records from DNCCS_flows.csv
+2025-10-23 18:51:03,412 - INFO - Parsing file: DNCCW_flows.csv
+2025-10-23 18:51:03,412 - INFO - Successfully opened DNCCW_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,412 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,412 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,413 - INFO -   [OK] Parsed 28 records from DNCCW_flows.csv
+2025-10-23 18:51:03,413 - INFO - Parsing file: DNCER_flows.csv
+2025-10-23 18:51:03,413 - INFO - Successfully opened DNCER_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,413 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,413 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,414 - INFO -   [OK] Parsed 84 records from DNCER_flows.csv
+2025-10-23 18:51:03,415 - INFO - Parsing file: DNCIT_flows.csv
+2025-10-23 18:51:03,415 - INFO - Successfully opened DNCIT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,415 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,415 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,416 - INFO -   [OK] Parsed 35 records from DNCIT_flows.csv
+2025-10-23 18:51:03,416 - INFO - Parsing file: DNCOR_flows.csv
+2025-10-23 18:51:03,416 - INFO - Successfully opened DNCOR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,416 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,417 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,419 - INFO -   [OK] Parsed 64 records from DNCOR_flows.csv
+2025-10-23 18:51:03,419 - INFO - Parsing file: DNCWS_flows.csv
+2025-10-23 18:51:03,419 - INFO - Successfully opened DNCWS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,420 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,420 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,422 - INFO -   [OK] Parsed 45 records from DNCWS_flows.csv
+2025-10-23 18:51:03,422 - INFO - Parsing file: DNDNS_flows.csv
+2025-10-23 18:51:03,422 - INFO - Successfully opened DNDNS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,422 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,423 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,424 - INFO -   [OK] Parsed 65 records from DNDNS_flows.csv
+2025-10-23 18:51:03,424 - INFO - Parsing file: DNENG_flows.csv
+2025-10-23 18:51:03,424 - INFO - Successfully opened DNENG_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,424 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,424 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,425 - INFO -   [OK] Parsed 37 records from DNENG_flows.csv
+2025-10-23 18:51:03,425 - INFO - Parsing file: DNESR_flows.csv
+2025-10-23 18:51:03,426 - INFO - Successfully opened DNESR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,426 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,426 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,430 - INFO -   [OK] Parsed 143 records from DNESR_flows.csv
+2025-10-23 18:51:03,430 - INFO - Parsing file: DNGCM_flows.csv
+2025-10-23 18:51:03,430 - INFO - Successfully opened DNGCM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,430 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,430 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,430 - INFO -   [OK] Parsed 32 records from DNGCM_flows.csv
+2025-10-23 18:51:03,430 - INFO - Parsing file: DNGFC_flows.csv
+2025-10-23 18:51:03,431 - INFO - Successfully opened DNGFC_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,431 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,431 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,432 - INFO -   [OK] Parsed 69 records from DNGFC_flows.csv
+2025-10-23 18:51:03,432 - INFO - Parsing file: DNHRT_flows.csv
+2025-10-23 18:51:03,432 - INFO - Successfully opened DNHRT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,432 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,432 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,433 - INFO -   [OK] Parsed 44 records from DNHRT_flows.csv
+2025-10-23 18:51:03,434 - INFO - Parsing file: DNIBS_flows.csv
+2025-10-23 18:51:03,434 - INFO - Successfully opened DNIBS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,434 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,434 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,436 - INFO -   [OK] Parsed 63 records from DNIBS_flows.csv
+2025-10-23 18:51:03,436 - INFO - Parsing file: DNIDE_flows.csv
+2025-10-23 18:51:03,437 - INFO - Successfully opened DNIDE_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,437 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,437 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,439 - INFO -   [OK] Parsed 52 records from DNIDE_flows.csv
+2025-10-23 18:51:03,439 - INFO - Parsing file: DNINR_flows.csv
+2025-10-23 18:51:03,440 - INFO - Successfully opened DNINR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,440 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,440 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,442 - INFO -   [OK] Parsed 81 records from DNINR_flows.csv
+2025-10-23 18:51:03,443 - INFO - Parsing file: DNINT_flows.csv
+2025-10-23 18:51:03,443 - INFO - Successfully opened DNINT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,443 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,443 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,445 - INFO -   [OK] Parsed 79 records from DNINT_flows.csv
+2025-10-23 18:51:03,445 - INFO - Parsing file: DNINV_flows.csv
+2025-10-23 18:51:03,445 - INFO - Successfully opened DNINV_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,446 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,446 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,447 - INFO -   [OK] Parsed 43 records from DNINV_flows.csv
+2025-10-23 18:51:03,447 - INFO - Parsing file: DNLDS_flows.csv
+2025-10-23 18:51:03,447 - INFO - Successfully opened DNLDS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,447 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,447 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,449 - INFO -   [OK] Parsed 91 records from DNLDS_flows.csv
+2025-10-23 18:51:03,450 - INFO - Parsing file: DNLOC_flows.csv
+2025-10-23 18:51:03,450 - INFO - Successfully opened DNLOC_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,450 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,450 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,452 - INFO -   [OK] Parsed 52 records from DNLOC_flows.csv
+2025-10-23 18:51:03,452 - INFO - Parsing file: DNMCM_flows.csv
+2025-10-23 18:51:03,452 - INFO - Successfully opened DNMCM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,452 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,452 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,454 - INFO -   [OK] Parsed 57 records from DNMCM_flows.csv
+2025-10-23 18:51:03,454 - INFO - Parsing file: DNMET_flows.csv
+2025-10-23 18:51:03,454 - INFO - Successfully opened DNMET_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,454 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,454 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,455 - INFO -   [OK] Parsed 51 records from DNMET_flows.csv
+2025-10-23 18:51:03,456 - INFO - Parsing file: DNMLO_flows.csv
+2025-10-23 18:51:03,456 - INFO - Successfully opened DNMLO_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,456 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,456 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,457 - INFO -   [OK] Parsed 49 records from DNMLO_flows.csv
+2025-10-23 18:51:03,457 - INFO - Parsing file: DNMMZ_flows.csv
+2025-10-23 18:51:03,457 - INFO - Successfully opened DNMMZ_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,457 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,457 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,458 - INFO -   [OK] Parsed 61 records from DNMMZ_flows.csv
+2025-10-23 18:51:03,458 - INFO - Parsing file: DNPGR_flows.csv
+2025-10-23 18:51:03,458 - INFO - Successfully opened DNPGR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,458 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,458 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,459 - INFO -   [OK] Parsed 45 records from DNPGR_flows.csv
+2025-10-23 18:51:03,459 - INFO - Parsing file: DNRAS_flows.csv
+2025-10-23 18:51:03,459 - INFO - Successfully opened DNRAS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,459 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,459 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,460 - INFO -   [OK] Parsed 29 records from DNRAS_flows.csv
+2025-10-23 18:51:03,460 - INFO - Parsing file: DNRCB_flows.csv
+2025-10-23 18:51:03,460 - INFO - Successfully opened DNRCB_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,460 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,460 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,461 - INFO -   [OK] Parsed 70 records from DNRCB_flows.csv
+2025-10-23 18:51:03,461 - INFO - Parsing file: DNRCT_flows.csv
+2025-10-23 18:51:03,461 - INFO - Successfully opened DNRCT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,461 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,461 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,463 - INFO -   [OK] Parsed 80 records from DNRCT_flows.csv
+2025-10-23 18:51:03,463 - INFO - Parsing file: DNREP_flows.csv
+2025-10-23 18:51:03,463 - INFO - Successfully opened DNREP_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,463 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,463 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,464 - INFO -   [OK] Parsed 50 records from DNREP_flows.csv
+2025-10-23 18:51:03,464 - INFO - Parsing file: DNRGE_flows.csv
+2025-10-23 18:51:03,464 - INFO - Successfully opened DNRGE_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,464 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,464 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,466 - INFO -   [OK] Parsed 61 records from DNRGE_flows.csv
+2025-10-23 18:51:03,466 - INFO - Parsing file: DNROM_flows.csv
+2025-10-23 18:51:03,466 - INFO - Successfully opened DNROM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,466 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,467 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,469 - INFO -   [OK] Parsed 83 records from DNROM_flows.csv
+2025-10-23 18:51:03,469 - INFO - Parsing file: DNRVS_flows.csv
+2025-10-23 18:51:03,469 - INFO - Successfully opened DNRVS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,469 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,469 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,470 - INFO -   [OK] Parsed 86 records from DNRVS_flows.csv
+2025-10-23 18:51:03,470 - INFO - Parsing file: DNSBT_flows.csv
+2025-10-23 18:51:03,471 - INFO - Successfully opened DNSBT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,471 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,471 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,471 - INFO -   [OK] Parsed 40 records from DNSBT_flows.csv
+2025-10-23 18:51:03,471 - INFO - Parsing file: DNSCC_flows.csv
+2025-10-23 18:51:03,472 - INFO - Successfully opened DNSCC_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,472 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,472 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,472 - INFO -   [OK] Parsed 41 records from DNSCC_flows.csv
+2025-10-23 18:51:03,472 - INFO - Parsing file: DNSCH_flows.csv
+2025-10-23 18:51:03,473 - INFO - Successfully opened DNSCH_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,473 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,473 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,474 - INFO -   [OK] Parsed 73 records from DNSCH_flows.csv
+2025-10-23 18:51:03,474 - INFO - Parsing file: DNTCB_flows.csv
+2025-10-23 18:51:03,474 - INFO - Successfully opened DNTCB_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,474 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,474 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,475 - INFO -   [OK] Parsed 75 records from DNTCB_flows.csv
+2025-10-23 18:51:03,475 - INFO - Parsing file: DNTCM_flows.csv
+2025-10-23 18:51:03,476 - INFO - Successfully opened DNTCM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,476 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,476 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,477 - INFO -   [OK] Parsed 65 records from DNTCM_flows.csv
+2025-10-23 18:51:03,477 - INFO - Parsing file: DNWHO_flows.csv
+2025-10-23 18:51:03,477 - INFO - Successfully opened DNWHO_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,477 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,477 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,478 - INFO -   [OK] Parsed 86 records from DNWHO_flows.csv
+2025-10-23 18:51:03,478 - INFO - Parsing file: DNWHS_flows.csv
+2025-10-23 18:51:03,479 - INFO - Successfully opened DNWHS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,479 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,479 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,479 - INFO -   [OK] Parsed 33 records from DNWHS_flows.csv
+2025-10-23 18:51:03,479 - INFO - Parsing file: DNZEL_flows.csv
+2025-10-23 18:51:03,480 - INFO - Successfully opened DNZEL_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,480 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,480 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,480 - INFO -   [OK] Parsed 43 records from DNZEL_flows.csv
+2025-10-23 18:51:03,480 - INFO - Parsing file: DPAPI_flows.csv
+2025-10-23 18:51:03,481 - INFO - Successfully opened DPAPI_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,481 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,481 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,483 - INFO -   [OK] Parsed 100 records from DPAPI_flows.csv
+2025-10-23 18:51:03,483 - INFO - Parsing file: DSAA_flows.csv
+2025-10-23 18:51:03,483 - INFO - Successfully opened DSAA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,483 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,483 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,486 - INFO -   [OK] Parsed 156 records from DSAA_flows.csv
+2025-10-23 18:51:03,486 - INFO - Parsing file: ECL_flows.csv
+2025-10-23 18:51:03,486 - INFO - Successfully opened ECL_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,486 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,486 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,488 - INFO -   [OK] Parsed 30 records from ECL_flows.csv
+2025-10-23 18:51:03,488 - INFO - Parsing file: EFW_flows.csv
+2025-10-23 18:51:03,488 - INFO - Successfully opened EFW_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,488 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,488 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,489 - INFO -   [OK] Parsed 62 records from EFW_flows.csv
+2025-10-23 18:51:03,489 - INFO - Parsing file: EMDS_flows.csv
+2025-10-23 18:51:03,489 - INFO - Successfully opened EMDS_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,489 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,489 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,491 - INFO -   [OK] Parsed 78 records from EMDS_flows.csv
+2025-10-23 18:51:03,491 - INFO - Parsing file: EMGR_flows.csv
+2025-10-23 18:51:03,491 - INFO - Successfully opened EMGR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,491 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,491 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,492 - INFO -   [OK] Parsed 40 records from EMGR_flows.csv
+2025-10-23 18:51:03,492 - INFO - Parsing file: EM_flows.csv
+2025-10-23 18:51:03,492 - INFO - Successfully opened EM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,492 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,492 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,493 - INFO -   [OK] Parsed 28 records from EM_flows.csv
+2025-10-23 18:51:03,493 - INFO - Parsing file: ENDNC_flows.csv
+2025-10-23 18:51:03,493 - INFO - Successfully opened ENDNC_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,493 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,493 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,494 - INFO -   [OK] Parsed 59 records from ENDNC_flows.csv
+2025-10-23 18:51:03,494 - INFO - Parsing file: END_flows.csv
+2025-10-23 18:51:03,494 - INFO - Successfully opened END_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,494 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,494 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,495 - INFO -   [OK] Parsed 47 records from END_flows.csv
+2025-10-23 18:51:03,495 - INFO - Parsing file: ERCPT_flows.csv
+2025-10-23 18:51:03,495 - INFO - Successfully opened ERCPT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,495 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,495 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,496 - INFO -   [OK] Parsed 70 records from ERCPT_flows.csv
+2025-10-23 18:51:03,496 - INFO - Parsing file: FAAR_flows.csv
+2025-10-23 18:51:03,497 - INFO - Successfully opened FAAR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,497 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,497 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,498 - INFO -   [OK] Parsed 70 records from FAAR_flows.csv
+2025-10-23 18:51:03,498 - INFO - Parsing file: FG_flows.csv
+2025-10-23 18:51:03,498 - INFO - Successfully opened FG_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,498 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,498 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,500 - INFO -   [OK] Parsed 82 records from FG_flows.csv
+2025-10-23 18:51:03,501 - INFO - Parsing file: FICPM_flows.csv
+2025-10-23 18:51:03,501 - INFO - Successfully opened FICPM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,501 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,501 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,502 - INFO -   [OK] Parsed 29 records from FICPM_flows.csv
+2025-10-23 18:51:03,502 - INFO - Parsing file: FIMSP_flows.csv
+2025-10-23 18:51:03,502 - INFO - Successfully opened FIMSP_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,502 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,502 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,503 - INFO -   [OK] Parsed 71 records from FIMSP_flows.csv
+2025-10-23 18:51:03,503 - INFO - Parsing file: FM_flows.csv
+2025-10-23 18:51:03,503 - INFO - Successfully opened FM_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,503 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,503 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,505 - INFO -   [OK] Parsed 83 records from FM_flows.csv
+2025-10-23 18:51:03,505 - INFO - Parsing file: I3SQL_flows.csv
+2025-10-23 18:51:03,505 - INFO - Successfully opened I3SQL_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,505 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,505 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,508 - INFO -   [OK] Parsed 177 records from I3SQL_flows.csv
+2025-10-23 18:51:03,508 - INFO - Parsing file: IA_flows.csv
+2025-10-23 18:51:03,508 - INFO - Successfully opened IA_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,508 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,508 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,509 - INFO -   [OK] Parsed 39 records from IA_flows.csv
+2025-10-23 18:51:03,509 - INFO - Parsing file: IB_flows.csv
+2025-10-23 18:51:03,509 - INFO - Successfully opened IB_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,509 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,509 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,510 - INFO -   [OK] Parsed 86 records from IB_flows.csv
+2025-10-23 18:51:03,510 - INFO - Parsing file: IMGVF_flows.csv
+2025-10-23 18:51:03,511 - INFO - Successfully opened IMGVF_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,511 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,511 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,512 - INFO -   [OK] Parsed 86 records from IMGVF_flows.csv
+2025-10-23 18:51:03,513 - INFO - Parsing file: ITR_flows.csv
+2025-10-23 18:51:03,513 - INFO - Successfully opened ITR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,513 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,513 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,516 - INFO -   [OK] Parsed 65 records from ITR_flows.csv
+2025-10-23 18:51:03,516 - INFO - Parsing file: IVGBU_flows.csv
+2025-10-23 18:51:03,516 - INFO - Successfully opened IVGBU_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,517 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,517 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,519 - INFO -   [OK] Parsed 60 records from IVGBU_flows.csv
+2025-10-23 18:51:03,519 - INFO - Parsing file: IVRMC_flows.csv
+2025-10-23 18:51:03,519 - INFO - Successfully opened IVRMC_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,519 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,519 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,520 - INFO -   [OK] Parsed 29 records from IVRMC_flows.csv
+2025-10-23 18:51:03,520 - INFO - Parsing file: IVR_flows.csv
+2025-10-23 18:51:03,520 - INFO - Successfully opened IVR_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,520 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,520 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,521 - INFO -   [OK] Parsed 103 records from IVR_flows.csv
+2025-10-23 18:51:03,522 - INFO - Parsing file: IV_flows.csv
+2025-10-23 18:51:03,522 - INFO - Successfully opened IV_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,522 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,522 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,523 - INFO -   [OK] Parsed 69 records from IV_flows.csv
+2025-10-23 18:51:03,523 - INFO - Parsing file: IWDE_flows.csv
+2025-10-23 18:51:03,523 - INFO - Successfully opened IWDE_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,523 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,523 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,524 - INFO -   [OK] Parsed 27 records from IWDE_flows.csv
+2025-10-23 18:51:03,524 - INFO - Parsing file: IW_flows.csv
+2025-10-23 18:51:03,524 - INFO - Successfully opened IW_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,524 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,524 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,524 - INFO -   [OK] Parsed 28 records from IW_flows.csv
+2025-10-23 18:51:03,524 - INFO - Parsing file: IXCI_flows.csv
+2025-10-23 18:51:03,524 - INFO - Successfully opened IXCI_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,525 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,525 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,526 - INFO -   [OK] Parsed 64 records from IXCI_flows.csv
+2025-10-23 18:51:03,526 - INFO - Parsing file: IXOF_flows.csv
+2025-10-23 18:51:03,526 - INFO - Successfully opened IXOF_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,526 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,526 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,527 - INFO -   [OK] Parsed 74 records from IXOF_flows.csv
+2025-10-23 18:51:03,527 - INFO - Parsing file: IX_flows.csv
+2025-10-23 18:51:03,527 - INFO - Successfully opened IX_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,527 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,531 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,534 - INFO -   [OK] Parsed 90 records from IX_flows.csv
+2025-10-23 18:51:03,534 - INFO - Parsing file: LBCC_flows.csv
+2025-10-23 18:51:03,534 - INFO - Successfully opened LBCC_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,534 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,534 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,535 - INFO -   [OK] Parsed 56 records from LBCC_flows.csv
+2025-10-23 18:51:03,536 - INFO - Parsing file: LBOT_flows.csv
+2025-10-23 18:51:03,536 - INFO - Successfully opened LBOT_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,536 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,536 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,538 - INFO -   [OK] Parsed 50 records from LBOT_flows.csv
+2025-10-23 18:51:03,538 - INFO - Parsing file: LB_flows.csv
+2025-10-23 18:51:03,538 - INFO - Successfully opened LB_flows.csv with encoding: utf-8
+2025-10-23 18:51:03,539 - INFO - CSV columns found: ['App', 'Source IP', 'Source Hostname', 'Dest IP', 'Dest Hostname', 'Port', 'Protocol', 'Bytes In', 'Bytes Out']
+2025-10-23 18:51:03,539 - INFO - Column mapping result: {'src_hostname': 'Source Hostname', 'src_ip': 'Source IP', 'dst_hostname': 'Dest Hostname', 'dst_ip': 'Dest IP', 'protocol': 'Protocol', 'bytes': 'Bytes In', 'port': 'Port'}
+2025-10-23 18:51:03,540 - INFO -   [OK] Parsed 31 records from LB_flows.csv
+2025-10-23 18:51:03,540 - INFO - Parsing complete. Total records: 9427, Errors: 0
+2025-10-23 18:51:03,564 - INFO -   [OK] Loaded 9427 flow records
+2025-10-23 18:51:03,565 - INFO - Building network graph with NetworkX...
+2025-10-23 18:51:03,565 - INFO - GraphAnalyzer initialized with 9427 records
+2025-10-23 18:51:03,565 - INFO - Building in-memory network graph...
+2025-10-23 18:51:03,600 - INFO -   Graph built: 1790 nodes, 9392 edges
+2025-10-23 18:51:03,602 - INFO -   [OK] Graph built: 1790 nodes, 9392 edges
+2025-10-23 18:51:03,602 - INFO - Analyzing threat surface (attack paths, exposure, chokepoints)...
+2025-10-23 18:51:03,602 - INFO - ThreatSurfaceAnalyzer initialized
+2025-10-23 18:51:03,602 - INFO - Starting comprehensive threat surface analysis...
+2025-10-23 18:51:03,609 - INFO -     Found 256 external nodes, 512 critical assets
+2025-10-23 18:52:01,825 - INFO -   Analyzing node exposure levels...
+2025-10-23 18:52:01,834 - INFO -   Calculating threat scores...
+2025-10-23 18:52:01,834 - INFO - Calculating centrality metrics...
+2025-10-23 18:52:21,819 - INFO -   Identifying critical chokepoints...
+2025-10-23 18:52:21,819 - INFO - Calculating centrality metrics...
+2025-10-23 18:52:59,602 - INFO -   Generating mitigation recommendations...
+2025-10-23 18:52:59,602 - INFO -   Identifying critical chokepoints...
+2025-10-23 18:52:59,602 - INFO - Calculating centrality metrics...
+2025-10-23 18:54:18,249 - INFO -   Identifying critical chokepoints...
+2025-10-23 18:54:18,250 - INFO - Calculating centrality metrics...
+2025-10-23 18:55:27,741 - INFO -   [OK] Found 8793 attack paths
+2025-10-23 18:55:27,741 - INFO -   [OK] Identified 256 high-exposure nodes
+2025-10-23 18:55:27,741 - INFO -   [OK] 8793 critical assets at risk
+2025-10-23 18:55:27,742 - INFO - Exporting threat surface analysis: outputs\threat_analysis\threat_surface_analysis.json
+2025-10-23 18:55:27,743 - INFO - Starting comprehensive threat surface analysis...
+2025-10-23 18:55:27,744 - INFO -     Found 256 external nodes, 512 critical assets
+2025-10-23 18:56:55,135 - INFO -   Analyzing node exposure levels...
+2025-10-23 18:56:55,147 - INFO -   Calculating threat scores...
+2025-10-23 18:56:55,147 - INFO - Calculating centrality metrics...
+2025-10-23 18:57:23,410 - INFO -   Identifying critical chokepoints...
+2025-10-23 18:57:23,410 - INFO - Calculating centrality metrics...
+2025-10-23 18:58:15,224 - INFO -   Generating mitigation recommendations...
+2025-10-23 18:58:15,224 - INFO -   Identifying critical chokepoints...
+2025-10-23 18:58:15,224 - INFO - Calculating centrality metrics...
+2025-10-23 18:58:56,462 - INFO -   Identifying critical chokepoints...
+2025-10-23 18:58:56,463 - INFO - Calculating centrality metrics...
+2025-10-24 08:17:09,038 - INFO -   [OK] JSON exported to: outputs\threat_analysis\threat_surface_analysis.json
+2025-10-24 08:17:09,039 - INFO - [OK] NetworkX threat analysis completed successfully
+2025-10-24 08:17:09,068 - INFO - ================================================================================
+2025-10-24 08:17:09,068 - INFO - STEP 2: Generating HTML Threat Surface Visualization
+2025-10-24 08:17:09,068 - INFO - ================================================================================
+2025-10-24 08:17:09,069 - ERROR - [ERROR] HTML generation failed: cannot access local variable 'Path' where it is not associated with a value
+2025-10-24 08:17:09,073 - INFO - ================================================================================
+2025-10-24 08:17:09,073 - INFO - STEP 3: Generating Word Documents (per-application)
+2025-10-24 08:17:09,073 - INFO - ================================================================================
+2025-10-24 08:17:09,073 - INFO - Loading topology data from: persistent_data\master_topology.json
+2025-10-24 08:17:09,083 - INFO - Found 140 applications in topology
+2025-10-24 08:17:09,085 - INFO - Output directory: outputs_final\word_reports\threat_surface
+2025-10-24 08:17:09,209 - INFO - Generating threat surface document for: ACDA
+2025-10-24 08:17:10,078 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-ACDA.docx
+2025-10-24 08:17:10,092 - INFO - Generating threat surface document for: ALE
+2025-10-24 08:17:10,612 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-ALE.docx
+2025-10-24 08:17:10,630 - INFO - Generating threat surface document for: AODSVY
+2025-10-24 08:17:11,234 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-AODSVY.docx
+2025-10-24 08:17:11,254 - INFO - Generating threat surface document for: APSE
+2025-10-24 08:17:12,018 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-APSE.docx
+2025-10-24 08:17:12,146 - INFO - Generating threat surface document for: ARA
+2025-10-24 08:17:12,645 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-ARA.docx
+2025-10-24 08:17:12,656 - INFO - Generating threat surface document for: AV
+2025-10-24 08:17:13,326 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-AV.docx
+2025-10-24 08:17:13,339 - INFO - Generating threat surface document for: BCA
+2025-10-24 08:17:13,815 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BCA.docx
+2025-10-24 08:17:13,833 - INFO - Generating threat surface document for: BKO
+2025-10-24 08:17:14,398 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BKO.docx
+2025-10-24 08:17:14,416 - INFO - Generating threat surface document for: BLND
+2025-10-24 08:17:15,049 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BLND.docx
+2025-10-24 08:17:15,060 - INFO - Generating threat surface document for: BLZD
+2025-10-24 08:17:15,694 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BLZD.docx
+2025-10-24 08:17:15,706 - INFO - Generating threat surface document for: BLZE
+2025-10-24 08:17:16,248 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BLZE.docx
+2025-10-24 08:17:16,258 - INFO - Generating threat surface document for: BM
+2025-10-24 08:17:16,747 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BM.docx
+2025-10-24 08:17:16,757 - INFO - Generating threat surface document for: BO
+2025-10-24 08:17:17,074 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BO.docx
+2025-10-24 08:17:17,082 - INFO - Generating threat surface document for: BOD
+2025-10-24 08:17:17,408 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BOD.docx
+2025-10-24 08:17:17,416 - INFO - Generating threat surface document for: BP
+2025-10-24 08:17:17,728 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BP.docx
+2025-10-24 08:17:17,738 - INFO - Generating threat surface document for: BTIF
+2025-10-24 08:17:18,054 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BTIF.docx
+2025-10-24 08:17:18,062 - INFO - Generating threat surface document for: BW
+2025-10-24 08:17:18,421 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BW.docx
+2025-10-24 08:17:18,431 - INFO - Generating threat surface document for: BX
+2025-10-24 08:17:18,737 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-BX.docx
+2025-10-24 08:17:18,746 - INFO - Generating threat surface document for: CACS
+2025-10-24 08:17:19,034 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CACS.docx
+2025-10-24 08:17:19,042 - INFO - Generating threat surface document for: CAP
+2025-10-24 08:17:19,325 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CAP.docx
+2025-10-24 08:17:19,340 - INFO - Generating threat surface document for: CCA
+2025-10-24 08:17:19,717 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CCA.docx
+2025-10-24 08:17:19,733 - INFO - Generating threat surface document for: CCLTR
+2025-10-24 08:17:20,212 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CCLTR.docx
+2025-10-24 08:17:20,227 - INFO - Generating threat surface document for: CCPA
+2025-10-24 08:17:20,640 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CCPA.docx
+2025-10-24 08:17:20,656 - INFO - Generating threat surface document for: CCS
+2025-10-24 08:17:21,037 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CCS.docx
+2025-10-24 08:17:21,049 - INFO - Generating threat surface document for: CDSA
+2025-10-24 08:17:21,486 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CDSA.docx
+2025-10-24 08:17:21,500 - INFO - Generating threat surface document for: CIRA
+2025-10-24 08:17:21,980 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CIRA.docx
+2025-10-24 08:17:22,000 - INFO - Generating threat surface document for: CLSP
+2025-10-24 08:17:22,606 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CLSP.docx
+2025-10-24 08:17:22,620 - INFO - Generating threat surface document for: CMAR
+2025-10-24 08:17:23,354 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CMAR.docx
+2025-10-24 08:17:23,377 - INFO - Generating threat surface document for: CNET
+2025-10-24 08:17:24,081 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CNET.docx
+2025-10-24 08:17:24,101 - INFO - Generating threat surface document for: CP
+2025-10-24 08:17:24,654 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CP.docx
+2025-10-24 08:17:24,670 - INFO - Generating threat surface document for: CRECL
+2025-10-24 08:17:25,272 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CRECL.docx
+2025-10-24 08:17:25,285 - INFO - Generating threat surface document for: CSAA
+2025-10-24 08:17:25,789 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CSAA.docx
+2025-10-24 08:17:25,803 - INFO - Generating threat surface document for: CSAS
+2025-10-24 08:17:26,301 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CSAS.docx
+2025-10-24 08:17:26,318 - INFO - Generating threat surface document for: CT
+2025-10-24 08:17:26,864 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CT.docx
+2025-10-24 08:17:26,876 - INFO - Generating threat surface document for: CV
+2025-10-24 08:17:27,242 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CV.docx
+2025-10-24 08:17:27,250 - INFO - Generating threat surface document for: CXI
+2025-10-24 08:17:27,597 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CXI.docx
+2025-10-24 08:17:27,609 - INFO - Generating threat surface document for: CXSI
+2025-10-24 08:17:27,974 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-CXSI.docx
+2025-10-24 08:17:27,988 - INFO - Generating threat surface document for: DAD
+2025-10-24 08:17:28,463 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DAD.docx
+2025-10-24 08:17:28,479 - INFO - Generating threat surface document for: DCDPP
+2025-10-24 08:17:28,937 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DCDPP.docx
+2025-10-24 08:17:28,947 - INFO - Generating threat surface document for: DCIDM
+2025-10-24 08:17:29,342 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DCIDM.docx
+2025-10-24 08:17:29,351 - INFO - Generating threat surface document for: DCIFI
+2025-10-24 08:17:29,718 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DCIFI.docx
+2025-10-24 08:17:29,733 - INFO - Generating threat surface document for: DG
+2025-10-24 08:17:30,304 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DG.docx
+2025-10-24 08:17:30,314 - INFO - Generating threat surface document for: DM
+2025-10-24 08:17:30,768 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM.docx
+2025-10-24 08:17:30,781 - INFO - Generating threat surface document for: DM_BAP
+2025-10-24 08:17:31,283 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_BAP.docx
+2025-10-24 08:17:31,296 - INFO - Generating threat surface document for: DM_BLZE
+2025-10-24 08:17:31,801 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_BLZE.docx
+2025-10-24 08:17:31,815 - INFO - Generating threat surface document for: DM_CCRMBZ
+2025-10-24 08:17:32,231 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_CCRMBZ.docx
+2025-10-24 08:17:32,247 - INFO - Generating threat surface document for: DM_CMDAT
+2025-10-24 08:17:32,634 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_CMDAT.docx
+2025-10-24 08:17:32,648 - INFO - Generating threat surface document for: DM_CMDF
+2025-10-24 08:17:32,969 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_CMDF.docx
+2025-10-24 08:17:32,977 - INFO - Generating threat surface document for: DM_CMRDB
+2025-10-24 08:17:33,402 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_CMRDB.docx
+2025-10-24 08:17:33,419 - INFO - Generating threat surface document for: DM_CMREG
+2025-10-24 08:17:33,881 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_CMREG.docx
+2025-10-24 08:17:33,894 - INFO - Generating threat surface document for: DM_CORD
+2025-10-24 08:17:34,326 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_CORD.docx
+2025-10-24 08:17:34,342 - INFO - Generating threat surface document for: DM_DNCCW
+2025-10-24 08:17:34,671 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_DNCCW.docx
+2025-10-24 08:17:34,682 - INFO - Generating threat surface document for: DM_LEDAT
+2025-10-24 08:17:35,040 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_LEDAT.docx
+2025-10-24 08:17:35,049 - INFO - Generating threat surface document for: DM_RDOM
+2025-10-24 08:17:35,411 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_RDOM.docx
+2025-10-24 08:17:35,420 - INFO - Generating threat surface document for: DM_SBADJ
+2025-10-24 08:17:35,910 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_SBADJ.docx
+2025-10-24 08:17:35,928 - INFO - Generating threat surface document for: DM_WMAHR
+2025-10-24 08:17:36,361 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DM_WMAHR.docx
+2025-10-24 08:17:36,373 - INFO - Generating threat surface document for: DNACA
+2025-10-24 08:17:36,683 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNACA.docx
+2025-10-24 08:17:36,691 - INFO - Generating threat surface document for: DNADP
+2025-10-24 08:17:37,014 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNADP.docx
+2025-10-24 08:17:37,026 - INFO - Generating threat surface document for: DNAEP
+2025-10-24 08:17:37,323 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNAEP.docx
+2025-10-24 08:17:37,336 - INFO - Generating threat surface document for: DNAGR
+2025-10-24 08:17:37,711 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNAGR.docx
+2025-10-24 08:17:37,727 - INFO - Generating threat surface document for: DNASA
+2025-10-24 08:17:38,118 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNASA.docx
+2025-10-24 08:17:38,134 - INFO - Generating threat surface document for: DNBCI
+2025-10-24 08:17:38,715 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNBCI.docx
+2025-10-24 08:17:38,733 - INFO - Generating threat surface document for: DNBIT
+2025-10-24 08:17:39,275 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNBIT.docx
+2025-10-24 08:17:39,286 - INFO - Generating threat surface document for: DNBLC
+2025-10-24 08:17:39,683 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNBLC.docx
+2025-10-24 08:17:39,700 - INFO - Generating threat surface document for: DNBRI
+2025-10-24 08:17:40,187 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNBRI.docx
+2025-10-24 08:17:40,198 - INFO - Generating threat surface document for: DNBUH
+2025-10-24 08:17:40,695 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNBUH.docx
+2025-10-24 08:17:40,708 - INFO - Generating threat surface document for: DNCAC
+2025-10-24 08:17:41,133 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNCAC.docx
+2025-10-24 08:17:41,145 - INFO - Generating threat surface document for: DNCCL
+2025-10-24 08:17:41,524 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNCCL.docx
+2025-10-24 08:17:41,536 - INFO - Generating threat surface document for: DNCCO
+2025-10-24 08:17:42,091 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNCCO.docx
+2025-10-24 08:17:42,108 - INFO - Generating threat surface document for: DNCCS
+2025-10-24 08:17:42,515 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNCCS.docx
+2025-10-24 08:17:42,527 - INFO - Generating threat surface document for: DNCCW
+2025-10-24 08:17:43,066 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNCCW.docx
+2025-10-24 08:17:43,082 - INFO - Generating threat surface document for: DNCER
+2025-10-24 08:17:43,588 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNCER.docx
+2025-10-24 08:17:43,605 - INFO - Generating threat surface document for: DNCIT
+2025-10-24 08:17:44,398 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNCIT.docx
+2025-10-24 08:17:44,415 - INFO - Generating threat surface document for: DNCOR
+2025-10-24 08:17:45,179 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNCOR.docx
+2025-10-24 08:17:45,199 - INFO - Generating threat surface document for: DNCWS
+2025-10-24 08:17:46,194 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNCWS.docx
+2025-10-24 08:17:46,220 - INFO - Generating threat surface document for: DNDNS
+2025-10-24 08:17:47,019 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNDNS.docx
+2025-10-24 08:17:47,037 - INFO - Generating threat surface document for: DNENG
+2025-10-24 08:17:47,637 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNENG.docx
+2025-10-24 08:17:47,648 - INFO - Generating threat surface document for: DNESR
+2025-10-24 08:17:48,284 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNESR.docx
+2025-10-24 08:17:48,299 - INFO - Generating threat surface document for: DNGCM
+2025-10-24 08:17:49,002 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNGCM.docx
+2025-10-24 08:17:49,015 - INFO - Generating threat surface document for: DNGFC
+2025-10-24 08:17:49,570 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNGFC.docx
+2025-10-24 08:17:49,584 - INFO - Generating threat surface document for: DNHRT
+2025-10-24 08:17:49,992 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNHRT.docx
+2025-10-24 08:17:50,005 - INFO - Generating threat surface document for: DNIBS
+2025-10-24 08:17:50,383 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNIBS.docx
+2025-10-24 08:17:50,398 - INFO - Generating threat surface document for: DNIDE
+2025-10-24 08:17:50,854 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNIDE.docx
+2025-10-24 08:17:50,866 - INFO - Generating threat surface document for: DNINR
+2025-10-24 08:17:51,390 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNINR.docx
+2025-10-24 08:17:51,405 - INFO - Generating threat surface document for: DNINT
+2025-10-24 08:17:51,990 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNINT.docx
+2025-10-24 08:17:52,006 - INFO - Generating threat surface document for: DNINV
+2025-10-24 08:17:52,422 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNINV.docx
+2025-10-24 08:17:52,433 - INFO - Generating threat surface document for: DNLDS
+2025-10-24 08:17:52,795 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNLDS.docx
+2025-10-24 08:17:52,807 - INFO - Generating threat surface document for: DNLOC
+2025-10-24 08:17:53,330 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNLOC.docx
+2025-10-24 08:17:53,356 - INFO - Generating threat surface document for: DNMCM
+2025-10-24 08:17:54,051 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNMCM.docx
+2025-10-24 08:17:54,105 - INFO - Generating threat surface document for: DNMET
+2025-10-24 08:17:55,075 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNMET.docx
+2025-10-24 08:17:55,111 - INFO - Generating threat surface document for: DNMLO
+2025-10-24 08:17:55,802 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNMLO.docx
+2025-10-24 08:17:55,814 - INFO - Generating threat surface document for: DNMMZ
+2025-10-24 08:17:56,198 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNMMZ.docx
+2025-10-24 08:17:56,207 - INFO - Generating threat surface document for: DNPGR
+2025-10-24 08:17:56,569 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNPGR.docx
+2025-10-24 08:17:56,578 - INFO - Generating threat surface document for: DNRAS
+2025-10-24 08:17:56,960 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNRAS.docx
+2025-10-24 08:17:56,971 - INFO - Generating threat surface document for: DNRCB
+2025-10-24 08:17:57,367 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNRCB.docx
+2025-10-24 08:17:57,381 - INFO - Generating threat surface document for: DNRCT
+2025-10-24 08:17:57,794 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNRCT.docx
+2025-10-24 08:17:57,807 - INFO - Generating threat surface document for: DNREP
+2025-10-24 08:17:58,245 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNREP.docx
+2025-10-24 08:17:58,259 - INFO - Generating threat surface document for: DNRGE
+2025-10-24 08:17:58,760 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNRGE.docx
+2025-10-24 08:17:58,772 - INFO - Generating threat surface document for: DNROM
+2025-10-24 08:17:59,410 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNROM.docx
+2025-10-24 08:17:59,424 - INFO - Generating threat surface document for: DNRVS
+2025-10-24 08:17:59,968 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNRVS.docx
+2025-10-24 08:17:59,984 - INFO - Generating threat surface document for: DNSBT
+2025-10-24 08:18:00,561 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNSBT.docx
+2025-10-24 08:18:00,574 - INFO - Generating threat surface document for: DNSCC
+2025-10-24 08:18:01,122 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNSCC.docx
+2025-10-24 08:18:01,140 - INFO - Generating threat surface document for: DNSCH
+2025-10-24 08:18:01,689 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNSCH.docx
+2025-10-24 08:18:01,701 - INFO - Generating threat surface document for: DNTCB
+2025-10-24 08:18:02,331 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNTCB.docx
+2025-10-24 08:18:02,345 - INFO - Generating threat surface document for: DNTCM
+2025-10-24 08:18:02,929 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNTCM.docx
+2025-10-24 08:18:02,945 - INFO - Generating threat surface document for: DNWHO
+2025-10-24 08:18:03,509 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNWHO.docx
+2025-10-24 08:18:03,527 - INFO - Generating threat surface document for: DNWHS
+2025-10-24 08:18:04,221 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNWHS.docx
+2025-10-24 08:18:04,237 - INFO - Generating threat surface document for: DNZEL
+2025-10-24 08:18:04,884 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DNZEL.docx
+2025-10-24 08:18:04,899 - INFO - Generating threat surface document for: DPAPI
+2025-10-24 08:18:05,439 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DPAPI.docx
+2025-10-24 08:18:05,457 - INFO - Generating threat surface document for: DSAA
+2025-10-24 08:18:05,941 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-DSAA.docx
+2025-10-24 08:18:05,955 - INFO - Generating threat surface document for: ECL
+2025-10-24 08:18:06,472 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-ECL.docx
+2025-10-24 08:18:06,496 - INFO - Generating threat surface document for: EFW
+2025-10-24 08:18:07,356 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-EFW.docx
+2025-10-24 08:18:07,368 - INFO - Generating threat surface document for: EM
+2025-10-24 08:18:08,456 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-EM.docx
+2025-10-24 08:18:08,472 - INFO - Generating threat surface document for: EMDS
+2025-10-24 08:18:09,086 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-EMDS.docx
+2025-10-24 08:18:09,098 - INFO - Generating threat surface document for: EMGR
+2025-10-24 08:18:09,623 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-EMGR.docx
+2025-10-24 08:18:09,634 - INFO - Generating threat surface document for: END
+2025-10-24 08:18:10,100 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-END.docx
+2025-10-24 08:18:10,110 - INFO - Generating threat surface document for: ENDNC
+2025-10-24 08:18:10,721 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-ENDNC.docx
+2025-10-24 08:18:10,743 - INFO - Generating threat surface document for: ERCPT
+2025-10-24 08:18:11,478 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-ERCPT.docx
+2025-10-24 08:18:11,492 - INFO - Generating threat surface document for: FAAR
+2025-10-24 08:18:12,004 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-FAAR.docx
+2025-10-24 08:18:12,018 - INFO - Generating threat surface document for: FG
+2025-10-24 08:18:12,499 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-FG.docx
+2025-10-24 08:18:12,515 - INFO - Generating threat surface document for: FICPM
+2025-10-24 08:18:13,127 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-FICPM.docx
+2025-10-24 08:18:13,155 - INFO - Generating threat surface document for: FIMSP
+2025-10-24 08:18:13,857 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-FIMSP.docx
+2025-10-24 08:18:13,871 - INFO - Generating threat surface document for: FM
+2025-10-24 08:18:14,424 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-FM.docx
+2025-10-24 08:18:14,442 - INFO - Generating threat surface document for: I3SQL
+2025-10-24 08:18:14,960 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-I3SQL.docx
+2025-10-24 08:18:14,974 - INFO - Generating threat surface document for: IA
+2025-10-24 08:18:15,528 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IA.docx
+2025-10-24 08:18:15,544 - INFO - Generating threat surface document for: IB
+2025-10-24 08:18:16,019 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IB.docx
+2025-10-24 08:18:16,034 - INFO - Generating threat surface document for: IMGVF
+2025-10-24 08:18:16,547 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IMGVF.docx
+2025-10-24 08:18:16,562 - INFO - Generating threat surface document for: ITR
+2025-10-24 08:18:17,036 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-ITR.docx
+2025-10-24 08:18:17,051 - INFO - Generating threat surface document for: IV
+2025-10-24 08:18:17,536 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IV.docx
+2025-10-24 08:18:17,551 - INFO - Generating threat surface document for: IVGBU
+2025-10-24 08:18:18,071 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IVGBU.docx
+2025-10-24 08:18:18,097 - INFO - Generating threat surface document for: IVR
+2025-10-24 08:18:18,649 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IVR.docx
+2025-10-24 08:18:18,664 - INFO - Generating threat surface document for: IVRMC
+2025-10-24 08:18:19,196 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IVRMC.docx
+2025-10-24 08:18:19,212 - INFO - Generating threat surface document for: IW
+2025-10-24 08:18:19,798 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IW.docx
+2025-10-24 08:18:19,811 - INFO - Generating threat surface document for: IWDE
+2025-10-24 08:18:20,300 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IWDE.docx
+2025-10-24 08:18:20,315 - INFO - Generating threat surface document for: IX
+2025-10-24 08:18:20,849 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IX.docx
+2025-10-24 08:18:20,862 - INFO - Generating threat surface document for: IXCI
+2025-10-24 08:18:21,325 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IXCI.docx
+2025-10-24 08:18:21,338 - INFO - Generating threat surface document for: IXOF
+2025-10-24 08:18:21,764 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-IXOF.docx
+2025-10-24 08:18:21,777 - INFO - Generating threat surface document for: LB
+2025-10-24 08:18:22,378 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-LB.docx
+2025-10-24 08:18:22,396 - INFO - Generating threat surface document for: LBCC
+2025-10-24 08:18:22,915 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-LBCC.docx
+2025-10-24 08:18:22,931 - INFO - Generating threat surface document for: LBOT
+2025-10-24 08:18:23,420 - INFO - [OK] Threat surface document saved: outputs_final\word_reports\threat_surface\ThreatSurface-LBOT.docx
+2025-10-24 08:18:23,422 - INFO - ================================================================================
+2025-10-24 08:18:23,422 - INFO - Generation Summary:
+2025-10-24 08:18:23,422 - INFO -   Total: 140
+2025-10-24 08:18:23,422 - INFO -   Success: 140
+2025-10-24 08:18:23,422 - INFO -   Failed: 0
+2025-10-24 08:18:23,422 - INFO -   Duration: 74.3s
+2025-10-24 08:18:23,422 - INFO -   Output: outputs_final\word_reports\threat_surface
+2025-10-24 08:18:23,422 - INFO - ================================================================================

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANSIBLE Architecture Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .diagram-container {
+            padding: 40px;
+            background: white;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 2px solid #e0e0e0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-weight: 500;
+            background: #2a5298;
+            color: white;
+        }
+
+        .btn:hover {
+            background: #1e3c72;
+            transform: scale(1.05);
+        }
+
+        .info {
+            padding: 20px 40px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            margin: 20px 40px;
+            border-radius: 5px;
+        }
+
+        .info h3 {
+            margin-top: 0;
+            color: #1976D2;
+        }
+
+        .info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .info li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏗️ ANSIBLE Architecture Diagram</h1>
+            <p>Professional Network Segmentation Architecture</p>
+        </div>
+
+        <div class="info">
+            <h3>📊 Diagram Features:</h3>
+            <ul>
+                <li><strong>Horizontal Layout:</strong> Upstream (Left) → Application (Center) → Downstream (Right)</li>
+                <li><strong>Server Type Grouping:</strong> Web Tier 🌐 | Application Tier ⚙️ | Database Tier 🗄️</li>
+                <li><strong>Color Coded:</strong> Easy visual identification of different components</li>
+                <li><strong>Editable:</strong> This is Mermaid source - can be edited in any Mermaid editor</li>
+                <li><strong>Word-Ready:</strong> Optimized for export to Word/PowerPoint documents</li>
+            </ul>
+        </div>
+
+        <div class="diagram-container">
+            <div class="mermaid">
+graph LR
+    %% ANSIBLE Architecture Diagram
+
+    subgraph UPSTREAM["⬅️ UPSTREAM SOURCES"]
+        UP0["ANSIBLE<br/>2 flows"]:::upstream
+        UP1["APACHE<br/>1 flows"]:::upstream
+    end
+
+    subgraph CENTER["ANSIBLE APPLICATION"]
+        subgraph WEB["🌐 WEB TIER"]
+            W0["WEB-SERVER-01.corp.local<br/>10.100.246.20"]:::web
+            W1["WEB-VM-01.rgbk.com<br/>192.168.1.102"]:::web
+            W2["VM-Server-03.rgbk.com<br/>192.168.1.102"]:::web
+        end
+        subgraph APP["⚙️ APPLICATION TIER"]
+            AGRP["⚙️ App Servers<br/>4 servers"]:::app
+        end
+        subgraph DB["🗄️ DATABASE TIER"]
+            DGRP["🗄️ Database Servers<br/>5 servers"]:::database
+        end
+    end
+
+    subgraph DOWNSTREAM["DOWNSTREAM DESTINATIONS ➡️"]
+        DOWN0["ALIBABA<br/>2 servers | 2 flows"]:::downstream
+    end
+
+    EXTERNAL["🌍 EXTERNAL / INTERNET<br/>5 destinations | 8 flows"]:::external
+
+    UP0 --> CENTER
+    UP1 --> CENTER
+    CENTER --> DOWN0
+    CENTER --> EXTERNAL
+
+    %% Styles
+    classDef upstream fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#000
+    classDef web fill:#4CAF50,stroke:#2E7D32,stroke-width:3px,color:#fff
+    classDef app fill:#FF9800,stroke:#E65100,stroke-width:3px,color:#fff
+    classDef database fill:#9C27B0,stroke:#6A1B9A,stroke-width:3px,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:4px,color:#000
+    classDef other fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
+    classDef downstream fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:3px,color:#fff
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="downloadSVG()">⬇️ Download SVG</button>
+            <button class="btn" onclick="window.print()">🖨️ Print</button>
+            <button class="btn" onclick="window.open('https://mermaid.live', '_blank')">✏️ Edit in Mermaid Live</button>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                fontSize: '14px',
+                fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif'
+            },
+            flowchart: {
+                nodeSpacing: 80,
+                rankSpacing: 120,
+                padding: 20,
+                useMaxWidth: true
+            }
+        });
+
+        function downloadSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ANSIBLE_architecture.svg';
+                a.click();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+graph LR
+    %% FULL FLOW: Source Apps → ANSIBLE → Destination Apps
+
+    SRC_APP_0["<b>ANSIBLE</b><br/>172.16.0.12 (DB-SERVER-01.rgbk.com)<br/>192.168.1.103 (APP-SERVER-01.rgbk.com)<br/>2 Servers | 2 Flows"]:::upstream
+    SRC_APP_1[("<b>APACHE</b><br/>10.10.10.50 (vm-host-01.corp.local)<br/>1 Servers | 1 Flows | 1 VMware")]:::upstream
+
+    CENTER["<b>ANSIBLE (CENTER)</b><br/>10.164.92.166 (host01.rgbk.com)<br/>172.16.0.12 (DB-SERVER-01.rgbk.com)<br/>... (+10 more)<br/>9 Servers | 12 Flows"]:::centerapp
+
+    SRC_APP_0 .->|2| CENTER
+    SRC_APP_1 .->|1| CENTER
+    DEST_APP_0[("<b>ALIBABA</b><br/>172.16.0.13 (APP-VM-01.rgbk.com)<br/>172.16.0.10 (VMware AD6FD1)<br/>2 Servers | 2 Flows | 2 VMware")]:::downstream
+    CENTER .->|2| DEST_APP_0
+    EXTERNAL["<b>External / Internet</b><br/>172.16.1.50<br/>10.164.92.180<br/>... (+3 more)<br/>5 Destinations | 8 Flows"]:::external
+    CENTER .->|8| EXTERNAL
+
+    %% Styles
+    classDef centerapp fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef upstream fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef downstream fill:#9C27B0,stroke:#6A1B9A,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff

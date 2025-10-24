@@ -1,0 +1,16 @@
+graph LR
+    %% UPSTREAM: Who sends data TO APACHE
+
+    SRC_APP_0[("<b>APACHE</b><br/>10.100.246.18 (server02.corp.local)<br/>10.100.246.20 (ESXi-Host-02.corp.local)<br/>2 Servers | 2 Flows | 1 VMware")]:::vmware
+    SRC_APP_1["<b>APIGTW</b><br/>10.100.246.18 (DB-SERVER-01.rgbk.com)<br/>1 Servers | 1 Flows"]:::sourceapp
+    SRC_APP_2[("<b>APM</b><br/>10.164.92.169 (ESXi-Host-02.corp.local)<br/>1 Servers | 1 Flows | 1 VMware")]:::vmware
+    TARGET[("<b>APACHE (TARGET)</b><br/>10.100.246.18 (server02.corp.local)<br/>10.164.92.169 (WAPRCG.rgbk.com)<br/>... (+2 more)<br/>4 Servers | 4 Flows | 2 VMware")]:::targetapp
+
+    SRC_APP_0 -->|2| TARGET
+    SRC_APP_1 -->|1| TARGET
+    SRC_APP_2 -->|1| TARGET
+
+    %% Styles
+    classDef targetapp fill:#4CAF50,stroke:#2E7D32,stroke-width:4px,color:#fff
+    classDef sourceapp fill:#2196F3,stroke:#1565C0,stroke-width:3px,color:#fff
+    classDef vmware fill:#FF9800,stroke:#E65100,stroke-width:3px,color:#fff

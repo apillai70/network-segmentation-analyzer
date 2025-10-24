@@ -1,0 +1,62 @@
+graph TB
+    %% Application: ANSIBLE
+
+    subgraph ANSIBLE_WEB["ANSIBLE - Web Tier"]
+        direction TB
+        SRC_WEB_0["WEB-SERVER-01.corp.local<br/>10.100.246.20"]:::redborder
+        SRC_WEB_1[("WEB-VM-01 | WEB-VM-01.rgbk.com<br/>192.168.1.102")]:::vmware
+    end
+
+    subgraph ANSIBLE_APP["ANSIBLE - App Tier"]
+        direction TB
+        SRC_APP_0["host01.rgbk.com<br/>10.164.92.166"]:::redborder
+        SRC_APP_1["APP-SERVER-01.rgbk.com<br/>192.168.1.103"]:::redborder
+        SRC_APP_2["API-GATEWAY.rgbk.com<br/>10.164.92.169"]:::redborder
+        SRC_APP_3["APP-SERVER-01.rgbk.com<br/>10.100.246.18"]:::redborder
+        SRC_APP_4["APP-SERVER-01.rgbk.com<br/>10.10.10.50"]:::redborder
+        SRC_APP_5[("VM-Server-03 | VM-Server-03.rgbk.com<br/>192.168.1.102")]:::vmware
+    end
+
+    subgraph ANSIBLE_DB["ANSIBLE - Database Tier"]
+        direction TB
+        SRC_DB_0["DB-SERVER-01.rgbk.com<br/>172.16.0.12"]:::redborder
+        SRC_DB_1["WPEVISQL02.corp.rgbk.com<br/>10.10.10.51"]:::redborder
+        SRC_DB_2["DB-SERVER-01.rgbk.com<br/>10.164.92.169"]:::redborder
+        SRC_DB_3["host02.corp.local<br/>172.16.0.12"]:::redborder
+    end
+
+    SRC_WEB_0 -->|internal| SRC_APP_0
+    SRC_WEB_1 -->|internal| SRC_APP_0
+    SRC_APP_0 -->|internal| SRC_DB_0
+    SRC_APP_1 -->|internal| SRC_DB_0
+    SRC_APP_2 -->|internal| SRC_DB_0
+    SRC_APP_3 -->|internal| SRC_DB_0
+    SRC_APP_4 -->|internal| SRC_DB_0
+    SRC_APP_5 -->|internal| SRC_DB_0
+
+    subgraph ALIBABA_SERVERS["ALIBABA Servers"]
+        direction TB
+        ALIBABA_SRV_0[("APP-VM-01 | APP-VM-01.rgbk.com<br/>172.16.0.13")]:::vmware
+        ALIBABA_SRV_1[("VMware AD6FD1 | VMware AD6FD1<br/>172.16.0.10")]:::vmware
+    end
+
+    SRC_DB_0 -->|depends on| ALIBABA_SERVERS
+
+    subgraph EXTERNAL["External / Internet"]
+        direction TB
+        EXT_0["172.16.1.50<br/>172.16.1.50"]:::redborder
+        EXT_2["10.164.92.180<br/>10.164.92.180"]:::redborder
+        EXT_5["172.16.1.51<br/>172.16.1.51"]:::redborder
+        EXT_6["172.16.1.52<br/>172.16.1.52"]:::redborder
+        EXT_7["1.0.0.1<br/>1.0.0.1"]:::redborder
+    end
+
+    SRC_DB_0 -->|external| EXTERNAL
+
+    %% Styles
+    classDef sourceapp fill:#4CAF50,stroke:#2E7D32,stroke-width:3px,color:#fff
+    classDef normal fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    classDef vmware fill:#FFF3E0,stroke:#F57C00,stroke-width:2px
+    classDef redborder fill:#FFEBEE,stroke:#F44336,stroke-width:3px
+    classDef internal fill:#F1F8E9,stroke:#689F38,stroke-width:2px
+    classDef external fill:#FCE4EC,stroke:#C2185B,stroke-width:2px

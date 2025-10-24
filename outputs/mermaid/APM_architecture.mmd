@@ -1,0 +1,51 @@
+graph TD
+    %% APM Architecture Diagram (Vertical Layout)
+
+    subgraph CENTER["APM APPLICATION"]
+        subgraph NLB["⚖️ NETWORK LOAD BALANCER (Inferred)"]
+            NLB_NODE["External/Internal Gateway<br/>Distributes traffic to Web Tier"]:::loadbalancer
+        end
+        subgraph WEB["🌐 WEB TIER"]
+            W0["192.168.1.101<br/>(WAPRCG.rgbk.com)"]:::web
+            W1["10.100.246.21<br/>(server03.rgbk.com)"]:::web
+            WMORE["... (+5 more)"]:::webmore
+            click WMORE showWebServers
+        end
+        subgraph ALB["⚖️ APPLICATION LOAD BALANCER (Inferred)"]
+            ALB_NODE["Internal Gateway/API Gateway<br/>Distributes traffic to App Tier"]:::loadbalancer
+        end
+        subgraph APP["⚙️ APPLICATION TIER"]
+            A0["10.100.246.21<br/>(API-GATEWAY.rgbk.com)"]:::app
+            A1["192.168.1.102<br/>(API-GATEWAY.rgbk.com)"]:::app
+        end
+        subgraph DB["🗄️ DATABASE TIER"]
+            D0["172.16.0.10<br/>(vmhost-02.rgbk.com)"]:::database
+        end
+        subgraph OTHER["🖥️ OTHER SERVICES"]
+            OTH_File["File<br/>1 servers"]:::other
+        end
+    end
+
+    subgraph DOWNSTREAM["⬇️ DOWNSTREAM DESTINATIONS"]
+        DOWN0["APACHE<br/>1 servers | 1 flows"]:::downstream
+        DOWN1["APIGTW<br/>1 servers | 1 flows"]:::downstream
+    end
+
+    EXTERNAL["🌍 EXTERNAL / INTERNET<br/>8 destinations | 9 flows"]:::external
+
+    CENTER --> DOWN0
+    CENTER --> DOWN1
+    CENTER --> EXTERNAL
+
+    %% Styles (thinner strokes for professional appearance)
+    classDef upstream fill:#E3F2FD,stroke:#1976D2,stroke-width:1.5px,color:#000
+    classDef web fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef webmore fill:#81C784,stroke:#2E7D32,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef app fill:#FF9800,stroke:#E65100,stroke-width:2px,color:#fff
+    classDef appmore fill:#FFB74D,stroke:#E65100,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef database fill:#9C27B0,stroke:#6A1B9A,stroke-width:2px,color:#fff
+    classDef dbmore fill:#BA68C8,stroke:#6A1B9A,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:2px,color:#000
+    classDef other fill:#607D8B,stroke:#37474F,stroke-width:1.5px,color:#fff
+    classDef downstream fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff

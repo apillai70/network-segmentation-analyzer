@@ -1,0 +1,20 @@
+graph LR
+    %% DOWNSTREAM: Where APM sends data
+
+    SOURCE["<b>APM</b><br/>192.168.1.101 (WAPRCG.rgbk.com)<br/>172.16.0.10 (vmhost-02.rgbk.com)<br/>10.100.246.21 (server03.rgbk.com)<br/>... (+8 more)<br/>8 Servers | 11 Flows"]:::sourceapp
+
+    DEST_APP_0[("<b>APACHE</b><br/>10.100.246.20 (ESXi-Host-02.corp.local)<br/>1 Servers | 1 Flows | 1 VMware")]:::vmware
+    SOURCE .->|1| DEST_APP_0
+    DEST_APP_1["<b>APIGTW</b><br/>10.100.246.18 (DB-SERVER-01.rgbk.com)<br/>1 Servers | 1 Flows"]:::destapp
+    SOURCE .->|1| DEST_APP_1
+
+    EXTERNAL["<b>External / Internet</b><br/>10.20.20.102<br/>10.100.246.31<br/>... (+6 more)<br/>8 Destinations | 9 Flows"]:::external
+    SOURCE .->|9| EXTERNAL
+
+    %% Styles
+    classDef sourceapp fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef destapp fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef vmware fill:#FF9800,stroke:#E65100,stroke-width:1.5px,color:#fff
+    classDef internal fill:#9C27B0,stroke:#6A1B9A,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:2px,color:#000,rx:2,ry:2

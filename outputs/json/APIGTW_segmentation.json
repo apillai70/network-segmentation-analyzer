@@ -1,0 +1,17 @@
+{
+  "application": "APIGTW",
+  "generated": "2025-10-24T16:18:12.494230",
+  "statistics": {
+    "total_flows": 13,
+    "internal_flows": 1,
+    "outbound_flows": 4,
+    "external_flows": 8
+  },
+  "dependencies": [
+    "APACHE",
+    "ALIBABA",
+    "APIGTW"
+  ],
+  "vmware_instances": 7,
+  "failed_dns_count": 13
+}

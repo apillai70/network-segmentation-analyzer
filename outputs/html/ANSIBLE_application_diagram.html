@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANSIBLE - Application Architecture</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            padding: 20px 30px;
+            background: #f8f9fa;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+        }
+
+        .stat-card .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2a5298;
+            margin-bottom: 3px;
+        }
+
+        .stat-card .label {
+            color: #666;
+            font-size: 0.75em;
+            line-height: 1.2;
+        }
+
+        .controls {
+            padding: 20px 30px;
+            background: #fff;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #2a5298;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e3c72;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-toggle {
+            padding: 12px 24px;
+            border: 2px solid #2a5298;
+            background: white;
+            color: #2a5298;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn-toggle:hover {
+            background: #e3f2fd;
+        }
+
+        .btn-toggle.active {
+            background: #2a5298;
+            color: white;
+        }
+
+        .toggle-section {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .diagram-container {
+            padding: 30px;
+            background: white;
+            overflow-x: auto;
+            overflow-y: hidden;
+            width: 100%;
+        }
+
+        .diagram-view {
+            min-height: 600px;
+            background: white;
+            width: 100%;
+            overflow: visible;
+        }
+
+        .diagram-view .mermaid {
+            width: 100%;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .diagram-view .mermaid svg {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+
+        .diagram-view.hidden {
+            display: none;
+        }
+
+        /* Professional uniform box sizing for Mermaid */
+        #diagram svg .node rect,
+        #diagram svg .node circle,
+        #diagram svg .node ellipse,
+        #diagram svg .node polygon,
+        #diagram svg .node path {
+            min-width: 180px !important;
+            min-height: 80px !important;
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Uniform node sizing */
+        .mermaid .node {
+            min-width: 200px !important;
+            text-align: center !important;
+        }
+
+        .mermaid .nodeLabel {
+            padding: 15px 20px !important;
+            line-height: 1.4 !important;
+        }
+
+        /* Uniform text sizing */
+        .mermaid text {
+            font-size: 14px !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        }
+
+        .legend {
+            padding: 15px 30px;
+            background: #f8f9fa;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .legend h3 {
+            color: #2a5298;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid #ddd;
+            flex-shrink: 0;
+        }
+
+        .footer {
+            padding: 20px 30px;
+            background: #2a5298;
+            color: white;
+            text-align: center;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .controls, .stats {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal for showing all IPs/hostnames -->
+    <div id="detailsModal" style="display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6);">
+        <div style="background-color: white; margin: 5% auto; padding: 0; border-radius: 10px; width: 80%; max-width: 800px; box-shadow: 0 5px 30px rgba(0,0,0,0.3);">
+            <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 20px; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between; align-items: center;">
+                <h2 id="modalTitle" style="margin: 0; font-size: 1.5em;">Server Details</h2>
+                <span onclick="closeModal()" style="cursor: pointer; font-size: 28px; font-weight: bold;">&times;</span>
+            </div>
+            <div id="modalContent" style="padding: 30px;">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>ANSIBLE</h1>
+            <div class="subtitle">Application Architecture & Dependencies</div>
+            <div class="subtitle">Generated on October 24, 2025 at 04:18 PM</div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="value">12</div>
+                <div class="label">Total Flows</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">2</div>
+                <div class="label">Internal Flows</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">2</div>
+                <div class="label">Outbound to Apps</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">8</div>
+                <div class="label">External Flows</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">2</div>
+                <div class="label">Destination Apps</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">4</div>
+                <div class="label">VMware Instances</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">12</div>
+                <div class="label">Failed DNS (RED)</div>
+            </div>
+        </div>
+
+        <div class="toggle-section">
+            <button class="btn-toggle active" onclick="showView('architecture')" id="btn-architecture">
+                🏗️ Architecture (Tier-Based)
+            </button>
+            <button class="btn-toggle" onclick="showView('fullflow')" id="btn-fullflow">
+                🔄 Full Flow (End-to-End)
+            </button>
+            <button class="btn-toggle" onclick="showView('upstream')" id="btn-upstream">
+                ⬆️ Upstream Only
+            </button>
+            <button class="btn-toggle" onclick="showView('downstream')" id="btn-downstream">
+                ⬇️ Downstream Only
+            </button>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="zoomIn()">🔍 Zoom In</button>
+            <button class="btn btn-primary" onclick="zoomOut()">🔍 Zoom Out</button>
+            <button class="btn btn-primary" onclick="resetZoom()">↺ Reset</button>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ Print</button>
+            <button class="btn btn-secondary" onclick="downloadSVG()">⬇️ Download SVG</button>
+            <button class="btn btn-secondary" onclick="downloadPNG()">⬇️ Download PNG</button>
+        </div>
+
+        <div class="diagram-container">
+            <div id="view-architecture" class="diagram-view" style="display: block;">
+                <div style="text-align: center; padding: 20px 0; background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #fff; margin: 0;">🏗️ ARCHITECTURE: ANSIBLE Vertical Tier-Based Layout (Optimized for Large Deployments)</h3>
+                </div>
+                <div class="mermaid">
+graph TD
+    %% ANSIBLE Architecture Diagram (Vertical Layout)
+
+    subgraph UPSTREAM["⬆️ UPSTREAM SOURCES"]
+        UP0["ANSIBLE<br/>2 flows"]:::upstream
+        UP1["APACHE<br/>1 flows"]:::upstream
+    end
+
+    subgraph CENTER["ANSIBLE APPLICATION"]
+        subgraph NLB["⚖️ NETWORK LOAD BALANCER (Inferred)"]
+            NLB_NODE["External/Internal Gateway<br/>Distributes traffic to Web Tier"]:::loadbalancer
+        end
+        subgraph WEB["🌐 WEB TIER"]
+            W0["10.100.246.20<br/>(WEB-SERVER-01.corp.local)"]:::web
+            W1["192.168.1.102<br/>(WEB-VM-01.rgbk.com)"]:::web
+            WMORE["... (+1 more)"]:::webmore
+            click WMORE showWebServers
+        end
+        subgraph ALB["⚖️ APPLICATION LOAD BALANCER (Inferred)"]
+            ALB_NODE["Internal Gateway/API Gateway<br/>Distributes traffic to App Tier"]:::loadbalancer
+        end
+        subgraph APP["⚙️ APPLICATION TIER"]
+            A0["192.168.1.103<br/>(APP-SERVER-01.rgbk.com)"]:::app
+            A1["10.164.92.169<br/>(API-GATEWAY.rgbk.com)"]:::app
+            AMORE["... (+2 more)"]:::appmore
+            click AMORE showAppServers
+        end
+        subgraph DB["🗄️ DATABASE TIER"]
+            D0["10.164.92.166<br/>(host01.rgbk.com)"]:::database
+            D1["172.16.0.12<br/>(DB-SERVER-01.rgbk.com)"]:::database
+            DMORE["... (+3 more)"]:::dbmore
+            click DMORE showDatabaseServers
+        end
+    end
+
+    subgraph DOWNSTREAM["⬇️ DOWNSTREAM DESTINATIONS"]
+        DOWN0["ALIBABA<br/>2 servers | 2 flows"]:::downstream
+    end
+
+    EXTERNAL["🌍 EXTERNAL / INTERNET<br/>5 destinations | 8 flows"]:::external
+
+    UP0 --> CENTER
+    UP1 --> CENTER
+    CENTER --> DOWN0
+    CENTER --> EXTERNAL
+
+    %% Styles (thinner strokes for professional appearance)
+    classDef upstream fill:#E3F2FD,stroke:#1976D2,stroke-width:1.5px,color:#000
+    classDef web fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef webmore fill:#81C784,stroke:#2E7D32,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef app fill:#FF9800,stroke:#E65100,stroke-width:2px,color:#fff
+    classDef appmore fill:#FFB74D,stroke:#E65100,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef database fill:#9C27B0,stroke:#6A1B9A,stroke-width:2px,color:#fff
+    classDef dbmore fill:#BA68C8,stroke:#6A1B9A,stroke-width:1.5px,stroke-dasharray:5,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:2px,color:#000
+    classDef other fill:#607D8B,stroke:#37474F,stroke-width:1.5px,color:#fff
+    classDef downstream fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff
+
+                </div>
+            </div>
+
+            <div id="view-fullflow" class="diagram-view" style="display: block;">
+                <div style="text-align: center; padding: 20px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #fff; margin: 0;">🔄 FULL FLOW: Source Apps → ANSIBLE → Destination Apps</h3>
+                </div>
+                <div class="mermaid">
+graph LR
+    %% FULL FLOW: Source Apps → ANSIBLE → Destination Apps
+
+    SRC_APP_0["<b>ANSIBLE</b><br/>172.16.0.12 (DB-SERVER-01.rgbk.com)<br/>192.168.1.103 (APP-SERVER-01.rgbk.com)<br/>2 Servers | 2 Flows"]:::upstream
+    SRC_APP_1[("<b>APACHE</b><br/>10.10.10.50 (vm-host-01.corp.local)<br/>1 Servers | 1 Flows | 1 VMware")]:::upstream
+
+    CENTER["<b>ANSIBLE (CENTER)</b><br/>10.164.92.166 (host01.rgbk.com)<br/>172.16.0.12 (DB-SERVER-01.rgbk.com)<br/>... (+10 more)<br/>9 Servers | 12 Flows"]:::centerapp
+
+    SRC_APP_0 .->|2| CENTER
+    SRC_APP_1 .->|1| CENTER
+    DEST_APP_0[("<b>ALIBABA</b><br/>172.16.0.13 (APP-VM-01.rgbk.com)<br/>172.16.0.10 (VMware AD6FD1)<br/>2 Servers | 2 Flows | 2 VMware")]:::downstream
+    CENTER .->|2| DEST_APP_0
+    EXTERNAL["<b>External / Internet</b><br/>172.16.1.50<br/>10.164.92.180<br/>... (+3 more)<br/>5 Destinations | 8 Flows"]:::external
+    CENTER .->|8| EXTERNAL
+
+    %% Styles
+    classDef centerapp fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef upstream fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef downstream fill:#9C27B0,stroke:#6A1B9A,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff
+
+                </div>
+            </div>
+
+            <div id="view-upstream" class="diagram-view" style="display: block;">
+                <div style="text-align: center; padding: 20px 0; background: #e3f2fd; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #2a5298; margin: 0;">⬆️ UPSTREAM ONLY: Who Sends Data TO ANSIBLE</h3>
+                </div>
+                <div class="mermaid">
+graph LR
+    %% UPSTREAM: Who sends data TO ANSIBLE
+
+    SRC_APP_0["<b>ANSIBLE</b><br/>172.16.0.12 (DB-SERVER-01.rgbk.com)<br/>192.168.1.103 (APP-SERVER-01.rgbk.com)<br/>2 Servers | 2 Flows"]:::sourceapp
+    SRC_APP_1[("<b>APACHE</b><br/>10.10.10.50 (vm-host-01.corp.local)<br/>1 Servers | 1 Flows | 1 VMware")]:::vmware
+    TARGET["<b>ANSIBLE (TARGET)</b><br/>172.16.0.12 (DB-SERVER-01.rgbk.com)<br/>10.164.92.166 (host01.rgbk.com)<br/>... (+1 more)<br/>3 Servers | 3 Flows"]:::targetapp
+
+    SRC_APP_0 -->|2| TARGET
+    SRC_APP_1 -->|1| TARGET
+
+    %% Styles
+    classDef targetapp fill:#4CAF50,stroke:#2E7D32,stroke-width:4px,color:#fff
+    classDef sourceapp fill:#2196F3,stroke:#1565C0,stroke-width:3px,color:#fff
+    classDef vmware fill:#FF9800,stroke:#E65100,stroke-width:3px,color:#fff
+
+                </div>
+            </div>
+
+            <div id="view-downstream" class="diagram-view" style="display: block;">
+                <div style="text-align: center; padding: 20px 0; background: #fff3e0; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #2a5298; margin: 0;">⬇️ DOWNSTREAM ONLY: Where ANSIBLE Sends Data</h3>
+                </div>
+                <div class="mermaid">
+graph LR
+    %% DOWNSTREAM: Where ANSIBLE sends data
+
+    SOURCE["<b>ANSIBLE</b><br/>10.164.92.166 (host01.rgbk.com)<br/>10.100.246.20 (WEB-SERVER-01.corp.local)<br/>192.168.1.103 (APP-SERVER-01.rgbk.com)<br/>... (+7 more)<br/>8 Servers | 10 Flows"]:::sourceapp
+
+    INTERNAL["<b>Internal Traffic</b><br/>1 Flows"]:::internal
+    SOURCE .->|1| INTERNAL
+
+    DEST_APP_0[("<b>ALIBABA</b><br/>172.16.0.10 (VMware AD6FD1)<br/>1 Servers | 1 Flows | 1 VMware")]:::vmware
+    SOURCE .->|1| DEST_APP_0
+
+    EXTERNAL["<b>External / Internet</b><br/>172.16.1.50<br/>10.164.92.180<br/>... (+3 more)<br/>5 Destinations | 8 Flows"]:::external
+    SOURCE .->|8| EXTERNAL
+
+    %% Styles
+    classDef sourceapp fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef destapp fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef vmware fill:#FF9800,stroke:#E65100,stroke-width:1.5px,color:#fff
+    classDef internal fill:#9C27B0,stroke:#6A1B9A,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:2px,color:#000,rx:2,ry:2
+
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>Legend</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #4CAF50; border-color: #2E7D32;"></div>
+                    <span>Source Application</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #E3F2FD; border-color: #1976D2;"></div>
+                    <span>Normal Server</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #FF9800; border-color: #E65100;"></div>
+                    <span>VMware/ESXi Server</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #FFF; border: 4px solid #F44336;"></div>
+                    <span>Load Balancer (F5/ALB)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #F44336; border-color: #C62828;"></div>
+                    <span>External/Internet</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #F1F8E9; border-color: #689F38;"></div>
+                    <span>Internal Communication</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #FCE4EC; border-color: #C2185B;"></div>
+                    <span>External/Internet</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 2025 Enterprise Security Team | Network Segmentation Analysis
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            themeVariables: {
+                fontSize: '13px',
+                fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                primaryColor: '#fff',
+                primaryTextColor: '#000',
+                lineColor: '#333',
+                edgeLabelBackground: '#ffffff'
+            },
+            flowchart: {
+                nodeSpacing: 50,
+                rankSpacing: 80,
+                padding: 15,
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        let currentZoom = 1;
+        let currentView = 'architecture';
+
+        // After Mermaid renders, hide the non-active views
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('view-fullflow').style.display = 'none';
+                document.getElementById('view-upstream').style.display = 'none';
+                document.getElementById('view-downstream').style.display = 'none';
+            }, 500);
+        });
+
+        function showView(view) {
+            // Hide all views
+            document.getElementById('view-architecture').style.display = 'none';
+            document.getElementById('view-fullflow').style.display = 'none';
+            document.getElementById('view-upstream').style.display = 'none';
+            document.getElementById('view-downstream').style.display = 'none';
+
+            // Remove active from all buttons
+            document.getElementById('btn-architecture').classList.remove('active');
+            document.getElementById('btn-fullflow').classList.remove('active');
+            document.getElementById('btn-upstream').classList.remove('active');
+            document.getElementById('btn-downstream').classList.remove('active');
+
+            // Show selected view
+            document.getElementById('view-' + view).style.display = 'block';
+            document.getElementById('btn-' + view).classList.add('active');
+
+            currentView = view;
+            resetZoom();
+        }
+
+        function zoomIn() {
+            currentZoom += 0.1;
+            const activeView = document.getElementById('view-' + currentView);
+            if (activeView) {
+                activeView.style.transform = `scale(${currentZoom})`;
+            }
+        }
+
+        function zoomOut() {
+            currentZoom = Math.max(0.5, currentZoom - 0.1);
+            const activeView = document.getElementById('view-' + currentView);
+            if (activeView) {
+                activeView.style.transform = `scale(${currentZoom})`;
+            }
+        }
+
+        function resetZoom() {
+            currentZoom = 1;
+            const activeView = document.getElementById('view-' + currentView);
+            if (activeView) {
+                activeView.style.transform = 'scale(1)';
+            }
+        }
+
+        function downloadSVG() {
+            const svg = document.querySelector('#diagram svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ANSIBLE_architecture.svg';
+                a.click();
+            }
+        }
+
+        function downloadPNG() {
+            const svg = document.querySelector('#diagram svg');
+            if (svg) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+
+                img.onload = function() {
+                    canvas.width = img.width * 2;
+                    canvas.height = img.height * 2;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    canvas.toBlob(function(blob) {
+                        const pngUrl = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = pngUrl;
+                        a.download = 'ANSIBLE_architecture.png';
+                        a.click();
+                    });
+                };
+                img.src = url;
+            }
+        }
+
+        // Node details data for modal popups
+        const nodeDetails = {
+  "SOURCE": {
+    "title": "ANSIBLE Source Servers",
+    "items": [
+      {
+        "ip": "10.164.92.166",
+        "hostname": "host01.rgbk.com",
+        "type": "Database",
+        "display": "10.164.92.166 (host01.rgbk.com)"
+      },
+      {
+        "ip": "172.16.0.12",
+        "hostname": "DB-SERVER-01.rgbk.com",
+        "type": "Database",
+        "display": "172.16.0.12 (DB-SERVER-01.rgbk.com)"
+      },
+      {
+        "ip": "10.100.246.20",
+        "hostname": "WEB-SERVER-01.corp.local",
+        "type": "Web",
+        "display": "10.100.246.20 (WEB-SERVER-01.corp.local)"
+      },
+      {
+        "ip": "10.10.10.51",
+        "hostname": "WPEVISQL02.corp.rgbk.com",
+        "type": "Database",
+        "display": "10.10.10.51 (WPEVISQL02.corp.rgbk.com)"
+      },
+      {
+        "ip": "192.168.1.103",
+        "hostname": "APP-SERVER-01.rgbk.com",
+        "type": "App",
+        "display": "192.168.1.103 (APP-SERVER-01.rgbk.com)"
+      },
+      {
+        "ip": "10.164.92.169",
+        "hostname": "API-GATEWAY.rgbk.com",
+        "type": "App",
+        "display": "10.164.92.169 (API-GATEWAY.rgbk.com)"
+      },
+      {
+        "ip": "10.164.92.169",
+        "hostname": "DB-SERVER-01.rgbk.com",
+        "type": "Database",
+        "display": "10.164.92.169 (DB-SERVER-01.rgbk.com)"
+      },
+      {
+        "ip": "192.168.1.102",
+        "hostname": "WEB-VM-01.rgbk.com",
+        "type": "Web",
+        "display": "192.168.1.102 (WEB-VM-01.rgbk.com)"
+      },
+      {
+        "ip": "10.100.246.18",
+        "hostname": "APP-SERVER-01.rgbk.com",
+        "type": "App",
+        "display": "10.100.246.18 (APP-SERVER-01.rgbk.com)"
+      },
+      {
+        "ip": "10.10.10.50",
+        "hostname": "APP-SERVER-01.rgbk.com",
+        "type": "App",
+        "display": "10.10.10.50 (APP-SERVER-01.rgbk.com)"
+      },
+      {
+        "ip": "172.16.0.12",
+        "hostname": "host02.corp.local",
+        "type": "Database",
+        "display": "172.16.0.12 (host02.corp.local)"
+      },
+      {
+        "ip": "192.168.1.102",
+        "hostname": "VM-Server-03.rgbk.com",
+        "type": "Web",
+        "display": "192.168.1.102 (VM-Server-03.rgbk.com)"
+      }
+    ]
+  },
+  "ARCH_WEB": {
+    "title": "\ud83c\udf10 ANSIBLE Web Tier Servers",
+    "items": [
+      {
+        "ip": "10.100.246.20",
+        "hostname": "WEB-SERVER-01.corp.local",
+        "type": "Web",
+        "display": "10.100.246.20 (WEB-SERVER-01.corp.local)"
+      },
+      {
+        "ip": "192.168.1.102",
+        "hostname": "WEB-VM-01.rgbk.com",
+        "type": "Web",
+        "display": "192.168.1.102 (WEB-VM-01.rgbk.com)"
+      },
+      {
+        "ip": "192.168.1.102",
+        "hostname": "VM-Server-03.rgbk.com",
+        "type": "Web",
+        "display": "192.168.1.102 (VM-Server-03.rgbk.com)"
+      }
+    ]
+  },
+  "ARCH_APP": {
+    "title": "\u2699\ufe0f ANSIBLE Application Tier Servers",
+    "items": [
+      {
+        "ip": "192.168.1.103",
+        "hostname": "APP-SERVER-01.rgbk.com",
+        "type": "App",
+        "display": "192.168.1.103 (APP-SERVER-01.rgbk.com)"
+      },
+      {
+        "ip": "10.164.92.169",
+        "hostname": "API-GATEWAY.rgbk.com",
+        "type": "App",
+        "display": "10.164.92.169 (API-GATEWAY.rgbk.com)"
+      },
+      {
+        "ip": "10.100.246.18",
+        "hostname": "APP-SERVER-01.rgbk.com",
+        "type": "App",
+        "display": "10.100.246.18 (APP-SERVER-01.rgbk.com)"
+      },
+      {
+        "ip": "10.10.10.50",
+        "hostname": "APP-SERVER-01.rgbk.com",
+        "type": "App",
+        "display": "10.10.10.50 (APP-SERVER-01.rgbk.com)"
+      }
+    ]
+  },
+  "ARCH_DB": {
+    "title": "\ud83d\uddc4\ufe0f ANSIBLE Database Tier Servers",
+    "items": [
+      {
+        "ip": "10.164.92.166",
+        "hostname": "host01.rgbk.com",
+        "type": "Database",
+        "display": "10.164.92.166 (host01.rgbk.com)"
+      },
+      {
+        "ip": "172.16.0.12",
+        "hostname": "DB-SERVER-01.rgbk.com",
+        "type": "Database",
+        "display": "172.16.0.12 (DB-SERVER-01.rgbk.com)"
+      },
+      {
+        "ip": "10.10.10.51",
+        "hostname": "WPEVISQL02.corp.rgbk.com",
+        "type": "Database",
+        "display": "10.10.10.51 (WPEVISQL02.corp.rgbk.com)"
+      },
+      {
+        "ip": "10.164.92.169",
+        "hostname": "DB-SERVER-01.rgbk.com",
+        "type": "Database",
+        "display": "10.164.92.169 (DB-SERVER-01.rgbk.com)"
+      },
+      {
+        "ip": "172.16.0.12",
+        "hostname": "host02.corp.local",
+        "type": "Database",
+        "display": "172.16.0.12 (host02.corp.local)"
+      }
+    ]
+  },
+  "DEST_ALIBABA": {
+    "title": "ALIBABA Servers",
+    "items": [
+      {
+        "ip": "172.16.0.13",
+        "hostname": "APP-VM-01.rgbk.com",
+        "type": "App",
+        "display": "172.16.0.13 (APP-VM-01.rgbk.com)"
+      },
+      {
+        "ip": "172.16.0.10",
+        "hostname": "VMware AD6FD1",
+        "type": "Domain Controller",
+        "display": "172.16.0.10 (VMware AD6FD1)"
+      }
+    ]
+  },
+  "EXTERNAL": {
+    "title": "External / Internet Destinations",
+    "items": [
+      {
+        "ip": "172.16.1.50",
+        "hostname": "172.16.1.50",
+        "type": "Web",
+        "display": "172.16.1.50"
+      },
+      {
+        "ip": "10.164.92.180",
+        "hostname": "10.164.92.180",
+        "type": "General",
+        "display": "10.164.92.180"
+      },
+      {
+        "ip": "172.16.1.51",
+        "hostname": "172.16.1.51",
+        "type": "Web",
+        "display": "172.16.1.51"
+      },
+      {
+        "ip": "172.16.1.52",
+        "hostname": "172.16.1.52",
+        "type": "Web",
+        "display": "172.16.1.52"
+      },
+      {
+        "ip": "1.0.0.1",
+        "hostname": "1.0.0.1",
+        "type": "Web",
+        "display": "1.0.0.1"
+      },
+      {
+        "ip": "172.16.1.52",
+        "hostname": "172.16.1.52",
+        "type": "Web",
+        "display": "172.16.1.52"
+      },
+      {
+        "ip": "172.16.1.51",
+        "hostname": "172.16.1.51",
+        "type": "Web",
+        "display": "172.16.1.51"
+      },
+      {
+        "ip": "172.16.1.50",
+        "hostname": "172.16.1.50",
+        "type": "Web",
+        "display": "172.16.1.50"
+      }
+    ]
+  }
+};
+
+        // Add click handlers to all diagram nodes
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // Get all node elements from Mermaid diagrams
+                const nodes = document.querySelectorAll('.node');
+                nodes.forEach(function(node) {
+                    // Make nodes clickable if they have "+X more"
+                    const label = node.querySelector('.nodeLabel');
+                    if (label && label.textContent.includes('(+')) {
+                        node.style.cursor = 'pointer';
+                        node.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            showNodeDetails(node);
+                        });
+                    }
+                });
+            }, 1000);
+        });
+
+        function showNodeDetails(node) {
+            const label = node.querySelector('.nodeLabel');
+            if (!label) return;
+
+            const text = label.textContent;
+
+            // Try to determine which node this is
+            let nodeKey = null;
+            let details = null;
+
+            // Check if it's SOURCE
+            if (text.includes('ANSIBLE') && text.includes('Servers')) {
+                nodeKey = 'SOURCE';
+                details = nodeDetails.SOURCE;
+            }
+            // Check for destination apps
+            else {
+                for (let key in nodeDetails) {
+                    if (key.startsWith('DEST_')) {
+                        const appName = key.replace('DEST_', '');
+                        if (text.includes(appName)) {
+                            details = nodeDetails[key];
+                            break;
+                        }
+                    }
+                }
+            }
+            // Check for EXTERNAL
+            if (!details && (text.includes('External') || text.includes('Internet'))) {
+                details = nodeDetails.EXTERNAL;
+            }
+
+            if (details) {
+                showModal(details.title, details.items);
+            }
+        }
+
+        function showModal(title, items) {
+            const modal = document.getElementById('detailsModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+
+            modalTitle.textContent = title;
+
+            // Server type icons/emojis
+            const typeIcons = {
+                'Web': '🌐',
+                'Database': '🗄️',
+                'App': '⚙️',
+                'DNS': '🔍',
+                'Mail': '📧',
+                'File': '📁',
+                'Domain Controller': '👑',
+                'Cache': '💾',
+                'Message Queue': '📨',
+                'Monitoring': '📊',
+                'Backup': '💿',
+                'General': '🖥️'
+            };
+
+            // Build the list with server types
+            let html = '<div style="max-height: 500px; overflow-y: auto;">';
+            html += '<table style="width: 100%; border-collapse: collapse;">';
+            html += '<tr style="background: #2a5298; color: white;">';
+            html += '<th style="padding: 10px; text-align: left;">#</th>';
+            html += '<th style="padding: 10px; text-align: left;">Type</th>';
+            html += '<th style="padding: 10px; text-align: left;">IP (Hostname)</th>';
+            html += '</tr>';
+
+            items.forEach(function(item, idx) {
+                const bg = idx % 2 === 0 ? '#f8f9fa' : 'white';
+                const serverType = item.type || 'General';
+                const icon = typeIcons[serverType] || '🖥️';
+                const display = item.display || item;
+
+                html += `<tr style="background: ${bg};">`;
+                html += `<td style="padding: 8px; border-bottom: 1px solid #ddd;">${idx + 1}</td>`;
+                html += `<td style="padding: 8px; border-bottom: 1px solid #ddd;"><span style="font-size: 16px;">${icon}</span> ${serverType}</td>`;
+                html += `<td style="padding: 8px; border-bottom: 1px solid #ddd; font-family: monospace;">${display}</td>`;
+                html += `</tr>`;
+            });
+            html += '</table></div>';
+
+            // Count server types
+            const typeCounts = {};
+            items.forEach(function(item) {
+                const type = item.type || 'General';
+                typeCounts[type] = (typeCounts[type] || 0) + 1;
+            });
+
+            html += `<div style="margin-top: 15px; padding: 15px; background: #e3f2fd; border-radius: 5px;">`;
+            html += `<strong>Total:</strong> ${items.length} servers<br/><br/>`;
+            html += `<strong>Breakdown by Type:</strong><br/>`;
+            for (let type in typeCounts) {
+                const icon = typeIcons[type] || '🖥️';
+                html += `<span style="display: inline-block; margin: 5px 10px 5px 0;">${icon} ${type}: ${typeCounts[type]}</span>`;
+            }
+            html += `</div>`;
+
+            modalContent.innerHTML = html;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+
+        // Architecture diagram click handlers
+        function showWebServers() {
+            const data = nodeDetails['ARCH_WEB'];
+            if (data) {
+                showModal(data.title, data.items);
+            }
+        }
+
+        function showAppServers() {
+            const data = nodeDetails['ARCH_APP'];
+            if (data) {
+                showModal(data.title, data.items);
+            }
+        }
+
+        function showDatabaseServers() {
+            const data = nodeDetails['ARCH_DB'];
+            if (data) {
+                showModal(data.title, data.items);
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailsModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

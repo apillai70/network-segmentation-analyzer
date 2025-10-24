@@ -1,0 +1,19 @@
+graph LR
+    %% DOWNSTREAM: Where ALIBABA sends data
+
+    SOURCE["<b>ALIBABA</b><br/>10.10.10.52 (APP-VM-01.rgbk.com)<br/>10.164.92.166 (host01.rgbk.com)<br/>10.164.92.166 (VMware AD6FD1)<br/>... (+14 more)<br/>11 Servers | 17 Flows"]:::sourceapp
+
+    INTERNAL["<b>Internal Traffic</b><br/>1 Flows"]:::internal
+    SOURCE .->|1| INTERNAL
+
+
+    EXTERNAL["<b>External / Internet</b><br/>10.20.20.100<br/>1.0.0.1<br/>... (+9 more)<br/>11 Destinations | 16 Flows"]:::external
+    SOURCE -->|16| EXTERNAL
+
+    %% Styles
+    classDef sourceapp fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef destapp fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef vmware fill:#FF9800,stroke:#E65100,stroke-width:1.5px,color:#fff
+    classDef internal fill:#9C27B0,stroke:#6A1B9A,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:2px,color:#000,rx:2,ry:2

@@ -1,116 +1,240 @@
 {
   "summary": {
-    "total_attack_paths": 8414,
+    "total_attack_paths": 8793,
     "exposed_nodes": 256,
-    "critical_assets_at_risk": 8414,
-    "avg_attack_distance": 5.777513667696696,
+    "critical_assets_at_risk": 8793,
+    "avg_attack_distance": 5.785738655748891,
     "high_threat_nodes": 512
   },
   "attack_paths": [
     {
-      "source": "10.164.105.2",
+      "source": "10.164.105.112",
       "source_tier": "WEB",
-      "target": "10.164.116.120",
+      "target": "10.164.116.109",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.2",
-        "10.164.116.120"
-      ],
-      "path_length": 1,
-      "risk_level": "CRITICAL",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.99",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 1,
-      "risk_level": "CRITICAL",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.39",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.39",
-        "10.164.105.99",
-        "10.164.116.175"
+        "10.164.105.112",
+        "10.100.160.166",
+        "10.164.116.109"
       ],
       "path_length": 2,
       "risk_level": "HIGH",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.238",
+      "source": "10.164.105.41",
       "source_tier": "WEB",
-      "target": "10.164.116.120",
+      "target": "10.164.116.237",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.238",
-        "10.164.105.63",
-        "10.164.116.120"
+        "10.164.105.41",
+        "10.164.144.68",
+        "10.164.116.237"
       ],
       "path_length": 2,
       "risk_level": "HIGH",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.54",
+      "source": "10.164.105.203",
       "source_tier": "WEB",
-      "target": "10.164.116.120",
+      "target": "10.164.116.238",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.54",
-        "10.164.105.2",
-        "10.164.116.120"
+        "10.164.105.203",
+        "10.100.160.220",
+        "10.164.116.238"
       ],
       "path_length": 2,
       "risk_level": "HIGH",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.245",
+      "source": "10.164.105.74",
       "source_tier": "WEB",
-      "target": "10.164.116.120",
+      "target": "10.164.116.216",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.245",
-        "10.164.105.63",
-        "10.164.116.120"
+        "10.164.105.74",
+        "10.164.116.125",
+        "10.164.116.216"
       ],
       "path_length": 2,
       "risk_level": "HIGH",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.23",
+      "source": "10.164.105.136",
       "source_tier": "WEB",
-      "target": "10.164.116.7",
+      "target": "10.164.116.112",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.23",
-        "10.164.105.204",
-        "10.100.246.142",
-        "10.164.116.7"
+        "10.164.105.136",
+        "10.164.145.36",
+        "10.100.246.30",
+        "10.164.116.112"
       ],
       "path_length": 3,
       "risk_level": "MEDIUM",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.89",
+      "source": "10.164.105.136",
+      "source_tier": "WEB",
+      "target": "10.164.116.67",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.136",
+        "10.164.145.36",
+        "10.164.145.197",
+        "10.164.116.67"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.128",
+      "source_tier": "WEB",
+      "target": "10.164.116.102",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.128",
+        "10.164.105.114",
+        "10.164.145.230",
+        "10.164.116.102"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.128",
+      "source_tier": "WEB",
+      "target": "10.164.116.89",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.128",
+        "10.164.105.114",
+        "10.164.105.137",
+        "10.164.116.89"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.248",
+      "source_tier": "WEB",
+      "target": "10.164.116.112",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.248",
+        "10.100.246.122",
+        "10.165.116.109",
+        "10.164.116.112"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.41",
+      "source_tier": "WEB",
+      "target": "10.164.116.246",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.41",
+        "10.165.116.145",
+        "10.164.105.133",
+        "10.164.116.246"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.41",
+      "source_tier": "WEB",
+      "target": "10.164.116.237",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.41",
+        "10.164.105.44",
+        "10.164.144.203",
+        "10.164.116.237"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.58",
+      "source_tier": "WEB",
+      "target": "10.164.116.89",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.58",
+        "10.164.144.11",
+        "10.164.144.227",
+        "10.164.116.89"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.58",
       "source_tier": "WEB",
       "target": "10.164.116.238",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.89",
+        "10.164.105.58",
+        "10.100.160.177",
+        "10.164.145.164",
+        "10.164.116.238"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.253",
+      "source_tier": "WEB",
+      "target": "10.164.116.102",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.253",
+        "10.164.105.114",
+        "10.164.145.230",
+        "10.164.116.102"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.253",
+      "source_tier": "WEB",
+      "target": "10.164.116.89",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.253",
+        "10.164.105.114",
+        "10.164.105.137",
+        "10.164.116.89"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.51",
+      "source_tier": "WEB",
+      "target": "10.164.116.238",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.51",
         "10.164.105.203",
         "10.100.160.220",
         "10.164.116.238"
@@ -120,135 +244,60 @@
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.190",
+      "source": "10.164.105.27",
       "source_tier": "WEB",
-      "target": "10.164.116.7",
+      "target": "10.164.116.121",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.190",
-        "10.164.145.229",
-        "10.100.246.142",
-        "10.164.116.7"
+        "10.164.105.27",
+        "10.164.105.92",
+        "10.164.145.89",
+        "10.164.116.121"
       ],
       "path_length": 3,
       "risk_level": "MEDIUM",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.11",
+      "source": "10.164.105.223",
       "source_tier": "WEB",
-      "target": "10.164.116.120",
+      "target": "10.164.116.246",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.11",
-        "10.164.145.42",
-        "10.164.105.2",
-        "10.164.116.120"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.39",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.39",
-        "10.100.246.154",
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.39",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.39",
-        "10.164.105.163",
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.161",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.161",
-        "10.100.246.154",
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.46",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.46",
-        "10.164.145.45",
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.120",
-      "source_tier": "WEB",
-      "target": "10.164.116.124",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.120",
-        "10.164.105.239",
-        "10.164.105.10",
-        "10.164.116.124"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.144",
-      "source_tier": "WEB",
-      "target": "10.164.116.7",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.144",
-        "10.164.105.204",
-        "10.100.246.142",
-        "10.164.116.7"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.242",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.242",
+        "10.164.105.223",
+        "10.100.246.26",
         "10.164.105.133",
-        "10.164.105.99",
-        "10.164.116.175"
+        "10.164.116.246"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.203",
+      "source_tier": "WEB",
+      "target": "10.164.116.246",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.203",
+        "10.164.116.53",
+        "10.165.116.62",
+        "10.164.116.246"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.203",
+      "source_tier": "WEB",
+      "target": "10.164.116.109",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.203",
+        "10.165.116.41",
+        "10.100.246.88",
+        "10.164.116.109"
       ],
       "path_length": 3,
       "risk_level": "MEDIUM",
@@ -270,442 +319,392 @@
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.110",
-      "source_tier": "WEB",
-      "target": "10.164.116.32",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.110",
-        "10.164.105.254",
-        "10.164.144.112",
-        "10.164.116.32"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.155",
-      "source_tier": "WEB",
-      "target": "10.164.116.7",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.155",
-        "10.164.105.204",
-        "10.100.246.142",
-        "10.164.116.7"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.121",
-      "source_tier": "WEB",
-      "target": "10.164.116.59",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.121",
-        "10.164.145.226",
-        "10.164.116.62",
-        "10.164.116.59"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.217",
-      "source_tier": "WEB",
-      "target": "10.164.116.124",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.217",
-        "10.164.105.104",
-        "10.164.105.10",
-        "10.164.116.124"
-      ],
-      "path_length": 3,
-      "risk_level": "MEDIUM",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.23",
-      "source_tier": "WEB",
-      "target": "10.164.116.124",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.23",
-        "10.164.105.107",
-        "10.100.246.164",
-        "10.164.105.10",
-        "10.164.116.124"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.23",
-      "source_tier": "WEB",
-      "target": "10.164.116.32",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.23",
-        "10.164.105.107",
-        "10.100.246.164",
-        "10.164.105.177",
-        "10.164.116.32"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.23",
-      "source_tier": "WEB",
-      "target": "10.164.116.120",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.23",
-        "10.100.160.18",
-        "10.164.145.194",
-        "10.164.105.63",
-        "10.164.116.120"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.23",
-      "source_tier": "WEB",
-      "target": "10.164.116.7",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.23",
-        "10.164.105.107",
-        "10.164.105.192",
-        "10.164.145.216",
-        "10.164.116.7"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.2",
-      "source_tier": "WEB",
-      "target": "10.164.116.124",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.2",
-        "10.164.145.50",
-        "10.164.144.27",
-        "10.164.145.240",
-        "10.164.116.124"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.2",
-      "source_tier": "WEB",
-      "target": "10.164.116.37",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.2",
-        "10.164.145.50",
-        "10.164.105.243",
-        "10.164.144.81",
-        "10.164.116.37"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.2",
-      "source_tier": "WEB",
-      "target": "10.164.116.37",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.2",
-        "10.164.105.98",
-        "10.164.105.243",
-        "10.164.144.81",
-        "10.164.116.37"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.2",
-      "source_tier": "WEB",
-      "target": "10.164.116.198",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.2",
-        "10.164.105.11",
-        "10.164.144.181",
-        "10.164.116.186",
-        "10.164.116.198"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.232",
-      "source_tier": "WEB",
-      "target": "10.164.116.32",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.232",
-        "10.165.116.230",
-        "10.164.105.254",
-        "10.164.144.112",
-        "10.164.116.32"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.22",
-      "source_tier": "WEB",
-      "target": "10.164.116.124",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.22",
-        "10.164.105.12",
-        "10.164.105.109",
-        "10.164.105.10",
-        "10.164.116.124"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.22",
-      "source_tier": "WEB",
-      "target": "10.164.116.32",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.22",
-        "10.164.105.12",
-        "10.164.105.189",
-        "10.164.105.37",
-        "10.164.116.32"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.22",
-      "source_tier": "WEB",
-      "target": "10.164.116.198",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.22",
-        "10.164.105.12",
-        "10.164.105.189",
-        "10.164.116.186",
-        "10.164.116.198"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.56",
-      "source_tier": "WEB",
-      "target": "10.164.116.198",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.56",
-        "10.100.160.92",
-        "10.100.160.199",
-        "10.164.145.175",
-        "10.164.116.198"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.56",
-      "source_tier": "WEB",
-      "target": "10.164.116.7",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.56",
-        "10.164.144.208",
-        "10.164.144.198",
-        "10.164.145.216",
-        "10.164.116.7"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.56",
-      "source_tier": "WEB",
-      "target": "10.164.116.7",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.56",
-        "10.164.105.144",
-        "10.164.105.204",
-        "10.100.246.142",
-        "10.164.116.7"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.171",
-      "source_tier": "WEB",
-      "target": "10.164.116.59",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.171",
-        "10.164.145.186",
-        "10.164.105.221",
-        "10.100.160.223",
-        "10.164.116.59"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.171",
-      "source_tier": "WEB",
-      "target": "10.164.116.37",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.171",
-        "10.164.145.103",
-        "10.164.105.243",
-        "10.164.144.81",
-        "10.164.116.37"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.171",
-      "source_tier": "WEB",
-      "target": "10.164.116.201",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.171",
-        "10.164.145.186",
-        "10.100.246.189",
-        "10.100.246.237",
-        "10.164.116.201"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
       "source": "10.164.105.89",
-      "source_tier": "WEB",
-      "target": "10.164.116.120",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.89",
-        "10.164.105.79",
-        "10.164.105.139",
-        "10.164.105.63",
-        "10.164.116.120"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.89",
-      "source_tier": "WEB",
-      "target": "10.164.116.7",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.89",
-        "10.164.105.79",
-        "10.164.105.192",
-        "10.164.145.216",
-        "10.164.116.7"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.190",
-      "source_tier": "WEB",
-      "target": "10.164.116.120",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.190",
-        "10.164.145.229",
-        "10.164.145.28",
-        "10.164.105.2",
-        "10.164.116.120"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.190",
-      "source_tier": "WEB",
-      "target": "10.164.116.7",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.190",
-        "10.164.145.229",
-        "10.164.145.27",
-        "10.164.145.216",
-        "10.164.116.7"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.226",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.226",
-        "10.164.105.46",
-        "10.164.145.45",
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.11",
       "source_tier": "WEB",
       "target": "10.164.116.238",
       "target_tier": "DATABASE",
       "path": [
+        "10.164.105.89",
+        "10.164.105.203",
+        "10.100.160.220",
+        "10.164.116.238"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.188",
+      "source_tier": "WEB",
+      "target": "10.164.116.246",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.188",
+        "10.164.144.163",
+        "10.164.105.133",
+        "10.164.116.246"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.198",
+      "source_tier": "WEB",
+      "target": "10.164.116.112",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.198",
+        "10.164.105.197",
+        "10.164.105.71",
+        "10.164.116.112"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.246",
+      "source_tier": "WEB",
+      "target": "10.164.116.67",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.246",
+        "10.164.105.68",
+        "10.100.160.109",
+        "10.164.116.67"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.163",
+      "source_tier": "WEB",
+      "target": "10.164.116.216",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.163",
+        "10.164.105.177",
+        "10.164.116.125",
+        "10.164.116.216"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.163",
+      "source_tier": "WEB",
+      "target": "10.164.116.121",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.163",
+        "10.100.246.176",
+        "10.164.145.49",
+        "10.164.116.121"
+      ],
+      "path_length": 3,
+      "risk_level": "MEDIUM",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.136",
+      "source_tier": "WEB",
+      "target": "10.164.116.237",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.136",
+        "10.164.145.36",
+        "10.164.145.197",
+        "10.164.116.24",
+        "10.164.116.237"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.112",
+      "source_tier": "WEB",
+      "target": "10.164.116.109",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.112",
+        "10.164.105.196",
+        "10.165.116.214",
+        "10.164.144.196",
+        "10.164.116.109"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.112",
+      "source_tier": "WEB",
+      "target": "10.164.116.109",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.112",
+        "10.164.105.38",
+        "10.165.116.198",
+        "10.100.160.166",
+        "10.164.116.109"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.112",
+      "source_tier": "WEB",
+      "target": "10.164.116.121",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.112",
+        "10.100.160.166",
+        "10.164.145.204",
+        "10.164.145.151",
+        "10.164.116.121"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.112",
+      "source_tier": "WEB",
+      "target": "10.164.116.102",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.112",
+        "10.164.105.38",
+        "10.164.105.114",
+        "10.164.145.230",
+        "10.164.116.102"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.112",
+      "source_tier": "WEB",
+      "target": "10.164.116.89",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.112",
+        "10.164.105.38",
+        "10.164.105.114",
+        "10.164.105.137",
+        "10.164.116.89"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.112",
+      "source_tier": "WEB",
+      "target": "10.164.116.238",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.112",
+        "10.100.160.166",
+        "10.164.105.203",
+        "10.100.160.220",
+        "10.164.116.238"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.112",
+      "source_tier": "WEB",
+      "target": "10.164.116.237",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.112",
+        "10.164.105.38",
+        "10.165.116.198",
+        "10.164.144.213",
+        "10.164.116.237"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.122",
+      "source_tier": "WEB",
+      "target": "10.164.116.121",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.122",
+        "10.164.105.216",
+        "10.164.105.146",
+        "10.164.145.241",
+        "10.164.116.121"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.122",
+      "source_tier": "WEB",
+      "target": "10.164.116.237",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.122",
+        "10.164.105.234",
+        "10.164.144.157",
+        "10.164.144.213",
+        "10.164.116.237"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.125",
+      "source_tier": "WEB",
+      "target": "10.164.116.109",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.125",
+        "10.164.105.175",
+        "10.164.105.64",
+        "10.164.144.152",
+        "10.164.116.109"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.125",
+      "source_tier": "WEB",
+      "target": "10.164.116.102",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.125",
+        "10.100.160.111",
+        "10.100.160.92",
+        "10.100.246.107",
+        "10.164.116.102"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.171",
+      "source_tier": "WEB",
+      "target": "10.164.116.216",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.171",
+        "10.164.145.65",
+        "10.164.105.16",
+        "10.100.160.232",
+        "10.164.116.216"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.171",
+      "source_tier": "WEB",
+      "target": "10.164.116.246",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.171",
+        "10.164.105.95",
+        "10.164.105.40",
+        "10.164.105.133",
+        "10.164.116.246"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.171",
+      "source_tier": "WEB",
+      "target": "10.164.116.121",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.171",
+        "10.164.105.216",
+        "10.164.105.146",
+        "10.164.145.241",
+        "10.164.116.121"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.171",
+      "source_tier": "WEB",
+      "target": "10.164.116.89",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.171",
+        "10.164.145.65",
         "10.164.105.11",
-        "10.164.145.42",
-        "10.100.246.152",
+        "10.164.144.181",
+        "10.164.116.89"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.248",
+      "source_tier": "WEB",
+      "target": "10.164.116.121",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.248",
+        "10.100.246.122",
+        "10.164.105.146",
+        "10.164.145.241",
+        "10.164.116.121"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.248",
+      "source_tier": "WEB",
+      "target": "10.164.116.121",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.248",
+        "10.100.246.122",
+        "10.165.116.109",
+        "10.164.145.49",
+        "10.164.116.121"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.248",
+      "source_tier": "WEB",
+      "target": "10.164.116.238",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.248",
+        "10.100.160.250",
+        "10.164.144.110",
         "10.164.144.187",
         "10.164.116.238"
       ],
@@ -714,286 +713,542 @@
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.241",
+      "source": "10.164.105.41",
       "source_tier": "WEB",
-      "target": "10.164.116.198",
+      "target": "10.164.116.67",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.241",
-        "10.100.246.23",
-        "10.164.144.181",
-        "10.164.116.186",
-        "10.164.116.198"
+        "10.164.105.41",
+        "10.165.116.145",
+        "10.100.246.181",
+        "10.164.145.197",
+        "10.164.116.67"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.39",
+      "source": "10.164.105.41",
       "source_tier": "WEB",
-      "target": "10.164.116.124",
+      "target": "10.164.116.246",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.39",
-        "10.100.246.154",
-        "10.164.145.195",
-        "10.164.105.10",
-        "10.164.116.124"
+        "10.164.105.41",
+        "10.165.116.70",
+        "10.100.160.214",
+        "10.164.144.25",
+        "10.164.116.246"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.39",
+      "source": "10.164.105.41",
       "source_tier": "WEB",
-      "target": "10.164.116.59",
+      "target": "10.164.116.89",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.39",
-        "10.164.105.163",
-        "10.164.116.77",
-        "10.164.144.105",
-        "10.164.116.59"
+        "10.164.105.41",
+        "10.164.144.68",
+        "10.164.105.229",
+        "10.164.105.137",
+        "10.164.116.89"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.39",
+      "source": "10.164.105.41",
       "source_tier": "WEB",
-      "target": "10.164.116.37",
+      "target": "10.164.116.237",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.39",
-        "10.164.105.185",
-        "10.164.105.243",
-        "10.164.144.81",
-        "10.164.116.37"
+        "10.164.105.41",
+        "10.164.105.154",
+        "10.164.144.157",
+        "10.164.144.213",
+        "10.164.116.237"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.99",
+      "source": "10.164.105.41",
       "source_tier": "WEB",
-      "target": "10.164.116.120",
+      "target": "10.164.116.237",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.99",
-        "10.164.105.188",
-        "10.164.105.234",
-        "10.164.105.2",
-        "10.164.116.120"
+        "10.164.105.41",
+        "10.165.116.145",
+        "10.164.105.133",
+        "10.164.105.150",
+        "10.164.116.237"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.161",
+      "source": "10.164.105.194",
       "source_tier": "WEB",
-      "target": "10.164.116.124",
+      "target": "10.164.116.246",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.161",
-        "10.100.246.154",
-        "10.164.145.195",
-        "10.164.105.10",
-        "10.164.116.124"
+        "10.164.105.194",
+        "10.164.145.114",
+        "10.164.116.53",
+        "10.165.116.62",
+        "10.164.116.246"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.161",
+      "source": "10.164.105.194",
       "source_tier": "WEB",
-      "target": "10.164.116.59",
+      "target": "10.164.116.102",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.161",
+        "10.164.105.194",
+        "10.164.145.114",
+        "10.164.105.114",
+        "10.164.145.230",
+        "10.164.116.102"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.194",
+      "source_tier": "WEB",
+      "target": "10.164.116.89",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.194",
+        "10.164.145.114",
+        "10.164.105.114",
+        "10.164.105.137",
+        "10.164.116.89"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.194",
+      "source_tier": "WEB",
+      "target": "10.164.116.237",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.194",
+        "10.164.145.114",
+        "10.164.145.158",
+        "10.164.144.68",
+        "10.164.116.237"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.58",
+      "source_tier": "WEB",
+      "target": "10.164.116.67",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.58",
+        "10.164.105.244",
+        "10.164.116.96",
+        "10.164.145.197",
+        "10.164.116.67"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.58",
+      "source_tier": "WEB",
+      "target": "10.164.116.109",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.58",
+        "10.164.145.83",
+        "10.100.246.91",
+        "10.164.145.181",
+        "10.164.116.109"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.253",
+      "source_tier": "WEB",
+      "target": "10.164.116.89",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.253",
+        "10.164.105.114",
+        "10.164.145.192",
+        "10.164.105.137",
+        "10.164.116.89"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.97",
+      "source_tier": "WEB",
+      "target": "10.164.116.216",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.97",
         "10.164.105.76",
         "10.164.105.221",
-        "10.100.160.223",
-        "10.164.116.59"
+        "10.164.145.102",
+        "10.164.116.216"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.73",
+      "source": "10.164.105.97",
       "source_tier": "WEB",
-      "target": "10.164.116.120",
+      "target": "10.164.116.246",
       "target_tier": "DATABASE",
       "path": [
+        "10.164.105.97",
+        "10.164.105.76",
+        "10.164.105.85",
+        "10.164.116.251",
+        "10.164.116.246"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.97",
+      "source_tier": "WEB",
+      "target": "10.164.116.246",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.97",
+        "10.164.116.55",
+        "10.164.116.53",
+        "10.165.116.62",
+        "10.164.116.246"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.97",
+      "source_tier": "WEB",
+      "target": "10.164.116.102",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.97",
+        "10.164.144.225",
+        "10.164.116.46",
+        "10.100.246.113",
+        "10.164.116.102"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.176",
+      "source_tier": "WEB",
+      "target": "10.164.116.112",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.176",
         "10.164.105.73",
         "10.100.246.6",
-        "10.164.105.250",
-        "10.164.116.43",
-        "10.164.116.120"
+        "10.164.105.71",
+        "10.164.116.112"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.73",
+      "source": "10.164.105.176",
       "source_tier": "WEB",
-      "target": "10.164.116.59",
+      "target": "10.164.116.67",
       "target_tier": "DATABASE",
       "path": [
+        "10.164.105.176",
         "10.164.105.73",
-        "10.164.105.121",
-        "10.164.145.226",
-        "10.164.116.62",
-        "10.164.116.59"
+        "10.164.116.96",
+        "10.164.145.197",
+        "10.164.116.67"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.238",
+      "source": "10.164.105.176",
       "source_tier": "WEB",
-      "target": "10.164.116.124",
+      "target": "10.164.116.102",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.238",
-        "10.164.144.134",
-        "10.164.144.196",
-        "10.164.145.104",
-        "10.164.116.124"
+        "10.164.105.176",
+        "10.164.105.192",
+        "10.164.105.114",
+        "10.164.145.230",
+        "10.164.116.102"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.238",
+      "source": "10.164.105.51",
       "source_tier": "WEB",
-      "target": "10.164.116.120",
+      "target": "10.164.116.216",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.238",
-        "10.164.144.134",
-        "10.164.145.194",
-        "10.164.105.63",
-        "10.164.116.120"
+        "10.164.105.51",
+        "10.164.105.203",
+        "10.100.246.101",
+        "10.164.145.102",
+        "10.164.116.216"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.238",
+      "source": "10.164.105.51",
       "source_tier": "WEB",
-      "target": "10.164.116.59",
+      "target": "10.164.116.246",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.238",
-        "10.164.105.63",
-        "10.164.105.221",
-        "10.100.160.223",
-        "10.164.116.59"
+        "10.164.105.51",
+        "10.164.105.203",
+        "10.164.116.53",
+        "10.165.116.62",
+        "10.164.116.246"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.238",
+      "source": "10.164.105.51",
       "source_tier": "WEB",
-      "target": "10.164.116.198",
+      "target": "10.164.116.109",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.238",
-        "10.164.105.198",
-        "10.164.145.129",
-        "10.164.116.186",
-        "10.164.116.198"
+        "10.164.105.51",
+        "10.164.105.203",
+        "10.165.116.41",
+        "10.100.246.88",
+        "10.164.116.109"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.6",
+      "source": "10.164.105.51",
       "source_tier": "WEB",
-      "target": "10.164.116.198",
+      "target": "10.164.116.102",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.6",
-        "10.164.144.1",
-        "10.100.246.215",
-        "10.165.116.91",
-        "10.164.116.198"
+        "10.164.105.51",
+        "10.164.105.203",
+        "10.164.105.114",
+        "10.164.145.230",
+        "10.164.116.102"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.6",
+      "source": "10.164.105.51",
       "source_tier": "WEB",
-      "target": "10.164.116.198",
+      "target": "10.164.116.89",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.6",
-        "10.164.144.1",
-        "10.100.160.199",
-        "10.164.145.175",
-        "10.164.116.198"
+        "10.164.105.51",
+        "10.164.105.203",
+        "10.164.105.114",
+        "10.164.105.137",
+        "10.164.116.89"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.6",
+      "source": "10.164.105.27",
       "source_tier": "WEB",
-      "target": "10.164.116.7",
+      "target": "10.164.116.216",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.6",
-        "10.164.105.126",
-        "10.100.160.49",
-        "10.164.145.187",
-        "10.164.116.7"
+        "10.164.105.27",
+        "10.164.105.92",
+        "10.164.105.184",
+        "10.100.160.120",
+        "10.164.116.216"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.33",
+      "source": "10.164.105.27",
       "source_tier": "WEB",
-      "target": "10.164.116.32",
+      "target": "10.164.116.89",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.33",
-        "10.100.160.134",
-        "10.164.144.56",
-        "10.164.144.22",
-        "10.164.116.32"
+        "10.164.105.27",
+        "10.164.105.92",
+        "10.164.105.184",
+        "10.164.105.137",
+        "10.164.116.89"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.33",
+      "source": "10.164.105.223",
+      "source_tier": "WEB",
+      "target": "10.164.116.112",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.223",
+        "10.164.105.73",
+        "10.100.246.6",
+        "10.164.105.71",
+        "10.164.116.112"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.223",
+      "source_tier": "WEB",
+      "target": "10.164.116.67",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.223",
+        "10.164.105.73",
+        "10.164.116.96",
+        "10.164.145.197",
+        "10.164.116.67"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.223",
+      "source_tier": "WEB",
+      "target": "10.164.116.109",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.223",
+        "10.100.246.26",
+        "10.164.105.246",
+        "10.100.246.88",
+        "10.164.116.109"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.223",
+      "source_tier": "WEB",
+      "target": "10.164.116.109",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.223",
+        "10.100.246.26",
+        "10.164.105.133",
+        "10.164.116.246",
+        "10.164.116.109"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.223",
+      "source_tier": "WEB",
+      "target": "10.164.116.237",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.223",
+        "10.100.246.26",
+        "10.164.105.133",
+        "10.164.105.150",
+        "10.164.116.237"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.139",
+      "source_tier": "WEB",
+      "target": "10.164.116.112",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.139",
+        "10.165.116.212",
+        "10.164.116.31",
+        "10.164.105.71",
+        "10.164.116.112"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.139",
+      "source_tier": "WEB",
+      "target": "10.164.116.216",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.139",
+        "10.165.116.212",
+        "10.165.116.33",
+        "10.100.160.232",
+        "10.164.116.216"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.139",
       "source_tier": "WEB",
       "target": "10.164.116.238",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.33",
-        "10.100.160.134",
-        "10.164.144.56",
+        "10.164.105.139",
+        "10.165.116.212",
+        "10.165.116.33",
         "10.164.145.54",
         "10.164.116.238"
       ],
@@ -1002,96 +1257,80 @@
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.173",
+      "source": "10.164.105.152",
       "source_tier": "WEB",
-      "target": "10.164.116.124",
+      "target": "10.164.116.112",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.173",
-        "10.164.105.32",
-        "10.164.105.23",
-        "10.164.105.10",
-        "10.164.116.124"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.173",
-      "source_tier": "WEB",
-      "target": "10.164.116.32",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.173",
-        "10.164.116.85",
         "10.164.105.152",
         "10.164.105.37",
-        "10.164.116.32"
+        "10.164.105.131",
+        "10.164.105.71",
+        "10.164.116.112"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.173",
+      "source": "10.164.105.152",
       "source_tier": "WEB",
-      "target": "10.164.116.198",
+      "target": "10.164.116.121",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.173",
-        "10.164.105.11",
-        "10.164.144.181",
-        "10.164.116.186",
-        "10.164.116.198"
+        "10.164.105.152",
+        "10.100.160.250",
+        "10.164.144.110",
+        "10.164.145.89",
+        "10.164.116.121"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.173",
+      "source": "10.164.105.152",
       "source_tier": "WEB",
-      "target": "10.164.116.198",
+      "target": "10.164.116.238",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.173",
-        "10.164.105.198",
-        "10.164.145.129",
-        "10.164.116.186",
-        "10.164.116.198"
+        "10.164.105.152",
+        "10.100.160.250",
+        "10.164.144.110",
+        "10.164.144.187",
+        "10.164.116.238"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.75",
+      "source": "10.164.105.152",
       "source_tier": "WEB",
-      "target": "10.164.116.120",
+      "target": "10.164.116.237",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.75",
-        "10.164.105.175",
-        "10.164.105.54",
-        "10.164.105.2",
-        "10.164.116.120"
+        "10.164.105.152",
+        "10.164.105.37",
+        "10.164.105.41",
+        "10.164.144.68",
+        "10.164.116.237"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.75",
+      "source": "10.164.105.203",
       "source_tier": "WEB",
-      "target": "10.164.116.198",
+      "target": "10.164.116.102",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.75",
-        "10.100.160.92",
-        "10.100.160.199",
-        "10.164.145.175",
-        "10.164.116.198"
+        "10.164.105.203",
+        "10.165.116.41",
+        "10.100.246.218",
+        "10.164.145.230",
+        "10.164.116.102"
       ],
       "path_length": 4,
       "risk_level": "LOW",
@@ -1100,222 +1339,30 @@
     {
       "source": "10.164.105.74",
       "source_tier": "WEB",
-      "target": "10.164.116.175",
+      "target": "10.164.116.67",
       "target_tier": "DATABASE",
       "path": [
         "10.164.105.74",
-        "10.164.105.227",
-        "10.164.105.106",
-        "10.164.105.99",
-        "10.164.116.175"
+        "10.164.105.246",
+        "10.164.105.68",
+        "10.100.160.109",
+        "10.164.116.67"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.46",
+      "source": "10.164.105.74",
       "source_tier": "WEB",
-      "target": "10.164.116.124",
+      "target": "10.164.116.121",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.46",
-        "10.164.105.120",
-        "10.164.105.239",
-        "10.164.105.10",
-        "10.164.116.124"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.46",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.46",
-        "10.164.145.45",
-        "10.164.105.106",
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.120",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.120",
-        "10.164.145.39",
-        "10.164.105.235",
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.208",
-      "source_tier": "WEB",
-      "target": "10.164.116.32",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.208",
-        "10.100.246.17",
-        "10.165.116.30",
-        "10.164.105.177",
-        "10.164.116.32"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.208",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.208",
-        "10.100.246.17",
-        "10.164.145.41",
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.144",
-      "source_tier": "WEB",
-      "target": "10.164.116.32",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.144",
-        "10.164.105.6",
-        "10.164.105.126",
-        "10.164.105.37",
-        "10.164.116.32"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.231",
-      "source_tier": "WEB",
-      "target": "10.164.116.124",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.231",
-        "10.100.246.214",
-        "10.164.105.184",
-        "10.164.145.192",
-        "10.164.116.124"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.231",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.231",
-        "10.164.105.87",
-        "10.164.145.233",
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.216",
-      "source_tier": "WEB",
-      "target": "10.164.116.7",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.216",
-        "10.164.105.146",
-        "10.164.105.192",
-        "10.164.145.216",
-        "10.164.116.7"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.242",
-      "source_tier": "WEB",
-      "target": "10.164.116.120",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.242",
-        "10.164.105.133",
-        "10.164.105.139",
-        "10.164.105.63",
-        "10.164.116.120"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.242",
-      "source_tier": "WEB",
-      "target": "10.164.116.238",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.242",
-        "10.100.246.248",
-        "10.164.105.203",
-        "10.100.160.220",
-        "10.164.116.238"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.182",
-      "source_tier": "WEB",
-      "target": "10.164.116.120",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.182",
-        "10.164.105.185",
-        "10.164.105.243",
-        "10.164.116.43",
-        "10.164.116.120"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.182",
-      "source_tier": "WEB",
-      "target": "10.164.116.37",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.182",
-        "10.164.105.185",
-        "10.164.105.243",
-        "10.164.144.81",
-        "10.164.116.37"
+        "10.164.105.74",
+        "10.100.246.185",
+        "10.164.144.153",
+        "10.164.144.221",
+        "10.164.116.121"
       ],
       "path_length": 4,
       "risk_level": "LOW",
@@ -1324,254 +1371,206 @@
     {
       "source": "10.164.105.4",
       "source_tier": "WEB",
-      "target": "10.164.116.198",
+      "target": "10.164.116.121",
       "target_tier": "DATABASE",
       "path": [
         "10.164.105.4",
-        "10.100.246.160",
-        "10.164.144.173",
-        "10.164.116.186",
-        "10.164.116.198"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.143",
-      "source_tier": "WEB",
-      "target": "10.164.116.198",
-      "target_tier": "DATABASE",
-      "path": [
         "10.164.105.143",
-        "10.100.246.29",
-        "10.164.144.253",
-        "10.164.116.186",
-        "10.164.116.198"
+        "10.164.145.60",
+        "10.164.145.151",
+        "10.164.116.121"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.150",
+      "source": "10.164.105.4",
       "source_tier": "WEB",
-      "target": "10.164.116.120",
+      "target": "10.164.116.237",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.150",
-        "10.164.105.248",
-        "10.164.105.17",
-        "10.164.145.4",
-        "10.164.116.120"
+        "10.164.105.4",
+        "10.164.105.143",
+        "10.164.145.60",
+        "10.164.144.203",
+        "10.164.116.237"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.150",
+      "source": "10.164.105.49",
       "source_tier": "WEB",
-      "target": "10.164.116.7",
+      "target": "10.164.116.109",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.150",
-        "10.164.105.0",
-        "10.164.105.204",
-        "10.100.246.142",
-        "10.164.116.7"
+        "10.164.105.49",
+        "10.164.105.22",
+        "10.164.105.30",
+        "10.164.145.181",
+        "10.164.116.109"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.248",
+      "source": "10.164.105.49",
       "source_tier": "WEB",
-      "target": "10.164.116.32",
+      "target": "10.164.116.237",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.248",
-        "10.100.160.250",
+        "10.164.105.49",
+        "10.164.105.157",
+        "10.164.116.51",
+        "10.165.116.29",
+        "10.164.116.237"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.189",
+      "source_tier": "WEB",
+      "target": "10.164.116.112",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.189",
+        "10.164.105.37",
+        "10.164.105.131",
+        "10.164.105.71",
+        "10.164.116.112"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.189",
+      "source_tier": "WEB",
+      "target": "10.164.116.246",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.189",
+        "10.164.145.11",
+        "10.164.105.40",
+        "10.164.105.133",
+        "10.164.116.246"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.189",
+      "source_tier": "WEB",
+      "target": "10.164.116.109",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.189",
+        "10.164.105.46",
+        "10.164.116.94",
+        "10.100.246.88",
+        "10.164.116.109"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.189",
+      "source_tier": "WEB",
+      "target": "10.164.116.102",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.189",
+        "10.164.145.11",
+        "10.164.145.249",
+        "10.164.145.230",
+        "10.164.116.102"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.189",
+      "source_tier": "WEB",
+      "target": "10.164.116.237",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.189",
+        "10.164.105.37",
+        "10.164.105.41",
+        "10.164.144.68",
+        "10.164.116.237"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.183",
+      "source_tier": "WEB",
+      "target": "10.164.116.112",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.183",
+        "10.165.116.31",
+        "10.164.105.131",
+        "10.164.105.71",
+        "10.164.116.112"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.183",
+      "source_tier": "WEB",
+      "target": "10.164.116.246",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.183",
+        "10.164.105.254",
+        "10.164.105.162",
+        "10.164.105.133",
+        "10.164.116.246"
+      ],
+      "path_length": 4,
+      "risk_level": "LOW",
+      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
+    },
+    {
+      "source": "10.164.105.183",
+      "source_tier": "WEB",
+      "target": "10.164.116.121",
+      "target_tier": "DATABASE",
+      "path": [
+        "10.164.105.183",
+        "10.165.116.31",
         "10.164.144.110",
-        "10.164.144.22",
-        "10.164.116.32"
+        "10.164.145.89",
+        "10.164.116.121"
       ],
       "path_length": 4,
       "risk_level": "LOW",
       "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
     },
     {
-      "source": "10.164.105.248",
+      "source": "10.164.105.183",
       "source_tier": "WEB",
       "target": "10.164.116.238",
       "target_tier": "DATABASE",
       "path": [
-        "10.164.105.248",
-        "10.100.160.250",
+        "10.164.105.183",
+        "10.165.116.31",
         "10.164.144.110",
         "10.164.144.187",
         "10.164.116.238"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.248",
-      "source_tier": "WEB",
-      "target": "10.164.116.238",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.248",
-        "10.164.105.17",
-        "10.164.116.242",
-        "10.164.145.54",
-        "10.164.116.238"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.193",
-      "source_tier": "WEB",
-      "target": "10.164.116.32",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.193",
-        "10.100.246.243",
-        "10.164.145.86",
-        "10.164.105.37",
-        "10.164.116.32"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.193",
-      "source_tier": "WEB",
-      "target": "10.164.116.198",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.193",
-        "10.164.105.198",
-        "10.164.145.129",
-        "10.164.116.186",
-        "10.164.116.198"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.193",
-      "source_tier": "WEB",
-      "target": "10.164.116.201",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.193",
-        "10.164.145.77",
-        "10.164.145.184",
-        "10.100.246.237",
-        "10.164.116.201"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.193",
-      "source_tier": "WEB",
-      "target": "10.164.116.238",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.193",
-        "10.164.105.179",
-        "10.164.144.230",
-        "10.164.144.4",
-        "10.164.116.238"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.94",
-      "source_tier": "WEB",
-      "target": "10.164.116.120",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.94",
-        "10.164.145.1",
-        "10.164.145.48",
-        "10.164.105.63",
-        "10.164.116.120"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.54",
-      "source_tier": "WEB",
-      "target": "10.164.116.32",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.54",
-        "10.164.105.2",
-        "10.165.116.114",
-        "10.164.105.37",
-        "10.164.116.32"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.54",
-      "source_tier": "WEB",
-      "target": "10.164.116.120",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.54",
-        "10.164.105.2",
-        "10.165.116.114",
-        "10.164.116.43",
-        "10.164.116.120"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.54",
-      "source_tier": "WEB",
-      "target": "10.164.116.175",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.54",
-        "10.164.105.2",
-        "10.164.105.39",
-        "10.164.105.99",
-        "10.164.116.175"
-      ],
-      "path_length": 4,
-      "risk_level": "LOW",
-      "attack_vector": "External \u2192 Database (SQL Injection, Data Exfiltration)"
-    },
-    {
-      "source": "10.164.105.245",
-      "source_tier": "WEB",
-      "target": "10.164.116.59",
-      "target_tier": "DATABASE",
-      "path": [
-        "10.164.105.245",
-        "10.164.105.63",
-        "10.164.105.221",
-        "10.100.160.223",
-        "10.164.116.59"
       ],
       "path_length": 4,
       "risk_level": "LOW",
@@ -1580,7 +1579,607 @@
   ],
   "high_exposure_nodes": [
     {
+      "ip": "10.164.105.136",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 17,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.112",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 13,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.122",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 13,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.125",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 22,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.128",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.171",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.248",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.41",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 9,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.194",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 15,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.58",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.215",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.253",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 16,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.97",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.176",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 14,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.51",
+      "exposure_score": 6.1,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 9,
+      "out_degree": 1
+    },
+    {
+      "ip": "10.164.105.27",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 23,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.223",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 19,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.139",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 18,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.152",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 15,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.203",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 15,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.74",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 7,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.4",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.49",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 13,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.189",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 10,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.183",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.89",
+      "exposure_score": 6.2,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 8,
+      "out_degree": 2
+    },
+    {
+      "ip": "10.164.105.78",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 14,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.53",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 18,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.188",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 16,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.249",
+      "exposure_score": 6.2,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 13,
+      "out_degree": 2
+    },
+    {
+      "ip": "10.164.105.158",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 16,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.198",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 19,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.209",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.197",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 17,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.246",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.82",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.14",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.254",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 9,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.156",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 14,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.81",
+      "exposure_score": 7.1,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 19,
+      "out_degree": 11
+    },
+    {
+      "ip": "10.164.105.133",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 15,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.177",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 10,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.93",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 13,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.163",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 15,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.60",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 15,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.235",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.147",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.30",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.45",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.120",
+      "exposure_score": 6.2,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 17,
+      "out_degree": 2
+    },
+    {
+      "ip": "10.164.105.184",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 16,
+      "out_degree": 10
+    },
+    {
       "ip": "10.164.105.23",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 15,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.250",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 16,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.220",
+      "exposure_score": 6.9,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 17,
+      "out_degree": 9
+    },
+    {
+      "ip": "10.164.105.181",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.50",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 14,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.39",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.247",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.100",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 14,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.234",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 13,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.43",
       "exposure_score": 6.9,
       "exposure_level": "HIGH",
       "tier": "WEB",
@@ -1588,6 +2187,456 @@
       "has_external_access": false,
       "in_degree": 15,
       "out_degree": 9
+    },
+    {
+      "ip": "10.164.105.165",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.212",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 17,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.140",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.195",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.88",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.130",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 16,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.190",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 10,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.155",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 10,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.135",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 9,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.228",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 17,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.76",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.90",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 18,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.150",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 10,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.192",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 13,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.241",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.113",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 13,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.33",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 16,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.47",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 11,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.231",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 16,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.54",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.196",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.72",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 18,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.65",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 19,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.240",
+      "exposure_score": 6.7,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 14,
+      "out_degree": 7
+    },
+    {
+      "ip": "10.164.105.134",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 10,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.131",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 17,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.104",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 9,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.180",
+      "exposure_score": 6.2,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 18,
+      "out_degree": 2
+    },
+    {
+      "ip": "10.164.105.204",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 17,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.137",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 18,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.117",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 10,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.175",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 18,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.92",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 17,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.187",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.166",
+      "exposure_score": 6.4,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 18,
+      "out_degree": 4
+    },
+    {
+      "ip": "10.164.105.44",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 15,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.211",
+      "exposure_score": 7.0,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 13,
+      "out_degree": 10
+    },
+    {
+      "ip": "10.164.105.107",
+      "exposure_score": 6.8,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 14,
+      "out_degree": 8
+    },
+    {
+      "ip": "10.164.105.34",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 15,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.159",
+      "exposure_score": 6.3,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 21,
+      "out_degree": 3
+    },
+    {
+      "ip": "10.164.105.225",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 10,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.87",
+      "exposure_score": 7.2,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 12
+    },
+    {
+      "ip": "10.164.105.35",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 12,
+      "out_degree": 5
+    },
+    {
+      "ip": "10.164.105.148",
+      "exposure_score": 6.6,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 14,
+      "out_degree": 6
+    },
+    {
+      "ip": "10.164.105.205",
+      "exposure_score": 6.5,
+      "exposure_level": "HIGH",
+      "tier": "WEB",
+      "is_internal": true,
+      "has_external_access": false,
+      "in_degree": 18,
+      "out_degree": 5
     },
     {
       "ip": "10.164.105.2",
@@ -1630,16 +2679,6 @@
       "out_degree": 8
     },
     {
-      "ip": "10.164.105.171",
-      "exposure_score": 6.9,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 10,
-      "out_degree": 9
-    },
-    {
       "ip": "10.164.105.16",
       "exposure_score": 6.3,
       "exposure_level": "HIGH",
@@ -1648,26 +2687,6 @@
       "has_external_access": false,
       "in_degree": 11,
       "out_degree": 3
-    },
-    {
-      "ip": "10.164.105.89",
-      "exposure_score": 6.2,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 7,
-      "out_degree": 2
-    },
-    {
-      "ip": "10.164.105.190",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 8,
-      "out_degree": 6
     },
     {
       "ip": "10.164.105.226",
@@ -1688,26 +2707,6 @@
       "has_external_access": false,
       "in_degree": 13,
       "out_degree": 9
-    },
-    {
-      "ip": "10.164.105.241",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 4
-    },
-    {
-      "ip": "10.164.105.39",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 10,
-      "out_degree": 6
     },
     {
       "ip": "10.164.105.99",
@@ -1760,26 +2759,6 @@
       "out_degree": 5
     },
     {
-      "ip": "10.164.105.49",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.33",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 4
-    },
-    {
       "ip": "10.164.105.173",
       "exposure_score": 6.9,
       "exposure_level": "HIGH",
@@ -1788,16 +2767,6 @@
       "has_external_access": false,
       "in_degree": 14,
       "out_degree": 9
-    },
-    {
-      "ip": "10.164.105.92",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 6
     },
     {
       "ip": "10.164.105.75",
@@ -1810,16 +2779,6 @@
       "out_degree": 5
     },
     {
-      "ip": "10.164.105.74",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 7,
-      "out_degree": 6
-    },
-    {
       "ip": "10.164.105.46",
       "exposure_score": 6.5,
       "exposure_level": "HIGH",
@@ -1828,16 +2787,6 @@
       "has_external_access": false,
       "in_degree": 18,
       "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.120",
-      "exposure_score": 6.2,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 15,
-      "out_degree": 2
     },
     {
       "ip": "10.164.105.208",
@@ -1858,16 +2807,6 @@
       "has_external_access": false,
       "in_degree": 17,
       "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.231",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 6
     },
     {
       "ip": "10.164.105.216",
@@ -1900,26 +2839,6 @@
       "out_degree": 4
     },
     {
-      "ip": "10.164.105.136",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 17,
-      "out_degree": 4
-    },
-    {
-      "ip": "10.164.105.4",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 6
-    },
-    {
       "ip": "10.164.105.143",
       "exposure_score": 6.6,
       "exposure_level": "HIGH",
@@ -1927,26 +2846,6 @@
       "is_internal": true,
       "has_external_access": false,
       "in_degree": 14,
-      "out_degree": 6
-    },
-    {
-      "ip": "10.164.105.150",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 9,
-      "out_degree": 6
-    },
-    {
-      "ip": "10.164.105.248",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 10,
       "out_degree": 6
     },
     {
@@ -1990,16 +2889,6 @@
       "out_degree": 3
     },
     {
-      "ip": "10.164.105.54",
-      "exposure_score": 6.7,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 7
-    },
-    {
       "ip": "10.164.105.245",
       "exposure_score": 6.3,
       "exposure_level": "HIGH",
@@ -2028,16 +2917,6 @@
       "has_external_access": false,
       "in_degree": 6,
       "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.155",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 9,
-      "out_degree": 6
     },
     {
       "ip": "10.164.105.57",
@@ -2070,26 +2949,6 @@
       "out_degree": 8
     },
     {
-      "ip": "10.164.105.188",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 3
-    },
-    {
-      "ip": "10.164.105.156",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 13,
-      "out_degree": 5
-    },
-    {
       "ip": "10.164.105.103",
       "exposure_score": 6.4,
       "exposure_level": "HIGH",
@@ -2098,16 +2957,6 @@
       "has_external_access": false,
       "in_degree": 18,
       "out_degree": 4
-    },
-    {
-      "ip": "10.164.105.51",
-      "exposure_score": 6.1,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 8,
-      "out_degree": 1
     },
     {
       "ip": "10.164.105.36",
@@ -2150,36 +2999,6 @@
       "out_degree": 5
     },
     {
-      "ip": "10.164.105.50",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 14,
-      "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.212",
-      "exposure_score": 6.8,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 17,
-      "out_degree": 8
-    },
-    {
-      "ip": "10.164.105.223",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 18,
-      "out_degree": 4
-    },
-    {
       "ip": "10.164.105.26",
       "exposure_score": 7.0,
       "exposure_level": "HIGH",
@@ -2208,16 +3027,6 @@
       "has_external_access": false,
       "in_degree": 15,
       "out_degree": 7
-    },
-    {
-      "ip": "10.164.105.246",
-      "exposure_score": 6.8,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 8
     },
     {
       "ip": "10.164.105.102",
@@ -2250,26 +3059,6 @@
       "out_degree": 6
     },
     {
-      "ip": "10.164.105.35",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 4
-    },
-    {
-      "ip": "10.164.105.254",
-      "exposure_score": 6.8,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 7,
-      "out_degree": 8
-    },
-    {
       "ip": "10.164.105.83",
       "exposure_score": 6.5,
       "exposure_level": "HIGH",
@@ -2278,16 +3067,6 @@
       "has_external_access": false,
       "in_degree": 12,
       "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.181",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 6
     },
     {
       "ip": "10.164.105.224",
@@ -2300,46 +3079,6 @@
       "out_degree": 6
     },
     {
-      "ip": "10.164.105.82",
-      "exposure_score": 6.2,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 2
-    },
-    {
-      "ip": "10.164.105.147",
-      "exposure_score": 6.2,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 2
-    },
-    {
-      "ip": "10.164.105.30",
-      "exposure_score": 6.7,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 7
-    },
-    {
-      "ip": "10.164.105.220",
-      "exposure_score": 6.8,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 8
-    },
-    {
       "ip": "10.164.105.9",
       "exposure_score": 6.4,
       "exposure_level": "HIGH",
@@ -2350,16 +3089,6 @@
       "out_degree": 4
     },
     {
-      "ip": "10.164.105.47",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 3
-    },
-    {
       "ip": "10.164.105.179",
       "exposure_score": 6.7,
       "exposure_level": "HIGH",
@@ -2368,66 +3097,6 @@
       "has_external_access": false,
       "in_degree": 16,
       "out_degree": 7
-    },
-    {
-      "ip": "10.164.105.53",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 3
-    },
-    {
-      "ip": "10.164.105.27",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 23,
-      "out_degree": 6
-    },
-    {
-      "ip": "10.164.105.14",
-      "exposure_score": 6.7,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 7
-    },
-    {
-      "ip": "10.164.105.43",
-      "exposure_score": 6.8,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 15,
-      "out_degree": 8
-    },
-    {
-      "ip": "10.164.105.253",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 6
-    },
-    {
-      "ip": "10.164.105.65",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 19,
-      "out_degree": 4
     },
     {
       "ip": "10.164.105.13",
@@ -2450,36 +3119,6 @@
       "out_degree": 8
     },
     {
-      "ip": "10.164.105.180",
-      "exposure_score": 6.2,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 17,
-      "out_degree": 2
-    },
-    {
-      "ip": "10.164.105.58",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 4
-    },
-    {
-      "ip": "10.164.105.234",
-      "exposure_score": 6.9,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 9
-    },
-    {
       "ip": "10.164.105.84",
       "exposure_score": 6.6,
       "exposure_level": "HIGH",
@@ -2500,36 +3139,6 @@
       "out_degree": 4
     },
     {
-      "ip": "10.164.105.130",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.134",
-      "exposure_score": 6.9,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 10,
-      "out_degree": 9
-    },
-    {
-      "ip": "10.164.105.88",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 4
-    },
-    {
       "ip": "10.164.105.115",
       "exposure_score": 6.5,
       "exposure_level": "HIGH",
@@ -2537,16 +3146,6 @@
       "is_internal": true,
       "has_external_access": false,
       "in_degree": 9,
-      "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.175",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 17,
       "out_degree": 5
     },
     {
@@ -2560,16 +3159,6 @@
       "out_degree": 3
     },
     {
-      "ip": "10.164.105.41",
-      "exposure_score": 6.7,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 9,
-      "out_degree": 7
-    },
-    {
       "ip": "10.164.105.68",
       "exposure_score": 6.8,
       "exposure_level": "HIGH",
@@ -2580,16 +3169,6 @@
       "out_degree": 8
     },
     {
-      "ip": "10.164.105.196",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 3
-    },
-    {
       "ip": "10.164.105.124",
       "exposure_score": 6.5,
       "exposure_level": "HIGH",
@@ -2598,36 +3177,6 @@
       "has_external_access": false,
       "in_degree": 15,
       "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.163",
-      "exposure_score": 6.7,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 15,
-      "out_degree": 7
-    },
-    {
-      "ip": "10.164.105.177",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 10,
-      "out_degree": 6
-    },
-    {
-      "ip": "10.164.105.81",
-      "exposure_score": 7.0,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 19,
-      "out_degree": 10
     },
     {
       "ip": "10.164.105.199",
@@ -2670,16 +3219,6 @@
       "out_degree": 6
     },
     {
-      "ip": "10.164.105.131",
-      "exposure_score": 7.0,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 15,
-      "out_degree": 10
-    },
-    {
       "ip": "10.164.105.28",
       "exposure_score": 6.8,
       "exposure_level": "HIGH",
@@ -2688,16 +3227,6 @@
       "has_external_access": false,
       "in_degree": 19,
       "out_degree": 8
-    },
-    {
-      "ip": "10.164.105.44",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 13,
-      "out_degree": 3
     },
     {
       "ip": "10.164.105.105",
@@ -2730,16 +3259,6 @@
       "out_degree": 4
     },
     {
-      "ip": "10.164.105.184",
-      "exposure_score": 6.9,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 9
-    },
-    {
       "ip": "10.164.105.19",
       "exposure_score": 6.6,
       "exposure_level": "HIGH",
@@ -2747,16 +3266,6 @@
       "is_internal": true,
       "has_external_access": false,
       "in_degree": 8,
-      "out_degree": 6
-    },
-    {
-      "ip": "10.164.105.112",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 13,
       "out_degree": 6
     },
     {
@@ -2768,36 +3277,6 @@
       "has_external_access": false,
       "in_degree": 17,
       "out_degree": 0
-    },
-    {
-      "ip": "10.164.105.203",
-      "exposure_score": 6.9,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 15,
-      "out_degree": 9
-    },
-    {
-      "ip": "10.164.105.176",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 14,
-      "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.189",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 10,
-      "out_degree": 5
     },
     {
       "ip": "10.164.105.48",
@@ -2830,26 +3309,6 @@
       "out_degree": 7
     },
     {
-      "ip": "10.164.105.158",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 14,
-      "out_degree": 3
-    },
-    {
-      "ip": "10.164.105.133",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 15,
-      "out_degree": 5
-    },
-    {
       "ip": "10.164.105.109",
       "exposure_score": 6.7,
       "exposure_level": "HIGH",
@@ -2858,16 +3317,6 @@
       "has_external_access": false,
       "in_degree": 11,
       "out_degree": 7
-    },
-    {
-      "ip": "10.164.105.228",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 17,
-      "out_degree": 5
     },
     {
       "ip": "10.164.105.127",
@@ -2910,16 +3359,6 @@
       "out_degree": 3
     },
     {
-      "ip": "10.164.105.192",
-      "exposure_score": 6.7,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 7
-    },
-    {
       "ip": "10.164.105.17",
       "exposure_score": 6.9,
       "exposure_level": "HIGH",
@@ -2950,16 +3389,6 @@
       "out_degree": 6
     },
     {
-      "ip": "10.164.105.195",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 9,
-      "out_degree": 3
-    },
-    {
       "ip": "10.164.105.21",
       "exposure_score": 6.3,
       "exposure_level": "HIGH",
@@ -2978,26 +3407,6 @@
       "has_external_access": false,
       "in_degree": 14,
       "out_degree": 11
-    },
-    {
-      "ip": "10.164.105.197",
-      "exposure_score": 6.7,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 7
-    },
-    {
-      "ip": "10.164.105.125",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 22,
-      "out_degree": 4
     },
     {
       "ip": "10.164.105.71",
@@ -3040,36 +3449,6 @@
       "out_degree": 3
     },
     {
-      "ip": "10.164.105.204",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 16,
-      "out_degree": 4
-    },
-    {
-      "ip": "10.164.105.107",
-      "exposure_score": 6.8,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 13,
-      "out_degree": 8
-    },
-    {
-      "ip": "10.164.105.117",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 9,
-      "out_degree": 5
-    },
-    {
       "ip": "10.164.105.213",
       "exposure_score": 6.5,
       "exposure_level": "HIGH",
@@ -3090,16 +3469,6 @@
       "out_degree": 4
     },
     {
-      "ip": "10.164.105.78",
-      "exposure_score": 6.7,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 13,
-      "out_degree": 7
-    },
-    {
       "ip": "10.164.105.255",
       "exposure_score": 6.7,
       "exposure_level": "HIGH",
@@ -3108,16 +3477,6 @@
       "has_external_access": false,
       "in_degree": 14,
       "out_degree": 7
-    },
-    {
-      "ip": "10.164.105.93",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 13,
-      "out_degree": 3
     },
     {
       "ip": "10.164.105.210",
@@ -3130,16 +3489,6 @@
       "out_degree": 7
     },
     {
-      "ip": "10.164.105.90",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 17,
-      "out_degree": 3
-    },
-    {
       "ip": "10.164.105.172",
       "exposure_score": 6.9,
       "exposure_level": "HIGH",
@@ -3148,16 +3497,6 @@
       "has_external_access": false,
       "in_degree": 14,
       "out_degree": 9
-    },
-    {
-      "ip": "10.164.105.87",
-      "exposure_score": 7.2,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 12
     },
     {
       "ip": "10.164.105.252",
@@ -3180,16 +3519,6 @@
       "out_degree": 7
     },
     {
-      "ip": "10.164.105.137",
-      "exposure_score": 6.9,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 18,
-      "out_degree": 9
-    },
-    {
       "ip": "10.164.105.91",
       "exposure_score": 6.7,
       "exposure_level": "HIGH",
@@ -3198,26 +3527,6 @@
       "has_external_access": false,
       "in_degree": 9,
       "out_degree": 7
-    },
-    {
-      "ip": "10.164.105.166",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 18,
-      "out_degree": 3
-    },
-    {
-      "ip": "10.164.105.247",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 5
     },
     {
       "ip": "10.164.105.62",
@@ -3300,16 +3609,6 @@
       "out_degree": 7
     },
     {
-      "ip": "10.164.105.250",
-      "exposure_score": 6.8,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 15,
-      "out_degree": 8
-    },
-    {
       "ip": "10.164.105.31",
       "exposure_score": 6.2,
       "exposure_level": "HIGH",
@@ -3318,16 +3617,6 @@
       "has_external_access": false,
       "in_degree": 11,
       "out_degree": 2
-    },
-    {
-      "ip": "10.164.105.249",
-      "exposure_score": 6.1,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 13,
-      "out_degree": 1
     },
     {
       "ip": "10.164.105.142",
@@ -3360,16 +3649,6 @@
       "out_degree": 4
     },
     {
-      "ip": "10.164.105.198",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 17,
-      "out_degree": 4
-    },
-    {
       "ip": "10.164.105.1",
       "exposure_score": 6.4,
       "exposure_level": "HIGH",
@@ -3378,16 +3657,6 @@
       "has_external_access": false,
       "in_degree": 12,
       "out_degree": 4
-    },
-    {
-      "ip": "10.164.105.76",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 10,
-      "out_degree": 3
     },
     {
       "ip": "10.164.105.227",
@@ -3410,26 +3679,6 @@
       "out_degree": 10
     },
     {
-      "ip": "10.164.105.159",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 20,
-      "out_degree": 3
-    },
-    {
-      "ip": "10.164.105.235",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 10,
-      "out_degree": 3
-    },
-    {
       "ip": "10.164.105.243",
       "exposure_score": 6.6,
       "exposure_level": "HIGH",
@@ -3448,16 +3697,6 @@
       "has_external_access": false,
       "in_degree": 11,
       "out_degree": 8
-    },
-    {
-      "ip": "10.164.105.139",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 18,
-      "out_degree": 6
     },
     {
       "ip": "10.164.105.222",
@@ -3490,16 +3729,6 @@
       "out_degree": 6
     },
     {
-      "ip": "10.164.105.194",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 14,
-      "out_degree": 3
-    },
-    {
       "ip": "10.164.105.37",
       "exposure_score": 6.5,
       "exposure_level": "HIGH",
@@ -3510,16 +3739,6 @@
       "out_degree": 5
     },
     {
-      "ip": "10.164.105.152",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 15,
-      "out_degree": 4
-    },
-    {
       "ip": "10.164.105.5",
       "exposure_score": 6.4,
       "exposure_level": "HIGH",
@@ -3528,16 +3747,6 @@
       "has_external_access": false,
       "in_degree": 10,
       "out_degree": 4
-    },
-    {
-      "ip": "10.164.105.60",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 14,
-      "out_degree": 3
     },
     {
       "ip": "10.164.105.67",
@@ -3560,16 +3769,6 @@
       "out_degree": 7
     },
     {
-      "ip": "10.164.105.104",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 8,
-      "out_degree": 4
-    },
-    {
       "ip": "10.164.105.244",
       "exposure_score": 6.4,
       "exposure_level": "HIGH",
@@ -3588,16 +3787,6 @@
       "has_external_access": false,
       "in_degree": 13,
       "out_degree": 7
-    },
-    {
-      "ip": "10.164.105.211",
-      "exposure_score": 6.8,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 13,
-      "out_degree": 8
     },
     {
       "ip": "10.164.105.132",
@@ -3658,26 +3847,6 @@
       "has_external_access": false,
       "in_degree": 15,
       "out_degree": 3
-    },
-    {
-      "ip": "10.164.105.183",
-      "exposure_score": 6.9,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 9
-    },
-    {
-      "ip": "10.164.105.140",
-      "exposure_score": 7.0,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 10
     },
     {
       "ip": "10.164.105.200",
@@ -3730,16 +3899,6 @@
       "out_degree": 6
     },
     {
-      "ip": "10.164.105.187",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 4
-    },
-    {
       "ip": "10.164.105.164",
       "exposure_score": 6.7,
       "exposure_level": "HIGH",
@@ -3760,26 +3919,6 @@
       "out_degree": 5
     },
     {
-      "ip": "10.164.105.72",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 17,
-      "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.205",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 17,
-      "out_degree": 5
-    },
-    {
       "ip": "10.164.105.138",
       "exposure_score": 6.6,
       "exposure_level": "HIGH",
@@ -3787,26 +3926,6 @@
       "is_internal": true,
       "has_external_access": false,
       "in_degree": 10,
-      "out_degree": 6
-    },
-    {
-      "ip": "10.164.105.225",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 10,
-      "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.34",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 14,
       "out_degree": 6
     },
     {
@@ -3818,16 +3937,6 @@
       "has_external_access": false,
       "in_degree": 12,
       "out_degree": 4
-    },
-    {
-      "ip": "10.164.105.240",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 14,
-      "out_degree": 6
     },
     {
       "ip": "10.164.105.221",
@@ -3850,16 +3959,6 @@
       "out_degree": 4
     },
     {
-      "ip": "10.164.105.122",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 3
-    },
-    {
       "ip": "10.164.105.141",
       "exposure_score": 7.0,
       "exposure_level": "HIGH",
@@ -3868,16 +3967,6 @@
       "has_external_access": false,
       "in_degree": 16,
       "out_degree": 10
-    },
-    {
-      "ip": "10.164.105.113",
-      "exposure_score": 6.2,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 2
     },
     {
       "ip": "10.164.105.170",
@@ -3900,26 +3989,6 @@
       "out_degree": 3
     },
     {
-      "ip": "10.164.105.167",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 9,
-      "out_degree": 3
-    },
-    {
-      "ip": "10.164.105.135",
-      "exposure_score": 7.0,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 7,
-      "out_degree": 10
-    },
-    {
       "ip": "10.164.105.40",
       "exposure_score": 7.0,
       "exposure_level": "HIGH",
@@ -3928,16 +3997,6 @@
       "has_external_access": false,
       "in_degree": 18,
       "out_degree": 10
-    },
-    {
-      "ip": "10.164.105.215",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 12,
-      "out_degree": 6
     },
     {
       "ip": "10.164.105.52",
@@ -3970,14 +4029,14 @@
       "out_degree": 5
     },
     {
-      "ip": "10.164.105.165",
-      "exposure_score": 6.6,
+      "ip": "10.164.105.167",
+      "exposure_score": 6.3,
       "exposure_level": "HIGH",
       "tier": "WEB",
       "is_internal": true,
       "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 6
+      "in_degree": 9,
+      "out_degree": 3
     },
     {
       "ip": "10.164.105.108",
@@ -4020,26 +4079,6 @@
       "out_degree": 5
     },
     {
-      "ip": "10.164.105.209",
-      "exposure_score": 6.3,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 10,
-      "out_degree": 3
-    },
-    {
-      "ip": "10.164.105.148",
-      "exposure_score": 6.6,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 13,
-      "out_degree": 6
-    },
-    {
       "ip": "10.164.105.153",
       "exposure_score": 6.5,
       "exposure_level": "HIGH",
@@ -4060,37 +4099,7 @@
       "out_degree": 5
     },
     {
-      "ip": "10.164.105.100",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 14,
-      "out_degree": 5
-    },
-    {
-      "ip": "10.164.105.128",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 9,
-      "out_degree": 5
-    },
-    {
       "ip": "10.164.105.24",
-      "exposure_score": 6.4,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 4
-    },
-    {
-      "ip": "10.164.105.97",
       "exposure_score": 6.4,
       "exposure_level": "HIGH",
       "tier": "WEB",
@@ -4120,16 +4129,6 @@
       "out_degree": 5
     },
     {
-      "ip": "10.164.105.45",
-      "exposure_score": 6.5,
-      "exposure_level": "HIGH",
-      "tier": "WEB",
-      "is_internal": true,
-      "has_external_access": false,
-      "in_degree": 11,
-      "out_degree": 5
-    },
-    {
       "ip": "10.164.105.191",
       "exposure_score": 6.6,
       "exposure_level": "HIGH",
@@ -4142,6 +4141,910 @@
   ],
   "high_threat_nodes": [
     {
+      "ip": "10.164.105.136",
+      "threat_score": 8.43
+    },
+    {
+      "ip": "10.164.105.112",
+      "threat_score": 8.35
+    },
+    {
+      "ip": "10.164.116.112",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.122",
+      "threat_score": 8.27
+    },
+    {
+      "ip": "10.164.116.67",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.216",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.246",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.109",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.125",
+      "threat_score": 8.66
+    },
+    {
+      "ip": "10.164.105.128",
+      "threat_score": 8.14
+    },
+    {
+      "ip": "10.164.116.121",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.102",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.89",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.238",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.171",
+      "threat_score": 8.59
+    },
+    {
+      "ip": "10.164.116.237",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.81",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.248",
+      "threat_score": 8.51
+    },
+    {
+      "ip": "10.164.105.41",
+      "threat_score": 8.5
+    },
+    {
+      "ip": "10.164.116.31",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.249",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.84",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.172",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.194",
+      "threat_score": 8.22
+    },
+    {
+      "ip": "10.164.105.58",
+      "threat_score": 8.3
+    },
+    {
+      "ip": "10.164.116.101",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.38",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.215",
+      "threat_score": 8.24
+    },
+    {
+      "ip": "10.164.116.138",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.253",
+      "threat_score": 8.49
+    },
+    {
+      "ip": "10.164.105.97",
+      "threat_score": 8.1
+    },
+    {
+      "ip": "10.164.105.176",
+      "threat_score": 8.19
+    },
+    {
+      "ip": "10.164.116.217",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.144",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.51",
+      "threat_score": 8.05
+    },
+    {
+      "ip": "10.164.105.27",
+      "threat_score": 8.7
+    },
+    {
+      "ip": "10.164.116.92",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.223",
+      "threat_score": 8.17
+    },
+    {
+      "ip": "10.164.105.139",
+      "threat_score": 8.68
+    },
+    {
+      "ip": "10.164.105.152",
+      "threat_score": 8.18
+    },
+    {
+      "ip": "10.164.116.96",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.73",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.203",
+      "threat_score": 8.72
+    },
+    {
+      "ip": "10.164.116.35",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.74",
+      "threat_score": 8.23
+    },
+    {
+      "ip": "10.164.116.125",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.4",
+      "threat_score": 8.37
+    },
+    {
+      "ip": "10.164.105.49",
+      "threat_score": 8.19
+    },
+    {
+      "ip": "10.164.116.72",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.189",
+      "threat_score": 8.32
+    },
+    {
+      "ip": "10.164.105.183",
+      "threat_score": 8.67
+    },
+    {
+      "ip": "10.164.105.89",
+      "threat_score": 8.14
+    },
+    {
+      "ip": "10.164.116.37",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.78",
+      "threat_score": 8.45
+    },
+    {
+      "ip": "10.164.105.53",
+      "threat_score": 8.21
+    },
+    {
+      "ip": "10.164.105.188",
+      "threat_score": 8.42
+    },
+    {
+      "ip": "10.164.116.174",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.80",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.226",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.249",
+      "threat_score": 8.09
+    },
+    {
+      "ip": "10.164.116.117",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.45",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.158",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.158",
+      "threat_score": 8.15
+    },
+    {
+      "ip": "10.164.105.198",
+      "threat_score": 8.49
+    },
+    {
+      "ip": "10.164.105.209",
+      "threat_score": 8.17
+    },
+    {
+      "ip": "10.164.105.197",
+      "threat_score": 8.28
+    },
+    {
+      "ip": "10.164.116.43",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.122",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.246",
+      "threat_score": 8.7
+    },
+    {
+      "ip": "10.164.105.82",
+      "threat_score": 8.16
+    },
+    {
+      "ip": "10.164.105.14",
+      "threat_score": 8.26
+    },
+    {
+      "ip": "10.164.116.22",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.150",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.242",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.95",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.254",
+      "threat_score": 8.44
+    },
+    {
+      "ip": "10.164.105.156",
+      "threat_score": 8.34
+    },
+    {
+      "ip": "10.164.116.180",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.81",
+      "threat_score": 9.03
+    },
+    {
+      "ip": "10.164.105.133",
+      "threat_score": 8.61
+    },
+    {
+      "ip": "10.164.105.177",
+      "threat_score": 8.49
+    },
+    {
+      "ip": "10.164.116.184",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.93",
+      "threat_score": 8.36
+    },
+    {
+      "ip": "10.164.116.148",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.163",
+      "threat_score": 8.68
+    },
+    {
+      "ip": "10.164.116.46",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.99",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.60",
+      "threat_score": 8.31
+    },
+    {
+      "ip": "10.164.116.23",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.13",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.88",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.235",
+      "threat_score": 8.12
+    },
+    {
+      "ip": "10.164.105.147",
+      "threat_score": 8.18
+    },
+    {
+      "ip": "10.164.116.103",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.30",
+      "threat_score": 8.48
+    },
+    {
+      "ip": "10.164.105.45",
+      "threat_score": 8.42
+    },
+    {
+      "ip": "10.164.116.18",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.167",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.120",
+      "threat_score": 8.27
+    },
+    {
+      "ip": "10.164.105.184",
+      "threat_score": 9.09
+    },
+    {
+      "ip": "10.164.116.232",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.29",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.41",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.68",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.24",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.50",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.23",
+      "threat_score": 8.55
+    },
+    {
+      "ip": "10.164.116.113",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.78",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.250",
+      "threat_score": 8.42
+    },
+    {
+      "ip": "10.164.105.220",
+      "threat_score": 8.86
+    },
+    {
+      "ip": "10.164.105.181",
+      "threat_score": 8.32
+    },
+    {
+      "ip": "10.164.105.50",
+      "threat_score": 8.64
+    },
+    {
+      "ip": "10.164.116.194",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.247",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.39",
+      "threat_score": 8.41
+    },
+    {
+      "ip": "10.164.116.69",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.229",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.247",
+      "threat_score": 8.47
+    },
+    {
+      "ip": "10.164.105.100",
+      "threat_score": 8.62
+    },
+    {
+      "ip": "10.164.105.234",
+      "threat_score": 8.86
+    },
+    {
+      "ip": "10.164.116.58",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.43",
+      "threat_score": 8.49
+    },
+    {
+      "ip": "10.164.116.251",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.165",
+      "threat_score": 8.36
+    },
+    {
+      "ip": "10.164.105.212",
+      "threat_score": 9.19
+    },
+    {
+      "ip": "10.164.116.63",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.140",
+      "threat_score": 8.58
+    },
+    {
+      "ip": "10.164.116.119",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.195",
+      "threat_score": 8.21
+    },
+    {
+      "ip": "10.164.105.88",
+      "threat_score": 8.32
+    },
+    {
+      "ip": "10.164.116.212",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.130",
+      "threat_score": 8.51
+    },
+    {
+      "ip": "10.164.105.190",
+      "threat_score": 8.55
+    },
+    {
+      "ip": "10.164.105.155",
+      "threat_score": 8.23
+    },
+    {
+      "ip": "10.164.116.162",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.135",
+      "threat_score": 8.54
+    },
+    {
+      "ip": "10.164.116.15",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.228",
+      "threat_score": 8.53
+    },
+    {
+      "ip": "10.164.105.76",
+      "threat_score": 8.18
+    },
+    {
+      "ip": "10.164.116.44",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.90",
+      "threat_score": 8.28
+    },
+    {
+      "ip": "10.164.105.150",
+      "threat_score": 8.31
+    },
+    {
+      "ip": "10.164.116.214",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.192",
+      "threat_score": 8.56
+    },
+    {
+      "ip": "10.164.116.220",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.27",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.250",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.135",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.134",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.196",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.71",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.198",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.241",
+      "threat_score": 8.22
+    },
+    {
+      "ip": "10.164.105.113",
+      "threat_score": 8.31
+    },
+    {
+      "ip": "10.164.116.90",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.19",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.33",
+      "threat_score": 8.42
+    },
+    {
+      "ip": "10.164.116.116",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.51",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.47",
+      "threat_score": 8.22
+    },
+    {
+      "ip": "10.164.116.215",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.57",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.253",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.60",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.231",
+      "threat_score": 8.46
+    },
+    {
+      "ip": "10.164.105.54",
+      "threat_score": 8.37
+    },
+    {
+      "ip": "10.164.116.130",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.196",
+      "threat_score": 8.39
+    },
+    {
+      "ip": "10.164.116.114",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.160",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.115",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.105",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.72",
+      "threat_score": 8.25
+    },
+    {
+      "ip": "10.164.105.65",
+      "threat_score": 8.38
+    },
+    {
+      "ip": "10.164.116.183",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.156",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.240",
+      "threat_score": 8.29
+    },
+    {
+      "ip": "10.164.105.134",
+      "threat_score": 8.59
+    },
+    {
+      "ip": "10.164.105.131",
+      "threat_score": 8.56
+    },
+    {
+      "ip": "10.164.105.104",
+      "threat_score": 8.2
+    },
+    {
+      "ip": "10.164.116.157",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.180",
+      "threat_score": 8.14
+    },
+    {
+      "ip": "10.164.116.14",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.204",
+      "threat_score": 8.47
+    },
+    {
+      "ip": "10.164.105.137",
+      "threat_score": 9.19
+    },
+    {
+      "ip": "10.164.105.117",
+      "threat_score": 8.34
+    },
+    {
+      "ip": "10.164.105.175",
+      "threat_score": 8.58
+    },
+    {
+      "ip": "10.164.116.187",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.230",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.92",
+      "threat_score": 8.58
+    },
+    {
+      "ip": "10.164.116.227",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.4",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.202",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.139",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.175",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.126",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.164",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.187",
+      "threat_score": 8.29
+    },
+    {
+      "ip": "10.164.105.166",
+      "threat_score": 8.55
+    },
+    {
+      "ip": "10.164.116.153",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.25",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.70",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.218",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.128",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.44",
+      "threat_score": 8.29
+    },
+    {
+      "ip": "10.164.116.34",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.211",
+      "threat_score": 8.55
+    },
+    {
+      "ip": "10.164.105.107",
+      "threat_score": 8.41
+    },
+    {
+      "ip": "10.164.105.34",
+      "threat_score": 8.4
+    },
+    {
+      "ip": "10.164.116.28",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.159",
+      "threat_score": 8.23
+    },
+    {
+      "ip": "10.164.105.225",
+      "threat_score": 8.31
+    },
+    {
+      "ip": "10.164.105.87",
+      "threat_score": 8.62
+    },
+    {
+      "ip": "10.164.116.182",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.169",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.211",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.35",
+      "threat_score": 8.23
+    },
+    {
+      "ip": "10.164.116.55",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.108",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.147",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.116.181",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.148",
+      "threat_score": 8.28
+    },
+    {
+      "ip": "10.164.116.170",
+      "threat_score": 10.0
+    },
+    {
+      "ip": "10.164.105.205",
+      "threat_score": 8.48
+    },
+    {
       "ip": "10.164.116.124",
       "threat_score": 10.0
     },
@@ -4150,12 +5053,8 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.23",
-      "threat_score": 8.61
-    },
-    {
       "ip": "10.164.105.2",
-      "threat_score": 8.51
+      "threat_score": 8.48
     },
     {
       "ip": "10.164.116.120",
@@ -4163,11 +5062,11 @@
     },
     {
       "ip": "10.164.105.232",
-      "threat_score": 8.52
+      "threat_score": 8.45
     },
     {
       "ip": "10.164.105.22",
-      "threat_score": 8.36
+      "threat_score": 8.3
     },
     {
       "ip": "10.164.116.59",
@@ -4175,23 +5074,7 @@
     },
     {
       "ip": "10.164.105.56",
-      "threat_score": 8.6
-    },
-    {
-      "ip": "10.164.116.37",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.198",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.171",
-      "threat_score": 8.65
-    },
-    {
-      "ip": "10.164.116.175",
-      "threat_score": 10.0
+      "threat_score": 8.61
     },
     {
       "ip": "10.164.116.7",
@@ -4203,31 +5086,11 @@
     },
     {
       "ip": "10.164.105.16",
-      "threat_score": 8.21
-    },
-    {
-      "ip": "10.164.116.238",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.215",
-      "threat_score": 10.0
+      "threat_score": 8.18
     },
     {
       "ip": "10.164.116.155",
       "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.147",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.89",
-      "threat_score": 8.14
-    },
-    {
-      "ip": "10.164.105.190",
-      "threat_score": 8.57
     },
     {
       "ip": "10.164.116.75",
@@ -4235,59 +5098,35 @@
     },
     {
       "ip": "10.164.105.226",
-      "threat_score": 8.27
+      "threat_score": 8.23
     },
     {
       "ip": "10.164.105.11",
-      "threat_score": 8.53
-    },
-    {
-      "ip": "10.164.116.251",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.212",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.44",
-      "threat_score": 10.0
+      "threat_score": 8.47
     },
     {
       "ip": "10.164.116.3",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.241",
-      "threat_score": 8.24
-    },
-    {
       "ip": "10.164.116.132",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.39",
-      "threat_score": 8.26
-    },
-    {
       "ip": "10.164.105.99",
-      "threat_score": 8.45
+      "threat_score": 8.42
     },
     {
       "ip": "10.164.105.161",
-      "threat_score": 8.4
+      "threat_score": 8.34
     },
     {
       "ip": "10.164.105.73",
-      "threat_score": 8.65
-    },
-    {
-      "ip": "10.164.116.92",
-      "threat_score": 10.0
+      "threat_score": 8.53
     },
     {
       "ip": "10.164.105.238",
-      "threat_score": 8.37
+      "threat_score": 8.33
     },
     {
       "ip": "10.164.116.208",
@@ -4295,15 +5134,11 @@
     },
     {
       "ip": "10.164.105.6",
-      "threat_score": 8.48
+      "threat_score": 8.42
     },
     {
       "ip": "10.164.116.142",
       "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.49",
-      "threat_score": 8.16
     },
     {
       "ip": "10.164.116.133",
@@ -4318,68 +5153,32 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.33",
-      "threat_score": 8.31
-    },
-    {
-      "ip": "10.164.116.216",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.116.199",
       "threat_score": 10.0
     },
     {
       "ip": "10.164.105.173",
-      "threat_score": 8.57
+      "threat_score": 8.51
     },
     {
       "ip": "10.164.116.85",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.232",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.92",
-      "threat_score": 8.64
-    },
-    {
       "ip": "10.164.105.75",
-      "threat_score": 8.19
+      "threat_score": 8.16
     },
     {
       "ip": "10.164.116.123",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.18",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.74",
-      "threat_score": 8.24
-    },
-    {
       "ip": "10.164.105.46",
-      "threat_score": 8.49
-    },
-    {
-      "ip": "10.164.105.120",
-      "threat_score": 8.26
+      "threat_score": 8.43
     },
     {
       "ip": "10.164.105.208",
-      "threat_score": 8.98
-    },
-    {
-      "ip": "10.164.116.170",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.69",
-      "threat_score": 10.0
+      "threat_score": 8.79
     },
     {
       "ip": "10.164.116.66",
@@ -4391,91 +5190,43 @@
     },
     {
       "ip": "10.164.105.144",
-      "threat_score": 8.37
-    },
-    {
-      "ip": "10.164.116.134",
-      "threat_score": 10.0
+      "threat_score": 8.32
     },
     {
       "ip": "10.164.116.225",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.57",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.231",
-      "threat_score": 8.51
-    },
-    {
       "ip": "10.164.116.91",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.78",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.216",
-      "threat_score": 8.37
-    },
-    {
-      "ip": "10.164.116.253",
-      "threat_score": 10.0
+      "threat_score": 8.35
     },
     {
       "ip": "10.164.105.242",
-      "threat_score": 8.52
+      "threat_score": 8.45
     },
     {
       "ip": "10.164.105.182",
-      "threat_score": 8.27
-    },
-    {
-      "ip": "10.164.105.136",
-      "threat_score": 8.26
-    },
-    {
-      "ip": "10.164.116.125",
-      "threat_score": 10.0
+      "threat_score": 8.24
     },
     {
       "ip": "10.164.116.5",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.4",
-      "threat_score": 8.36
-    },
-    {
       "ip": "10.164.105.143",
-      "threat_score": 8.64
+      "threat_score": 8.56
     },
     {
       "ip": "10.164.116.213",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.150",
-      "threat_score": 8.19
-    },
-    {
-      "ip": "10.164.105.248",
-      "threat_score": 8.35
-    },
-    {
       "ip": "10.164.105.193",
-      "threat_score": 8.49
-    },
-    {
-      "ip": "10.164.116.229",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.202",
-      "threat_score": 10.0
+      "threat_score": 8.4
     },
     {
       "ip": "10.164.116.61",
@@ -4495,18 +5246,10 @@
     },
     {
       "ip": "10.164.105.110",
-      "threat_score": 8.49
-    },
-    {
-      "ip": "10.164.116.81",
-      "threat_score": 10.0
+      "threat_score": 8.41
     },
     {
       "ip": "10.164.116.36",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.144",
       "threat_score": 10.0
     },
     {
@@ -4515,18 +5258,10 @@
     },
     {
       "ip": "10.164.105.94",
-      "threat_score": 8.26
-    },
-    {
-      "ip": "10.164.116.73",
-      "threat_score": 10.0
+      "threat_score": 8.25
     },
     {
       "ip": "10.164.116.65",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.27",
       "threat_score": 10.0
     },
     {
@@ -4535,55 +5270,31 @@
     },
     {
       "ip": "10.164.105.237",
-      "threat_score": 8.2
-    },
-    {
-      "ip": "10.164.105.54",
-      "threat_score": 8.38
+      "threat_score": 8.19
     },
     {
       "ip": "10.164.116.137",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.183",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.242",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.245",
-      "threat_score": 8.1
+      "threat_score": 8.08
     },
     {
       "ip": "10.164.105.214",
-      "threat_score": 8.27
+      "threat_score": 8.22
     },
     {
       "ip": "10.164.105.146",
       "threat_score": 8.13
     },
     {
-      "ip": "10.164.105.155",
-      "threat_score": 8.2
-    },
-    {
       "ip": "10.164.105.57",
-      "threat_score": 8.15
+      "threat_score": 8.11
     },
     {
       "ip": "10.164.105.121",
-      "threat_score": 8.79
-    },
-    {
-      "ip": "10.164.116.38",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.150",
-      "threat_score": 10.0
+      "threat_score": 8.59
     },
     {
       "ip": "10.164.116.228",
@@ -4595,15 +5306,7 @@
     },
     {
       "ip": "10.164.105.217",
-      "threat_score": 8.63
-    },
-    {
-      "ip": "10.164.105.188",
-      "threat_score": 8.31
-    },
-    {
-      "ip": "10.164.116.211",
-      "threat_score": 10.0
+      "threat_score": 8.54
     },
     {
       "ip": "10.164.116.252",
@@ -4618,32 +5321,12 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.172",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.227",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.156",
-      "threat_score": 8.36
-    },
-    {
       "ip": "10.164.105.103",
-      "threat_score": 8.36
-    },
-    {
-      "ip": "10.164.105.51",
-      "threat_score": 8.06
+      "threat_score": 8.3
     },
     {
       "ip": "10.164.105.36",
-      "threat_score": 8.56
-    },
-    {
-      "ip": "10.164.116.71",
-      "threat_score": 10.0
+      "threat_score": 8.47
     },
     {
       "ip": "10.164.116.178",
@@ -4663,55 +5346,31 @@
     },
     {
       "ip": "10.164.105.162",
-      "threat_score": 8.3
+      "threat_score": 8.28
     },
     {
       "ip": "10.164.105.154",
-      "threat_score": 8.1
-    },
-    {
-      "ip": "10.164.116.180",
-      "threat_score": 10.0
+      "threat_score": 8.09
     },
     {
       "ip": "10.164.105.218",
-      "threat_score": 8.34
-    },
-    {
-      "ip": "10.164.105.50",
-      "threat_score": 8.64
-    },
-    {
-      "ip": "10.164.116.58",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.212",
-      "threat_score": 8.93
-    },
-    {
-      "ip": "10.164.105.223",
-      "threat_score": 8.17
+      "threat_score": 8.28
     },
     {
       "ip": "10.164.105.26",
-      "threat_score": 8.82
+      "threat_score": 8.76
     },
     {
       "ip": "10.164.105.106",
-      "threat_score": 8.41
+      "threat_score": 8.39
     },
     {
       "ip": "10.164.105.98",
-      "threat_score": 8.31
-    },
-    {
-      "ip": "10.164.105.246",
-      "threat_score": 8.71
+      "threat_score": 8.29
     },
     {
       "ip": "10.164.105.102",
-      "threat_score": 8.22
+      "threat_score": 8.2
     },
     {
       "ip": "10.164.116.204",
@@ -4723,30 +5382,18 @@
     },
     {
       "ip": "10.164.105.55",
-      "threat_score": 8.27
-    },
-    {
-      "ip": "10.164.116.23",
-      "threat_score": 10.0
+      "threat_score": 8.23
     },
     {
       "ip": "10.164.116.10",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.67",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.206",
-      "threat_score": 8.29
+      "threat_score": 8.25
     },
     {
       "ip": "10.164.116.47",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.249",
       "threat_score": 10.0
     },
     {
@@ -4754,116 +5401,32 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.35",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.25",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.35",
-      "threat_score": 8.2
-    },
-    {
-      "ip": "10.164.105.254",
-      "threat_score": 8.41
-    },
-    {
       "ip": "10.164.105.83",
-      "threat_score": 8.28
-    },
-    {
-      "ip": "10.164.105.181",
-      "threat_score": 8.27
+      "threat_score": 8.24
     },
     {
       "ip": "10.164.105.224",
-      "threat_score": 8.32
-    },
-    {
-      "ip": "10.164.105.82",
-      "threat_score": 8.04
-    },
-    {
-      "ip": "10.164.105.147",
-      "threat_score": 8.12
-    },
-    {
-      "ip": "10.164.105.30",
-      "threat_score": 8.54
-    },
-    {
-      "ip": "10.164.105.220",
-      "threat_score": 8.75
+      "threat_score": 8.29
     },
     {
       "ip": "10.164.105.9",
-      "threat_score": 8.47
-    },
-    {
-      "ip": "10.164.105.47",
-      "threat_score": 8.17
+      "threat_score": 8.4
     },
     {
       "ip": "10.164.105.179",
-      "threat_score": 8.57
-    },
-    {
-      "ip": "10.164.105.53",
-      "threat_score": 8.21
-    },
-    {
-      "ip": "10.164.105.27",
-      "threat_score": 8.74
-    },
-    {
-      "ip": "10.164.105.14",
-      "threat_score": 8.23
-    },
-    {
-      "ip": "10.164.105.43",
       "threat_score": 8.46
     },
     {
-      "ip": "10.164.105.253",
-      "threat_score": 8.56
-    },
-    {
-      "ip": "10.164.105.65",
-      "threat_score": 8.38
-    },
-    {
       "ip": "10.164.105.13",
-      "threat_score": 8.21
+      "threat_score": 8.17
     },
     {
       "ip": "10.164.105.185",
-      "threat_score": 8.57
+      "threat_score": 8.56
     },
     {
       "ip": "10.164.116.40",
       "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.180",
-      "threat_score": 8.17
-    },
-    {
-      "ip": "10.164.116.214",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.230",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.58",
-      "threat_score": 8.24
-    },
-    {
-      "ip": "10.164.105.234",
-      "threat_score": 8.75
     },
     {
       "ip": "10.164.116.127",
@@ -4871,26 +5434,14 @@
     },
     {
       "ip": "10.164.105.84",
-      "threat_score": 8.3
+      "threat_score": 8.26
     },
     {
       "ip": "10.164.105.236",
-      "threat_score": 8.31
-    },
-    {
-      "ip": "10.164.105.130",
-      "threat_score": 8.46
-    },
-    {
-      "ip": "10.164.105.134",
-      "threat_score": 8.61
+      "threat_score": 8.27
     },
     {
       "ip": "10.164.116.241",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.181",
       "threat_score": 10.0
     },
     {
@@ -4898,16 +5449,8 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.88",
-      "threat_score": 8.23
-    },
-    {
       "ip": "10.164.105.115",
-      "threat_score": 8.15
-    },
-    {
-      "ip": "10.164.105.175",
-      "threat_score": 8.65
+      "threat_score": 8.12
     },
     {
       "ip": "10.164.116.16",
@@ -4915,7 +5458,7 @@
     },
     {
       "ip": "10.164.105.59",
-      "threat_score": 8.19
+      "threat_score": 8.21
     },
     {
       "ip": "10.164.116.165",
@@ -4926,52 +5469,20 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.41",
-      "threat_score": 8.51
-    },
-    {
       "ip": "10.164.105.68",
-      "threat_score": 8.5
-    },
-    {
-      "ip": "10.164.116.117",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.196",
-      "threat_score": 8.36
+      "threat_score": 8.46
     },
     {
       "ip": "10.164.116.190",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.24",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.237",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.124",
-      "threat_score": 8.48
-    },
-    {
-      "ip": "10.164.105.163",
-      "threat_score": 8.52
-    },
-    {
-      "ip": "10.164.105.177",
-      "threat_score": 8.48
-    },
-    {
-      "ip": "10.164.105.81",
-      "threat_score": 9.08
+      "threat_score": 8.47
     },
     {
       "ip": "10.164.105.199",
-      "threat_score": 8.76
+      "threat_score": 8.65
     },
     {
       "ip": "10.164.116.197",
@@ -4983,7 +5494,7 @@
     },
     {
       "ip": "10.164.105.18",
-      "threat_score": 8.31
+      "threat_score": 8.25
     },
     {
       "ip": "10.164.116.87",
@@ -4995,23 +5506,15 @@
     },
     {
       "ip": "10.164.105.32",
-      "threat_score": 8.6
+      "threat_score": 8.51
     },
     {
       "ip": "10.164.105.42",
-      "threat_score": 8.53
-    },
-    {
-      "ip": "10.164.105.131",
-      "threat_score": 8.57
+      "threat_score": 8.45
     },
     {
       "ip": "10.164.105.28",
-      "threat_score": 8.78
-    },
-    {
-      "ip": "10.164.105.44",
-      "threat_score": 8.29
+      "threat_score": 8.68
     },
     {
       "ip": "10.164.105.105",
@@ -5019,31 +5522,19 @@
     },
     {
       "ip": "10.164.105.63",
-      "threat_score": 8.25
+      "threat_score": 8.21
     },
     {
       "ip": "10.164.105.61",
-      "threat_score": 8.24
-    },
-    {
-      "ip": "10.164.105.184",
-      "threat_score": 9.07
+      "threat_score": 8.19
     },
     {
       "ip": "10.164.105.19",
-      "threat_score": 8.4
-    },
-    {
-      "ip": "10.164.105.112",
-      "threat_score": 8.32
+      "threat_score": 8.35
     },
     {
       "ip": "10.164.105.151",
       "threat_score": 8.0
-    },
-    {
-      "ip": "10.164.105.203",
-      "threat_score": 8.73
     },
     {
       "ip": "10.164.116.239",
@@ -5054,19 +5545,7 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.176",
-      "threat_score": 8.17
-    },
-    {
-      "ip": "10.164.105.189",
-      "threat_score": 8.25
-    },
-    {
       "ip": "10.164.116.223",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.70",
       "threat_score": 10.0
     },
     {
@@ -5075,11 +5554,11 @@
     },
     {
       "ip": "10.164.105.48",
-      "threat_score": 8.15
+      "threat_score": 8.13
     },
     {
       "ip": "10.164.105.178",
-      "threat_score": 8.25
+      "threat_score": 8.23
     },
     {
       "ip": "10.164.116.222",
@@ -5087,55 +5566,27 @@
     },
     {
       "ip": "10.164.105.96",
-      "threat_score": 8.52
-    },
-    {
-      "ip": "10.164.105.158",
-      "threat_score": 8.17
-    },
-    {
-      "ip": "10.164.105.133",
-      "threat_score": 8.48
+      "threat_score": 8.42
     },
     {
       "ip": "10.164.116.42",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.96",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.157",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.109",
-      "threat_score": 8.37
-    },
-    {
-      "ip": "10.164.116.226",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.228",
-      "threat_score": 8.37
+      "threat_score": 8.32
     },
     {
       "ip": "10.164.105.127",
-      "threat_score": 8.06
+      "threat_score": 8.04
     },
     {
       "ip": "10.164.116.56",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.250",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.160",
-      "threat_score": 8.27
+      "threat_score": 8.28
     },
     {
       "ip": "10.164.116.236",
@@ -5147,7 +5598,7 @@
     },
     {
       "ip": "10.164.105.116",
-      "threat_score": 8.79
+      "threat_score": 8.66
     },
     {
       "ip": "10.164.116.9",
@@ -5155,19 +5606,7 @@
     },
     {
       "ip": "10.164.105.230",
-      "threat_score": 8.19
-    },
-    {
-      "ip": "10.164.116.114",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.192",
-      "threat_score": 8.53
-    },
-    {
-      "ip": "10.164.116.80",
-      "threat_score": 10.0
+      "threat_score": 8.18
     },
     {
       "ip": "10.164.116.83",
@@ -5175,11 +5614,11 @@
     },
     {
       "ip": "10.164.105.17",
-      "threat_score": 8.71
+      "threat_score": 8.63
     },
     {
       "ip": "10.164.105.79",
-      "threat_score": 8.39
+      "threat_score": 8.35
     },
     {
       "ip": "10.164.116.136",
@@ -5190,27 +5629,11 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.109",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.12",
-      "threat_score": 8.45
+      "threat_score": 8.4
     },
     {
       "ip": "10.164.116.234",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.195",
-      "threat_score": 8.13
-    },
-    {
-      "ip": "10.164.116.138",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.15",
       "threat_score": 10.0
     },
     {
@@ -5222,52 +5645,24 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.184",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.21",
-      "threat_score": 8.16
-    },
-    {
-      "ip": "10.164.116.105",
-      "threat_score": 10.0
+      "threat_score": 8.13
     },
     {
       "ip": "10.164.105.123",
-      "threat_score": 8.7
-    },
-    {
-      "ip": "10.164.116.115",
-      "threat_score": 10.0
+      "threat_score": 8.6
     },
     {
       "ip": "10.164.116.200",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.197",
-      "threat_score": 8.29
-    },
-    {
-      "ip": "10.164.116.128",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.60",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.125",
-      "threat_score": 8.49
-    },
-    {
       "ip": "10.164.105.71",
-      "threat_score": 8.31
+      "threat_score": 8.27
     },
     {
       "ip": "10.164.105.118",
-      "threat_score": 8.89
+      "threat_score": 8.75
     },
     {
       "ip": "10.164.116.11",
@@ -5275,34 +5670,14 @@
     },
     {
       "ip": "10.164.105.10",
-      "threat_score": 8.58
+      "threat_score": 8.51
     },
     {
       "ip": "10.164.105.85",
-      "threat_score": 8.39
-    },
-    {
-      "ip": "10.164.116.29",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.204",
-      "threat_score": 8.52
+      "threat_score": 8.33
     },
     {
       "ip": "10.164.116.221",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.167",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.153",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.50",
       "threat_score": 10.0
     },
     {
@@ -5310,48 +5685,24 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.107",
-      "threat_score": 8.39
-    },
-    {
-      "ip": "10.164.105.117",
-      "threat_score": 8.37
-    },
-    {
       "ip": "10.164.105.213",
       "threat_score": 8.18
     },
     {
       "ip": "10.164.105.149",
-      "threat_score": 8.27
-    },
-    {
-      "ip": "10.164.116.246",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.78",
-      "threat_score": 8.52
+      "threat_score": 8.24
     },
     {
       "ip": "10.164.105.255",
       "threat_score": 8.31
     },
     {
-      "ip": "10.164.105.93",
-      "threat_score": 8.22
-    },
-    {
       "ip": "10.164.105.210",
-      "threat_score": 8.3
+      "threat_score": 8.29
     },
     {
       "ip": "10.164.116.140",
       "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.90",
-      "threat_score": 8.36
     },
     {
       "ip": "10.164.116.141",
@@ -5359,22 +5710,14 @@
     },
     {
       "ip": "10.164.105.172",
-      "threat_score": 8.37
+      "threat_score": 8.32
     },
     {
       "ip": "10.164.116.8",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.87",
-      "threat_score": 8.74
-    },
-    {
       "ip": "10.164.116.52",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.119",
       "threat_score": 10.0
     },
     {
@@ -5382,16 +5725,8 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.43",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.46",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.252",
-      "threat_score": 8.66
+      "threat_score": 8.56
     },
     {
       "ip": "10.164.116.188",
@@ -5399,35 +5734,15 @@
     },
     {
       "ip": "10.164.105.233",
-      "threat_score": 8.45
-    },
-    {
-      "ip": "10.164.105.137",
-      "threat_score": 9.11
-    },
-    {
-      "ip": "10.164.116.95",
-      "threat_score": 10.0
+      "threat_score": 8.42
     },
     {
       "ip": "10.164.105.91",
-      "threat_score": 8.38
-    },
-    {
-      "ip": "10.164.116.121",
-      "threat_score": 10.0
+      "threat_score": 8.33
     },
     {
       "ip": "10.164.116.145",
       "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.166",
-      "threat_score": 8.51
-    },
-    {
-      "ip": "10.164.105.247",
-      "threat_score": 8.52
     },
     {
       "ip": "10.164.116.195",
@@ -5435,11 +5750,11 @@
     },
     {
       "ip": "10.164.105.62",
-      "threat_score": 8.05
+      "threat_score": 8.04
     },
     {
       "ip": "10.164.105.126",
-      "threat_score": 8.53
+      "threat_score": 8.45
     },
     {
       "ip": "10.164.105.20",
@@ -5447,27 +5762,15 @@
     },
     {
       "ip": "10.164.105.0",
-      "threat_score": 8.08
-    },
-    {
-      "ip": "10.164.116.187",
-      "threat_score": 10.0
+      "threat_score": 8.06
     },
     {
       "ip": "10.164.105.145",
-      "threat_score": 8.3
-    },
-    {
-      "ip": "10.164.116.51",
-      "threat_score": 10.0
+      "threat_score": 8.25
     },
     {
       "ip": "10.164.105.114",
-      "threat_score": 8.97
-    },
-    {
-      "ip": "10.164.116.135",
-      "threat_score": 10.0
+      "threat_score": 8.82
     },
     {
       "ip": "10.164.105.77",
@@ -5483,63 +5786,35 @@
     },
     {
       "ip": "10.164.105.86",
-      "threat_score": 8.27
-    },
-    {
-      "ip": "10.164.105.250",
-      "threat_score": 8.43
+      "threat_score": 8.25
     },
     {
       "ip": "10.164.105.31",
       "threat_score": 8.1
     },
     {
-      "ip": "10.164.116.103",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.249",
-      "threat_score": 8.03
-    },
-    {
       "ip": "10.164.105.142",
-      "threat_score": 8.52
+      "threat_score": 8.44
     },
     {
       "ip": "10.164.105.80",
-      "threat_score": 8.53
+      "threat_score": 8.46
     },
     {
       "ip": "10.164.105.25",
       "threat_score": 8.32
     },
     {
-      "ip": "10.164.105.198",
-      "threat_score": 8.5
-    },
-    {
       "ip": "10.164.105.1",
-      "threat_score": 8.5
-    },
-    {
-      "ip": "10.164.105.76",
-      "threat_score": 8.18
+      "threat_score": 8.42
     },
     {
       "ip": "10.164.105.227",
-      "threat_score": 8.56
+      "threat_score": 8.52
     },
     {
       "ip": "10.164.105.169",
-      "threat_score": 8.78
-    },
-    {
-      "ip": "10.164.105.159",
-      "threat_score": 8.26
-    },
-    {
-      "ip": "10.164.105.235",
-      "threat_score": 8.11
+      "threat_score": 8.69
     },
     {
       "ip": "10.164.116.176",
@@ -5551,66 +5826,34 @@
     },
     {
       "ip": "10.164.105.243",
-      "threat_score": 8.55
+      "threat_score": 8.51
     },
     {
       "ip": "10.164.105.219",
-      "threat_score": 8.57
-    },
-    {
-      "ip": "10.164.105.139",
       "threat_score": 8.44
     },
     {
       "ip": "10.164.105.222",
-      "threat_score": 8.38
+      "threat_score": 8.28
     },
     {
       "ip": "10.164.105.3",
-      "threat_score": 8.57
+      "threat_score": 8.51
     },
     {
       "ip": "10.164.116.205",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.218",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.95",
-      "threat_score": 8.5
-    },
-    {
-      "ip": "10.164.105.194",
-      "threat_score": 8.24
+      "threat_score": 8.41
     },
     {
       "ip": "10.164.105.37",
-      "threat_score": 8.44
-    },
-    {
-      "ip": "10.164.105.152",
-      "threat_score": 8.17
-    },
-    {
-      "ip": "10.164.116.14",
-      "threat_score": 10.0
+      "threat_score": 8.39
     },
     {
       "ip": "10.164.116.240",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.99",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.4",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.156",
       "threat_score": 10.0
     },
     {
@@ -5618,28 +5861,16 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.116",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.5",
-      "threat_score": 8.31
-    },
-    {
-      "ip": "10.164.105.60",
-      "threat_score": 8.19
+      "threat_score": 8.26
     },
     {
       "ip": "10.164.105.67",
-      "threat_score": 8.4
+      "threat_score": 8.35
     },
     {
       "ip": "10.164.105.229",
-      "threat_score": 8.42
-    },
-    {
-      "ip": "10.164.105.104",
-      "threat_score": 8.19
+      "threat_score": 8.4
     },
     {
       "ip": "10.164.116.100",
@@ -5647,7 +5878,7 @@
     },
     {
       "ip": "10.164.105.244",
-      "threat_score": 8.25
+      "threat_score": 8.19
     },
     {
       "ip": "10.164.116.131",
@@ -5655,7 +5886,7 @@
     },
     {
       "ip": "10.164.105.64",
-      "threat_score": 8.77
+      "threat_score": 8.67
     },
     {
       "ip": "10.164.116.168",
@@ -5666,16 +5897,12 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.105.211",
-      "threat_score": 8.5
-    },
-    {
       "ip": "10.164.116.76",
       "threat_score": 10.0
     },
     {
       "ip": "10.164.105.132",
-      "threat_score": 8.14
+      "threat_score": 8.15
     },
     {
       "ip": "10.164.116.12",
@@ -5687,15 +5914,11 @@
     },
     {
       "ip": "10.164.105.239",
-      "threat_score": 8.37
+      "threat_score": 8.3
     },
     {
       "ip": "10.164.105.8",
       "threat_score": 8.11
-    },
-    {
-      "ip": "10.164.116.112",
-      "threat_score": 10.0
     },
     {
       "ip": "10.164.116.233",
@@ -5703,11 +5926,7 @@
     },
     {
       "ip": "10.164.105.70",
-      "threat_score": 8.18
-    },
-    {
-      "ip": "10.164.116.90",
-      "threat_score": 10.0
+      "threat_score": 8.16
     },
     {
       "ip": "10.164.105.119",
@@ -5718,32 +5937,16 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.169",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.105.201",
-      "threat_score": 8.21
-    },
-    {
-      "ip": "10.164.116.101",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.183",
-      "threat_score": 8.74
-    },
-    {
-      "ip": "10.164.105.140",
-      "threat_score": 8.53
+      "threat_score": 8.19
     },
     {
       "ip": "10.164.105.200",
-      "threat_score": 8.75
+      "threat_score": 8.63
     },
     {
       "ip": "10.164.105.7",
-      "threat_score": 8.03
+      "threat_score": 8.02
     },
     {
       "ip": "10.164.116.171",
@@ -5754,231 +5957,127 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.89",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.116.111",
       "threat_score": 10.0
     },
     {
       "ip": "10.164.105.168",
-      "threat_score": 8.19
-    },
-    {
-      "ip": "10.164.116.68",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.157",
-      "threat_score": 8.14
-    },
-    {
-      "ip": "10.164.116.13",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.247",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.105.66",
-      "threat_score": 8.53
-    },
-    {
-      "ip": "10.164.105.187",
       "threat_score": 8.18
     },
     {
-      "ip": "10.164.105.164",
-      "threat_score": 8.32
+      "ip": "10.164.105.157",
+      "threat_score": 8.15
     },
     {
-      "ip": "10.164.105.186",
-      "threat_score": 8.24
-    },
-    {
-      "ip": "10.164.105.72",
-      "threat_score": 8.26
-    },
-    {
-      "ip": "10.164.105.205",
+      "ip": "10.164.105.66",
       "threat_score": 8.46
     },
     {
+      "ip": "10.164.105.164",
+      "threat_score": 8.28
+    },
+    {
+      "ip": "10.164.105.186",
+      "threat_score": 8.2
+    },
+    {
       "ip": "10.164.105.138",
-      "threat_score": 8.26
-    },
-    {
-      "ip": "10.164.105.225",
-      "threat_score": 8.22
-    },
-    {
-      "ip": "10.164.105.34",
-      "threat_score": 8.35
-    },
-    {
-      "ip": "10.164.105.207",
       "threat_score": 8.24
     },
     {
-      "ip": "10.164.105.240",
-      "threat_score": 8.27
+      "ip": "10.164.105.207",
+      "threat_score": 8.23
     },
     {
       "ip": "10.164.105.221",
-      "threat_score": 8.66
+      "threat_score": 8.54
     },
     {
       "ip": "10.164.105.38",
-      "threat_score": 8.34
-    },
-    {
-      "ip": "10.164.105.122",
-      "threat_score": 8.25
+      "threat_score": 8.31
     },
     {
       "ip": "10.164.105.141",
-      "threat_score": 8.64
-    },
-    {
-      "ip": "10.164.105.113",
-      "threat_score": 8.22
-    },
-    {
-      "ip": "10.164.116.196",
-      "threat_score": 10.0
+      "threat_score": 8.58
     },
     {
       "ip": "10.164.105.170",
-      "threat_score": 8.21
+      "threat_score": 8.17
     },
     {
       "ip": "10.164.105.202",
       "threat_score": 8.17
     },
     {
-      "ip": "10.164.116.174",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.22",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.116.106",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.220",
-      "threat_score": 10.0
+      "ip": "10.164.105.40",
+      "threat_score": 8.81
     },
     {
-      "ip": "10.164.116.110",
-      "threat_score": 10.0
+      "ip": "10.164.105.52",
+      "threat_score": 8.19
+    },
+    {
+      "ip": "10.164.105.111",
+      "threat_score": 8.19
+    },
+    {
+      "ip": "10.164.105.174",
+      "threat_score": 8.18
     },
     {
       "ip": "10.164.105.167",
       "threat_score": 8.16
     },
     {
-      "ip": "10.164.105.135",
-      "threat_score": 8.49
-    },
-    {
-      "ip": "10.164.105.40",
-      "threat_score": 8.89
-    },
-    {
-      "ip": "10.164.105.215",
+      "ip": "10.164.105.108",
       "threat_score": 8.21
     },
     {
-      "ip": "10.164.105.52",
-      "threat_score": 8.22
-    },
-    {
-      "ip": "10.164.105.111",
-      "threat_score": 8.25
-    },
-    {
-      "ip": "10.164.105.174",
-      "threat_score": 8.19
-    },
-    {
-      "ip": "10.164.105.165",
-      "threat_score": 8.37
-    },
-    {
-      "ip": "10.164.105.108",
-      "threat_score": 8.25
-    },
-    {
       "ip": "10.164.105.69",
-      "threat_score": 8.45
+      "threat_score": 8.38
     },
     {
       "ip": "10.164.105.129",
-      "threat_score": 8.19
+      "threat_score": 8.16
     },
     {
       "ip": "10.164.105.15",
-      "threat_score": 8.22
-    },
-    {
-      "ip": "10.164.105.209",
-      "threat_score": 8.17
-    },
-    {
-      "ip": "10.164.105.148",
-      "threat_score": 8.29
+      "threat_score": 8.19
     },
     {
       "ip": "10.164.105.153",
-      "threat_score": 8.18
+      "threat_score": 8.14
     },
     {
       "ip": "10.164.105.101",
-      "threat_score": 8.13
-    },
-    {
-      "ip": "10.164.105.100",
-      "threat_score": 8.61
-    },
-    {
-      "ip": "10.164.105.128",
-      "threat_score": 8.15
-    },
-    {
-      "ip": "10.164.105.24",
-      "threat_score": 8.22
-    },
-    {
-      "ip": "10.164.105.97",
       "threat_score": 8.11
     },
     {
+      "ip": "10.164.105.24",
+      "threat_score": 8.17
+    },
+    {
       "ip": "10.164.105.29",
-      "threat_score": 8.18
+      "threat_score": 8.17
     },
     {
       "ip": "10.164.105.251",
-      "threat_score": 8.32
-    },
-    {
-      "ip": "10.164.105.45",
-      "threat_score": 8.32
+      "threat_score": 8.28
     },
     {
       "ip": "10.164.105.191",
-      "threat_score": 8.2
+      "threat_score": 8.16
     },
     {
-      "ip": "10.164.116.154",
+      "ip": "10.164.116.110",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.19",
+      "ip": "10.164.116.154",
       "threat_score": 10.0
     },
     {
@@ -5987,18 +6086,6 @@
     },
     {
       "ip": "10.164.116.244",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.162",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.31",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.164",
       "threat_score": 10.0
     },
     {
@@ -6018,23 +6105,7 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.34",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.116.209",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.158",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.139",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.88",
       "threat_score": 10.0
     },
     {
@@ -6050,35 +6121,11 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.182",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.113",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.130",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.116.203",
       "threat_score": 10.0
     },
     {
       "ip": "10.164.116.33",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.148",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.28",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.102",
       "threat_score": 10.0
     },
     {
@@ -6090,19 +6137,7 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.63",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.45",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.116.192",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.126",
       "threat_score": 10.0
     },
     {
@@ -6126,10 +6161,6 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.122",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.116.210",
       "threat_score": 10.0
     },
@@ -6138,39 +6169,11 @@
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.84",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.55",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.41",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.194",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.116.185",
       "threat_score": 10.0
     },
     {
-      "ip": "10.164.116.217",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.72",
-      "threat_score": 10.0
-    },
-    {
       "ip": "10.164.116.82",
-      "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.160",
       "threat_score": 10.0
     },
     {
@@ -6184,10 +6187,6 @@
     {
       "ip": "10.164.116.149",
       "threat_score": 10.0
-    },
-    {
-      "ip": "10.164.116.108",
-      "threat_score": 10.0
     }
   ],
   "chokepoints": [
@@ -6195,99 +6194,90 @@
       "ip": "10.164.105.137",
       "hostname": "",
       "tier": "WEB",
-      "betweenness": 0.0139,
-      "paths_blocked": 2,
-      "reduction_percentage": 0.5,
-      "mitigation_priority": "MEDIUM"
-    },
-    {
-      "ip": "10.164.105.81",
-      "hostname": "",
-      "tier": "WEB",
-      "betweenness": 0.0135,
+      "betweenness": 0.0149,
       "paths_blocked": 0,
       "reduction_percentage": 0.0,
-      "mitigation_priority": "MEDIUM"
-    },
-    {
-      "ip": "10.164.145.192",
-      "hostname": "",
-      "tier": "QUEUE",
-      "betweenness": 0.0134,
-      "paths_blocked": 16,
-      "reduction_percentage": 4.2,
-      "mitigation_priority": "MEDIUM"
-    },
-    {
-      "ip": "10.164.105.184",
-      "hostname": "",
-      "tier": "WEB",
-      "betweenness": 0.0134,
-      "paths_blocked": 3,
-      "reduction_percentage": 0.8,
-      "mitigation_priority": "MEDIUM"
-    },
-    {
-      "ip": "10.164.105.208",
-      "hostname": "",
-      "tier": "WEB",
-      "betweenness": 0.0123,
-      "paths_blocked": 1,
-      "reduction_percentage": 0.3,
-      "mitigation_priority": "MEDIUM"
-    },
-    {
-      "ip": "10.164.105.114",
-      "hostname": "",
-      "tier": "WEB",
-      "betweenness": 0.0121,
-      "paths_blocked": 5,
-      "reduction_percentage": 1.3,
-      "mitigation_priority": "MEDIUM"
-    },
-    {
-      "ip": "10.164.145.76",
-      "hostname": "",
-      "tier": "QUEUE",
-      "betweenness": 0.0117,
-      "paths_blocked": 1,
-      "reduction_percentage": 0.3,
       "mitigation_priority": "MEDIUM"
     },
     {
       "ip": "10.164.105.212",
       "hostname": "",
       "tier": "WEB",
-      "betweenness": 0.0116,
+      "betweenness": 0.0149,
+      "paths_blocked": 5,
+      "reduction_percentage": 1.2,
+      "mitigation_priority": "MEDIUM"
+    },
+    {
+      "ip": "10.164.105.184",
+      "hostname": "",
+      "tier": "WEB",
+      "betweenness": 0.0136,
+      "paths_blocked": 4,
+      "reduction_percentage": 1.0,
+      "mitigation_priority": "MEDIUM"
+    },
+    {
+      "ip": "10.164.105.81",
+      "hostname": "",
+      "tier": "WEB",
+      "betweenness": 0.0128,
+      "paths_blocked": 2,
+      "reduction_percentage": 0.5,
+      "mitigation_priority": "MEDIUM"
+    },
+    {
+      "ip": "10.164.145.192",
+      "hostname": "",
+      "tier": "QUEUE",
+      "betweenness": 0.0111,
       "paths_blocked": 15,
-      "reduction_percentage": 3.9,
+      "reduction_percentage": 3.7,
+      "mitigation_priority": "MEDIUM"
+    },
+    {
+      "ip": "10.164.105.220",
+      "hostname": "",
+      "tier": "WEB",
+      "betweenness": 0.0108,
+      "paths_blocked": 0,
+      "reduction_percentage": 0.0,
+      "mitigation_priority": "MEDIUM"
+    },
+    {
+      "ip": "10.164.105.234",
+      "hostname": "",
+      "tier": "WEB",
+      "betweenness": 0.0107,
+      "paths_blocked": 0,
+      "reduction_percentage": 0.0,
+      "mitigation_priority": "MEDIUM"
+    },
+    {
+      "ip": "10.164.145.76",
+      "hostname": "",
+      "tier": "QUEUE",
+      "betweenness": 0.0102,
+      "paths_blocked": 0,
+      "reduction_percentage": 0.0,
+      "mitigation_priority": "MEDIUM"
+    },
+    {
+      "ip": "10.164.105.114",
+      "hostname": "",
+      "tier": "WEB",
+      "betweenness": 0.0102,
+      "paths_blocked": 5,
+      "reduction_percentage": 1.2,
       "mitigation_priority": "MEDIUM"
     },
     {
       "ip": "10.164.105.40",
       "hostname": "",
       "tier": "WEB",
-      "betweenness": 0.0112,
-      "paths_blocked": 2,
-      "reduction_percentage": 0.5,
-      "mitigation_priority": "MEDIUM"
-    },
-    {
-      "ip": "10.164.105.118",
-      "hostname": "",
-      "tier": "WEB",
-      "betweenness": 0.0111,
-      "paths_blocked": 16,
-      "reduction_percentage": 4.2,
-      "mitigation_priority": "MEDIUM"
-    },
-    {
-      "ip": "10.164.105.26",
-      "hostname": "",
-      "tier": "WEB",
-      "betweenness": 0.0103,
-      "paths_blocked": 2,
-      "reduction_percentage": 0.5,
+      "betweenness": 0.0102,
+      "paths_blocked": 7,
+      "reduction_percentage": 1.7,
       "mitigation_priority": "MEDIUM"
     }
   ],

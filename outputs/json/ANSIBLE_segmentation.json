@@ -1,0 +1,16 @@
+{
+  "application": "ANSIBLE",
+  "generated": "2025-10-24T16:18:07.716756",
+  "statistics": {
+    "total_flows": 12,
+    "internal_flows": 2,
+    "outbound_flows": 2,
+    "external_flows": 8
+  },
+  "dependencies": [
+    "ANSIBLE",
+    "ALIBABA"
+  ],
+  "vmware_instances": 4,
+  "failed_dns_count": 12
+}

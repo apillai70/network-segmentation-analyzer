@@ -1,0 +1,21 @@
+graph LR
+    %% DOWNSTREAM: Where ANSIBLE sends data
+
+    SOURCE["<b>ANSIBLE</b><br/>10.164.92.166 (host01.rgbk.com)<br/>10.100.246.20 (WEB-SERVER-01.corp.local)<br/>192.168.1.103 (APP-SERVER-01.rgbk.com)<br/>... (+7 more)<br/>8 Servers | 10 Flows"]:::sourceapp
+
+    INTERNAL["<b>Internal Traffic</b><br/>1 Flows"]:::internal
+    SOURCE .->|1| INTERNAL
+
+    DEST_APP_0[("<b>ALIBABA</b><br/>172.16.0.10 (VMware AD6FD1)<br/>1 Servers | 1 Flows | 1 VMware")]:::vmware
+    SOURCE .->|1| DEST_APP_0
+
+    EXTERNAL["<b>External / Internet</b><br/>172.16.1.50<br/>10.164.92.180<br/>... (+3 more)<br/>5 Destinations | 8 Flows"]:::external
+    SOURCE .->|8| EXTERNAL
+
+    %% Styles
+    classDef sourceapp fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef destapp fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef vmware fill:#FF9800,stroke:#E65100,stroke-width:1.5px,color:#fff
+    classDef internal fill:#9C27B0,stroke:#6A1B9A,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:2px,color:#000,rx:2,ry:2

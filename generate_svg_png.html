@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate SVG/PNG from Mermaid</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #2a5298;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e3c72;
+            transform: scale(1.05);
+        }
+
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #388E3C;
+            transform: scale(1.05);
+        }
+
+        .diagram-container {
+            padding: 40px;
+            background: white;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .info-box {
+            margin: 20px 40px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            border-radius: 5px;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: #1976D2;
+        }
+
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .info-box li {
+            margin: 8px 0;
+        }
+
+        .warning-box {
+            margin: 20px 40px;
+            padding: 20px;
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            border-radius: 5px;
+        }
+
+        .warning-box h3 {
+            margin-top: 0;
+            color: #f57c00;
+        }
+
+        #status {
+            margin: 20px 40px;
+            padding: 15px;
+            background: #c8e6c9;
+            border-left: 4px solid #4caf50;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 SVG/PNG Generator for Architecture Diagrams</h1>
+            <p>Generate high-quality exports from Mermaid diagrams</p>
+        </div>
+
+        <div class="info-box">
+            <h3>🎯 What You'll Get:</h3>
+            <ul>
+                <li><strong>SVG Format:</strong> Vector graphics - perfect for Word/PowerPoint (scalable, no quality loss)</li>
+                <li><strong>PNG Format:</strong> Raster graphics - high-resolution image (2x scale for clarity)</li>
+                <li><strong>Includes All Features:</strong> IP (hostname), server types, colors, +X more indicators</li>
+                <li><strong>Professional Quality:</strong> Suitable for documentation, presentations, reports</li>
+            </ul>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="downloadSVG()">⬇️ Download as SVG (Vector)</button>
+            <button class="btn btn-success" onclick="downloadPNG()">⬇️ Download as PNG (High-Res)</button>
+            <button class="btn btn-primary" onclick="downloadPNGLarge()">⬇️ Download as PNG (4x Large)</button>
+        </div>
+
+        <div id="status"></div>
+
+        <div class="warning-box">
+            <h3>💡 For Automated Generation:</h3>
+            <p>To automatically generate SVG/PNG when running the report generator, install Mermaid CLI:</p>
+            <pre style="background: #333; color: #0f0; padding: 10px; border-radius: 5px; overflow-x: auto;">npm install -g @mermaid-js/mermaid-cli</pre>
+            <p>Then the reports will include:</p>
+            <ul>
+                <li>✅ <code>outputs/svg/ANSIBLE_architecture.svg</code></li>
+                <li>✅ <code>outputs/png/ANSIBLE_architecture.png</code></li>
+            </ul>
+        </div>
+
+        <div class="diagram-container">
+            <div class="mermaid" id="diagram">
+graph LR
+    %% ANSIBLE Architecture Diagram
+
+    subgraph UPSTREAM["⬅️ UPSTREAM SOURCES"]
+        UP0["ANSIBLE<br/>2 flows"]:::upstream
+        UP1["APACHE<br/>1 flows"]:::upstream
+    end
+
+    subgraph CENTER["ANSIBLE APPLICATION"]
+        subgraph WEB["🌐 WEB TIER"]
+            W0["10.100.246.20<br/>(WEB-SERVER-01.corp.local)"]:::web
+            W1["192.168.1.102<br/>(WEB-VM-01.rgbk.com)"]:::web
+            WMORE["... (+1 more)"]:::webmore
+        end
+        subgraph APP["⚙️ APPLICATION TIER"]
+            A0["192.168.1.103<br/>(APP-SERVER-01.rgbk.com)"]:::app
+            A1["10.164.92.169<br/>(API-GATEWAY.rgbk.com)"]:::app
+            AMORE["... (+2 more)"]:::appmore
+        end
+        subgraph DB["🗄️ DATABASE TIER"]
+            D0["10.164.92.166<br/>(host01.rgbk.com)"]:::database
+            D1["172.16.0.12<br/>(DB-SERVER-01.rgbk.com)"]:::database
+            DMORE["... (+3 more)"]:::dbmore
+        end
+    end
+
+    subgraph DOWNSTREAM["DOWNSTREAM DESTINATIONS ➡️"]
+        DOWN0["ALIBABA<br/>2 servers | 2 flows"]:::downstream
+    end
+
+    EXTERNAL["🌍 EXTERNAL / INTERNET<br/>5 destinations | 8 flows"]:::external
+
+    UP0 --> CENTER
+    UP1 --> CENTER
+    CENTER --> DOWN0
+    CENTER --> EXTERNAL
+
+    %% Styles
+    classDef upstream fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#000
+    classDef web fill:#4CAF50,stroke:#2E7D32,stroke-width:3px,color:#fff
+    classDef webmore fill:#81C784,stroke:#2E7D32,stroke-width:2px,stroke-dasharray:5,color:#fff
+    classDef app fill:#FF9800,stroke:#E65100,stroke-width:3px,color:#fff
+    classDef appmore fill:#FFB74D,stroke:#E65100,stroke-width:2px,stroke-dasharray:5,color:#fff
+    classDef database fill:#9C27B0,stroke:#6A1B9A,stroke-width:3px,color:#fff
+    classDef dbmore fill:#BA68C8,stroke:#6A1B9A,stroke-width:2px,stroke-dasharray:5,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:4px,color:#000
+    classDef other fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
+    classDef downstream fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:3px,color:#fff
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                fontSize: '16px',
+                fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif'
+            },
+            flowchart: {
+                nodeSpacing: 100,
+                rankSpacing: 150,
+                padding: 30,
+                useMaxWidth: false
+            }
+        });
+
+        function showStatus(message) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        function downloadSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                // Clone and clean up
+                const svgClone = svg.cloneNode(true);
+                svgClone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+
+                const svgData = new XMLSerializer().serializeToString(svgClone);
+                const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ANSIBLE_architecture.svg';
+                a.click();
+                URL.revokeObjectURL(url);
+                showStatus('✅ SVG downloaded successfully!');
+            }
+        }
+
+        function downloadPNG(scale = 2) {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+
+                // Clone and prepare SVG
+                const svgClone = svg.cloneNode(true);
+                svgClone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+
+                const svgData = new XMLSerializer().serializeToString(svgClone);
+
+                // Use data URL instead of blob to avoid CORS issues
+                const svgDataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+
+                img.onload = function() {
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
+                    ctx.scale(scale, scale);
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+
+                    // Convert to PNG
+                    try {
+                        canvas.toBlob(function(blob) {
+                            const pngUrl = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = pngUrl;
+                            a.download = `ANSIBLE_architecture_${scale}x.png`;
+                            a.click();
+                            URL.revokeObjectURL(pngUrl);
+                            showStatus(`✅ PNG downloaded successfully (${scale}x resolution)!`);
+                        }, 'image/png');
+                    } catch (e) {
+                        // Fallback: use toDataURL
+                        const pngData = canvas.toDataURL('image/png');
+                        const a = document.createElement('a');
+                        a.href = pngData;
+                        a.download = `ANSIBLE_architecture_${scale}x.png`;
+                        a.click();
+                        showStatus(`✅ PNG downloaded successfully (${scale}x resolution)!`);
+                    }
+                };
+
+                img.onerror = function() {
+                    showStatus('❌ Error loading image. Please try SVG download instead.');
+                };
+
+                img.src = svgDataUrl;
+            }
+        }
+
+        function downloadPNGLarge() {
+            downloadPNG(4);
+        }
+    </script>
+</body>
+</html>

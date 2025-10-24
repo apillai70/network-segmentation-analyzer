@@ -1,0 +1,16 @@
+{
+  "application": "APACHE",
+  "generated": "2025-10-24T16:18:10.161631",
+  "statistics": {
+    "total_flows": 18,
+    "internal_flows": 2,
+    "outbound_flows": 1,
+    "external_flows": 15
+  },
+  "dependencies": [
+    "ANSIBLE",
+    "APACHE"
+  ],
+  "vmware_instances": 8,
+  "failed_dns_count": 18
+}

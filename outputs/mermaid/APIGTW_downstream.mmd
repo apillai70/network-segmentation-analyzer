@@ -1,0 +1,23 @@
+graph LR
+    %% DOWNSTREAM: Where APIGTW sends data
+
+    SOURCE["<b>APIGTW</b><br/>10.100.246.19 (vm-host-01.corp.local)<br/>10.164.92.169 (server03.rgbk.com)<br/>10.100.246.18 (DB-SERVER-01.rgbk.com)<br/>... (+9 more)<br/>10 Servers | 12 Flows"]:::sourceapp
+
+    INTERNAL["<b>Internal Traffic</b><br/>1 Flows"]:::internal
+    SOURCE .->|1| INTERNAL
+
+    DEST_APP_0[("<b>ALIBABA</b><br/>10.164.92.167 (ESXi-Host-02.corp.local)<br/>10.164.92.168 (vmhost-02.rgbk.com)<br/>2 Servers | 3 Flows | 3 VMware")]:::vmware
+    SOURCE .->|3| DEST_APP_0
+    DEST_APP_1[("<b>APACHE</b><br/>10.10.10.51 (vm-host-01.corp.local)<br/>1 Servers | 1 Flows | 1 VMware")]:::vmware
+    SOURCE .->|1| DEST_APP_1
+
+    EXTERNAL["<b>External / Internet</b><br/>10.20.20.100<br/>10.20.20.103<br/>... (+3 more)<br/>5 Destinations | 7 Flows"]:::external
+    SOURCE .->|7| EXTERNAL
+
+    %% Styles
+    classDef sourceapp fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    classDef destapp fill:#2196F3,stroke:#1565C0,stroke-width:1.5px,color:#fff
+    classDef vmware fill:#FF9800,stroke:#E65100,stroke-width:1.5px,color:#fff
+    classDef internal fill:#9C27B0,stroke:#6A1B9A,stroke-width:1.5px,color:#fff
+    classDef external fill:#F44336,stroke:#C62828,stroke-width:1.5px,color:#fff
+    classDef loadbalancer fill:#FFF,stroke:#F44336,stroke-width:2px,color:#000,rx:2,ry:2
