@@ -6,13 +6,16 @@ database:
   # Primary: PostgreSQL (if available)
   # Fallback: JSON files (automatic)
 
+  # IMPORTANT: Database credentials are loaded from .env files, NOT from here!
+  # - Production: .env.production
+  # - Development: .env.development
+  # This config.yaml only contains non-sensitive settings
+
   postgresql:
     enabled: true  # Set to false to force JSON mode
-    host: udideapdb01.unix.rgbk.com
-    port: 5432
-    database: prutech_bais
-    user: activenet_admin
-    password: Xm9Kp2Nq7Rt4Wv8Yz3Lh6Jc5  # CHANGE IN PRODUCTION!
+
+    # Credentials are loaded from .env files via src/config.py
+    # DO NOT hardcode credentials here!
 
     # Connection pool settings
     min_connections: 2

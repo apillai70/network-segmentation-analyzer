@@ -668,6 +668,11 @@ class ApplicationDiagramGenerator:
     def _generate_html_diagram(self, mermaid_content: str, html_path: str):
         """Generate interactive HTML version of diagram"""
 
+        # Extract app_code from html_path (e.g., "AODSVY_application_diagram.html" -> "AODSVY")
+        import os
+        filename = os.path.basename(html_path)
+        app_code = filename.split('_')[0] if '_' in filename else 'UNKNOWN'
+
         # Extract ONLY the graph portion (between backticks, excluding legend)
         # Split by lines and find the graph content
         lines = mermaid_content.split('\n')
@@ -709,11 +714,22 @@ class ApplicationDiagramGenerator:
         h1 {{
             color: #2c3e50;
             margin: 0;
-            padding: 15px 20px;
+            padding: 15px 20px 15px 20px;
             font-size: 22px;
             background: white;
             border-bottom: 3px solid #3498db;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }}
+        h1 span {{
+            flex: 1;
+        }}
+        h1 a {{
+            margin-left: 20px;
+            margin-right: 180px;
+            white-space: nowrap;
         }}
         .instructions {{
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -750,122 +766,82 @@ class ApplicationDiagramGenerator:
             height: auto !important;
         }}
         .controls {{
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            z-index: 1001;
-            background: rgba(255, 255, 255, 0.98);
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
             padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-            border: 2px solid #3498db;
-            cursor: move;
-        }}
-        .controls h4 {{
-            margin: 0 0 12px 0;
-            font-size: 14px;
-            color: #2c3e50;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 2px solid #e0e0e0;
             text-align: center;
-            font-weight: 600;
-            cursor: move;
-            user-select: none;
         }}
-        .controls button {{
-            display: block;
-            width: 70px;  /* Half of original 140px */
-            margin: 8px 0;
-            padding: 10px 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
+        .controls-title {{
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }}
+        .arrow-grid {{
+            display: grid;
+            grid-template-columns: repeat(3, 38px);
+            gap: 4px;
+            margin-bottom: 10px;
+        }}
+        .zoom-grid {{
+            display: grid;
+            grid-template-columns: repeat(3, 38px);
+            gap: 4px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }}
+        .arrow-btn {{
+            width: 38px;
+            height: 38px;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        }}
-        .controls button:hover {{
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-        }}
-        .controls button:active {{
-            transform: translateY(0);
-        }}
-        /* Override hover for pan arrows - keep them centered */
-        .pan-arrow.pan-up:hover {{
-            transform: translateX(-50%) !important;
-        }}
-        .pan-arrow.pan-down:hover {{
-            transform: translateX(-50%) !important;
-        }}
-        .pan-arrow.pan-left:hover {{
-            transform: translateY(-50%) !important;
-        }}
-        .pan-arrow.pan-right:hover {{
-            transform: translateY(-50%) !important;
-        }}
-        .pan-control {{
-            width: 55px;  /* Half of original 110px */
-            height: 55px;
-            margin: 15px auto;
-            position: relative;
-            background: radial-gradient(circle, #ecf0f1 0%, #bdc3c7 100%);
-            border-radius: 50%;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15);
-        }}
-        .pan-arrow {{
-            position: absolute;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;  /* Larger arrow symbols */
-            font-weight: bold;
+            font-size: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.15s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+            color: #333;
             user-select: none;
         }}
-        .pan-arrow:hover {{
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transform: scale(1.05) !important;
+        .arrow-btn:hover {{
+            background: #e8f4f8;
+            border-color: #64b5f6;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }}
-        .pan-arrow:active {{
-            transform: scale(0.95) !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        .arrow-btn:active {{
+            transform: translateY(0);
+            box-shadow: none;
         }}
-        .pan-up {{
-            top: 2px;
-            left: 50%;
-            width: 10px;  /* Vertical arrow - rotated 90° */
-            height: 18px; /* Half of original */
-            transform: translateX(-50%) rotate(0deg) !important;
+        .arrow-btn.empty {{
+            background: transparent;
+            border: none;
+            cursor: default;
         }}
-        .pan-down {{
-            bottom: 2px;
-            left: 50%;
-            width: 10px;  /* Vertical arrow - rotated 90° */
-            height: 18px; /* Half of original */
-            transform: translateX(-50%) rotate(0deg) !important;
+        .arrow-btn.empty:hover {{
+            background: transparent;
+            border: none;
+            transform: none;
+            box-shadow: none;
         }}
-        .pan-left {{
-            left: 2px;
-            top: 50%;
-            width: 18px; /* Horizontal arrow - half size */
-            height: 10px;
-            transform: translateY(-50%) !important;
-        }}
-        .pan-right {{
-            right: 2px;
-            top: 50%;
-            width: 18px; /* Horizontal arrow - half size */
-            height: 10px;
-            transform: translateY(-50%) !important;
+        .controls-hint {{
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 10px;
+            color: #999;
+            line-height: 1.4;
         }}
         .legend {{
             position: fixed;
@@ -946,26 +922,45 @@ class ApplicationDiagramGenerator:
     </style>
 </head>
 <body>
-    <h1>Application Data Flow Diagram</h1>
+    <h1>
+        <span>Application Data Flow Diagram</span>
+        <a href="../enhanced_diagrams/{app_code}_enhanced_application_diagram.html"
+           style="padding: 8px 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+           color: white; text-decoration: none; border-radius: 5px; font-weight: 500; font-size: 14px;
+           box-shadow: 0 2px 6px rgba(102, 126, 234, 0.4); transition: all 0.3s;"
+           onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 10px rgba(102, 126, 234, 0.6)';"
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 6px rgba(102, 126, 234, 0.4)';">
+            View Enhanced Analysis
+        </a>
+    </h1>
 
     <div class="instructions">
         <strong>Navigation:</strong>
-        <span>Use 4-way arrows to pan • Mouse wheel to zoom • Use controls on right</span>
+        <span>Use directional arrows to pan • Mouse wheel to zoom • + and − to zoom in/out</span>
     </div>
 
     <div class="controls">
-        <h4>Controls</h4>
-
-        <div class="pan-control">
-            <button class="pan-arrow pan-up" onclick="panDirection('up')" title="Move view up (content down)">↓</button>
-            <button class="pan-arrow pan-down" onclick="panDirection('down')" title="Move view down (content up)">↑</button>
-            <button class="pan-arrow pan-left" onclick="panDirection('left')" title="Move view left (content right)">→</button>
-            <button class="pan-arrow pan-right" onclick="panDirection('right')" title="Move view right (content left)">←</button>
+        <div class="controls-title">Navigate</div>
+        <div class="arrow-grid">
+            <div class="arrow-btn empty"></div>
+            <div class="arrow-btn" onclick="panUp()" title="Pan North">↑</div>
+            <div class="arrow-btn empty"></div>
+            <div class="arrow-btn" onclick="panLeft()" title="Pan West">←</div>
+            <div class="arrow-btn" onclick="resetView()" title="Reset View">⊙</div>
+            <div class="arrow-btn" onclick="panRight()" title="Pan East">→</div>
+            <div class="arrow-btn empty"></div>
+            <div class="arrow-btn" onclick="panDown()" title="Pan South">↓</div>
+            <div class="arrow-btn empty"></div>
         </div>
-
-        <button onclick="zoomIn()">+ Zoom</button>
-        <button onclick="zoomOut()">− Zoom</button>
-        <button onclick="resetView()">Reset</button>
+        <div class="zoom-grid">
+            <div class="arrow-btn empty"></div>
+            <div class="arrow-btn" onclick="zoomIn()" title="Zoom In">+</div>
+            <div class="arrow-btn empty"></div>
+            <div class="arrow-btn empty"></div>
+            <div class="arrow-btn" onclick="zoomOut()" title="Zoom Out">−</div>
+            <div class="arrow-btn empty"></div>
+        </div>
+        <div class="controls-hint">Mouse wheel to zoom<br>Click & drag to pan</div>
     </div>
 
     <div class="legend">
@@ -1005,10 +1000,6 @@ class ApplicationDiagramGenerator:
         let translateY = 0;
         let scale = 1;
         const PAN_STEP = 100; // pixels to pan per arrow click
-
-        // Make controls panel draggable
-        let controlsIsDragging = false;
-        let controlsStartX, controlsStartY, controlsInitialX, controlsInitialY;
 
         mermaid.initialize({{
             startOnLoad: false,
@@ -1050,45 +1041,10 @@ class ApplicationDiagramGenerator:
             // Mouse wheel to zoom
             container.addEventListener('wheel', zoom);
 
-            // Make controls panel draggable
-            const controls = document.querySelector('.controls');
-            const controlsHeader = controls.querySelector('h4');
-
-            controlsHeader.addEventListener('mousedown', startDragControls);
-            document.addEventListener('mousemove', dragControls);
-            document.addEventListener('mouseup', stopDragControls);
-
             // Initial fit
             setTimeout(() => {{
                 fitView();
             }}, 500);
-        }}
-
-        function startDragControls(e) {{
-            controlsIsDragging = true;
-            const controls = document.querySelector('.controls');
-            controlsStartX = e.clientX;
-            controlsStartY = e.clientY;
-            const rect = controls.getBoundingClientRect();
-            controlsInitialX = rect.left;
-            controlsInitialY = rect.top;
-            e.preventDefault();
-        }}
-
-        function dragControls(e) {{
-            if (!controlsIsDragging) return;
-
-            const controls = document.querySelector('.controls');
-            const dx = e.clientX - controlsStartX;
-            const dy = e.clientY - controlsStartY;
-
-            controls.style.left = (controlsInitialX + dx) + 'px';
-            controls.style.top = (controlsInitialY + dy) + 'px';
-            controls.style.right = 'auto';
-        }}
-
-        function stopDragControls() {{
-            controlsIsDragging = false;
         }}
 
         function zoom(e) {{
@@ -1103,24 +1059,24 @@ class ApplicationDiagramGenerator:
             updateTransform();
         }}
 
-        function panDirection(direction) {{
-            requestAnimationFrame(() => {{
-                switch(direction) {{
-                    case 'up':
-                        translateY -= PAN_STEP;  // Fixed: up arrow moves view down (content up)
-                        break;
-                    case 'down':
-                        translateY += PAN_STEP;  // Fixed: down arrow moves view up (content down)
-                        break;
-                    case 'left':
-                        translateX -= PAN_STEP;  // Fixed: left arrow moves view right (content left)
-                        break;
-                    case 'right':
-                        translateX += PAN_STEP;  // Fixed: right arrow moves view left (content right)
-                        break;
-                }}
-                updateTransform();
-            }});
+        function panUp() {{
+            translateY += PAN_STEP;
+            updateTransform();
+        }}
+
+        function panDown() {{
+            translateY -= PAN_STEP;
+            updateTransform();
+        }}
+
+        function panLeft() {{
+            translateX += PAN_STEP;
+            updateTransform();
+        }}
+
+        function panRight() {{
+            translateX -= PAN_STEP;
+            updateTransform();
         }}
 
         function zoomIn() {{
@@ -1152,29 +1108,35 @@ class ApplicationDiagramGenerator:
                 return;
             }}
 
-            // Reset transform first
+            // Reset transform first to get accurate dimensions
             svg.style.transform = '';
+            translateX = 0;
+            translateY = 0;
+            scale = 1;
 
-            // Get natural dimensions
+            // Use getBBox for accurate SVG content dimensions
             setTimeout(() => {{
-                const svgRect = svg.getBoundingClientRect();
+                const bbox = svg.getBBox();
                 const containerRect = container.getBoundingClientRect();
 
-                console.log('SVG:', svgRect.width, svgRect.height);
+                console.log('SVG BBox:', bbox.width, bbox.height);
                 console.log('Container:', containerRect.width, containerRect.height);
 
-                const scaleX = containerRect.width / svgRect.width;
-                const scaleY = containerRect.height / svgRect.height;
-                scale = Math.min(scaleX, scaleY, 1) * 0.9;
+                // Calculate scale to fit with 10% padding
+                const scaleX = (containerRect.width * 0.9) / bbox.width;
+                const scaleY = (containerRect.height * 0.9) / bbox.height;
+                scale = Math.min(scaleX, scaleY);
 
-                // Center the diagram
-                translateX = (containerRect.width - svgRect.width * scale) / 2;
-                translateY = (containerRect.height - svgRect.height * scale) / 2;
+                console.log('Calculated scale:', scale);
 
-                console.log('Scale:', scale, 'Translate:', translateX, translateY);
+                // Center the diagram accounting for bbox offset
+                translateX = (containerRect.width - bbox.width * scale) / 2 - (bbox.x * scale);
+                translateY = (containerRect.height - bbox.height * scale) / 2 - (bbox.y * scale);
+
+                console.log('Translate:', translateX, translateY);
 
                 updateTransform();
-            }}, 100);
+            }}, 200);
         }}
 
         function updateTransform() {{
