@@ -35,7 +35,7 @@ def main():
         try:
             import subprocess
             result = subprocess.run(
-                ['python', 'build_master_topology.py'],
+                [sys.executable, 'build_master_topology.py'],
                 capture_output=True,
                 text=True
             )
